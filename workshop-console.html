@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EV Workshop Console — Tesla 專修工作台</title>
+<style>
+:root{
+  --ink:#171a20; --muted:#5c5e62; --faint:#8e8e93;
+  --line:#d0d1d2; --hair:#e8e8e9; --panel:#f4f4f4; --panel2:#fafafa;
+  --red:#e82127; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc; --hv:#e8a11c;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);background:#ececed;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{max-width:1180px;margin:0 auto;background:#fff;min-height:100vh;
+  box-shadow:0 0 40px rgba(0,0,0,.09)}
+/* ---- top bar ---- */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:14px 26px 12px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:14px}
+.wordmark{font-size:14px;font-weight:600;letter-spacing:.42em;text-transform:uppercase}
+.wordmark span{color:var(--red)}
+.brand h1{font-size:15px;font-weight:600;letter-spacing:.01em}
+.brand .sub{font-size:10.5px;color:var(--faint);letter-spacing:.04em}
+.topbtns{display:flex;gap:8px;align-items:center}
+button,.btn{font:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;padding:6px 13px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;border-radius:2px;white-space:nowrap}
+button:hover{background:var(--panel)}
+button.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.pri:hover{background:#000}
+button.dgr{color:var(--red);border-color:#f0b8ba}
+button.sm{font-size:10px;padding:4px 9px}
+/* ---- tabs ---- */
+nav.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);padding:0 26px;overflow-x:auto}
+nav.tabs button{border:none;background:none;border-bottom:2px solid transparent;border-radius:0;
+  padding:11px 15px;font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+nav.tabs button:hover{background:var(--panel2);color:var(--ink)}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--red)}
+main{padding:22px 26px 60px}
+.view{display:none} .view.on{display:block}
+/* ---- headings ---- */
+h2.sec{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h2.sec .r{font-size:9.5px;color:var(--faint);letter-spacing:.04em;text-transform:none;font-weight:400}
+h3{font-size:12.5px;font-weight:600;margin-bottom:6px}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.tiny{font-size:10px;color:var(--muted);line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-size:11px}
+/* ---- tables ---- */
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:8.6px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);
+  padding:0 9px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 9px 8px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+th+th,td+td{padding-left:9px}
+tbody tr:hover{background:var(--panel2)}
+.r{text-align:right} td.r,th.r{padding-right:0}
+/* ---- forms ---- */
+input,select,textarea{font:inherit;font-size:12px;padding:6px 8px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:2px;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+textarea{resize:vertical;min-height:56px;line-height:1.5}
+.grid{display:grid;gap:10px}
+.g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+.fld label{display:block;margin-bottom:3px}
+/* ---- cards ---- */
+.card{border:1px solid var(--hair);padding:14px 16px;margin-bottom:14px;background:#fff}
+.card.tint{background:var(--panel2)}
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:11px 13px;font-size:11px;line-height:1.55;margin-bottom:12px}
+.note.warn{border-left-color:var(--red);background:#fdf3f3}
+.note.hv{border-left-color:var(--hv);background:#fdf8ec}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.pill{display:inline-block;font-size:8.4px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fdf2f2}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-blue{color:var(--blue);border-color:#b3c1f2;background:#f2f5fd}
+.p-hv{color:#8a5c00;border-color:var(--hv);background:#fdf4e3}
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid #c3cef5}
+a:hover{border-bottom-color:var(--blue)}
+.savestat{font-size:9.5px;font-weight:600;letter-spacing:.05em;padding:5px 10px;border-radius:2px;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);white-space:nowrap;line-height:1.3}
+.savestat.ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.savestat.warn{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.savestat.bad{color:var(--red);border-color:var(--red);background:#fdf2f2}
+.savestat b{display:block;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.75}
+.empty{padding:34px;text-align:center;color:var(--faint);font-size:12px;border:1px dashed var(--line)}
+.row-actions{display:flex;gap:5px;justify-content:flex-end}
+.split{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+.list-item{padding:9px 11px;border:1px solid var(--hair);margin-bottom:6px;cursor:pointer;background:#fff}
+.list-item:hover{border-color:var(--line);background:var(--panel2)}
+.list-item.on{border-color:var(--ink);border-left:3px solid var(--red);background:var(--panel2)}
+.list-item .t{font-size:12.5px;font-weight:600}
+.list-item .s{font-size:10px;color:var(--faint);margin-top:2px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:11.5px}
+.kv dt{color:var(--faint);white-space:nowrap}
+.kv dd{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{font-size:10px;padding:4px 10px}
+@media print{
+  body{background:#fff} .app{box-shadow:none;max-width:none}
+  .top,nav.tabs,.noprint,button{display:none!important}
+  main{padding:0}
+  .view{display:none!important} .view.on{display:block!important}
+  @page{size:A4;margin:12mm}
+  .card{break-inside:avoid} tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <div class="wordmark">T E S L <span>A</span></div>
+      <div>
+        <h1 id="shopname">EV Workshop Console</h1>
+        <div class="sub" id="shopsub">Tesla 專修工作台 · 車輛登記 · 工單 · 診斷 · 高壓安全</div>
+      </div>
+    </div>
+    <div class="topbtns">
+      <div id="savestatus" class="savestat"></div>
+      <button id="linkbtn" onclick="linkBackupFile()">⛓ 連結備份檔</button>
+      <button onclick="exportData()">↓ 匯出資料 Export</button>
+      <button onclick="document.getElementById('importfile').click()">↑ 匯入 Import</button>
+      <input type="file" id="importfile" accept="application/json" style="display:none" onchange="importData(event)">
+      <button class="pri" onclick="window.print()">列印 Print</button>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+  <main id="main"></main>
+</div>
+<script>
+/* ============================================================
+   STATE — held in memory. Use Export/Import to persist.
+   No browser storage is used, so this file works identically
+   whether opened locally or viewed inside Claude.
+   ============================================================ */
+let DB = {
+  shop: {name:'', br:'', addr:'', tel:'', labourRate:800, currency:'HKD'},
+  vehicles: [
+    {id:'v1', vin:'5YJSB7E15GF122555', plate:'VY1428 / VM3645', model:'Model S 70', year:2016,
+     variant:T2('前期款 · 右駕 · 白色','Pre-refresh · RHD · White'), odo:301510, owner:'',
+     notes:T2('2026-05 由非原廠授權維修商作高壓電池組模組級維修（修復模組 1、採集板 3、全數模組絕緣處理、整包均衡、透氣孔升級、氣密性測試）— 無任何保用。2024-10 裝原廠翻新 LDU，手寫批註保用 4 年／80,000 km（至 2028-10 或 341,187 km，先到者為準）。12V 履歷異常：第 2 顆僅 7 個月／12,491 km。未完成項目：水撥臂無法歸位（2025-05 報價後擱置）。',
+              'HV pack repaired at module level by a non-authorised shop May 2026 (1 module, 3 collector boards, insulation treatment all modules, full-pack balancing, vent upgrade, air-tightness test) — no warranty of any kind. Reman LDU fitted Oct 2024; handwritten note gives 4 yr / 80,000 km (to Oct 2028 or 341,187 km, whichever first). Abnormal 12 V history: the second unit lasted only 7 months / 12,491 km. Open: wiper arm will not park (quoted May 2025, deferred).')}
+  ],
+  jobs: []
+};
+function T2(zh,en){return {zh,en};}
+let LANG='zh';
+const tx=o=>(o&&typeof o==='object'&&('zh' in o))?o[LANG]:o;
+let uid=100; const nid=p=>p+(++uid);
+
+/* ============================================================
+   MODEL REFERENCE — seeded with VERIFIED entries only.
+   Everything else is left as an explicit blank for the shop to
+   fill from the official manual. Editable in the app.
+   ============================================================ */
+let MODELS = [
+ {id:'ms-pre', name:'Model S — 2012 to 2016 (pre-refresh / classic nose)', hot:true,
+  fields:[
+   {k:T2('診斷插座位置','Diagnostic connector location'),
+    v:T2('2014-08 之後生產：中控台、觸控螢幕下方儲物格後面。2014-08 之前之右駕車：右側儀錶板側蓋後。','Built after Aug 2014: centre console, behind the cubby under the main touchscreen. RHD built before Aug 2014: behind the right instrument-panel side cover.'), src:'Tesla Model S Service Manual', ok:true},
+   {k:T2('插座型式','Connector type'),
+    v:T2('12 針 TE Connectivity 173851-2 — 並非標準 OBD-II。第三方工具需 12 針轉 16 針轉接線才讀到內部 CAN。車上 OBD-II 位置只給電壓及 VIN。','12-pin TE Connectivity 173851-2 — NOT standard OBD-II. Third-party tools need a 12-to-16-pin harness to reach the internal CAN bus. The nominal OBD-II position carries only voltage and VIN.'), src:'TeslaTap teardown / ScanMyTesla FAQ', ok:true},
+   {k:T2('12V 副電池','12 V auxiliary battery'),
+    v:T2('鉛酸，位於前備箱。本車零件 1083774-00-B（DCS33-UNCR, PRE-REFRESH）。典型壽命 3–4 年，論壇調查顯示逾七成 2 年內已更換。','Lead-acid, in the frunk. Part 1083774-00-B on this car (DCS33-UNCR, PRE-REFRESH). Typical life 3–4 years; forum polling shows over 70% replaced within 2 years.'), src:'Tesla invoice / TeslaTap 12V compendium', ok:true},
+   {k:T2('12V 充電來源','12 V charging source'),
+    v:T2('PCS（Power Conversion System）內置 DC-DC，把 HV 降至約 14V。Gen-2 Model S 規格：輸入 220–430VDC 最高 15A，輸出 9–16VDC 最高約 200A。只在高壓接觸器閉合（車輛喚醒／行駛／充電）時運作。','The DC-DC step-down sits inside the PCS (Power Conversion System), taking HV down to ≈14 V. Gen-2 Model S: input 220–430 VDC up to 15 A, output 9–16 VDC up to ≈200 A. It only runs while the HV contactors are closed — awake, driving or charging.'), src:'TeslaTap 12V compendium', ok:true},
+   {k:T2('12V 全放電後之緊急進入','Emergency access with a flat 12 V'),
+    v:T2('按前保險桿拖車鈎蓋右上角彈開蓋板，拉出外露紅／黑線，接便攜 12V 電源不超過 30 秒 — 此舉只解鎖前備箱蓋，並非充電。開啟前備箱後方可跨接或更換 12V 電池。','Press the top-right edge of the tow-eye cover on the front bumper to pop it, pull out the exposed red and black wires, and apply a portable 12 V supply for no more than 30 seconds — this only releases the frunk latch, it is not a charge. Jump or replace the 12 V battery once the frunk is open.'), src:'service.tesla.com public DIY procedure', ok:true},
+   {k:T2('為何 12V 沒電就完全無法上電','Why a flat 12 V kills the whole car'),
+    v:T2('高壓接觸器是 12V 激磁繼電器 — 無 12V 就無法閉合，即使高壓電池滿電也接不上。車門解鎖亦由 12V 驅動。這是典型「拋錨」故障，與電池電量無關。','The HV contactors are 12 V-energised relays — without 12 V they cannot close, so a fully charged HV pack still cannot connect. The door releases are 12 V-actuated too. This is a stranding fault and has nothing to do with state of charge.'), src:'TMC contactor diagnostic threads', ok:true},
+   {k:T2('已知召回（依生產日期核對 VIN）','Known recalls — verify by VIN and build date'),
+    v:T2('NHTSA 21V-035 MCU1 eMMC（2012-05 至 2018-03-03 生產）— 免費，不設年期或里程上限。NHTSA 17V-260 Brembo 電子手迫力卡鉗（2012-07-12 至 2016-11-17）— 免費更換。NHTSA 19V-002 Takata 前座乘客氣袋（2014–2016）。NHTSA PE20-026 前懸掛 fore-link 調查指向 2016 年 1–5 月生產批次（美國最終未召回）。','NHTSA 21V-035 MCU1 eMMC (built May 2012 – 3 Mar 2018) — free, no age or mileage cap. NHTSA 17V-260 Brembo electric parking-brake caliper (12 Jul 2012 – 17 Nov 2016) — free replacement. NHTSA 19V-002 Takata front passenger airbag (2014–2016). NHTSA PE20-026 front fore-link investigation pointed at Jan–May 2016 builds (no US recall followed).'), src:'NHTSA campaign documents', ok:true},
+   {k:T2('高壓系統斷電程序','HV disablement procedure'), v:T2('','') , src:'', ok:false},
+   {k:T2('扭力規格','Torque specifications'), v:T2('',''), src:'', ok:false},
+   {k:T2('起重／頂車點','Lift points'), v:T2('',''), src:'', ok:false}
+  ]},
+ {id:'ms-ref', name:'Model S — 2016 refresh onward', fields:[
+   {k:T2('診斷插座位置','Diagnostic connector location'), v:T2('',''), src:'', ok:false},
+   {k:T2('12V 系統','12 V system'),
+    v:T2('2021 年改款起改用鋰離子 12V，系統電壓 15.5V — 與前期款不相容。Musk 於 2021-02 表示改用鋰電是為了讓 12V 的日曆及循環壽命與主電池匹配。','From the 2021 refresh Tesla moved to a lithium-ion 12 V on a 15.5 V system — not interchangeable with pre-refresh. Musk stated in Feb 2021 that the change was to make the 12 V\'s calendar and cycle life match the main pack\'s.'), src:'Musk / Munro interview, Feb 2021', ok:true},
+   {k:T2('其他','Other'), v:T2('',''), src:'', ok:false}
+ ]},
+ {id:'m3', name:'Model 3', fields:[
+   {k:T2('診斷插座位置','Diagnostic connector location'), v:T2('待核實 — 由官方維修手冊填入','To verify — fill from the official service manual'), src:'', ok:false},
+   {k:T2('12V 系統','12 V system'), v:T2('待核實（早期鉛酸，較新年份改鋰電）','To verify (early cars lead-acid, later years lithium)'), src:'', ok:false},
+   {k:T2('高壓系統斷電程序','HV disablement procedure'), v:T2('',''), src:'', ok:false}
+ ]},
+ {id:'my', name:'Model Y', fields:[
+   {k:T2('診斷插座位置','Diagnostic connector location'), v:T2('待核實','To verify'), src:'', ok:false},
+   {k:T2('12V 系統','12 V system'), v:T2('待核實','To verify'), src:'', ok:false},
+   {k:T2('高壓系統斷電程序','HV disablement procedure'), v:T2('',''), src:'', ok:false}
+ ]},
+ {id:'mx', name:'Model X', fields:[
+   {k:T2('診斷插座位置','Diagnostic connector location'), v:T2('待核實','To verify'), src:'', ok:false},
+   {k:T2('鷹翼門','Falcon-wing doors'), v:T2('待核實 — 校正程序及常見故障','To verify — calibration procedure and common faults'), src:'', ok:false}
+ ]}
+];
+
+/* ============================================================
+   DIAGNOSTIC QUICK REFERENCE
+   ============================================================ */
+const CODES=[
+ {c:'BMS_u018', g:'BMS', d:T2('SOC／電芯不平衡，最高充電量被降低','SOC / cell imbalance, maximum charge level reduced'),
+  a:T2('讀電芯組電壓差及每模組 CAC。維修後電池組出現此碼，通常代表模組容量不匹配而非單純不平衡。','Read cell-group voltage delta and per-module CAC. On a repaired pack this code usually means capacity mismatch between modules, not simple imbalance.'), s:'red'},
+ {c:'BMS_u029', g:'BMS', d:T2('最高充電量降低，電壓異常','Reduced maximum charge, irregular voltage'), a:T2('同上','As above'), s:'red'},
+ {c:'BMS_f107', g:'BMS', d:T2('電池組內部冷凝／入水','Condensation or water ingress inside the pack'),
+  a:T2('高濕地區重點項目。檢查冷氣排水管走向、保險絲盒蓋腐蝕、側樑透氣孔。做氣密性測試及絕緣阻值。','A priority item in humid climates. Check the A/C drain hose routing, fuse-box cover corrosion and side-rail vents. Run an air-tightness test and measure insulation resistance.'), s:'red'},
+ {c:'BMS_f123', g:'BMS', d:T2('絕緣故障','Isolation fault'),
+  a:T2('可致接觸器無法閉合 → PCS 無法為 12V 充電 → 12V 反覆虧電。注意：12V 本身虛弱亦可令 BMS 誤報絕緣故障，兩個方向都要排除。','Can prevent the contactors closing, so the PCS cannot charge the 12 V and it drains repeatedly. Note the reverse also happens: a weak 12 V can make the BMS report a false isolation fault. Rule out both directions.'), s:'red'},
+ {c:'BMS_w142', g:'BMS', d:T2('電壓不平衡警告','Voltage imbalance warning'), a:T2('趨勢監察，未必需即時處理','Monitor the trend; not necessarily an immediate action'), s:'amb'},
+ {c:'BMS_a066 / a079', g:'BMS', d:T2('充電受限類','Charge-limiting family'), a:T2('與 u018／u029 一併判讀','Read alongside u018 / u029'), s:'amb'}
+];
+const CODE_NOTE = T2(
+ '以上代碼名稱源自第三方解碼資源及車主社群，<b>並非 Tesla 官方公佈之代碼表</b>。實際維修應以 Toolbox 3 讀出的原廠代碼及描述為準。此表用作快速判斷方向，不作最終依據。',
+ 'These code names come from third-party decoders and owner communities — <b>they are not a Tesla-published code table</b>. For actual repair work, rely on the OEM code and description read out of Toolbox 3. Use this table to orient yourself, not as the final authority.');
+
+const SMT=[
+ {f:'Nominal Full Pack (kWh)', d:T2('電池組滿電時的標稱可用能量 — 最直接反映實際容量','Nominal usable energy at full charge — the most direct measure of real capacity'), w:T2('每月同一條件記錄，看趨勢形狀','Log monthly under the same conditions; read the shape of the trend')},
+ {f:T2('電芯組電壓差 Cell delta (mV)','Cell-group voltage delta (mV)'), d:T2('最高與最低電芯組的電壓差','Spread between the highest and lowest cell group'), w:T2('社群參考：2–6 mV 健康，老車 20–30 mV 常見，>60 mV 或每週明顯上升為警號。非原廠門檻。','Community reference: 2–6 mV healthy, 20–30 mV unremarkable on an old pack, above ~60 mV or a week-on-week climb is the warning. Not an OEM threshold.')},
+ {f:'CAC (per module)', d:T2('每模組計算可用容量','Calculated usable capacity per module'), w:T2('指出是哪一個模組拖低整包 — 維修過的電池組必查','Identifies which module is dragging the pack down — essential on any repaired pack')},
+ {f:T2('模組溫度 Module temps','Module temperatures'), d:T2('各模組溫度','Temperature per module'), w:T2('單一模組偏熱可能是內阻偏高','One module running hot can indicate elevated internal resistance')},
+ {f:T2('充電循環次數 Charge cycles','Charge cycle count'), d:T2('累計循環','Cumulative cycles'), w:T2('用於估算電池使用強度','Used to gauge how hard the pack has been worked')}
+];
+
+/* ============================================================
+   HV SAFETY PROTOCOL
+   ============================================================ */
+const HV=[
+ {n:1, t:T2('人員資格','Personnel qualification'),
+  d:T2('高壓作業必須由受過電動車高壓訓練的人員執行。<b>本文件不能代替正式訓練或資格認證。</b>開業前應確認香港對電動車高壓維修人員之訓練／資格要求（可向 EMSD 及職業訓練局查詢），並保存每位技師的訓練紀錄。','High-voltage work must be carried out by personnel trained in EV high-voltage systems. <b>This document does not substitute for formal training or certification.</b> Before opening, confirm Hong Kong\'s training and qualification requirements for EV high-voltage work (EMSD and the Vocational Training Council are the places to ask) and keep a training record for every technician.')},
+ {n:2, t:T2('個人防護裝備','Personal protective equipment'),
+  d:T2('經檢定的絕緣手套（每次使用前目視及氣密檢查，並按週期送檢）、面罩、無金屬配飾。絕緣手套有失效期 — 建立更換週期紀錄。','Certified insulating gloves (visual and air test before every use, plus periodic recertification), face shield, no metal jewellery. Insulating gloves have a service life — keep a replacement-cycle record.')},
+ {n:3, t:T2('工作區隔離','Work area isolation'),
+  d:T2('高壓作業區以圍欄及警示牌隔離，非授權人員不得進入。地面絕緣墊。作業期間必須有第二人在場（不可單獨作業）。','Fence and sign off the HV work area; no unauthorised entry. Insulating floor mat. A second person must be present throughout — no lone working.')},
+ {n:4, t:T2('斷電程序','Disablement procedure'),
+  d:T2('按該車型官方維修手冊的「Vehicle HV Disablement Procedure」執行，<b>不可憑經驗或跨車型套用</b>。斷電後必須以量測確認無電壓，並靜候手冊指定的洩放時間。','Follow the model-specific "Vehicle HV Disablement Procedure" from the official service manual — <b>never from memory and never carried across models</b>. After disabling, verify absence of voltage by measurement and wait the discharge time the manual specifies.')},
+ {n:5, t:T2('上鎖掛牌','Lock-out / tag-out'),
+  d:T2('斷電後立即上鎖並掛牌，鑰匙由執行人員保管。掛牌註明日期、時間、執行人。','Lock and tag immediately after disabling, with the key held by the person doing the work. The tag records date, time and who did it.')},
+ {n:6, t:T2('量測器材','Test equipment'),
+  d:T2('CAT III 600V 或以上等級的萬用表及測試棒，並定期校驗。使用前先在已知電源上驗證儀錶正常（live-dead-live）。','A CAT III 600 V or higher multimeter and probes, calibrated on a schedule. Prove the meter on a known source before and after testing for absence of voltage (live-dead-live).')},
+ {n:7, t:T2('電池組搬運與存放','Pack handling and storage'),
+  d:T2('電池組重量大，須用專用升降台及固定具。存放區須遠離可燃物、有滅火設施及通風。<b>受損或起火風險的電池應隔離存放並即時通報。</b>','Packs are heavy and need a proper lift table and restraints. Store away from combustibles, with fire suppression and ventilation. <b>Damaged or thermally suspect packs must be isolated and escalated immediately.</b>')},
+ {n:8, t:T2('廢電池處理','Waste battery disposal'),
+  d:T2('香港將廢鋰電池及廢機油等列為受規管廢物。開業前應向環境保護署確認化學廢物產生者登記及合資格收集商安排。<b>這是紅旗項目 — 未辦妥即開始拆電池會有法律風險。</b>','Hong Kong regulates waste lithium batteries and waste oils. Before opening, confirm chemical-waste producer registration and licensed-collector arrangements with the Environmental Protection Department. <b>This is a red-flag item — dismantling packs before it is in place carries legal exposure.</b>')},
+ {n:9, t:T2('緊急應變','Emergency response'),
+  d:T2('張貼高壓觸電急救程序及緊急聯絡。備適用於鋰電池火警的滅火設施，並讓全員知道位置。與消防處確認你的存放量是否需要通報。','Post the HV electric-shock first-aid procedure and emergency contacts. Keep fire suppression suited to lithium battery fires and make sure everyone knows where it is. Confirm with the Fire Services Department whether your storage quantities require notification.')}
+];
+
+/* ============================================================
+   OFFICIAL RESOURCES
+   ============================================================ */
+const RES=[
+ {g:T2('Tesla 官方','Tesla official'), items:[
+  {n:T2('維修手冊、零件目錄、線路圖、工時（免費）','Service manual, parts catalogue, wiring diagrams, labour times (free)'), u:'https://service.tesla.com/', d:T2('免費註冊即可查閱。開業必備 — 亦可用來核對報價是否合理。','Free after registration. Essential for a shop, and useful for sanity-checking quotations.')},
+  {n:'Toolbox 3 診斷軟體 / diagnostic software', u:'https://service.tesla.com/en-US/diagnostic-software', d:T2('美國 US$75／日、US$150／月、US$700／年（2025-11 來源）。香港／亞太能否訂閱未經核實 — 直接試走註冊流程。','US $75/day, $150/month, $700/year (source Nov 2025). Whether a Hong Kong or APAC account can subscribe is not verified — try the sign-up flow.')},
+  {n:T2('診斷連接線','Diagnostic cables'), u:'https://service.tesla.com/en-US/diagnostic-cables', d:T2('2015-10 前後車款用線不同 — 訂購前以 VIN 核對。','Different cable before and after Oct 2015 — check by VIN before ordering.')}
+ ]},
+ {g:T2('召回查詢','Recall lookup'), items:[
+  {n:T2('NHTSA VIN 召回查詢','NHTSA VIN recall lookup'), u:'https://www.nhtsa.gov/recalls', d:T2('美國資料庫，未必反映香港的服務通報。','US database; may not reflect Hong Kong campaigns.')},
+  {n:T2('Tesla App「服務」頁','Tesla app Service tab'), u:'', d:T2('以 VIN 為準，最可靠。或直接向 Tesla 香港報 VIN 查詢。','VIN-specific and the most reliable. Or quote the VIN to Tesla Hong Kong.')}
+ ]},
+ {g:T2('香港法規','Hong Kong regulatory'), items:[
+  {n:T2('運輸署 — 驗車、續牌、過戶','Transport Department — examination, renewal, transfer'), u:'https://www.td.gov.hk/', d:T2('私家車滿 6 年起須每年驗車，費用 HK$585（複驗 HK$180）。過戶表格 TD25 須於 72 小時內遞交。','Private cars need annual examination from 6 years old; HK$585 (re-exam HK$180). Form TD25 must be lodged within 72 hours of sale.')},
+  {n:T2('環境保護署 — 化學廢物','Environmental Protection Department — chemical waste'), u:'https://www.epd.gov.hk/', d:T2('廢電池、廢機油之產生者登記及合資格收集商安排。開業前必辦。','Producer registration and licensed-collector arrangements for waste batteries and oils. Sort this out before opening.')},
+  {n:T2('港車北上','Northbound Travel for HK vehicles'), u:'https://www.hzmb.gov.hk/en/private-cars.html', d:T2('滿 6 年車輛須附驗車證明書。需內地交強險或香港「單邊認可」延伸保單。','Vehicles 6 years and older need a Certificate of Roadworthiness. Mainland compulsory insurance or a Hong Kong unilateral-recognition policy is required.')}
+ ]},
+ {g:T2('診斷工具','Diagnostic tools'), items:[
+  {n:'ScanMyTesla', u:'https://www.scanmytesla.com/', d:T2('需 OBD 轉接器（OBDLink 系列；iOS 需 MX+）加車型專用 12 針轉 16 針線。前期款 Model S 用 Vorfacelift 版本。','Needs an OBD adapter (OBDLink family; MX+ for iOS) plus the model-specific 12-to-16-pin harness. Pre-refresh Model S takes the Vorfacelift version.')},
+  {n:'TM-Spy', u:'', d:T2('功能相近，社群評價為較舊、更新較少。','Comparable capability; the community regards it as older and less actively maintained.')},
+  {n:T2('Tessie / TeslaFi / Teslamate','Tessie / TeslaFi / Teslamate'), u:'', d:T2('只讀 Tesla 雲端 API — 無電芯電壓、無 CAC。<b>不能用作電池診斷。</b>','Tesla cloud API only — no cell voltages, no CAC. <b>Not usable for battery diagnosis.</b>')}
+ ]}
+];
+</script>
+<script>
+/* ============================================================ APP ============================================================ */
+const TABS=[
+ {id:'veh',  z:'車輛登記冊', e:'Vehicles'},
+ {id:'job',  z:'工單',       e:'Job Cards'},
+ {id:'ref',  z:'車型速查',   e:'Model Reference'},
+ {id:'diag', z:'診斷速查',   e:'Diagnostics'},
+ {id:'hv',   z:'高壓安全',   e:'HV Safety'},
+ {id:'res',  z:'官方資源',   e:'Resources'},
+ {id:'set',  z:'店舖設定',   e:'Shop Setup'}
+];
+let TAB='veh', SELV=null, SELJ=null, SELM='ms-pre';
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=n=>Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+function drawTabs(){
+  document.getElementById('tabs').innerHTML=
+    TABS.map(t=>`<button class="${TAB===t.id?'on':''}" onclick="go('${t.id}')">${LANG==='zh'?t.z:t.e}</button>`).join('')
+    +`<button style="margin-left:auto;letter-spacing:.04em" onclick="toggleLang()">${LANG==='zh'?'EN':'中文'}</button>`;
+}
+function go(t){TAB=t;draw();}
+function toggleLang(){LANG=LANG==='zh'?'en':'zh';document.documentElement.lang=LANG==='zh'?'zh-Hant':'en';draw();}
+function draw(){drawTabs();document.getElementById('main').innerHTML=({veh:vVeh,job:vJob,ref:vRef,diag:vDiag,hv:vHv,res:vRes,set:vSet})[TAB]();if(typeof paintStatus==='function')paintStatus();}
+
+/* ---------------- vehicles ---------------- */
+function vVeh(){
+  const v=DB.vehicles.find(x=>x.id===SELV);
+  return `<h2 class="sec">${LANG==='zh'?'車輛登記冊':'Vehicle Register'}
+    <span class="r">${DB.vehicles.length} ${LANG==='zh'?'部車':'vehicles'}</span></h2>
+  <div class="split">
+    <div>
+      <button class="pri" style="width:100%;margin-bottom:10px" onclick="addVeh()">+ ${LANG==='zh'?'新增車輛':'Add vehicle'}</button>
+      ${DB.vehicles.length?DB.vehicles.map(x=>`
+        <div class="list-item ${x.id===SELV?'on':''}" onclick="SELV='${x.id}';draw()">
+          <div class="t">${esc(x.plate||'—')}</div>
+          <div class="s">${esc(x.model)} · ${x.year||''} · ${Number(x.odo||0).toLocaleString()} km</div>
+          <div class="s mono">${esc(x.vin)}</div>
+        </div>`).join(''):`<div class="empty">${LANG==='zh'?'未有車輛':'No vehicles yet'}</div>`}
+    </div>
+    <div>${v?vehDetail(v):`<div class="empty">${LANG==='zh'?'從左方選擇一部車，或新增車輛':'Select a vehicle on the left, or add one'}</div>`}</div>
+  </div>`;
+}
+function vehDetail(v){
+  const jobs=DB.jobs.filter(j=>j.vid===v.id);
+  return `<div class="card">
+    <div class="grid g3">
+      ${fld('VIN','vin',v.vin,v.id)}${fld(LANG==='zh'?'車牌':'Plate','plate',v.plate,v.id)}${fld(LANG==='zh'?'型號':'Model','model',v.model,v.id)}
+      ${fld(LANG==='zh'?'年份':'Year','year',v.year,v.id,'number')}${fld(LANG==='zh'?'里程 km':'Odometer km','odo',v.odo,v.id,'number')}${fld(LANG==='zh'?'車主':'Owner','owner',v.owner,v.id)}
+    </div>
+    <div class="fld" style="margin-top:10px"><label class="lbl">${LANG==='zh'?'版本／備註':'Variant / notes'}</label>
+      <textarea oninput="setV('${v.id}','variantTxt',this.value)">${esc(tx(v.variant))}</textarea></div>
+    <div class="fld" style="margin-top:10px"><label class="lbl">${LANG==='zh'?'車輛歷史與注意事項':'History and cautions'}</label>
+      <textarea style="min-height:110px" oninput="setV('${v.id}','notesTxt',this.value)">${esc(tx(v.notes))}</textarea></div>
+    <div class="row-actions" style="margin-top:10px">
+      <button class="sm" onclick="newJob('${v.id}')">+ ${LANG==='zh'?'為此車開工單':'New job card'}</button>
+      <button class="sm dgr" onclick="delVeh('${v.id}')">${LANG==='zh'?'刪除':'Delete'}</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>${LANG==='zh'?'此車工單':'Job cards for this vehicle'}</h3>
+    ${jobs.length?`<table><thead><tr><th>${LANG==='zh'?'單號':'No.'}</th><th>${LANG==='zh'?'日期':'Date'}</th><th>${LANG==='zh'?'項目':'Concern'}</th><th class="r">${LANG==='zh'?'金額':'Total'}</th><th></th></tr></thead><tbody>
+      ${jobs.map(j=>`<tr><td class="mono">${esc(j.no)}</td><td class="num">${esc(j.date)}</td><td>${esc(j.concern)||'—'}</td>
+        <td class="r num">${money(jobTotal(j))}</td>
+        <td class="r"><button class="sm" onclick="SELJ='${j.id}';go('job')">${LANG==='zh'?'開啟':'Open'}</button></td></tr>`).join('')}
+      </tbody></table>`:`<div class="tiny">${LANG==='zh'?'尚未有工單':'No job cards yet'}</div>`}
+  </div>`;
+}
+function fld(l,k,val,id,type){return `<div class="fld"><label class="lbl">${l}</label>
+  <input type="${type||'text'}" value="${esc(val)}" oninput="setV('${id}','${k}',this.value)"></div>`;}
+function setV(id,k,val){const v=DB.vehicles.find(x=>x.id===id);if(!v)return;
+  if(k==='variantTxt'){v.variant=val;return;} if(k==='notesTxt'){v.notes=val;return;}
+  v[k]=(k==='year'||k==='odo')?Number(val)||0:val;
+  if(k==='plate'||k==='model'||k==='vin'||k==='odo'||k==='year'){clearTimeout(window._t);window._t=setTimeout(draw,600);} }
+function addVeh(){const id=nid('v');DB.vehicles.push({id,vin:'',plate:'',model:'',year:'',variant:'',odo:0,owner:'',notes:''});SELV=id;markDirty();draw();}
+function delVeh(id){if(!confirm(LANG==='zh'?'刪除此車及其工單？':'Delete this vehicle and its job cards?'))return;
+  DB.vehicles=DB.vehicles.filter(x=>x.id!==id);DB.jobs=DB.jobs.filter(j=>j.vid!==id);SELV=null;markDirty();draw();}
+
+/* ---------------- job cards ---------------- */
+function jobTotal(j){const p=(j.parts||[]).reduce((s,x)=>s+Number(x.qty||0)*Number(x.price||0),0);
+  const l=(j.labour||[]).reduce((s,x)=>s+Number(x.hrs||0)*Number(DB.shop.labourRate||0),0);
+  return p+l-Number(j.discount||0);}
+function newJob(vid){const id=nid('j');
+  DB.jobs.push({id,vid,no:'WO-'+String(DB.jobs.length+1).padStart(4,'0'),date:'',odo:'',concern:'',cause:'',correction:'',
+    parts:[],labour:[],discount:0,tech:'',status:'open'});
+  SELJ=id;markDirty();go('job');}
+function vJob(){
+  const j=DB.jobs.find(x=>x.id===SELJ);
+  return `<h2 class="sec">${LANG==='zh'?'工單':'Job Cards'}<span class="r">${DB.jobs.length} ${LANG==='zh'?'張':'cards'}</span></h2>
+  <div class="split">
+    <div>
+      ${DB.vehicles.length?`<select onchange="if(this.value)newJob(this.value);this.value='';" style="margin-bottom:10px">
+        <option value="">+ ${LANG==='zh'?'開新工單（選車）':'New job card (pick a vehicle)'}</option>
+        ${DB.vehicles.map(v=>`<option value="${v.id}">${esc(v.plate||v.vin)}</option>`).join('')}</select>`
+        :`<div class="tiny" style="margin-bottom:10px">${LANG==='zh'?'請先新增車輛':'Add a vehicle first'}</div>`}
+      ${DB.jobs.length?DB.jobs.map(x=>{const v=DB.vehicles.find(y=>y.id===x.vid)||{};
+        return `<div class="list-item ${x.id===SELJ?'on':''}" onclick="SELJ='${x.id}';draw()">
+          <div class="t">${esc(x.no)} <span class="pill p-${x.status==='done'?'ok':'amb'}" style="float:right">${x.status==='done'?(LANG==='zh'?'完成':'done'):(LANG==='zh'?'進行中':'open')}</span></div>
+          <div class="s">${esc(v.plate||'—')} · ${esc(x.date||'—')}</div>
+          <div class="s">${esc((x.concern||'').slice(0,42))}</div></div>`;}).join('')
+        :`<div class="empty">${LANG==='zh'?'未有工單':'No job cards'}</div>`}
+    </div>
+    <div>${j?jobDetail(j):`<div class="empty">${LANG==='zh'?'選擇或開立一張工單':'Select or create a job card'}</div>`}</div>
+  </div>`;
+}
+function jobDetail(j){
+  const v=DB.vehicles.find(x=>x.id===j.vid)||{};
+  const pT=(j.parts||[]).reduce((s,x)=>s+Number(x.qty||0)*Number(x.price||0),0);
+  const lH=(j.labour||[]).reduce((s,x)=>s+Number(x.hrs||0),0);
+  const lT=lH*Number(DB.shop.labourRate||0);
+  return `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
+      <div><div class="lbl">${LANG==='zh'?'工單號':'Work order'}</div>
+        <div style="font-size:18px;font-weight:600" class="mono">${esc(j.no)}</div></div>
+      <div style="text-align:right"><div class="lbl">${LANG==='zh'?'車輛':'Vehicle'}</div>
+        <div style="font-size:14px;font-weight:600">${esc(v.plate||'—')}</div>
+        <div class="tiny mono">${esc(v.vin||'')}</div></div>
+    </div>
+    <div class="grid g4">
+      ${jf(j.id,'no',LANG==='zh'?'單號':'No.',j.no)}
+      ${jf(j.id,'date',LANG==='zh'?'日期':'Date',j.date,'date')}
+      ${jf(j.id,'odo',LANG==='zh'?'入廠里程':'Odometer in',j.odo,'number')}
+      ${jf(j.id,'tech',LANG==='zh'?'技師':'Technician',j.tech)}
+    </div>
+    <div class="grid" style="margin-top:10px">
+      ${jta(j.id,'concern',LANG==='zh'?'客戶陳述 Concern':'Concern',j.concern)}
+      ${jta(j.id,'cause',LANG==='zh'?'原因 Cause':'Cause',j.cause)}
+      ${jta(j.id,'correction',LANG==='zh'?'處理 Correction':'Correction',j.correction)}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>${LANG==='zh'?'零件':'Parts'} <button class="sm noprint" style="float:right" onclick="addLine('${j.id}','parts')">+ ${LANG==='zh'?'加一行':'Add line'}</button></h3>
+    <table><thead><tr><th>${LANG==='zh'?'零件編號':'Part no.'}</th><th>${LANG==='zh'?'名稱':'Description'}</th>
+      <th style="width:62px">${LANG==='zh'?'數量':'Qty'}</th><th style="width:88px">${LANG==='zh'?'單價':'Unit'}</th>
+      <th class="r" style="width:88px">${LANG==='zh'?'小計':'Subtotal'}</th><th class="noprint" style="width:34px"></th></tr></thead><tbody>
+      ${(j.parts||[]).map((p,i)=>`<tr>
+        <td><input class="mono" value="${esc(p.pn)}" oninput="setLine('${j.id}','parts',${i},'pn',this.value)"></td>
+        <td><input value="${esc(p.d)}" oninput="setLine('${j.id}','parts',${i},'d',this.value)"></td>
+        <td><input type="number" step="1" value="${esc(p.qty)}" oninput="setLine('${j.id}','parts',${i},'qty',this.value)"></td>
+        <td><input type="number" step="0.01" value="${esc(p.price)}" oninput="setLine('${j.id}','parts',${i},'price',this.value)"></td>
+        <td class="r num" style="padding-top:14px">${money(Number(p.qty||0)*Number(p.price||0))}</td>
+        <td class="noprint r"><button class="sm dgr" onclick="delLine('${j.id}','parts',${i})">×</button></td></tr>`).join('')}
+      </tbody></table>
+    ${(j.parts||[]).length?'':`<div class="tiny" style="padding:10px 0">${LANG==='zh'?'未有零件':'No parts'}</div>`}
+  </div>
+
+  <div class="card">
+    <h3>${LANG==='zh'?'工時':'Labour'} <span class="tiny">· ${DB.shop.currency} ${money(DB.shop.labourRate)}/hr</span>
+      <button class="sm noprint" style="float:right" onclick="addLine('${j.id}','labour')">+ ${LANG==='zh'?'加一行':'Add line'}</button></h3>
+    <table><thead><tr><th>${LANG==='zh'?'工序':'Operation'}</th><th style="width:76px">${LANG==='zh'?'工時':'Hours'}</th>
+      <th class="r" style="width:88px">${LANG==='zh'?'小計':'Subtotal'}</th><th class="noprint" style="width:34px"></th></tr></thead><tbody>
+      ${(j.labour||[]).map((l,i)=>`<tr>
+        <td><input value="${esc(l.d)}" oninput="setLine('${j.id}','labour',${i},'d',this.value)"></td>
+        <td><input type="number" step="0.1" value="${esc(l.hrs)}" oninput="setLine('${j.id}','labour',${i},'hrs',this.value)"></td>
+        <td class="r num" style="padding-top:14px">${money(Number(l.hrs||0)*Number(DB.shop.labourRate||0))}</td>
+        <td class="noprint r"><button class="sm dgr" onclick="delLine('${j.id}','labour',${i})">×</button></td></tr>`).join('')}
+      </tbody></table>
+    ${(j.labour||[]).length?'':`<div class="tiny" style="padding:10px 0">${LANG==='zh'?'未有工時':'No labour lines'}</div>`}
+  </div>
+
+  <div class="card tint">
+    <table><tbody>
+      <tr><td>${LANG==='zh'?'零件合計':'Parts total'}</td><td class="r num">${money(pT)}</td></tr>
+      <tr><td>${LANG==='zh'?'工時合計':'Labour total'} <span class="tiny">(${lH.toFixed(1)} h)</span></td><td class="r num">${money(lT)}</td></tr>
+      <tr><td>${LANG==='zh'?'折讓':'Discount'}</td><td class="r"><input type="number" step="0.01" style="width:110px;text-align:right;display:inline-block"
+        value="${esc(j.discount)}" oninput="setJ('${j.id}','discount',this.value)"></td></tr>
+      <tr><td style="border-top:1.5px solid var(--ink);font-weight:600;font-size:13px;padding-top:9px">${LANG==='zh'?'應收總額':'Total due'} (${DB.shop.currency})</td>
+        <td class="r num" style="border-top:1.5px solid var(--ink);font-weight:600;font-size:15px;padding-top:9px">${money(jobTotal(j))}</td></tr>
+    </tbody></table>
+    <div class="row-actions noprint" style="margin-top:12px">
+      <button class="sm" onclick="setJ('${j.id}','status','${j.status==='done'?'open':'done'}');draw()">
+        ${j.status==='done'?(LANG==='zh'?'標記為進行中':'Mark open'):(LANG==='zh'?'標記為完成':'Mark done')}</button>
+      <button class="sm" onclick="window.print()">${LANG==='zh'?'列印工單':'Print card'}</button>
+      <button class="sm dgr" onclick="delJob('${j.id}')">${LANG==='zh'?'刪除':'Delete'}</button>
+    </div>
+  </div>`;
+}
+function jf(id,k,l,v,t){return `<div class="fld"><label class="lbl">${l}</label>
+  <input type="${t||'text'}" value="${esc(v)}" oninput="setJ('${id}','${k}',this.value)"></div>`;}
+function jta(id,k,l,v){return `<div class="fld"><label class="lbl">${l}</label>
+  <textarea oninput="setJ('${id}','${k}',this.value)">${esc(v)}</textarea></div>`;}
+function setJ(id,k,v){const j=DB.jobs.find(x=>x.id===id);if(!j)return;j[k]=v;
+  if(k==='discount'||k==='status'){clearTimeout(window._t2);window._t2=setTimeout(draw,500);}}
+function addLine(id,t){const j=DB.jobs.find(x=>x.id===id);j[t]=j[t]||[];
+  j[t].push(t==='parts'?{pn:'',d:'',qty:1,price:0}:{d:'',hrs:0});markDirty();draw();}
+function setLine(id,t,i,k,v){const j=DB.jobs.find(x=>x.id===id);j[t][i][k]=v;
+  clearTimeout(window._t3);window._t3=setTimeout(draw,700);}
+function delLine(id,t,i){const j=DB.jobs.find(x=>x.id===id);j[t].splice(i,1);markDirty();draw();}
+function delJob(id){if(!confirm(LANG==='zh'?'刪除此工單？':'Delete this job card?'))return;
+  DB.jobs=DB.jobs.filter(x=>x.id!==id);SELJ=null;markDirty();draw();}
+
+/* ---------------- model reference ---------------- */
+function vRef(){
+  const m=MODELS.find(x=>x.id===SELM)||MODELS[0];
+  return `<h2 class="sec">${LANG==='zh'?'車型速查':'Model Reference'}
+    <span class="r">${LANG==='zh'?'綠色＝已核實來源 · 空白＝待你從原廠手冊補入':'green = verified source · blank = fill from the official manual'}</span></h2>
+  <div class="chips">${MODELS.map(x=>`<button class="${x.id===SELM?'pri':''}" onclick="SELM='${x.id}';draw()">${esc(x.name)}</button>`).join('')}</div>
+  <div class="card">
+    <h3>${esc(m.name)}</h3>
+    <table><thead><tr><th style="width:150px">${LANG==='zh'?'項目':'Item'}</th><th>${LANG==='zh'?'內容':'Content'}</th>
+      <th style="width:150px">${LANG==='zh'?'來源':'Source'}</th></tr></thead><tbody>
+      ${m.fields.map((f,i)=>`<tr>
+        <td style="font-weight:600">${esc(tx(f.k))} ${f.ok?'<span class="pill p-ok">✓</span>':'<span class="pill p-grey">'+(LANG==='zh'?'待補':'to fill')+'</span>'}</td>
+        <td><textarea style="min-height:${f.ok?'74':'46'}px" oninput="setRef('${m.id}',${i},'v',this.value)">${esc(tx(f.v))}</textarea></td>
+        <td><input value="${esc(f.src)}" placeholder="${LANG==='zh'?'來源／手冊章節':'source / manual section'}" oninput="setRef('${m.id}',${i},'src',this.value)"></td>
+      </tr>`).join('')}
+    </tbody></table>
+    <div class="row-actions" style="margin-top:10px"><button class="sm" onclick="addRef('${m.id}')">+ ${LANG==='zh'?'加一項':'Add item'}</button></div>
+  </div>
+  <div class="note">${LANG==='zh'
+    ?'綠色勾號的項目來自可核實的來源（Tesla 官方維修手冊、NHTSA 召回文件、廠方訪談），已列明出處。空白項目<b>刻意不填</b> — 高壓斷電程序、扭力值、頂車點這類數據錯了會傷人或毀車，必須由你從 service.tesla.com 的官方手冊逐車型抄入，本工具不作猜測。填好後這裡就是你自己店的知識庫。'
+    :'Items with a green tick come from verifiable sources (Tesla\'s official service manual, NHTSA recall documents, manufacturer interviews) and the source is stated. The blank items are <b>deliberately left empty</b> — HV disablement procedures, torque values and lift points can injure people or destroy cars if wrong, so they must be transcribed per model from the official manual on service.tesla.com. This tool does not guess them. Once filled, this becomes your own shop\'s knowledge base.'}</div>`;
+}
+function setRef(mid,i,k,val){const m=MODELS.find(x=>x.id===mid);
+  if(k==='v'){m.fields[i].v=val;}else{m.fields[i][k]=val;}}
+function addRef(mid){MODELS.find(x=>x.id===mid).fields.push({k:T2('新項目','New item'),v:'',src:'',ok:false});markDirty();draw();}
+
+/* ---------------- diagnostics ---------------- */
+function vDiag(){
+  return `<h2 class="sec">${LANG==='zh'?'診斷速查':'Diagnostics Quick Reference'}
+    <span class="r">${LANG==='zh'?'方向指引，非最終依據':'orientation only, not the final authority'}</span></h2>
+  <div class="note warn">${tx(CODE_NOTE)}</div>
+  <div class="card"><h3>${LANG==='zh'?'常見 BMS 代碼':'Common BMS codes'}</h3>
+    <table><thead><tr><th style="width:120px">${LANG==='zh'?'代碼':'Code'}</th><th>${LANG==='zh'?'意義':'Meaning'}</th>
+      <th>${LANG==='zh'?'處理方向':'Where to look'}</th></tr></thead><tbody>
+      ${CODES.map(c=>`<tr><td class="mono" style="font-weight:600">${c.c}
+        <div><span class="pill p-${c.s}">${c.s==='red'?(LANG==='zh'?'高':'high'):(LANG==='zh'?'中':'med')}</span></div></td>
+        <td>${tx(c.d)}</td><td>${tx(c.a)}</td></tr>`).join('')}
+    </tbody></table></div>
+  <div class="card"><h3>${LANG==='zh'?'ScanMyTesla 關鍵欄位':'ScanMyTesla — the fields that matter'}</h3>
+    <table><thead><tr><th style="width:190px">${LANG==='zh'?'欄位':'Field'}</th><th>${LANG==='zh'?'意義':'What it is'}</th>
+      <th>${LANG==='zh'?'怎樣用':'How to use it'}</th></tr></thead><tbody>
+      ${SMT.map(s=>`<tr><td style="font-weight:600">${tx(s.f)}</td><td>${tx(s.d)}</td><td>${tx(s.w)}</td></tr>`).join('')}
+    </tbody></table></div>
+  <div class="card"><h3>${LANG==='zh'?'連接程序（前期款 Model S）':'Connection procedure (pre-refresh Model S)'}</h3>
+    <ol style="font-size:11.5px;line-height:1.8;padding-left:20px">
+      <li>${LANG==='zh'?'打開中控台觸控螢幕下方儲物格，取出襯墊，露出 12 針診斷插座。':'Open the cubby under the main touchscreen in the centre console and remove the liner to expose the 12-pin diagnostic connector.'}</li>
+      <li>${LANG==='zh'?'接上 12 針轉 16 針 OBD-II 專用轉接線（前期款版本）。':'Fit the 12-pin-to-16-pin OBD-II harness (pre-refresh version).'}</li>
+      <li>${LANG==='zh'?'插上 OBD 藍牙／USB 轉接器（OBDLink 系列；iOS 需 MX+）。':'Plug in the OBD Bluetooth/USB adapter (OBDLink family; MX+ required for iOS).'}</li>
+      <li>${LANG==='zh'?'車輛保持喚醒狀態，於 App 內配對後開始讀值。':'Keep the car awake, pair in the app and start reading.'}</li>
+      <li>${LANG==='zh'?'量度電池組時：充滿 100%，靜置至少 30 分鐘讓電芯電壓穩定後才記錄。':'For pack measurements: charge to 100% and let it sit at least 30 minutes so cell voltages settle before recording.'}</li>
+    </ol>
+    <div class="note" style="margin-top:10px">${LANG==='zh'
+      ?'<b>比較數據時必須固定條件</b>：同一時段、同一充電樁、電池溫度相近。條件不同的讀數不能互相比較，趨勢就會失真。'
+      :'<b>Hold the conditions constant when comparing readings</b>: same time of day, same charger, similar pack temperature. Readings taken under different conditions are not comparable and will distort the trend.'}</div>
+  </div>`;
+}
+
+/* ---------------- HV safety ---------------- */
+function vHv(){
+  return `<h2 class="sec">${LANG==='zh'?'高壓作業安全規程':'High-Voltage Work Safety Protocol'}
+    <span class="r">${LANG==='zh'?'開業前必須逐項落實':'every item must be in place before you open'}</span></h2>
+  <div class="note hv"><h4>${LANG==='zh'?'重要聲明':'Important'}</h4>
+    ${LANG==='zh'
+     ?'本規程是一個<b>框架</b>，不是訓練教材，也不能代替正式資格。電動車高壓系統可致命。任何實際的斷電、拆裝或量測步驟，必須依照該車型官方維修手冊執行，並由受過訓練的人員操作。開業前請確認香港對此類作業的訓練及牌照要求。'
+     :'This protocol is a <b>framework</b>, not training material, and it does not substitute for formal qualification. EV high-voltage systems can kill. Every actual disablement, disassembly or measurement step must follow the model-specific official service manual and be carried out by trained personnel. Confirm Hong Kong\'s training and licensing requirements for this work before you open.'}</div>
+  <div class="card">
+    <table><thead><tr><th style="width:34px">#</th><th style="width:150px">${LANG==='zh'?'項目':'Item'}</th><th>${LANG==='zh'?'要求':'Requirement'}</th>
+      <th class="noprint" style="width:56px">${LANG==='zh'?'已落實':'In place'}</th></tr></thead><tbody>
+      ${HV.map(h=>`<tr><td class="num" style="font-weight:600;color:var(--red)">${String(h.n).padStart(2,'0')}</td>
+        <td style="font-weight:600">${tx(h.t)}</td><td>${tx(h.d)}</td>
+        <td class="noprint" style="text-align:center"><input type="checkbox" style="width:auto"></td></tr>`).join('')}
+    </tbody></table>
+  </div>`;
+}
+
+/* ---------------- resources ---------------- */
+function vRes(){
+  return `<h2 class="sec">${LANG==='zh'?'官方資源與外部連結':'Official Resources and External Links'}
+    <span class="r">${LANG==='zh'?'原廠手冊內文受版權保護，此處只提供連結':'the OEM manual text is copyrighted — links only here'}</span></h2>
+  ${RES.map(g=>`<div class="card"><h3>${tx(g.g)}</h3>
+    <table><tbody>${g.items.map(i=>`<tr>
+      <td style="width:230px;font-weight:600">${i.u?`<a href="${i.u}" target="_blank" rel="noopener">${tx(i.n)}</a>`:tx(i.n)}</td>
+      <td>${tx(i.d)}${i.u?`<div class="tiny mono" style="margin-top:3px">${i.u}</div>`:''}</td></tr>`).join('')}</tbody></table>
+  </div>`).join('')}
+  <div class="note warn">${LANG==='zh'
+   ?'<b>版權：</b>Tesla 的維修手冊、線路圖及工序內文受版權保護，本工具<b>不複製其內容</b>，只提供連結及本店自行輸入的資料。你在「車型速查」輸入的內容應為你自己的工作筆記，不宜整段抄錄原廠文字後再對外分發。'
+   :'<b>Copyright:</b> Tesla\'s service manual, wiring diagrams and procedure text are copyrighted. This tool <b>reproduces none of it</b> — only links, plus whatever your shop enters itself. What you type into Model Reference should be your own working notes; do not paste OEM text wholesale and then distribute it.'}</div>`;
+}
+
+/* ---------------- shop setup ---------------- */
+function vSet(){
+  const s=DB.shop;
+  return `<h2 class="sec">${LANG==='zh'?'店舖設定':'Shop Setup'}</h2>
+  <div class="card"><div class="grid g2">
+    ${sf('name',LANG==='zh'?'店名':'Shop name',s.name)}${sf('br',LANG==='zh'?'商業登記號碼':'Business registration no.',s.br)}
+    ${sf('addr',LANG==='zh'?'地址':'Address',s.addr)}${sf('tel',LANG==='zh'?'電話':'Telephone',s.tel)}
+    ${sf('labourRate',LANG==='zh'?'工時費率 / 小時':'Labour rate per hour',s.labourRate,'number')}${sf('currency',LANG==='zh'?'貨幣':'Currency',s.currency)}
+  </div></div>
+  <div class="card"><h3>${LANG==='zh'?'自動存檔':'Auto-save'}</h3>
+    <table><thead><tr><th style="width:112px">${LANG==='zh'?'層級':'Tier'}</th><th>${LANG==='zh'?'做法':'How it works'}</th><th style="width:150px">${LANG==='zh'?'限制':'Limitation'}</th></tr></thead><tbody>
+      <tr><td style="font-weight:600">1 · ${LANG==='zh'?'檔案連結':'Linked file'} ${TIER==='file'?'<span class="pill p-ok">'+(LANG==='zh'?'使用中':'active')+'</span>':''}</td>
+        <td>${LANG==='zh'?'撳右上角<b>「連結備份檔」</b>，揀一次存檔位置（例如放喺 OneDrive／Google Drive 同步資料夾）。之後每次改動，<b>1.2 秒內自動靜默寫入嗰個 .json 檔</b>，唔會再彈任何視窗。授權會記住，下次開啟自動接返。':'Press <b>Link backup file</b> at the top right and choose a location once — put it in a OneDrive or Google Drive sync folder. After that every change is <b>written silently to that .json within 1.2 seconds</b>, with no further dialogs. The grant is remembered and reconnects on the next open.'}</td>
+        <td>${LANG==='zh'?'需 Chrome／Edge，並以本機檔案方式開啟':'Chrome/Edge, opened as a local file'}</td></tr>
+      <tr><td style="font-weight:600">2 · ${LANG==='zh'?'瀏覽器儲存':'Browser storage'} ${TIER==='local'?'<span class="pill p-amb">'+(LANG==='zh'?'使用中':'active')+'</span>':''}</td>
+        <td>${LANG==='zh'?'自動同步存入瀏覽器，關咗分頁再開返都仲喺度。呢層永遠自動運作，唔使做任何嘢。':'Saved to browser storage automatically in parallel, so closing and reopening the tab keeps your data. This tier always runs, with nothing to set up.'}</td>
+        <td>${LANG==='zh'?'清除瀏覽器資料會清走；換電腦唔會跟住走':'Cleared if browser data is wiped; does not follow you to another computer'}</td></tr>
+      <tr><td style="font-weight:600">3 · ${LANG==='zh'?'僅記憶體':'Memory only'} ${TIER==='mem'?'<span class="pill p-red">'+(LANG==='zh'?'使用中':'active')+'</span>':''}</td>
+        <td>${LANG==='zh'?'如果上面兩層都用唔到（例如喺受限制的檢視器內開啟），資料只喺目前分頁。關閉前會彈出警告。':'If neither tier above is available — for example inside a restricted viewer — data lives only in this tab. You will be warned before closing.'}</td>
+        <td>${LANG==='zh'?'必須手動匯出':'Manual export required'}</td></tr>
+    </tbody></table>
+    <div class="row-actions" style="margin-top:11px">
+      <button class="sm pri" onclick="linkBackupFile()">${LANG==='zh'?'連結備份檔':'Link backup file'}</button>
+      <button class="sm" onclick="exportData()">${LANG==='zh'?'另存一份 JSON':'Save a copy as JSON'}</button>
+      <button class="sm" onclick="document.getElementById('importfile').click()">${LANG==='zh'?'匯入 JSON':'Import JSON'}</button>
+    </div>
+    <div class="note" style="margin-top:11px">${LANG==='zh'
+      ?'<b>建議設定：</b>將備份檔連結到一個雲端同步資料夾（OneDrive／Google Drive／iCloud）。咁樣你就有三重保障 — 本機檔案、雲端副本、加上瀏覽器儲存 — 而你唔使記得做任何嘢。右上角嘅狀態燈會顯示最後存檔時間。'
+      :'<b>Recommended setup:</b> link the backup file into a cloud-sync folder (OneDrive, Google Drive, iCloud). That gives you three layers — the local file, the cloud copy and browser storage — with nothing to remember. The status indicator at the top right shows the last save time.'}</div>
+  </div>
+  <div class="note warn"><h4>${LANG==='zh'?'開業前的合規紅旗（非法律意見）':'Compliance red flags before you open (not legal advice)'}</h4>
+    ${LANG==='zh'
+     ?'以下幾項在香港開設汽車維修工場時最常出問題，值得先行確認：<b>①</b> 商業登記；<b>②</b> 場地的地契及分區用途是否准許汽車修理（工業大廈的公契條款經常限制此類用途）；<b>③</b> 消防處對存放易燃物及電池的要求；<b>④</b> 環保署化學廢物產生者登記，以及廢電池、廢機油的合資格收集商安排；<b>⑤</b> 法定僱員補償保險，以及《職業安全及健康條例》下的責任；<b>⑥</b> 如需改動場地，屋宇署的相關批准。其中<b>④ 廢電池處理</b>對電動車專修店尤其關鍵，應在接第一部拆電池的車之前辦妥。'
+     :'These are the items that most often go wrong when opening a vehicle workshop in Hong Kong, and they are worth settling first: <b>①</b> business registration; <b>②</b> whether the lease and zoning permit vehicle repair at that site (industrial-building deeds of mutual covenant frequently restrict it); <b>③</b> Fire Services requirements for storing flammables and batteries; <b>④</b> EPD chemical-waste producer registration plus licensed-collector arrangements for waste batteries and oils; <b>⑤</b> statutory employees\' compensation insurance and duties under the Occupational Safety and Health Ordinance; <b>⑥</b> Buildings Department approval if you alter the premises. Of these, <b>④ waste battery handling</b> matters most for an EV specialist and should be in place before the first pack comes apart.'}</div>`;
+}
+function sf(k,l,v,t){return `<div class="fld"><label class="lbl">${l}</label>
+  <input type="${t||'text'}" value="${esc(v)}" oninput="DB.shop['${k}']=this.value;if('${k}'==='labourRate'||'${k}'==='currency'){clearTimeout(window._t4);window._t4=setTimeout(draw,700);}"></div>`;}
+
+/* ---------------- import / export ---------------- */
+function exportData(){
+  const payload={version:1, exported:'', shop:DB.shop, vehicles:DB.vehicles, jobs:DB.jobs, models:MODELS};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='ev-workshop-data.json';a.click();URL.revokeObjectURL(a.href);
+}
+function importData(e){
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);
+    if(d.shop)DB.shop=d.shop; if(d.vehicles)DB.vehicles=d.vehicles; if(d.jobs)DB.jobs=d.jobs; if(d.models)MODELS=d.models;
+    SELV=null;SELJ=null;draw();markDirty();doSave();
+    alert(LANG==='zh'?'已匯入':'Imported');
+  }catch(err){alert((LANG==='zh'?'檔案無法讀取：':'Could not read the file: ')+err.message);}};
+  r.readAsText(f); e.target.value='';
+}
+
+/* ============================================================
+   AUTO-SAVE — three tiers, tried in order, degrades gracefully
+   1. 檔案連結  File handle  — writes silently to a real .json on disk
+   2. 瀏覽器儲存 localStorage — survives closing the tab
+   3. 僅記憶體  Memory only  — warns on close, manual export required
+   ============================================================ */
+const LS_KEY='evwc_db_v1';
+let FH=null, PENDING_FH=null, TIER='mem', LAST_SAVE='', DIRTY=false, saveTimer=null;
+
+function snapshot(){return {version:1, savedAt:new Date().toISOString(),
+  shop:DB.shop, vehicles:DB.vehicles, jobs:DB.jobs, models:MODELS};}
+function applySnap(d){
+  if(d.shop)DB.shop=d.shop; if(d.vehicles)DB.vehicles=d.vehicles;
+  if(d.jobs)DB.jobs=d.jobs; if(d.models)MODELS=d.models;
+}
+function markDirty(){DIRTY=true;paintStatus();clearTimeout(saveTimer);saveTimer=setTimeout(doSave,1200);}
+
+async function doSave(){
+  const json=JSON.stringify(snapshot(),null,2);
+  let localOk=false, fileOk=false;
+  try{localStorage.setItem(LS_KEY,json);localOk=true;}catch(e){}
+  if(FH){
+    try{const w=await FH.createWritable();await w.write(json);await w.close();fileOk=true;}
+    catch(e){FH=null;}
+  }
+  TIER=fileOk?'file':(localOk?'local':'mem');
+  if(fileOk||localOk){DIRTY=false;LAST_SAVE=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+  paintStatus();
+}
+function paintStatus(){
+  const el=document.getElementById('savestatus'); if(!el)return;
+  const zh=LANG==='zh';
+  let cls,head,body;
+  if(PENDING_FH){cls='warn';head=zh?'需重新授權':'reauthorise';body=zh?'撳「連結備份檔」恢復':'click Link backup file';}
+  else if(TIER==='file'){cls='ok';head=zh?'自動存檔中':'auto-saving';body=(zh?'檔案 · ':'file · ')+(LAST_SAVE||'—');}
+  else if(TIER==='local'){cls='';head=zh?'瀏覽器已存':'saved in browser';body=(zh?'未連結檔案 · ':'no file linked · ')+(LAST_SAVE||'—');}
+  else {cls='bad';head=zh?'未儲存':'not saved';body=zh?'請連結備份檔或匯出':'link a backup file or export';}
+  el.className='savestat '+cls;
+  el.innerHTML=`<b>${head}</b>${body}`;
+  const lb=document.getElementById('linkbtn');
+  if(lb)lb.textContent = PENDING_FH?(zh?'⛓ 恢復連結':'⛓ Reconnect')
+    : TIER==='file'?(zh?'⛓ 已連結':'⛓ Linked') : (zh?'⛓ 連結備份檔':'⛓ Link backup file');
+}
+
+/* --- keep the file handle across sessions --- */
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('evwc',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('kv');
+  r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+async function idbSet(k,v){try{const d=await idb();d.transaction('kv','readwrite').objectStore('kv').put(v,k);}catch(e){}}
+async function idbGet(k){try{const d=await idb();return await new Promise(r=>{
+  const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>r(null);});}catch(e){return null;}}
+
+async function linkBackupFile(){
+  const zh=LANG==='zh';
+  if(PENDING_FH){
+    try{const p=await PENDING_FH.requestPermission({mode:'readwrite'});
+      if(p==='granted'){FH=PENDING_FH;PENDING_FH=null;await doSave();return;}}catch(e){}
+    alert(zh?'未取得檔案權限。':'Permission to the file was not granted.');return;
+  }
+  if(!window.showSaveFilePicker){
+    alert(zh?'此瀏覽器唔支援直接寫入檔案（需要 Chrome／Edge，並且以本機檔案方式開啟）。\n資料仍會自動儲存喺瀏覽器，但建議定期用「匯出資料」下載備份。'
+            :'This browser cannot write to a file directly (needs Chrome/Edge, opened as a local file).\nData is still auto-saved in the browser, but download a backup with Export regularly.');
+    return;
+  }
+  try{
+    FH=await window.showSaveFilePicker({suggestedName:'ev-workshop-data.json',
+      types:[{description:'JSON',accept:{'application/json':['.json']}}]});
+    await idbSet('fh',FH); await doSave();
+  }catch(e){/* cancelled */}
+}
+
+window.addEventListener('beforeunload',e=>{
+  if(DIRTY||TIER==='mem'){e.preventDefault();e.returnValue='';}
+});
+
+async function boot(){
+  try{const j=localStorage.getItem(LS_KEY); if(j){applySnap(JSON.parse(j));TIER='local';}}catch(e){}
+  const h=await idbGet('fh');
+  if(h){
+    try{const p=await h.queryPermission({mode:'readwrite'});
+      if(p==='granted'){FH=h;TIER='file';} else {PENDING_FH=h;}}catch(e){}
+  }
+  draw();
+  document.getElementById('main').addEventListener('input',markDirty);
+  document.getElementById('main').addEventListener('change',markDirty);
+  paintStatus();
+  if(FH) doSave();
+}
+boot();
+</script>
+</body>
+</html>

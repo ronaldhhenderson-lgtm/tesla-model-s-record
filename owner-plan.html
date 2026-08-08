@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla Model S VY1428 — 新車主保養與診斷計劃 / Owner's Preventive Maintenance &amp; Diagnostics Plan</title>
+<style>
+
+:root{
+  --ink:#171a20; --muted:#5c5e62; --faint:#8e8e93;
+  --line:#d0d1d2; --hair:#e8e8e9; --panel:#f4f4f4; --panel2:#fafafa;
+  --red:#e82127; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink); background:#e9e9ea; font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  width:210mm; min-height:297mm; margin:16px auto; background:#fff;
+  padding:14mm 13mm 13mm; position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10);
+}
+/* ---------- type ---------- */
+h1{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1.2}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+h3{font-size:12.5px;font-weight:600;letter-spacing:.01em}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.5px;color:var(--muted);line-height:1.45}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:-.01em}
+b,strong{font-weight:600}
+/* ---------- header ---------- */
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.wordmark{font-size:15px;font-weight:600;letter-spacing:.44em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--red)}
+.masthead h1{margin-top:9px}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:17px;
+  font-weight:600;letter-spacing:.09em;display:inline-block}
+.hd-right{text-align:right;flex:0 0 auto}
+.stamp{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+/* ---------- lang tabs ---------- */
+.langbar{display:flex;gap:0;margin-bottom:9px;justify-content:flex-end}
+.langbar button{
+  font:inherit;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 15px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.langbar button+button{border-left:none}
+.langbar button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+/* ---------- ident strip ---------- */
+.ident{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-bottom:1px solid var(--line);margin-top:0}
+.ident>div{padding:10px 10px 10px 0}
+.ident>div+div{border-left:1px solid var(--hair);padding-left:10px}
+.ident .v{font-size:12px;font-weight:500;margin-top:3px;letter-spacing:.01em}
+.ident .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ---------- kpi ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin-top:14px}
+.kpi{background:#fff;padding:11px 11px 12px}
+.kpi .v{font-size:21px;font-weight:600;letter-spacing:-.012em;margin-top:5px;line-height:1.05}
+.kpi .v small{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi .n{font-size:9px;color:var(--faint);margin-top:4px;line-height:1.35}
+.kpi.alert .v{color:var(--red)}
+/* ---------- sections ---------- */
+section{margin-top:22px;break-inside:avoid}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:11px}
+.shead .rule{font-size:9px;color:var(--faint);letter-spacing:.04em;text-align:right}
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;white-space:nowrap}
+td{padding:7px 7px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.42}
+th+th,td+td{padding-left:9px}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+td.r,th.r{padding-right:0}
+tbody tr:hover{background:var(--panel2)}
+.tot td{border-bottom:none;border-top:1.5px solid var(--ink);font-weight:600;padding-top:8px;font-size:11px}
+.dim{color:var(--muted)}
+/* ---------- pills ---------- */
+.pill{display:inline-block;font-size:8.2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fdf2f2}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-blue{color:var(--blue);border-color:#b3c1f2;background:#f2f5fd}
+/* ---------- charts ---------- */
+.card{border:1px solid var(--hair);padding:13px 14px 10px;background:#fff}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:13px;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend .bar{border-radius:1px;width:17px;height:10px}
+/* ---------- notes ---------- */
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.4px;line-height:1.5}
+.note.warn{border-left-color:var(--red);background:#fdf3f3}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ol.actions{list-style:none;counter-reset:a}
+ol.actions li{counter-increment:a;position:relative;padding:9px 0 9px 30px;border-bottom:1px solid var(--hair);font-size:10.5px;line-height:1.5}
+ol.actions li:before{content:counter(a,decimal-leading-zero);position:absolute;left:0;top:9px;
+  font-size:9.5px;font-weight:600;color:var(--red);font-variant-numeric:tabular-nums}
+ol.actions li:last-child{border-bottom:none}
+.foot{margin-top:26px;padding-top:9px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint);letter-spacing:.03em}
+/* ---------- lang visibility ---------- */
+body[data-lang="zh"] .en-only{display:none}
+body[data-lang="en"] .zh-only{display:none}
+/* ---------- print ---------- */
+@page{size:A4 portrait;margin:11mm 10mm 10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  .langbar,.noprint{display:none!important}
+  section,.card,.kpis,table,.note,.ident{break-inside:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .page-break{break-before:page}
+  section,section table{break-inside:auto}
+  .shead{break-after:avoid}
+  section{margin-top:14px}
+  .masthead{padding-bottom:9px}
+  .kpi{padding:9px 9px 10px}
+  .kpi .v{font-size:19px}
+  .card{padding:10px 11px 8px}
+  ol.actions li{padding:6px 0 6px 28px}
+  ol.actions li:before{top:6px}
+  .shead{margin-bottom:8px}
+  tbody tr:hover{background:none}
+}
+
+.kpis{grid-template-columns:repeat(4,1fr)}
+td .q{font-size:9.5px;color:var(--faint);display:block;margin-top:2px}
+.logsheet td{height:26px}
+.logsheet td.blank{background:#fcfcfc;border-bottom:1px solid var(--line)}
+.free{background:#f2f8f4;border-left:2px solid var(--ok)}
+h3.sub3{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+</style>
+</head>
+<body data-lang="zh">
+<div class="sheet">
+  <div class="langbar noprint">
+    <button id="btn-zh" class="on" onclick="setLang('zh')">繁體中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <div class="masthead">
+    <div>
+      <div class="wordmark">T E S L <span>A</span></div>
+      <h1 class="zh-only">新車主保養、診斷與監察計劃</h1>
+      <h1 class="en-only">Owner's Preventive Maintenance, Diagnostics &amp; Monitoring Plan</h1>
+      <div class="sub" style="margin-top:4px">
+        <span class="zh-only">2016 Model S 70 kWh · 301,510 km · 年均約 29,200 km · 香港</span>
+        <span class="en-only">2016 Model S 70 kWh · 301,510 km · ≈29,200 km/yr · Hong Kong</span>
+      </div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">VY 1428</div>
+      <div class="tiny" style="margin-top:7px">
+        <span class="zh-only">過戶登記日 2026-08-06</span><span class="en-only">Ownership registered 2026-08-06</span>
+      </div>
+      <div style="margin-top:6px"><span class="stamp" id="stamp"></span></div>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <!-- 01 FIRST 30 DAYS -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">01 — 首 30 日：法規、免費召回、基線量度</span><span class="en-only">01 — First 30 Days: Compliance, Free Recalls, Baselines</span></h2>
+      <div class="rule"><span class="zh-only">按緊急程度排序 · 綠色 ＝ 原廠免費</span><span class="en-only">by urgency · green = free from Tesla</span></div>
+    </div>
+    <table id="tbl-d30"></table>
+  </section>
+
+  <!-- 02 READING YOUR OWN DATA -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">02 — 如何連接車輛並讀取自己的數據</span><span class="en-only">02 — How to Connect to the Car and Read Your Own Data</span></h2>
+      <div class="rule"><span class="zh-only">工具比較 · 價格為所引用來源之公佈值</span><span class="en-only">tool comparison · prices as published by the cited source</span></div>
+    </div>
+    <table id="tbl-tools"></table>
+
+    <div class="note" style="margin-top:13px">
+      <h4><span class="zh-only">診斷插座位置（本車）</span><span class="en-only">Diagnostic port location (this car)</span></h4>
+      <div class="zh-only">2014 年 8 月後生產的右駕 Model S，診斷插座在<b>中控台、觸控螢幕下方的儲物格後面</b>（2014 年 8 月前的右駕車則在右側儀錶板側蓋後）。它<b>不是</b>標準 OBD-II 插座，而是 12 針 TE Connectivity 173851-2 連接器 — 所以第三方工具必須配一條「12 針轉 16 針 OBD-II」的特斯拉專用轉接線，才讀得到內部 CAN 匯流排。車上原有的 OBD-II 位置只提供電壓及 VIN，讀不到電芯數據。</div>
+      <div class="en-only">On RHD Model S built after August 2014, the diagnostic connector sits in the <b>centre console, behind the cubby beneath the main touchscreen</b> (pre-Aug 2014 RHD cars have it behind the right instrument-panel side cover). It is <b>not</b> a standard OBD-II socket — it is a 12-pin TE Connectivity 173851-2 connector, which is why third-party tools need a Tesla-specific 12-pin-to-16-pin OBD-II harness to reach the internal CAN bus. The car's nominal OBD-II position carries only voltage and VIN; no cell data.</div>
+    </div>
+  </section>
+
+  <!-- 03 THE BMS QUESTION -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">03 — 「BMS 逐步收窄可用範圍」— 在哪裡看得到</span><span class="en-only">03 — "BMS Progressively Restricting Range" — Where You Actually See It</span></h2>
+      <div class="rule"><span class="zh-only">分辨「BMS 限制」與「自然衰減」</span><span class="en-only">telling a BMS restriction apart from ordinary degradation</span></div>
+    </div>
+    <table id="tbl-bms"></table>
+    <div class="note warn" style="margin-top:12px">
+      <h4><span class="zh-only">關鍵分辨方法</span><span class="en-only">The key distinction</span></h4>
+      <div class="zh-only"><b>自然衰減是一條緩慢下斜的直線；BMS 限制是一級台階。</b>電池自然老化每年只跌幾個百分點，曲線平順；BMS 主動收窄可用範圍時，數字會在某個事件（例如一次維修、一次深放電、一次故障碼）之後<b>突然跌一級然後停住</b>，而且通常伴隨儀錶板警示或 BMS_u018／u029 一類代碼。<br><br>
+      所以<b>看的是曲線形狀，不是單一個數字</b>。單次讀數告訴你不了什麼；連續 6 至 12 個月、每月同一條件下的紀錄，才分得出是老化還是限制。本文件第 06 節附有可列印的紀錄表。</div>
+      <div class="en-only"><b>Ordinary degradation is a gentle downward slope; a BMS restriction is a step.</b> Natural ageing loses a few percent a year along a smooth curve. When the BMS actively restricts usable range, the number <b>drops abruptly and then plateaus</b> — tied to a specific event such as a repair, a deep discharge or a fault code — and it is usually accompanied by a dashboard alert or a code in the BMS_u018 / u029 family.<br><br>
+      So <b>what you read is the shape of the curve, not any single number</b>. One reading tells you almost nothing; six to twelve months of same-conditions monthly readings tell you whether this is ageing or restriction. Section 06 of this document is a printable log sheet for exactly that.</div>
+    </div>
+  </section>
+
+  <!-- 04 SCHEDULE -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">04 — 保養時間表（按本車 29,200 km／年換算）</span><span class="en-only">04 — Maintenance Schedule (scaled to this car's 29,200 km/yr)</span></h2>
+      <div class="rule"><span class="zh-only">原廠週期 vs 本車實際頻率</span><span class="en-only">OEM interval vs how often it actually falls due here</span></div>
+    </div>
+    <table id="tbl-sched"></table>
+    <div class="note" style="margin-top:12px">
+      <h4><span class="zh-only">為何本車的里程類項目來得特別快</span><span class="en-only">Why the km-based items come round so fast on this car</span></h4>
+      <div class="zh-only">香港私家車年均里程一般遠低於本車。此車以約 29,200 km／年行駛，凡以里程計算的保養項目（輪胎調位、迫力檢查、輪胎更換）<b>一年會來三次以上</b>，而以年份計算的項目（迫力油、車廂濾網）則維持不變。把兩者混在同一張「每年保養」清單上，是高里程車最常見的保養漏洞。</div>
+      <div class="en-only">This car runs far above the typical Hong Kong private-car mileage. At ≈29,200 km/yr, anything measured in kilometres — tyre rotation, brake inspection, tyre replacement — <b>falls due more than three times a year</b>, while year-based items such as brake fluid and cabin filter do not move. Lumping both onto one "annual service" list is the most common maintenance gap on high-mileage cars.</div>
+    </div>
+  </section>
+
+  <!-- 05 WATCHLIST -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">05 — 此車系已知高風險項目監察清單</span><span class="en-only">05 — Known-Risk Watchlist for This Generation</span></h2>
+      <div class="rule"><span class="zh-only">2012–2018 Model S 之已知弱項</span><span class="en-only">documented weak points, 2012–2018 Model S</span></div>
+    </div>
+    <table id="tbl-watch"></table>
+  </section>
+
+  <!-- 06 LOG SHEET -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">06 — 電池健康紀錄表（可列印填寫）</span><span class="en-only">06 — Battery Health Log Sheet (print and fill in)</span></h2>
+      <div class="rule"><span class="zh-only">每月一次 · 同一條件 · 連續至少 12 個月</span><span class="en-only">monthly · same conditions · at least 12 months</span></div>
+    </div>
+    <div class="note" style="margin-bottom:11px">
+      <div class="zh-only"><b>量度方法：</b>充電至 100%，靜置至少 30 分鐘讓電芯電壓穩定，然後在同一天記錄以下五項。每月同一時段、同一充電樁、電池溫度接近時量度，數據才可比。<b>特別留意經維修的那一個模組及那三塊採集板對應的電芯組。</b></div>
+      <div class="en-only"><b>Method:</b> charge to 100%, let the car sit at least 30 minutes so cell voltages settle, then record all five values on the same day. Take the reading at the same time of day, on the same charger, at a similar pack temperature — otherwise the numbers are not comparable. <b>Pay particular attention to the repaired module and the cell groups behind the three reworked collector boards.</b></div>
+    </div>
+    <table class="logsheet" id="tbl-log"></table>
+  </section>
+
+  <!-- 07 SOURCES -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">07 — 資料來源與可信度標示</span><span class="en-only">07 — Sources and Confidence Notes</span></h2>
+      <div class="rule"><span class="zh-only">未經核實者已明確標示</span><span class="en-only">unverified items are flagged</span></div>
+    </div>
+    <div class="note warn" id="src"></div>
+  </section>
+
+  <div class="foot">
+    <div><span class="zh-only">VIN 5YJSB7E15GF122555 · 本計劃為建議，不取代持牌技師之判斷</span><span class="en-only">VIN 5YJSB7E15GF122555 · Advisory only — does not replace a licensed technician's judgement</span></div>
+    <div><span class="zh-only">2026-08-06 編製</span><span class="en-only">Prepared 2026-08-06</span></div>
+  </div>
+</div>
+<script>
+const T=(zh,en)=>({zh,en});
+const L=()=>document.body.dataset.lang;
+const tx=o=>(typeof o==='string')?o:o[L()];
+
+/* ---------------- 01 first 30 days ---------------- */
+const D30=[
+ {p:'red', free:false, i:T('確認第三方保險已以你的名義生效','Confirm third-party insurance is live in YOUR name'),
+  w:T('香港法例第 272 章第 4 條規定必須有第三者傷亡保險，而<b>保單跟人不跟車</b> — 前車主的保單不會隨過戶轉到你身上。過戶（TD25）須於買賣後 <b>72 小時內</b>辦妥，而辦理時已須出示新保單或暫保單。既然過戶日期為今日，請即日確認保單已生效。',
+        'Cap. 272 s.4 requires third-party death and bodily-injury cover, and <b>the policy follows the holder, not the car</b> — the previous owner\'s policy does not transfer with ownership. The TD25 transfer must be lodged within <b>72 hours</b> of sale, and a policy or cover note is needed to lodge it. Since ownership was registered today, confirm cover is in force today.'),
+  d:T('即日','Today')},
+
+ {p:'red', free:true, i:T('向 Tesla 以 VIN 查核未完成召回 — 特別是 MCU eMMC','Check outstanding recalls by VIN with Tesla — the MCU eMMC one above all'),
+  w:T('<b>NHTSA 21V-035</b>（Tesla SB-21-21-001）涵蓋 2012-05 至 2018-03-03 生產、使用 MCU1（Tegra）加 8GB Hynix eMMC 的 Model S — 本車完全符合。快閃記憶體寫壞後，中控螢幕會變黑，同時失去倒車鏡頭、轉燈聲、除霧控制。Tesla 最初提供 8 年／10 萬英里善意保用，其後在 NHTSA 要求下升級為<b>正式召回，免費更換 64GB Micron eMMC，不設年期或里程上限</b>。本車服務紀錄內<u>沒有</u>相關工序。2026-07 所做的只是 LTE 數據機改裝，與 MCU 世代無關 — 有做 LTE 不代表 MCU 已處理。<br>查核途徑：Tesla App「服務」頁（以 VIN 為準，最可靠）／nhtsa.gov/recalls VIN 查詢（美國資料庫）／直接向 Tesla 香港報 VIN。',
+        '<b>NHTSA 21V-035</b> (Tesla SB-21-21-001) covers Model S built May 2012 – 3 Mar 2018 with MCU1 (Tegra) and an 8 GB Hynix eMMC — this car qualifies squarely. When the flash wears out the centre screen goes black, taking the reversing camera, turn-signal audio and defrost controls with it. Tesla first offered an 8-year / 100,000-mile goodwill warranty, then under NHTSA pressure made it a <b>full recall: free 64 GB Micron eMMC replacement with no age or mileage cap</b>. Nothing in this car\'s service history shows it was done. The July 2026 work was an LTE modem retrofit only, which is independent of MCU generation — having LTE does not mean the MCU was addressed.<br>How to check: Tesla app Service tab (VIN-specific, most reliable) / nhtsa.gov/recalls VIN lookup (US database) / quote the VIN to Tesla Hong Kong.'),
+  d:T('本週','This week')},
+
+ {p:'red', free:true, i:T('查核手迫力卡鉗召回 17V-260','Check the parking-brake caliper recall 17V-260'),
+  w:T('<b>NHTSA 17V-260</b>（SB-17-33-002）：Brembo 電子手迫力卡鉗內部齒輪製造不良，可能斷裂，導致手迫力無法解除或制動力不足。涵蓋 2012-07-12 至 2016-11-17 生產之 Model S — 本車（2016-03 生產）符合。原廠<b>免費更換卡鉗</b>。本車紀錄內<u>沒有</u>此工序。屬安全項目，與 eMMC 一併查核。',
+        '<b>NHTSA 17V-260</b> (SB-17-33-002): the Brembo electric parking-brake caliper contains an improperly manufactured internal gear that can fracture, preventing release or reducing holding force. Covers Model S built 12 Jul 2012 – 17 Nov 2016 — this car (built Mar 2016) qualifies. Remedy is <b>free caliper replacement</b>. Nothing in this car\'s record shows it was done. A safety item — check it in the same conversation as the eMMC.'),
+  d:T('本週','This week')},
+
+ {p:'amb', free:true, i:T('前懸掛 fore-link 檢查（本車生產月份落在高風險窗口）','Front suspension fore-link inspection (this car\'s build month falls in the flagged window)'),
+  w:T('Tesla 於 2020-10 在中國召回約 29,193 輛 Model S／X，涉前懸掛 fore-link（零件 1041570-00-A／1041575-00-A）斷裂風險，NHTSA 隨即開立 PE20-026 調查，資料顯示問題集中於 <b>2016 年 1 月至 5 月生產</b>之車輛 — 本車為 2016 年 3 月生產，正落在此窗口。NHTSA 於 2024 年結束調查、未在美國發出召回，只建議 Tesla 擴大其服務通報範圍。因此這<b>不是</b>一張免費召回單，但以本車的生產月份、10 年車齡及 30 萬公里里程計，值得在下次入廠時要求特別檢查此連桿及其球頭。',
+        'In October 2020 Tesla recalled about 29,193 Model S/X in China over front-suspension fore-link fracture risk (parts 1041570-00-A / 1041575-00-A). NHTSA opened investigation PE20-026, whose data pointed at vehicles built <b>January to May 2016</b> — this car was built in March 2016, squarely inside that window. NHTSA closed the probe in 2024 without a US recall, recommending only that Tesla widen its service bulletin. So this is <b>not</b> a free recall claim — but given the build month, ten years of age and 300,000 km, it is worth asking for this link and its ball joint to be specifically inspected at the next visit.'),
+  d:T('下次入廠','Next visit')},
+
+ {p:'red', free:false, i:T('迫力與輪胎基線量度','Baseline brake and tyre measurement'),
+  w:T('檔案內最後一次有紀錄的量度是 2023-01-27（前後皮 4mm、手迫力 3mm、前輪胎紋 2mm），距今已行走 85,460 km。你提及迫力碟及皮約於六個月前已更換，但單據不在檔案內。請取得該單據，並即時記錄<b>現時的皮厚、碟厚、四輪胎紋及輪胎生產週期（DOT 四位數）</b>作為你任內的起點。',
+        'The last recorded measurement in the file is 27 Jan 2023 (pads 4 mm front and rear, handbrake 3 mm, front tyres 2 mm) — 85,460 km ago. You mention discs and pads were replaced about six months ago, but that invoice is not in the file. Obtain it, and record <b>current pad thickness, disc thickness, tread depth on all four corners and the tyre DOT date codes</b> now, as the starting point for your ownership.'),
+  d:T('首 2 週','First 2 weeks')},
+
+ {p:'red', free:false, i:T('高壓電池組基線讀數','HV pack baseline reading'),
+  w:T('2026-05 的模組級維修由非原廠授權維修商執行，不受任何保用，而檔案內沒有維修後的容量或電壓分佈報告。在你開始長期使用之前，先取得一組基線數據（見第 02、03、06 節）。<b>沒有基線，日後任何數字都無法判讀。</b>',
+        'The May 2026 module-level repair was done by a non-authorised shop, carries no warranty, and the file contains no post-repair capacity or voltage-spread report. Take a baseline set of readings before you put serious mileage on it (sections 02, 03 and 06). <b>Without a baseline, no later number can be interpreted.</b>'),
+  d:T('首 2 週','First 2 weeks')},
+
+ {p:'amb', free:false, i:T('確認驗車證明書（年檢）現況','Confirm the Certificate of Roadworthiness is current'),
+  w:T('香港私家車滿 <b>6 年</b>後，每次續牌前均須通過年度驗車 — 本車自 2022 年起已屬強制範圍。費用 HK$585（複驗 HK$180，須於 14 日內），證明書有效期 4 個月。年檢為一般適路性檢查（識別、迫力、轉向、懸掛、輪胎、車身底盤、燈光、電路），未見官方文件列明電動車專項。請向前車主索取現行證明書，或按續牌日期預約。',
+        'A Hong Kong private car must pass an annual examination before every licence renewal once it reaches <b>6 years old</b> — compulsory for this car since 2022. Fee HK$585 (re-examination HK$180 within 14 days); the certificate is valid 4 months. The test is a general roadworthiness check (identity, brakes, steering, suspension, tyres, body/chassis, lights, electrical circuits); no official TD document lists EV-specific items. Get the current certificate from the seller, or book against your renewal date.'),
+  d:T('首 30 日','First 30 days')},
+
+ {p:'amb', free:false, i:T('12V 副電池：主動更換','12 V auxiliary battery: replace proactively'),
+  w:T('現役第 3 顆 12V 電池已服役 1.2 年／27,832 km，零件保用（12 個月／20,000 km）已屆滿；而上一顆僅用了 7 個月／12,491 km 便告警。此車的 12V 履歷不正常，值得在更換的同時量度靜態耗電（parasitic draw）。12V 失效在 Tesla 上的表現是<b>完全無法上電、無法開門</b>，屬典型「拋錨」故障 — 主動更換的成本遠低於一次拖車。',
+        'The current (third) 12 V battery has been in for 1.2 yr / 27,832 km and its 12-month / 20,000 km parts warranty has expired, while its predecessor alerted after just 7 months / 12,491 km. This car\'s 12 V history is not normal, so measure parasitic draw at the same time as replacing it. A 12 V failure on a Tesla presents as <b>a completely dead car you cannot even open</b> — a classic stranding fault, and proactive replacement costs far less than one tow.'),
+  d:T('首 30 日','First 30 days')},
+
+ {p:'blue', free:false, i:T('釐清車牌 VY1428 → VM3645','Clarify the VY1428 → VM3645 registration mark'),
+  w:T('香港的<b>車牌號碼並不自動跟車</b>：賣方可用表格 TD129 保留原有登記號碼（費用 HK$560，12 個月內可轉用於另一車輛），運輸署則會為車輛編配新號碼。這極可能就是登記文件顯示 VM3645、而所有 Tesla 工單顯示 VY1428 的原因，日期亦正好是 2026-08-06。請向運輸署或賣方確認，並同步更新保險、隧道及泊車登記資料。',
+        'In Hong Kong a <b>registration mark does not automatically stay with the car</b>: the seller can retain it on Form TD129 (HK$560, reusable on another vehicle within 12 months) and the Transport Department assigns the car a fresh mark. That is very likely why the registration document shows VM3645 while every Tesla invoice shows VY1428, with the date matching 06/08/2026. Confirm with TD or the seller, and update insurance, tunnel and parking registrations to match.'),
+  d:T('首 30 日','First 30 days')},
+
+ {p:'blue', free:false, i:T('牌費：留意 79 kW 剛好越過最低級距','Licence fee: note the 79 kW rating just clears the lowest band'),
+  w:T('自 2025-11-01 起，香港電動私家車牌費按<b>額定功率</b>分級，由 ≤75kW 的 HK$1,614／年至 >225kW 的 HK$5,114／年（另加 HK$114 交通意外傷亡援助基金徵款）。本車登記文件所載額定功率為 <b>79.00 kW</b>，剛好高於最低級距。適用之中間級距金額請以運輸署通告 341/2025 為準 — 本文件不引述未經核實之數字。',
+        'From 1 Nov 2025 Hong Kong licence fees for electric private cars are banded by <b>rated power</b>, from HK$1,614/yr at ≤75 kW to HK$5,114/yr above 225 kW, plus the HK$114 Traffic Accident Victims Assistance Fund levy. This car\'s registration document states <b>79.00 kW</b> — just above the cheapest band. The exact intermediate-band figure should be read from TD Circular 341/2025; this document does not quote an unverified number.'),
+  d:T('續牌前','Before renewal')}
+];
+
+/* ---------------- 02 tools ---------------- */
+const TOOLS=[
+ {n:T('Tesla Toolbox 3（原廠）','Tesla Toolbox 3 (official)'), s:'blue',
+  g:T('原廠診斷軟體：讀取即時及儲存故障碼、電池與模組記錄數據、執行導引校正程序、重刷韌體。Tesla 明確開放予「獨立商戶及個人」訂閱。','Tesla\'s own diagnostic software: live and stored fault codes, logged battery and module data, guided calibration routines, firmware reflash. Tesla explicitly offers it to "independent businesses and individuals".'),
+  c:T('美國 US$75／日、US$150／月、US$700／年；加拿大 C$110／日、C$210／月、C$1,000／年（2025-11 來源）','US $75/day, $150/month, $700/year; Canada C$110/day, C$210/month, C$1,000/year (source Nov 2025)'),
+  h:T('Tesla 診斷線（Ethernet 轉 Fakra/HSD），於 service.tesla.com 購買。2015-10 前後之車款用線不同 — 訂購前以 VIN 核對。','Tesla Diagnostic Service Cable (Ethernet to Fakra/HSD), sold on service.tesla.com. Different cable before and after Oct 2015 — check by VIN before ordering.'),
+  v:T('功能最全，但香港／亞太區能否訂閱<b>未經核實</b> — 須直接試走註冊流程。適合一次性深入診斷，不適合每月監察。','The most capable option, but whether a Hong Kong / APAC account can subscribe is <b>NOT VERIFIED</b> — you have to try the sign-up flow. Suited to a one-off deep diagnosis, not to monthly monitoring.')},
+
+ {n:T('service.tesla.com 技術文件（免費）','service.tesla.com technical documents (free)'), s:'ok',
+  g:T('維修手冊、零件與工具目錄、線路圖、工時表。與付費診斷軟體分開，免費註冊即可查閱。','Service manual, parts and tooling catalogue, wiring diagrams, labour times. Separate from the paid diagnostic tier and free to view after registration.'),
+  c:T('免費','Free'), h:T('只需瀏覽器','A browser'),
+  v:T('無論你用不用其他工具，都應該先開這個帳戶。可核對任何維修報價是否合理。','Open this account regardless of what else you use. It lets you sanity-check any repair quotation you are given.')},
+
+ {n:T('ScanMyTesla（第三方，推薦）','ScanMyTesla (third party — recommended)'), s:'ok',
+  g:T('直接讀取內部 CAN 匯流排。提供 Nominal Full Pack（kWh）、各電芯組最高／最低／差值電壓（mV）、模組溫度、每模組 CAC（可用容量）、充電循環次數。','Reads the internal CAN bus directly. Gives Nominal Full Pack (kWh), max/min/delta cell-group voltage (mV), module temperatures, per-module CAC (usable capacity) and charge-cycle count.'),
+  c:T('Android 及 iOS 付費 App（兩個平台分開購買；官方未公佈價格）','Paid app on Android and iOS, purchased separately per platform; price not published'),
+  h:T('OBD 藍牙／USB 轉接器（官方點名 OBDLink 系列，iOS 需 OBDLink MX+）<b>加上</b>一條「前期款 Model S 專用 12 針轉 16 針」轉接線（例如 GS-Design 的 Vorfacelift 版本）。','An OBD Bluetooth/USB adapter (the app names the OBDLink family; iOS needs OBDLink MX+) <b>plus</b> a pre-facelift Model S 12-pin-to-16-pin harness (e.g. GS-Design\'s Vorfacelift version).'),
+  v:T('<b>這是本車最實際的選擇。</b>硬體一次性投入，之後可無限次自行讀取，正好配合每月監察電池的需要。','<b>This is the practical choice for this car.</b> One-off hardware cost, then unlimited readings of your own — exactly what monthly battery monitoring needs.')},
+
+ {n:T('TM-Spy（第三方）','TM-Spy (third party)'), s:'grey',
+  g:T('同樣讀取 CAN 匯流排數據，另有自訂 PID 的「Recipes」功能。','Reads the same CAN-bus data, plus a "Recipes" system for custom PIDs.'),
+  c:T('未經核實','NOT VERIFIED'),
+  h:T('一般 ELM327 型藍牙／Wi-Fi 轉接器 ＋ 同一條 Tesla 專用線','A generic ELM327-type Bluetooth/Wi-Fi adapter + the same Tesla harness'),
+  v:T('社群評價為較舊、更新較少。若已買了硬體，可兩者都試；否則從 ScanMyTesla 入手。','The community regards it as older and less actively maintained. If you already own the hardware, try both; otherwise start with ScanMyTesla.')},
+
+ {n:T('Tessie / TeslaFi / Teslamate','Tessie / TeslaFi / Teslamate'), s:'red',
+  g:T('經 Tesla 雲端 API 取數，只有電量百分比、可用電量百分比、續航里程、充電與空調狀態、GPS、里程錶。','Pull from Tesla\'s cloud API: battery %, usable battery %, rated range, charge and climate state, GPS, odometer.'),
+  c:T('各有訂閱制；Teslamate 為自架開源','Each has its own subscription; Teslamate is self-hosted open source'),
+  h:T('不需硬體','No hardware'),
+  v:T('<b>讀不到電芯電壓、模組溫度或 CAC。</b>對長期追蹤續航趨勢有用，但無法診斷這次電池維修 — 別把它當成電池監察工具。','<b>Cannot read cell voltages, module temperatures or CAC.</b> Useful for tracking range trends over time, but it cannot diagnose this battery repair — do not mistake it for a pack monitoring tool.')}
+];
+
+/* ---------------- 03 BMS where to look ---------------- */
+const BMS=[
+ {w:T('儀錶板文字警示','Dashboard text alert'),
+  s:T('車內螢幕','In-car screen'),
+  d:T('「Maximum Battery Charge Level Reduced」（最高充電量已降低）一類訊息。車仍可行駛及充電，但最高充電電壓被封頂。','Messages such as "Maximum Battery Charge Level Reduced". The car still drives and charges, but the maximum charge voltage is capped.'),
+  n:T('這是 BMS 主動限制最直接的表徵','The most direct sign that the BMS is actively restricting')},
+ {w:T('BMS 故障碼','BMS fault codes'),
+  s:T('Toolbox 3／第三方解碼工具','Toolbox 3 / third-party decoders'),
+  d:T('BMS_u018（SOC／電芯不平衡）、BMS_u029、BMS_a066、BMS_a079 等充電限制類代碼。','BMS_u018 (SOC / cell imbalance), BMS_u029, BMS_a066, BMS_a079 and related charge-limiting codes.'),
+  n:T('代碼名稱源自第三方解碼網站，未經 Tesla 官方確認','Code names come from third-party decoder sites, not confirmed by Tesla')},
+ {w:T('Nominal Full Pack（kWh）','Nominal Full Pack (kWh)'),
+  s:T('ScanMyTesla','ScanMyTesla'),
+  d:T('電池組滿電時的標稱可用能量。<b>這是最能反映「水缸有多大」的單一數字。</b>','The pack\'s nominal usable energy when full. <b>This is the single number that best answers "how big is the tank".</b>'),
+  n:T('每月同一條件記錄，看趨勢','Log monthly under the same conditions and watch the trend')},
+ {w:T('電芯組電壓差（mV）','Cell-group voltage delta (mV)'),
+  s:T('ScanMyTesla','ScanMyTesla'),
+  d:T('最高與最低電芯組的電壓差。維修後模組若容量不匹配，此值會逐月擴大。','The spread between the highest and lowest cell group. If the repaired module\'s capacity does not match, this widens month by month.'),
+  n:T('社群經驗：2–6 mV 健康；老車 20–30 mV 常見；>60 mV 或每週明顯上升為警號（非原廠門檻）','Community experience: 2–6 mV healthy; 20–30 mV unremarkable on an old pack; above ~60 mV or any week-on-week climb is the warning (not an OEM threshold)')},
+ {w:T('每模組 CAC','Per-module CAC'),
+  s:T('ScanMyTesla','ScanMyTesla'),
+  d:T('各模組的計算可用容量。<b>直接指出是哪一個模組拖低整包 — 對本車而言就是被修復的那一個。</b>','Calculated usable capacity per module. <b>It points directly at which module is dragging the pack down — for this car, the repaired one.</b>'),
+  n:T('本車監察的重點欄位','The field to watch on this car')},
+ {w:T('100% 充電後的標示續航','Rated range at 100% charge'),
+  s:T('車內螢幕','In-car screen'),
+  d:T('最低成本的方法，不需任何硬體。充滿電後記錄標示續航里程。','The zero-cost method, no hardware required. Charge to full and record the rated range shown.'),
+  n:T('精度較低，但只要每月同一條件量度，趨勢一樣有效','Less precise, but the trend still works provided the conditions are the same each month')}
+];
+
+/* ---------------- 04 schedule ---------------- */
+const SCHED=[
+ {g:'km', i:T('輪胎調位','Tyre rotation'), o:T('每 10,000 km','Every 10,000 km'), f:T('約每 4 個月（一年 3 次）','≈ every 4 months — 3× a year'), s:T('Tesla 官方','Tesla official'), c:T('高里程車最易漏做的一項','The item high-mileage cars most often skip')},
+ {g:'km', i:T('迫力皮／碟厚度量度','Brake pad &amp; disc measurement'), o:T('原廠無固定週期，按檢測','No fixed OEM interval — by inspection'), f:T('建議每 10,000 km 隨調位一併量度','Measure at every rotation, i.e. every 10,000 km'), s:T('建議（本報告）','Recommended here'), c:T('記錄數字，不要只記「正常」','Record the numbers, not just "OK"')},
+ {g:'km', i:T('輪胎更換','Tyre replacement'), o:T('按胎紋及老化','By tread and age'), f:T('以本車里程計，估計每 12–18 個月一套','At this mileage, expect a set every 12–18 months'), s:T('—','—'), c:T('香港法定最低胎紋 1.6mm','Hong Kong legal minimum tread 1.6 mm')},
+
+ {g:'yr', i:T('迫力卡鉗清潔及潤滑','Brake caliper clean &amp; lubricate'), o:T('每年或 12,500 英里（融雪鹽地區）','Annually or 12,500 mi in salted-road regions'), f:T('每年 — 香港雖無融雪鹽，但年均濕度 78%（3–9 月 81–83%）','Annually — no road salt in Hong Kong, but 78% mean humidity, 81–83% Mar–Sep'), s:T('Tesla 官方（地區性）','Tesla official (regional)'), c:T('回充制動令迫力極少使用，鏽不會被磨走 — 高濕環境下此項比原廠設想更重要','Regen braking means the pads rarely scrub the rust off — in high humidity this matters more than the OEM wording implies')},
+ {g:'yr', i:T('水撥膠條','Wiper blades'), o:T('每年','Annually'), f:T('每年','Annually'), s:T('Tesla 官方','Tesla official'), c:T('連同未完成的水撥臂歸位故障一併處理','Close out the outstanding wiper-arm park fault at the same time')},
+ {g:'yr', i:T('年度驗車（法定）','Annual vehicle examination (statutory)'), o:T('滿 6 年後每年','Annually once 6 years old'), f:T('每年，續牌前','Annually, before licence renewal'), s:T('運輸署','Transport Department'), c:T('HK$585，複驗 HK$180（14 日內），證明書有效 4 個月','HK$585; re-examination HK$180 within 14 days; certificate valid 4 months')},
+ {g:'yr', i:T('電池健康讀數','Battery health reading'), o:T('原廠無此項','No OEM equivalent'), f:T('每月一次，連續至少 12 個月，其後每季','Monthly for at least 12 months, then quarterly'), s:T('建議（維修後監察）','Recommended — post-repair monitoring'), c:T('見第 06 節紀錄表','See the log sheet in section 06')},
+
+ {g:'multi', i:T('車廂空氣濾網','Cabin air filter'), o:T('每 2–3 年','Every 2–3 years'), f:T('每 2 年（高濕、高使用率）','Every 2 years given the humidity and duty cycle'), s:T('Tesla 官方','Tesla official'), c:T('零件 1072736-00-B，位於手套箱後','Part 1072736-00-B, behind the glovebox')},
+ {g:'multi', i:T('冷氣乾燥劑包','A/C desiccant bag'), o:T('約每 2 年（2021 年前車款）','≈ every 2 years on pre-2021 cars'), f:T('上次隨壓縮機於 2024-10 更換 → 下次約 2026-10','Last done with the compressor Oct 2024 → next ≈ Oct 2026'), s:T('Tesla 官方','Tesla official'), c:T('即將到期','Due shortly')},
+ {g:'multi', i:T('迫力油測試','Brake fluid test'), o:T('每 4 年','Every 4 years'), f:T('本車檔案內無任何紀錄，車齡 10.4 年 — 應即測','No record anywhere in this car\'s file at 10.4 years old — test now'), s:T('Tesla 官方','Tesla official'), c:T('低成本、基本合規項目','Low cost, baseline compliance')},
+ {g:'multi', i:T('12V 副電池主動更換','12 V battery — proactive replacement'), o:T('原廠無固定週期','No OEM interval'), f:T('每 3 年；本車因履歷異常，建議提前','Every 3 years — bring forward on this car given its history'), s:T('維修業／車主社群共識','Repair trade &amp; owner consensus'), c:T('12V 失效 = 完全無法上電，屬拋錨故障','A dead 12 V means a completely unresponsive car — a stranding fault')},
+ {g:'multi', i:T('驅動總成齒輪油','Drive unit gear oil'), o:T('原廠未公佈週期','No published OEM interval'), f:T('翻新件已行 40,323 km — 可於下次大保養時考慮更換','The reman unit has done 40,323 km — consider a change at the next major service'), s:T('車主社群建議（非原廠）','Owner-community suggestion, not OEM'), c:T('屬選擇性項目，非強制','Optional, not required')},
+ {g:'multi', i:T('高壓電池冷卻液','HV battery coolant'), o:T('Tesla：終身免更換','Tesla: not required for the life of the vehicle'), f:T('維持原廠立場，但 2026-05 維修後已補注 — 應向維修商索取用料規格','Follow the OEM position, but coolant was topped up in the May 2026 repair — get the specification used from that shop'), s:T('Tesla 官方','Tesla official'), c:T('<b>切勿做坊間的「冷卻液刪除」改裝</b> — 專門維修商已記錄到因此導致的過熱與失效','<b>Do not do the aftermarket "coolant delete"</b> — specialist shops have documented overheating and failures caused by it')}
+];
+
+/* ---------------- 05 watchlist ---------------- */
+const WATCH=[
+ {i:T('MCU1 eMMC 快閃記憶體','MCU1 eMMC flash memory'), r:'red',
+  s:T('中控螢幕變黑，連帶失去倒車鏡頭、轉燈聲、除霧控制','Centre screen goes black, taking the reversing camera, turn-signal audio and defrost with it'),
+  a:T('<b>免費召回 21V-035，不設年期或里程上限。</b>本車符合，紀錄內無此工序 — 立即以 VIN 查核。若召回已做而日後再壞，市面有 eMMC 更換或 MCU2 升級方案。','<b>Free recall 21V-035, no age or mileage cap.</b> This car qualifies and there is no record of it being done — check by VIN now. If it has been done and fails again, independent eMMC swaps or an MCU2 upgrade exist.')},
+ {i:T('手迫力卡鉗（Brembo EPB）','Parking-brake caliper (Brembo EPB)'), r:'red',
+  s:T('手迫力無法解除，或制動力不足','Parking brake fails to release, or holds insufficiently'),
+  a:T('<b>免費召回 17V-260。</b>本車生產日期符合，紀錄內無此工序 — 與 eMMC 一併查核。','<b>Free recall 17V-260.</b> This car\'s build date qualifies and there is no record of it — check alongside the eMMC.')},
+ {i:T('前懸掛 fore-link','Front suspension fore-link'), r:'amb',
+  s:T('連桿斷裂','Link fracture'),
+  a:T('中國 2020 年召回、NHTSA PE20-026 調查資料指向 2016 年 1–5 月生產批次；本車為 2016 年 3 月。美國最終未召回，故非免費 — 但值得指定檢查。','China recalled in 2020 and NHTSA\'s PE20-026 data pointed at Jan–May 2016 builds; this car is March 2016. No US recall followed, so it is not a free claim — but worth asking for it specifically.')},
+ {i:T('車門把手（伸縮機構）','Door handles (retracting mechanism)'), r:'amb',
+  s:T('把手無法彈出或收回','Handle fails to present or retract'),
+  a:T('2014–2016 Model S 已知弱項，美國有集體訴訟（Urban v. Tesla, 2022）指更換件亦有同一缺陷。無延長保用。壞了才修，但可預留預算。','A documented weak point on 2014–2016 cars; a US class action (Urban v. Tesla, 2022) alleges replacement handles share the defect. No extended warranty. Fix on failure, but budget for it.')},
+ {i:T('氣壓懸掛（如有配備）','Air suspension (if fitted)'), r:'amb',
+  s:T('前備箱內電磁閥組卡死或洩壓、氣管磨損、氣囊老化龜裂','Frunk solenoid block sticking or venting, air-line chafing, bladder cracking with age'),
+  a:T('先確認本車是氣壓還是彈簧：螢幕「Controls → Suspension」有選單即為氣壓，或看四角是黑色橡膠氣囊還是外露彈簧。','First establish which this car has: a Controls → Suspension menu on screen means air, or look for black rubber bellows versus an exposed coil at each corner.')},
+ {i:T('冷氣壓縮機','A/C compressor'), r:'amb',
+  s:T('運轉異響 → 軸承磨損 → 卡死','Running noise → bearing wear → seizure'),
+  a:T('本車壓縮機 2024-10 已換新、支架 2025-05 已換，兩者保用均已屆滿。屬非熱泵舊式 R134a 系統，維修費不菲 — 出現異響應盡早處理。','The compressor was replaced Oct 2024 and its mounting May 2025; both warranties have expired. This is the pre-heat-pump R134a system and repairs are not cheap — act early on any new noise.')},
+ {i:T('充電座','Charge port'), r:'grey',
+  s:T('高次數直流快充後，觸點及鎖扣致動器磨損','Pin and latch-actuator wear after many DC fast-charge cycles'),
+  a:T('本車 2023-01 已加裝 CCS Combo II 改裝件。留意充電時是否需要多次插拔才鎖上。','This car had the CCS Combo II retrofit in Jan 2023. Watch for needing several attempts before the connector latches.')},
+ {i:T('觸控螢幕黃邊','Touchscreen yellow border'), r:'grey',
+  s:T('螢幕邊緣出現黃色框','A yellow frame appears around the screen edge'),
+  a:T('屬黏合劑受熱／紫外線劣化，純外觀問題，不影響功能。Tesla 有紫外線照射修復程序。','Adhesive degradation from heat and UV — cosmetic only, no functional effect. Tesla has a UV-light fix procedure.')},
+ {i:T('高壓電池組濕氣入侵','HV pack moisture ingress'), r:'red',
+  s:T('絕緣故障碼（BMS_f107 冷凝、BMS_f123 絕緣）','Isolation fault codes (BMS_f107 condensation, BMS_f123 isolation)'),
+  a:T('獨立專家（057 Technology）記錄過經冷氣排水管／保險絲盒蓋腐蝕及側樑透氣孔劣化而入水的個案，翻新電池組亦屬高風險群。香港年均濕度 78%。本車 2026-05 的「全數模組絕緣處理 ＋ 透氣孔升級 ＋ 氣密性測試」正正符合濕氣相關維修的特徵 — <b>這是本車最需要長期監察的一項。</b>','Independent specialists (057 Technology) have documented water entering via a corroding A/C drain hose and fuse-box cover and via degraded side-rail vents, with refurbished packs in the high-risk group. Hong Kong averages 78% relative humidity. This car\'s May 2026 work — insulation treatment on all modules, vent upgrade, air-tightness test — fits a moisture-related repair exactly. <b>This is the item to monitor above all others on this car.</b>')}
+];
+</script>
+<script>
+function kpis(){
+  const k=[
+    {l:T('立即應辦','Act now'), v:'6', u:'', n:T('其中 2 項為原廠免費召回','2 of them free Tesla recalls')},
+    {l:T('年均里程','Annual distance'), v:'29,200', u:' km/yr', n:T('里程類保養一年到期 3 次以上','km-based items fall due 3× a year')},
+    {l:T('電池監察頻率','Battery check cadence'), v:'30', u:T(' 日','-day'), n:T('連續 12 個月後轉為每季','monthly for 12 months, then quarterly')},
+    {l:T('法定年檢','Statutory examination'), v:T('每年','Annual'), u:'', n:T('滿 6 年起強制，本車自 2022 年起適用','compulsory from 6 years — since 2022 here')}
+  ];
+  document.getElementById('kpis').innerHTML=k.map(x=>
+    `<div class="kpi"><div class="lbl">${tx(x.l)}</div><div class="v num">${tx(x.v)}<small>${tx(x.u)}</small></div><div class="n">${tx(x.n)}</div></div>`).join('');
+  document.getElementById('stamp').textContent = L()==='zh'?'新車主交接文件':'New-owner handover document';
+}
+function tblD30(){
+  const pl={red:T('高','High'),amb:T('中','Medium'),blue:T('行政','Admin')};
+  const h=[T('優先','Pri.'),T('事項','Action'),T('說明','Detail'),T('時限','By when')];
+  document.getElementById('tbl-d30').innerHTML=
+    '<thead><tr>'+h.map((x,i)=>`<th${i===0?' style="width:46px"':''}${i===3?' style="width:66px"':''}>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    D30.map(a=>`<tr${a.free?' class="free"':''}>
+      <td><span class="pill p-${a.p}">${tx(pl[a.p])}</span></td>
+      <td style="font-weight:600;min-width:120px">${tx(a.i)}${a.free?`<span class="q" style="color:var(--ok);font-weight:600">${L()==='zh'?'原廠免費':'FREE from Tesla'}</span>`:''}</td>
+      <td>${tx(a.w)}</td>
+      <td style="white-space:nowrap">${tx(a.d)}</td></tr>`).join('')+'</tbody>';
+}
+function tblTools(){
+  const h=[T('工具','Tool'),T('提供什麼','What it gives you'),T('費用','Cost'),T('所需硬體','Hardware needed'),T('本車評語','Verdict for this car')];
+  document.getElementById('tbl-tools').innerHTML=
+    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    TOOLS.map(t=>`<tr>
+      <td style="font-weight:600;min-width:92px">${tx(t.n)}</td>
+      <td>${tx(t.g)}</td><td>${tx(t.c)}</td><td>${tx(t.h)}</td>
+      <td><span class="pill p-${t.s}" style="margin-bottom:4px">${
+        t.s==='ok'?(L()==='zh'?'建議':'recommended'):
+        t.s==='blue'?(L()==='zh'?'可選':'optional'):
+        t.s==='red'?(L()==='zh'?'不適用於此目的':'not for this purpose'):
+        (L()==='zh'?'次選':'secondary')}</span><div>${tx(t.v)}</div></td></tr>`).join('')+'</tbody>';
+}
+function tblBms(){
+  const h=[T('要看的數值','What to look at'),T('在哪裡看','Where'),T('意義','What it means'),T('備註','Note')];
+  document.getElementById('tbl-bms').innerHTML=
+    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    BMS.map(b=>`<tr><td style="font-weight:600;min-width:104px">${tx(b.w)}</td>
+      <td style="white-space:nowrap">${tx(b.s)}</td><td>${tx(b.d)}</td><td class="dim">${tx(b.n)}</td></tr>`).join('')+'</tbody>';
+}
+function tblSched(){
+  const grp={km:T('按里程 — 本車一年到期多次','By distance — falls due several times a year here'),
+             yr:T('每年','Annual'),
+             multi:T('多年期','Multi-year')};
+  const h=[T('項目','Item'),T('原廠／標準週期','OEM or standard interval'),T('本車實際頻率','How often here'),T('來源','Source'),T('備註','Note')];
+  let s='<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
+  ['km','yr','multi'].forEach(g=>{
+    s+=`<tr><td colspan="5" style="border-bottom:1px solid var(--ink);padding-top:12px"><span class="lbl">${tx(grp[g])}</span></td></tr>`;
+    SCHED.filter(r=>r.g===g).forEach(r=>{
+      s+=`<tr><td style="font-weight:600;min-width:104px">${tx(r.i)}</td><td>${tx(r.o)}</td>
+          <td style="font-weight:500">${tx(r.f)}</td><td class="dim" style="white-space:nowrap">${tx(r.s)}</td><td>${tx(r.c)}</td></tr>`;
+    });
+  });
+  document.getElementById('tbl-sched').innerHTML=s+'</tbody>';
+}
+function tblWatch(){
+  const rl={red:T('高','High'),amb:T('中','Medium'),grey:T('留意','Monitor')};
+  const h=[T('項目','Item'),T('風險','Risk'),T('徵狀','Symptom'),T('應對','What to do')];
+  document.getElementById('tbl-watch').innerHTML=
+    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    WATCH.map(w=>`<tr><td style="font-weight:600;min-width:104px">${tx(w.i)}</td>
+      <td><span class="pill p-${w.r}">${tx(rl[w.r])}</span></td>
+      <td>${tx(w.s)}</td><td>${tx(w.a)}</td></tr>`).join('')+'</tbody>';
+}
+function tblLog(){
+  const h=[T('日期','Date'),T('里程 km','Odometer km'),T('100% 標示續航','Rated range @100%'),
+           T('Nominal Full Pack kWh','Nominal Full Pack kWh'),T('電芯電壓差 mV','Cell delta mV'),
+           T('最低 CAC 之模組','Lowest-CAC module'),T('備註／警示','Notes / alerts')];
+  let s='<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
+  s+=`<tr><td class="num" style="font-weight:600">2026-08-__</td><td class="num">301,5__</td>
+      <td colspan="5" class="dim" style="font-style:italic">${L()==='zh'?'← 基線：維修後第一次讀數，越早記錄越好':'← baseline: the first post-repair reading, take it as soon as you can'}</td></tr>`;
+  for(let i=0;i<22;i++) s+='<tr>'+h.map(()=>'<td class="blank"></td>').join('')+'</tr>';
+  document.getElementById('tbl-log').innerHTML=s+'</tbody>';
+}
+function src(){
+  const zh=`<h4>來源與可信度</h4>
+  <b>官方（高可信）</b> — Tesla：service.tesla.com 診斷軟體與診斷線頁面、Model S 維修手冊（診斷插座位置）、車輛保養建議頁。美國 NHTSA：召回 21V-035（MCU eMMC）、17V-260（手迫力卡鉗）、19V-002（Takata 乘客氣袋，本車已於 2023-07 完成）、調查 PE20-026（前懸掛）。香港運輸署：驗車與續牌規定、通告 341/2025（電動車牌費級距）、表格 TD25／TD129。香港法例第 272 章第 4 條（第三者保險）。香港天文台 1991–2020 濕度正常值。港珠澳大橋管理局及跨境公共服務網（港車北上）。<br><br>
+  <b>第三方（中可信，已標示）</b> — Toolbox 3 價格引自 Drive Tesla Canada（2025-11），非 Tesla 官方公佈頁；診斷線零件編號 1013230-00-A／1137658-00-C 引自零件商，非原廠目錄。ScanMyTesla／TM-Spy 之欄位名稱及硬體要求引自其 FAQ 及硬體供應商頁面。電芯電壓差之 2–6／20–30／60 mV 參考值為 Tesla Motors Club 車主社群經驗值，<b>並非原廠門檻</b>。翻新驅動總成壽命、電池組維修後壽命均無公開研究數據。<br><br>
+  <b>未經核實（已標示）</b> — Toolbox 3 在香港／亞太區能否訂閱；過戶費用約 HK$1,000；ScanMyTesla 及 TM-Spy 售價；79 kW 對應之牌費級距金額；本車是否配備氣壓懸掛。以上各項本報告不引述未經核實之數字，請以官方渠道確認。`;
+  const en=`<h4>Sources and confidence</h4>
+  <b>Official (high confidence)</b> — Tesla: the service.tesla.com diagnostic software and diagnostic cable pages, the Model S service manual (diagnostic connector location) and the vehicle maintenance page. US NHTSA: recalls 21V-035 (MCU eMMC), 17V-260 (parking-brake caliper), 19V-002 (Takata passenger airbag — already completed on this car in Jul 2023) and investigation PE20-026 (front suspension). Hong Kong Transport Department: examination and licence renewal rules, Circular 341/2025 (EV licence-fee bands), Forms TD25 and TD129. Cap. 272 s.4 (third-party insurance). Hong Kong Observatory 1991–2020 humidity normals. HZMB Authority and the Cross-boundary Public Services portal (Northbound Travel).<br><br>
+  <b>Third party (medium confidence, flagged)</b> — Toolbox 3 prices come from Drive Tesla Canada (Nov 2025), not a Tesla-published page; diagnostic cable part numbers 1013230-00-A / 1137658-00-C come from parts resellers, not Tesla's own catalogue. ScanMyTesla and TM-Spy field names and hardware requirements come from their FAQs and hardware vendors. The 2–6 / 20–30 / 60 mV cell-delta references are Tesla Motors Club owner-community experience, <b>not an OEM threshold</b>. There is no published study on reman drive-unit longevity or on the life of a module-repaired pack.<br><br>
+  <b>Not verified (flagged)</b> — whether Toolbox 3 can be subscribed to from Hong Kong or APAC; the ≈HK$1,000 transfer fee; ScanMyTesla and TM-Spy prices; the licence-fee band that applies at 79 kW; and whether this car has air suspension. This document deliberately quotes no unverified figure for these — confirm them through official channels.`;
+  document.getElementById('src').innerHTML=`<div class="zh-only">${zh}</div><div class="en-only">${en}</div>`;
+}
+function renderAll(){kpis();tblD30();tblTools();tblBms();tblSched();tblWatch();tblLog();src();}
+function setLang(l){
+  document.body.dataset.lang=l;
+  document.documentElement.lang=l==='zh'?'zh-Hant':'en';
+  document.getElementById('btn-zh').classList.toggle('on',l==='zh');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  renderAll();
+}
+renderAll();
+</script>
+</body>
+</html>

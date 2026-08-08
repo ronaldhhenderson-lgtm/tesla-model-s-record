@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla Model S — 維修保養紀錄 / Maintenance Record — VY1428</title>
+<style>
+:root{
+  --ink:#171a20; --muted:#5c5e62; --faint:#8e8e93;
+  --line:#d0d1d2; --hair:#e8e8e9; --panel:#f4f4f4; --panel2:#fafafa;
+  --red:#e82127; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink); background:#e9e9ea; font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  width:210mm; min-height:297mm; margin:16px auto; background:#fff;
+  padding:14mm 13mm 13mm; position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10);
+}
+/* ---------- type ---------- */
+h1{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1.2}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+h3{font-size:12.5px;font-weight:600;letter-spacing:.01em}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.5px;color:var(--muted);line-height:1.45}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:-.01em}
+b,strong{font-weight:600}
+/* ---------- header ---------- */
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.wordmark{font-size:15px;font-weight:600;letter-spacing:.44em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--red)}
+.masthead h1{margin-top:9px}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:17px;
+  font-weight:600;letter-spacing:.09em;display:inline-block}
+.hd-right{text-align:right;flex:0 0 auto}
+.stamp{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+/* ---------- lang tabs ---------- */
+.langbar{display:flex;gap:0;margin-bottom:9px;justify-content:flex-end}
+.langbar button{
+  font:inherit;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 15px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.langbar button+button{border-left:none}
+.langbar button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+/* ---------- ident strip ---------- */
+.ident{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-bottom:1px solid var(--line);margin-top:0}
+.ident>div{padding:10px 10px 10px 0}
+.ident>div+div{border-left:1px solid var(--hair);padding-left:10px}
+.ident .v{font-size:12px;font-weight:500;margin-top:3px;letter-spacing:.01em}
+.ident .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ---------- kpi ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin-top:14px}
+.kpi{background:#fff;padding:11px 11px 12px}
+.kpi .v{font-size:21px;font-weight:600;letter-spacing:-.012em;margin-top:5px;line-height:1.05}
+.kpi .v small{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi .n{font-size:9px;color:var(--faint);margin-top:4px;line-height:1.35}
+.kpi.alert .v{color:var(--red)}
+/* ---------- sections ---------- */
+section{margin-top:22px;break-inside:avoid}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:11px}
+.shead .rule{font-size:9px;color:var(--faint);letter-spacing:.04em;text-align:right}
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;white-space:nowrap}
+td{padding:7px 7px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.42}
+th+th,td+td{padding-left:9px}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+td.r,th.r{padding-right:0}
+tbody tr:hover{background:var(--panel2)}
+.tot td{border-bottom:none;border-top:1.5px solid var(--ink);font-weight:600;padding-top:8px;font-size:11px}
+.dim{color:var(--muted)}
+/* ---------- pills ---------- */
+.pill{display:inline-block;font-size:8.2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fdf2f2}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-blue{color:var(--blue);border-color:#b3c1f2;background:#f2f5fd}
+/* ---------- charts ---------- */
+.card{border:1px solid var(--hair);padding:13px 14px 10px;background:#fff}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:13px;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend .bar{border-radius:1px;width:17px;height:10px}
+/* ---------- notes ---------- */
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.4px;line-height:1.5}
+.note.warn{border-left-color:var(--red);background:#fdf3f3}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ol.actions{list-style:none;counter-reset:a}
+ol.actions li{counter-increment:a;position:relative;padding:9px 0 9px 30px;border-bottom:1px solid var(--hair);font-size:10.5px;line-height:1.5}
+ol.actions li:before{content:counter(a,decimal-leading-zero);position:absolute;left:0;top:9px;
+  font-size:9.5px;font-weight:600;color:var(--red);font-variant-numeric:tabular-nums}
+ol.actions li:last-child{border-bottom:none}
+.foot{margin-top:26px;padding-top:9px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint);letter-spacing:.03em}
+/* ---------- lang visibility ---------- */
+body[data-lang="zh"] .en-only{display:none}
+body[data-lang="en"] .zh-only{display:none}
+/* ---------- print ---------- */
+@page{size:A4 portrait;margin:11mm 10mm 10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  .langbar,.noprint{display:none!important}
+  section,.card,.kpis,table,.note,.ident{break-inside:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .page-break{break-before:page}
+  #sec-log,#sec-log table{break-inside:auto}
+  section{margin-top:14px}
+  .masthead{padding-bottom:9px}
+  .kpi{padding:9px 9px 10px}
+  .kpi .v{font-size:19px}
+  .card{padding:10px 11px 8px}
+  ol.actions li{padding:6px 0 6px 28px}
+  ol.actions li:before{top:6px}
+  .shead{margin-bottom:8px}
+  tbody tr:hover{background:none}
+}
+</style>
+</head>
+<body data-lang="zh">
+<div class="sheet">
+
+  <div class="langbar noprint">
+    <button id="btn-zh" class="on" onclick="setLang('zh')">繁體中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <!-- ======================= MASTHEAD ======================= -->
+  <div class="masthead">
+    <div>
+      <div class="wordmark">T E S L <span>A</span></div>
+      <h1 class="zh-only">車輛維修保養總紀錄</h1>
+      <h1 class="en-only">Vehicle Maintenance &amp; Service Record</h1>
+      <div class="sub" style="margin-top:4px">
+        <span class="zh-only">2016 Model S 70 kWh · 右駕 · 香港首次登記</span>
+        <span class="en-only">2016 Model S 70 kWh · RHD · First registered in Hong Kong</span>
+      </div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">VY 1428</div>
+      <div class="tiny" style="margin-top:7px">
+        <span class="zh-only">報告日期 2026-08-06</span><span class="en-only">Report date 2026-08-06</span>
+      </div>
+      <div style="margin-top:6px"><span class="stamp" id="stamp"></span></div>
+    </div>
+  </div>
+
+  <!-- ======================= IDENTITY ======================= -->
+  <div class="ident" id="ident"></div>
+
+  <!-- ======================= KPI ======================= -->
+  <div class="kpis" id="kpis"></div>
+
+  <!-- ======================= TIMELINE ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">01 — 里程與維修時間軸</span><span class="en-only">01 — Odometer &amp; Service Timeline</span></h2>
+      <div class="rule"><span class="zh-only">2016-03 → 2026-08 · 里程讀數取自原廠工單</span><span class="en-only">Mar 2016 → Aug 2026 · Odometer readings from service invoices</span></div>
+    </div>
+    <div class="card"><div id="chart-timeline"></div>
+      <div class="legend" id="legend-timeline"></div>
+    </div>
+  </section>
+
+  <!-- ======================= LIFE EXPECTANCY ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2><span class="zh-only">02 — 部件裝上／換出時間軸 vs 預期壽命</span><span class="en-only">02 — Component Fitted / Removed Timeline vs Expected Life</span></h2>
+      <div class="rule"><span class="zh-only">每條橫棒 ＝ 該部件實際服役期間 · ◆ ＝ 預期或保用屆滿日</span><span class="en-only">each bar = the part's actual time in service · ◆ = expected or warranty end date</span></div>
+    </div>
+    <div class="card"><div id="chart-life"></div>
+      <div class="legend" id="legend-life"></div>
+    </div>
+    <div class="note" style="margin-top:12px">
+      <h4><span class="zh-only">怎樣讀這張圖</span><span class="en-only">How to read this chart</span></h4>
+      <div class="zh-only">每一行代表一個部件。橫棒由「裝上」畫到「換出」，右邊寫出實際用了多久（年 ＋ 公里）。箭頭 ▶ 表示該件仍在車上。<b>◆ 及虛線</b>＝ 預期壽命或保用屆滿的日期；<b>灰色區塊</b>＝ 預期壽命有上下限時的區間。橫棒越過灰區或虛線，代表該件已用超過預期；橫棒遠遠短過灰區，代表早夭。<br>
+<b>保用期 ≠ 壽命。</b>灰色方旗 ▮ 標示的是<u>保用屆滿日</u>，屬商業條款，與該件還能用多久無關；只有 ◆ 及灰色區塊才是壽命估算。翻新後驅動總成即為明顯例子：保用 2028-10 屆滿（里程額度約 2027-11 更早到），但按同一業界估算，其預期壽命要到 2029-12 至 2035 年才用完 — 保用結束時，它才用了大約 18% 的壽命。<br>
+      基準來源：LDU 之 150,000–300,000 km 為維修業估算，按本車年均 29,200 km 換算成年份，同樣套用於翻新件（由 2024-10 裝上起算）；12V 電池 2–4 年為車主社群經驗值。兩者皆非原廠公佈之壽命規格。高壓電池組並無可靠公開壽命基準，故只標示保用屆滿日，不作壽命估算 — 其實際狀況須靠量度（見下方說明）。</div>
+      <div class="en-only">Each row is one part. The bar runs from the date it was <b>fitted</b> to the date it was <b>removed</b>, with the life it actually achieved (years + km) on the right. An arrow ▶ means the part is still on the car. <b>◆ and the dashed line</b> mark the expected-life or warranty end date; the <b>grey block</b> is the expected-life band where the benchmark is a range. A bar running past the grey block or the dashed line means the part outlived expectation; a bar falling far short of it means premature failure.<br>
+<b>A warranty is not a life expectancy.</b> The grey flag ▮ marks the <u>warranty end date</u> — a commercial term that says nothing about how much longer the part will run. Only ◆ and the grey blocks are life estimates. The reman drive unit is the clearest case: cover ends Oct 2028 (and the mileage cap bites around Nov 2027, earlier still), but on the same industry estimate its expected life does not run out until somewhere between Dec 2029 and 2035 — when the warranty expires it will have used only about 18% of its life.<br>
+      Benchmark sources: the 150,000–300,000 km LDU band is a repair-industry estimate, converted to years at this car's 29,200 km/yr and applied to the reman unit from its Oct 2024 install. The 2–4 year 12 V figure is owner-community experience. Neither is an OEM life specification. The HV battery has no reliable published life benchmark, so only its warranty end is marked and no life estimate is drawn — its real condition has to be measured (see the panel below).</div>
+    </div>
+
+    <div class="note warn" style="margin-top:12px">
+      <h4><span class="zh-only">高壓電池組維修後的壽命 — 為何無法給出一個數字</span><span class="en-only">Life expectancy of the HV pack after the repair — why no number can be given</span></h4>
+      <div class="zh-only">
+      2026-05 於中山所做的工序為：<b>修復模組 1 個、修復採集板 3 個、全數模組絕緣處理、整包均衡、透氣孔升級、氣密性測試</b>。
+      <br><br>
+      <b>整包均衡只會拉平水位，不會告訴你水缸有多大。</b>Tesla Model S 用的是<b>被動式（電阻放電）均衡</b>，只能把各組電芯的<u>電壓／電量狀態</u>拉到一致；它<u>無法</u>修正各模組之間<b>可用容量</b>或<b>內阻</b>的差異。整組電池是串聯的，實際可用容量由<b>最弱的一組</b>決定 — 均衡後車輛顯示正常，並不代表容量已回復。
+      <br><br>
+      <b>本車的容量：未知。</b>檔案內沒有維修後的容量報告、模組電壓分佈或絕緣阻值紀錄。原廠 8 年電池保用已於 2024-03 屆滿，此次維修由非原廠授權維修商執行，不受 Tesla 任何保用。經查證，<b>業界並無「模組級維修後電池組壽命」的公開研究或數據集</b>，僅有零星維修業個案報告，且傾向警示而非樂觀 — 已知的風險模式是：修復模組與其餘 15 個老化模組容量不一致，數月內重新漂移，BMS 逐步收窄可用範圍，最終可能出現無法行駛。
+      <br><br>
+      <b>所以壽命不是「估」出來，是「量」出來的。</b>唯一誠實的做法是建立基線並看趨勢：以 ScanMyTesla 或 TM-Spy 讀取<b>各組電芯電壓差（mV）</b>及<b>每模組可用容量 CAC</b>，維修後立即記錄一次，其後每 3 個月重複一次，為期至少一年，重點觀察被修復的那個模組及那 3 塊採集板。<b>看的是漂移速度，不是單次數值。</b>參考：車主社群普遍視 2–6 mV 為健康，老車 20–30 mV 仍屬常見，超過 60 mV 或出現「每週明顯上升」才是警號（此為社群經驗值，非原廠門檻）。若三個月內電壓差穩定不變，這組電池大有機會再撐數年；若持續擴大，就要提早規劃更換或再修。
+      </div>
+      <div class="en-only">
+      The May 2026 work in Zhongshan was: <b>one module repaired, three collector boards repaired, insulation treatment on all modules, full-pack balancing, vent upgrade, air-tightness test.</b>
+      <br><br>
+      <b>Balancing levels the water, it does not measure the tank.</b> The Model S uses <b>passive (bleed-resistor) balancing</b>, which equalises the <u>voltage / state of charge</u> across cell groups. It <u>cannot</u> correct differences in <b>usable capacity</b> or <b>internal resistance</b> between modules. The pack is a series string, so real usable capacity is set by the <b>weakest group</b> — a balanced pack that reads normal on the dash is not evidence that capacity has been restored.
+      <br><br>
+      <b>This pack's capacity: unknown.</b> The file contains no post-repair capacity report, no module voltage spread, no insulation resistance figures. Tesla's 8-year battery warranty lapsed in March 2024, and this repair was done by a non-authorised shop, so it carries no Tesla cover. On checking, <b>there is no published study or dataset on the longevity of module-level-repaired packs</b> — only scattered repair-trade case reports, and the strongest of those is cautionary rather than reassuring. The known risk pattern: the repaired module's capacity does not match the other fifteen aged modules, the pack drifts back out of balance within months, the BMS progressively restricts usable range, and in the worst case the car refuses to drive.
+      <br><br>
+      <b>So the life expectancy is measured, not estimated.</b> The only honest approach is to establish a baseline and watch the trend: read <b>cell-group voltage spread (mV)</b> and <b>per-module usable capacity (CAC)</b> with ScanMyTesla or TM-Spy, record it now, and repeat every 3 months for at least a year, paying particular attention to the repaired module and the three repaired collector boards. <b>What matters is the rate of drift, not any single reading.</b> For reference, the owner community generally treats 2–6 mV as healthy and 20–30 mV as unremarkable on an old pack, with concern above roughly 60 mV or on any week-on-week climb — these are community figures, not an OEM threshold. If the spread holds steady over three months, this pack has a fair chance of several more years. If it widens, plan the replacement or re-repair early rather than being caught by it.
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= SERVICE LOG ======================= -->
+  <section id="sec-log">
+    <div class="shead">
+      <h2><span class="zh-only">03 — 維修工單明細</span><span class="en-only">03 — Service Event Log</span></h2>
+      <div class="rule"><span class="zh-only">9 次有單據入廠 ＋ 1 項口述待補 · 18 頁掃描正本逐頁核對</span><span class="en-only">9 invoiced visits + 1 reported pending · all 18 scanned pages checked</span></div>
+    </div>
+    <table id="tbl-log"></table>
+  </section>
+
+  <!-- ======================= COST ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">04 — 費用分析</span><span class="en-only">04 — Cost Analysis</span></h2>
+      <div class="rule"><span class="zh-only">記錄期間 2023-01-27 → 2026-07-07</span><span class="en-only">Documented window 27 Jan 2023 → 7 Jul 2026</span></div>
+    </div>
+    <table id="tbl-cost"></table>
+    <div class="card" style="margin-top:14px"><div id="chart-cost"></div></div>
+  </section>
+
+  <!-- ======================= COMPONENT REGISTER ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">05 — 主要部件登記冊</span><span class="en-only">05 — Major Component Register</span></h2>
+      <div class="rule"><span class="zh-only">現役件之安裝日期、里程及保用狀態</span><span class="en-only">Install date, odometer and warranty status of fitted parts</span></div>
+    </div>
+    <table id="tbl-parts"></table>
+  </section>
+
+  <!-- ======================= SCHEDULED MAINT ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">06 — 定期保養合規檢查</span><span class="en-only">06 — Scheduled Maintenance Compliance</span></h2>
+      <div class="rule"><span class="zh-only">對照 Tesla 官方 2012–2020 Model S 保養週期</span><span class="en-only">Against Tesla's official 2012–2020 Model S intervals</span></div>
+    </div>
+    <table id="tbl-sched"></table>
+  </section>
+
+  <!-- ======================= ACTIONS ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">07 — 待辦事項與建議</span><span class="en-only">07 — Open Items &amp; Recommendations</span></h2>
+      <div class="rule"><span class="zh-only">按風險排序</span><span class="en-only">Ranked by risk</span></div>
+    </div>
+    <ol class="actions" id="list-actions"></ol>
+  </section>
+
+  <!-- ======================= PROVENANCE ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">08 — 資料來源與存疑事項</span><span class="en-only">08 — Data Provenance &amp; Unresolved Items</span></h2>
+      <div class="rule"><span class="zh-only">未經核實者已明確標示</span><span class="en-only">Unverified items are flagged explicitly</span></div>
+    </div>
+    <div class="note warn" id="prov"></div>
+  </section>
+
+  <div class="foot">
+    <div><span class="zh-only">VIN 5YJSB7E15GF122555 · 由 18 頁掃描正本編製 · 未經核實之數據已標示</span><span class="en-only">VIN 5YJSB7E15GF122555 · Compiled from 18 scanned original pages · Unverified data is flagged</span></div>
+    <div><span class="zh-only">第 <span class="num">2</span> 版 · 2026-08-06 · 已加入手寫批註及口述項目</span><span class="en-only">Rev <span class="num">2</span> · 2026-08-06 · handwritten notes &amp; reported items added</span></div>
+  </div>
+</div>
+
+<script>
+/* =================================================================
+   DATA — every figure below is transcribed from the scanned originals.
+   Estimated / unverified values carry an explicit flag.
+   ================================================================= */
+const T = (zh,en)=>({zh,en});
+const REG = {vin:'5YJSB7E15GF122555', firstReg:'2016-03-18', model:'MODEL S 70 kWh',
+  colour:'WHITE', body:'SALOON', power:'79.00 kW', origin:'U.S.A.', taxValue:630200,
+  plate:'VY1428', plateAlt:'VM3645', regFile:'0304468J', typeApproval:'F0472A00', prevOwners:3};
+
+const ODO = [
+  {d:'2016-03-18', km:0,      est:false},
+  {d:'2023-01-27', km:216050, est:false},
+  {d:'2023-07-04', km:224440, est:false},
+  {d:'2024-08-22', km:261179, est:false},
+  {d:'2024-09-27', km:261180, est:false},
+  {d:'2024-10-18', km:261187, est:false},
+  {d:'2024-11-21', km:263737, est:false},
+  {d:'2025-05-21', km:273678, est:false},
+  {d:'2026-07-07', km:301510, est:false}
+];
+
+/* kind: major | minor | diag | decline | goodwill | retrofit | thirdparty */
+const EVENTS = [
+  {d:'2016-03-18', kind:'reg', odo:0, ro:'—', sv:'—', site:T('香港運輸署首次登記','HK Transport Dept. first registration'),
+   adv:'—', cost:0, cur:'HKD',
+   work:T('全新車輛首次登記；應課稅價值 HK$630,200，首次登記稅 HK$7,280。',
+          'Brand-new vehicle first registered. Taxable value HK$630,200; first-registration tax HK$7,280.')},
+
+  {d:'2023-01-27', kind:'retrofit', odo:216050, ro:'2030S0000111276', sv:'SV00FAFE7E', site:T('Tesla 油塘服務中心','Tesla Yau Tong SvC'),
+   adv:'Brian Mak', cost:4011.00, cur:'HKD',
+   work:T('更換並編程車匙（1455938-00-B）；加裝 CCS Combo II 快充改裝件（1516761-00-A）；更換充電系統 ECU 及線束總成。檢查記錄：前後迫力皮 4mm、手迫力 3mm；輪胎深度 前左 2mm／前右 2mm／後左 4mm／後右 4mm。',
+          'Key fob replaced &amp; programmed (1455938-00-B). CCS Combo II retrofit fitted (1516761-00-A) with charging-system ECU &amp; harness retrofit kit. Recorded: front &amp; rear brake pads 4 mm, handbrake 3 mm; tyre depth FL 2 / FR 2 / RL 4 / RR 4 mm.')},
+
+  {d:'2023-07-04', kind:'minor', odo:224440, ro:'2030S0000135907', sv:'SV01264060', site:T('Tesla 鴨脷洲服務中心','Tesla Ap Lei Chau SvC'),
+   adv:'Gary Tai', cost:4551.00, cur:'HKD',
+   work:T('前右上車門鉸鏈鬆脫 → 更換（6009549-00-F）；水撥模組（1028699-00-C）及右前水撥臂（1546995-00-B）更換；一般檢測。同場執行前座乘客安全氣袋更換工程（Takata 全球回收 NHTSA 19V002），保用全數承擔。',
+          'Front-right upper door hinge loose → replaced (6009549-00-F). Wiper module (1028699-00-C) and RH wiper arm (1546995-00-B) replaced; general diagnosis. Front passenger airbag campaign performed in the same visit (global Takata recall, NHTSA 19V002) — fully covered under warranty.')},
+
+  {d:'2024-08-22', kind:'decline', odo:261179, ro:'2030S0000212390', sv:'SV01BA5A9C', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
+   adv:'Jerome Li', cost:0, cur:'HKD',
+   work:T('車輛無法啟動（VOR 不可行駛）。客戶婉拒原廠報價，決定自行安排第三方更換驅動總成及冷氣壓縮機，並自行安排拖車。原廠未執行任何工序。',
+          'Vehicle would not start (VOR). Customer declined the Tesla quotation and elected to have a third party replace the drive unit and A/C compressor, arranging own towing. No labour performed by Tesla.')},
+
+  {d:'2024-09-27', kind:'diag', odo:261180, ro:'2030S0000219532', sv:'SV01C6D728', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
+   adv:'Jerome Li', cost:1500.00, cur:'HKD',
+   work:T('一般檢測 1.0 工時：確認後驅動總成故障，韌體刷寫期間 HEX 檔案失敗。提供後驅動總成報價，客戶婉拒。以支付寶付款 HK$1,500（確認碼 6934）。',
+          'General diagnosis, 1.0 h: rear drive unit fault confirmed; HEX file failure during the firmware process. Rear Drive Unit quotation provided — customer declined. Settled HK$1,500 by Alipay (confirmation 6934).')},
+
+  {d:'2024-10-18', kind:'major', odo:261187, ro:'2030S0000223608', sv:'SV01CDA61E', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
+   adv:'Jerome Li', cost:56821.62, cur:'HKD',
+   work:T('大修：更換原廠翻新後驅動總成 LDU（1025598-00-U，HK$37,250）；更換電動冷氣壓縮機 HVCC（1028398-00-J，HK$10,779）連 O 型環兩件、乾燥瓶蓋及乾燥劑包；更換 12V 副電池（1083774-00-B）；補充 ATF 傳動油 2 夸脫及乙二醇冷卻液 1 加侖；更換前左上車門鉸鏈（6009549-00-F）。維修後路試驗證。合共減免 HK$2,985。',
+          'Major repair. Reman rear drive unit LDU fitted (1025598-00-U, HK$37,250). Electric A/C compressor HVCC replaced (1028398-00-J, HK$10,779) with two O-rings, receiver-drier cap and desiccant bag. 12 V auxiliary battery replaced (1083774-00-B). ATF 2 qt and ethylene-glycol coolant 1 gal. Front-left upper door hinge replaced (6009549-00-F). Post-repair validation test drive. Total goodwill discount HK$2,985.')},
+
+  {d:'2024-11-21', kind:'goodwill', odo:263737, ro:'2030S0000230393', sv:'SV01DA0980', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
+   adv:'Jerome Li', cost:0, cur:'HKD',
+   work:T('冷卻液液位偏低（距上次更換驅動總成 2,550 km）。執行冷卻系統檢查及添注，一般檢測。全數以善意保養（Goodwill – Service）處理，免費。',
+          'Coolant level low, 2,550 km after the drive-unit replacement. Cooling system check-and-fill plus general diagnosis, carried out entirely as Goodwill – Service at no charge.')},
+
+  {d:'2025-05-21', kind:'minor', odo:273678, ro:'2030S0000262438', sv:'SV0213BCE6', site:T('Tesla 油塘服務中心','Tesla Yau Tong SvC'),
+   adv:'Kenneth Ma', cost:4488.00, cur:'HKD',
+   work:T('冷氣運轉時有磨擦異響 → 判定源自壓縮機支架，更換底盤支架（6007369-00-D）、壓縮機支架（1028402-00-C）及斜向減震膠 8 件（1007055-00-C）。12V 低電量警示 → 更換 12V 電池（1083774-00-B），距上次更換僅 7 個月／12,491 km。水撥臂於保養模式下無法歸位 → 已報價，客戶暫不更換（未完成）。零件保用 12 個月或 20,000 km。',
+          'Grinding noise from the A/C while running, traced to the compressor mounting: chassis-support bracket (6007369-00-D), compressor bracket (1028402-00-C) and 8 diagonal isolators (1007055-00-C) replaced. 12 V low-battery alert → 12 V battery replaced (1083774-00-B), only 7 months / 12,491 km after the previous one. Wiper arm failing to park in service mode → quoted, customer deferred (OPEN). Parts warranty 12 months or 20,000 km, whichever first.')},
+
+  {d:'2026-05-05', kind:'thirdparty', odo:null, odoEst:297197, ro:'WK2605057840006075', sv:'—',
+   site:T('中山市雙電新能源汽車服務有限公司（特斯拉專修）','Zhongshan Shuangdian New Energy Vehicle Service Co. Ltd (independent Tesla specialist)'),
+   adv:'陳民強', cost:11892.00, cur:'CNY',
+   work:T('高壓電池組模組級維修（非原廠授權維修商）：拆裝電池包、拖車、分解組裝修復模組、全數電池模組絕緣處理、修復電池模組 1 個、整包電池均衡、修復電腦採集板 3 個、電池包透氣孔升級、氣密性測試；用料含冷卻液及密封膠。工時費 ¥11,360 ＋ 配件 ¥532 ＝ ¥11,892。車輛於 2026-05-04 17:17 入廠。',
+          'Module-level HV battery pack repair at a non-Tesla-authorised specialist: pack removal/refit, towing, module strip-and-rebuild, insulation treatment of all modules, one module repaired, full-pack cell balancing, three BMS collector boards repaired, pack vent upgrade, air-tightness test. Consumables: coolant and sealant. Labour ¥11,360 + parts ¥532 = ¥11,892. Vehicle received 2026-05-04 17:17.')},
+
+  {d:'2026-02-15', approx:true, kind:'pending', odo:null, odoEst:291600, ro:T('單據未存檔','Invoice not on file'), sv:'—',
+   site:T('待確認','To be confirmed'), adv:'—', cost:null, cur:'HKD',
+   work:T('【車主口述，本檔案內無單據】約六個月前（推算 2026 年 2 月前後）更換迫力碟及迫力皮。日期、里程、施工單位及金額均待補；估算里程 ≈291,600 km 為前後兩次讀數之內插值。此項未計入任何合計數字，請提供單據以完成紀錄。',
+          '[Owner-reported — no invoice in this file] Brake discs and pads replaced roughly six months ago (≈ February 2026). Date, odometer, workshop and cost all outstanding; the ≈291,600 km figure is interpolated between the readings either side. Excluded from every total — please supply the invoice to close this record.')},
+
+  {d:'2026-07-07', kind:'retrofit', odo:301510, ro:'2030S0000338064', sv:'SV02C385E2', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
+   adv:'Jerome Li', cost:1550.00, cur:'HKD',
+   work:T('4G／LTE 數據機改裝（1067726-00-A，HK$1,550）連 EU LTE 連線 PCBA + u-blox GPS（1054968-02-C），適用中國／香港／日本。因全球 3G 網絡退役，原 3G 數據機將失去連線；香港中國移動已於 2025-06-30 停用 3G，數碼通獲准由 2026-10-09 起停用。免工時費。',
+          '4G/LTE modem retrofit (1067726-00-A, HK$1,550) with EU LTE connectivity PCBA + u-blox GPS (1054968-02-C), China/Hong Kong/Japan variant. Required because the original 3G modem loses connectivity as networks retire 3G — CMHK ceased 3G on 30 Jun 2025 and SmarTone is approved to cease from 9 Oct 2026. No labour charged.')}
+];
+
+/* ------- component life: pct = achieved / benchmark ------- */
+const TODAY = new Date('2026-08-06');
+/* ---- component lifespans: fitted -> removed, vs expected life ----
+   exp = single expected end date; expA/expB = expected-life band (benchmark range)
+   state: over  = still running past its benchmark
+          met   = replaced inside the expected band
+          early = replaced well short of the benchmark (premature failure)
+          ok    = in service, still inside the benchmark
+          none  = no reliable published benchmark                               */
+const LIFE = [
+  {n:T('高壓電池組（原裝）','HV battery pack (original)'), from:'2016-03-18', to:null, state:'watch',
+   warr:'2024-03-18', warrN:T('原廠 8 年保用屆滿','8-yr warranty ended'),
+   life:T('10.4 年 · 301,510 km','10.4 yr · 301,510 km'),
+   sub:T('無公開壽命基準 · 2026-05 模組級維修','no published life benchmark · module repair May 2026'),
+   mark:{d:'2026-05-05', z:'模組維修', e:'module repair'}},
+
+  {n:T('後驅動總成 LDU（原裝）','Rear drive unit LDU (original)'), from:'2016-03-18', to:'2024-10-18', state:'met',
+   expA:'2021-05-01', expB:'2026-06-30', expN:T('業界估算壽命','industry estimate'),
+   life:T('8.6 年 · 261,187 km','8.6 yr · 261,187 km'),
+   sub:T('於估算區間內更換','replaced inside the estimated band')},
+
+  {n:T('後驅動總成 LDU（翻新，現役）','Rear drive unit LDU (reman, current)'), from:'2024-10-18', to:null, state:'ok',
+   expA:'2029-12-01', expB:'2035-01-01', expN:T('預期壽命 150–300k km（≈2030–2035）','expected life 150–300k km (≈2030–2035)'),
+   warr:'2028-10-18', warrN:T('保用至 2028-10','warranty to Oct 2028'),
+   life:T('1.8 年 · 40,323 km','1.8 yr · 40,323 km'),
+   sub:T('翻新件 · 壽命才用了約 18%','reman unit · only ≈18% of its life used')},
+
+  {n:T('12V 副電池 #2','12 V aux battery #2'), from:'2024-10-18', to:'2025-05-21', state:'early',
+   expA:'2026-10-18', expB:'2028-10-18', expN:T('常態 2–4 年','2–4 yr norm'),
+   life:T('0.59 年 · 12,491 km','0.59 yr · 12,491 km'),
+   sub:T('僅 7 個月即警示更換 — 早夭','failed after 7 months — premature')},
+
+  {n:T('12V 副電池 #3（現役）','12 V aux battery #3 (current)'), from:'2025-05-21', to:null, state:'ok',
+   expA:'2027-05-21', expB:'2029-05-21', expN:T('常態 2–4 年','2–4 yr norm'),
+   life:T('1.2 年 · 27,832 km','1.2 yr · 27,832 km'),
+   sub:T('已進入常見更換窗口','entering the usual replacement window'), warn:true},
+
+  {n:T('電動冷氣壓縮機（原裝）','A/C compressor, electric (original)'), from:'2016-03-18', to:'2024-10-18', state:'none',
+   life:T('8.6 年 · 261,187 km','8.6 yr · 261,187 km'), sub:T('無可靠公開壽命基準','no published benchmark')},
+
+  {n:T('冷氣壓縮機支架（原裝）','A/C compressor mounting (original)'), from:'2016-03-18', to:'2025-05-21', state:'none',
+   life:T('9.2 年 · 273,678 km','9.2 yr · 273,678 km'), sub:T('無可靠公開壽命基準','no published benchmark')},
+
+  {n:T('水撥模組（原裝）','Wiper module (original)'), from:'2016-03-18', to:'2023-07-04', state:'none',
+   life:T('7.3 年 · 224,440 km','7.3 yr · 224,440 km'), sub:T('無可靠公開壽命基準','no published benchmark')},
+
+  {n:T('前右上車門鉸鏈（原裝）','Front RH upper door hinge (original)'), from:'2016-03-18', to:'2023-07-04', state:'none',
+   life:T('7.3 年 · 224,440 km','7.3 yr · 224,440 km'), sub:T('非已知回收項目','not a recall item')},
+
+  {n:T('前左上車門鉸鏈（原裝）','Front LH upper door hinge (original)'), from:'2016-03-18', to:'2024-10-18', state:'none',
+   life:T('8.6 年 · 261,187 km','8.6 yr · 261,187 km'), sub:T('非已知回收項目','not a recall item')},
+
+  {n:T('車匙（原裝）','Key fob (original)'), from:'2016-03-18', to:'2023-01-27', state:'none',
+   life:T('6.9 年 · 216,050 km','6.9 yr · 216,050 km'), sub:T('無可靠公開壽命基準','no published benchmark')},
+
+  {n:T('迫力碟／皮','Brake discs &amp; pads'), from:'2023-01-27', to:'2026-02-15', state:'none', dashed:true,
+   life:T('未知','unknown'), sub:T('量度 4mm → 更換（口述，無單據）','4 mm measured → replaced (no invoice)')}
+];
+
+const PARTS = [
+  {p:'1025598-00-U', n:T('後驅動總成（原廠翻新 LDU）','Rear drive unit — reman LDU'), d:'2024-10-18', odo:261187, cost:'37,250', w:T('4 年／80,000 km（手寫批註）— 餘 39,677 km','4 yr / 80,000 km (handwritten) — 39,677 km left'), s:'amb'},
+  {p:'1028398-00-J', n:T('電動冷氣壓縮機 HVCC','A/C compressor, electric HVCC'), d:'2024-10-18', odo:261187, cost:'10,779', w:T('1 年／20,000 km（手寫批註）— 已屆滿','1 yr / 20,000 km (handwritten) — expired'), s:'grey'},
+  {p:'6007369-00-D +2', n:T('冷氣壓縮機支架組（含減震膠 8 件）','A/C compressor mounting set (incl. 8 isolators)'), d:'2025-05-21', odo:273678, cost:'1,031', w:T('12 個月／20,000 km — 已屆滿','12 mo / 20,000 km — expired'), s:'grey'},
+  {p:'1083774-00-B', n:T('12V 副電池（第二代）','12 V auxiliary battery, 2nd gen'), d:'2025-05-21', odo:273678, cost:'1,189', w:T('保用已滿；使用 1.2 年／27,832 km','Warranty expired; 1.2 yr / 27,832 km in service'), s:'red'},
+  {p:'1067726-00-A', n:T('LTE／4G 數據機改裝套件','LTE / 4G modem retrofit package'), d:'2026-07-07', odo:301510, cost:'1,550', w:T('12 個月／20,000 km — 有效至 2027-07','12 mo / 20,000 km — to Jul 2027'), s:'ok'},
+  {p:'1516761-00-A', n:T('CCS Combo II 快充改裝件','CCS Combo II retrofit'), d:'2023-01-27', odo:216050, cost:'2,482', w:T('保用已滿','Warranty expired'), s:'grey'},
+  {p:'1028699-00-C', n:T('水撥模組（右駕）','Wiper module, RHD'), d:'2023-07-04', odo:224440, cost:'1,071', w:T('保用已滿','Warranty expired'), s:'grey'},
+  {p:'6009549-00-F', n:T('前上車門鉸鏈 ×2（右 2023／左 2024）','Front upper door hinge ×2 (RH 2023 / LH 2024)'), d:'2023-07-04 / 2024-10-18', odo:261187, cost:'1,488', w:T('保用已滿','Warranty expired'), s:'grey'},
+  {p:'1455938-00-B', n:T('車匙 433MHz','Key fob 433 MHz'), d:'2023-01-27', odo:216050, cost:'1,379', w:T('保用已滿','Warranty expired'), s:'grey'},
+  {p:T('模組級維修','Module-level repair'), n:T('高壓電池組 — 修復模組 1 個、採集板 3 個、整包均衡、透氣孔升級','HV battery pack — 1 module repaired, 3 collector boards, full-pack balancing, vent upgrade'), d:'2026-05-05', odo:'≈297,200', cost:'¥11,892', w:T('非原廠授權維修，不受 Tesla 保用','Non-authorised repair — no Tesla warranty'), s:'red'}
+];
+
+const SCHED = [
+  {i:T('迫力油測試','Brake fluid test'), int:T('每 4 年','Every 4 yr'), last:T('本檔案內無紀錄','No record in this file'), st:'red',
+   c:T('自首次登記已 10.4 年；按官方週期應已完成 2 次','10.4 yr since first registration; two services due under the official interval')},
+  {i:T('冷氣乾燥劑包','A/C desiccant bag'), int:T('約每 2 年（2021 年前車款）','≈ every 2 yr (pre-2021 cars)'), last:'2024-10-18', st:'ok',
+   c:T('隨壓縮機更換一併完成','Done with the compressor replacement')},
+  {i:T('車廂空氣濾網','Cabin air filter'), int:T('每 2–3 年','Every 2–3 yr'), last:T('本檔案內無紀錄','No record in this file'), st:'amb',
+   c:T('建議下次入廠一併更換','Fit at the next visit')},
+  {i:T('水撥膠條','Wiper blades'), int:T('每年','Annually'), last:T('模組 2023-07 更換，膠條無獨立紀錄','Module Jul 2023; no separate blade record'), st:'amb', c:'—'},
+  {i:T('輪胎調位','Tyre rotation'), int:T('每 10,000 km','Every 10,000 km'), last:T('本檔案內無紀錄','No record in this file'), st:'amb',
+   c:T('2023-01 前輪僅餘 2mm，其後必曾更換但無單據','Fronts at 2 mm in Jan 2023 — tyres must have been changed since, but no invoice is in the file')},
+  {i:T('迫力皮／碟','Brake pads &amp; discs'), int:T('原廠無固定週期，按檢測','No fixed OEM interval — by inspection'), last:T('約 2026-02（車主口述，無單據）','≈ Feb 2026 (owner-reported, no invoice)'), st:'amb',
+   c:T('上次有紀錄之量度為 2023-01-27（前後 4mm）；車主表示碟及皮已於約六個月前更換，惟單據未存檔 — 需補回以完成紀錄','Last recorded measurement 27 Jan 2023 (4 mm F/R). Owner reports discs and pads were replaced ≈6 months ago, but no invoice is on file — obtain it to close the record')},
+  {i:T('迫力卡鉗保養','Brake caliper service'), int:T('每年（融雪鹽地區）','Annually (salted-road regions)'), last:'—', st:'grey',
+   c:T('香港不適用','Not applicable in Hong Kong')}
+];
+
+const ACTIONS = [
+  {p:'red', t:T('翻新驅動總成保用：里程額度先到期，非 2028 年期限','Reman drive-unit warranty: the mileage cap expires first, not the 2028 date'),
+   b:T('2024-10-18 工單上的手寫批註訂明「摩打 4 年 or 80,000 km 零件保養」。由 261,187 km 起算，保用止於 2028-10-18 或 341,187 km，以先到者為準。至 2026-07-07（301,510 km）已用 40,323 km，僅餘 39,677 km。按長期年均 29,200 km 推算，里程上限約在 2027 年 11 月觸及；即使按近 12 個月較低的 24,700 km／年計，亦約在 2028 年 2 月 — 兩者皆早於 2028-10-18。換言之，這部 HK$37,250 的部件實際受保時間比日曆年期短約 8 至 11 個月。如有任何異音、抖動或動力異常，應在里程上限前主動送檢，並向 Tesla 索取此保用條款的書面確認（手寫批註本身不構成合約文件）。',
+        'The handwritten note on the 18 Oct 2024 invoice reads "motor — 4 years or 80,000 km parts warranty". Counted from 261,187 km, cover ends on 18 Oct 2028 or at 341,187 km, whichever comes first. As at 7 Jul 2026 (301,510 km), 40,323 km is used and only 39,677 km remains. At the long-run 29,200 km/yr the mileage cap is reached around November 2027; even at the lower 24,700 km/yr of the last twelve months it lands around February 2028 — both well before 18 Oct 2028. In practice this HK$37,250 part is covered for roughly 8 to 11 months less than the calendar term suggests. Book an inspection ahead of the mileage cap at the first sign of noise, vibration or power loss, and ask Tesla to confirm the term in writing — a handwritten note is not a contractual document.')},
+  {p:'red', t:T('補回迫力碟／皮更換單據及量度數據','Obtain the brake disc/pad invoice and measurements'),
+   b:T('車主表示迫力碟及迫力皮已於約六個月前（推算 2026 年 2 月前後）更換，惟本檔案內並無單據，故未能核實日期、里程、規格及施工單位，亦未計入任何合計。上一次有紀錄的量度為 2023-01-27（前後皮 4mm、手迫力 3mm），同日前輪胎紋僅 2mm。請提供該次單據，並一併補回現時的皮厚、碟厚及四輪胎紋數據 — 此為安全關鍵項目，亦直接影響轉售時的紀錄完整性。',
+        'You report that the brake discs and pads were replaced about six months ago (≈ February 2026), but no invoice is in this file, so the date, odometer, specification and workshop cannot be verified and nothing has been added to the totals. The last recorded measurement was 27 Jan 2023 (pads 4 mm front and rear, handbrake 3 mm), with front tyres at 2 mm the same day. Please supply that invoice, and add current pad thickness, disc thickness and tread depth on all four corners — this is a safety-critical item and it directly affects how complete the record looks at resale.')},
+  {p:'red', t:T('12V 副電池：提前更換並查明耗電源頭','Replace the 12 V battery early and investigate the parasitic draw'),
+   b:T('第 #2 顆 12V 電池僅使用 7 個月／12,491 km 便觸發低電量警示，遠短於 2–4 年常態。現役第 #3 顆已服役 1.2 年／27,832 km，零件保用（12 個月／20,000 km）已屆滿。單一早夭可能是個別零件問題，但配合此車高頻使用模式，建議一併檢查靜態耗電及充電系統，避免再次無法啟動。',
+        'The #2 12 V battery triggered a low-voltage alert after only 7 months / 12,491 km, far short of the 2–4 year norm. The current #3 unit has now run 1.2 yr / 27,832 km and its 12 mo / 20,000 km parts warranty has expired. One early failure may be a one-off, but given this car\'s duty cycle it is worth measuring parasitic draw and checking the charging system at the same time to avoid another no-start.')},
+  {p:'red', t:T('高壓電池組：建立獨立健康檢測基線','Establish an independent HV pack health baseline'),
+   b:T('2026-05 於中山的模組級維修（修復模組 1 個、採集板 3 個、絕緣處理、整包均衡、透氣孔升級、氣密性測試）由非原廠授權維修商執行，Tesla 不提供任何保用，原廠 8 年電池保用亦已於 2024-03 屆滿。建議取得維修後的模組電壓分佈、絕緣阻值及氣密測試報告存檔，並每 6 個月重複量度以建立劣化趨勢。',
+        'The May 2026 module-level repair in Zhongshan (one module rebuilt, three collector boards, insulation treatment, full-pack balancing, vent upgrade, air-tightness test) was performed by a non-authorised specialist. Tesla provides no warranty on it, and the original 8-year battery warranty lapsed in March 2024. Obtain the post-repair module voltage spread, insulation resistance and air-tightness results for the file, and repeat the measurements every 6 months to build a degradation trend.')},
+  {p:'amb', t:T('水撥臂歸位故障 — 未完成項目','Wiper arm park fault — still open'),
+   b:T('2025-05-21 工單記錄「水撥臂於保養模式下無法歸位」，已報價但客戶暫緩，至今無後續紀錄。屬法定檢驗及雨天安全項目，應於下次入廠處理。',
+        'The 21 May 2025 invoice records "wiper arm unable to stop in position while set to wiper service mode". It was quoted, deferred, and there is no follow-up record. This is both a roadworthiness and a wet-weather safety item — close it at the next visit.')},
+  {p:'amb', t:T('輪胎紀錄仍然空白','Tyre history is still blank'),
+   b:T('2023-01-27 量度前輪僅餘 2mm（香港法定最低 1.6mm），其後必曾更換，但本檔案內並無任何輪胎單據。即使迫力已更換，輪胎仍是獨立項目。請補回更換日期、品牌規格及現時四輪胎紋。',
+        'The 27 Jan 2023 measurement shows front tyres at 2 mm against Hong Kong\'s 1.6 mm legal minimum, so they must have been replaced since — yet there is no tyre invoice anywhere in this file. Brakes being done does not cover this; tyres are a separate line. Add the replacement date, brand and size, plus current tread on all four.')},
+  {p:'amb', t:T('補做迫力油測試及車廂濾網','Catch up on the brake fluid test and cabin filter'),
+   b:T('Tesla 官方 2012–2020 Model S 週期為迫力油每 4 年測試、車廂濾網每 2–3 年。本檔案內兩者均無紀錄，而車齡已 10.4 年。兩項成本低但屬基本合規項目。',
+        'Tesla\'s official 2012–2020 Model S schedule calls for a brake fluid test every 4 years and a cabin filter every 2–3 years. Neither appears anywhere in this file, and the car is 10.4 years old. Both are low-cost baseline compliance items.')},
+  {p:'blue', t:T('車牌號碼不一致須釐清','Resolve the registration-mark discrepancy'),
+   b:T('所有 Tesla 工單（2023-01 至 2026-07）均載車牌 VY1428；檔案內的香港車輛登記文件（登記檔案 0304468J，同一 VIN）卻顯示登記標誌 VM3645，「登記為車主日期」為 2026-08-06。若屬換牌或過戶，應更新保險、隧道及泊車登記等資料；本報告未能從檔案核實原因。',
+        'Every Tesla invoice from Jan 2023 to Jul 2026 shows plate VY1428, while the Hong Kong vehicle registration document in this file (registration file 0304468J, same VIN) shows registration mark VM3645 with "date registered as owner" of 06/08/2026. If this is a re-plate or transfer, insurance, tunnel and parking registrations need updating. The cause could not be verified from the file.')},
+  {p:'blue', t:T('內地臨時入境牌照文件時限','Mainland temporary-import paperwork deadline'),
+   b:T('檔案第 2–3 頁載有內地車管所出境備案指引，並有紅字批註「僅限於車牌號 VY1428 車輛 2026年5月15日過港珠澳大橋口岸」。需備妥回鄉證、臨時行駛證、維修車行證明（蓋章）、營業執照及維修清單，電郵車管所並待回覆方可出關。此為時效文件，請確認已完成。',
+        'Pages 2–3 of the file contain the Mainland vehicle administration\'s exit-filing instructions plus a red annotation limiting it to plate VY1428 crossing the HZM Bridge port on 15 May 2026. The filing requires the Home Return Permit, temporary licence, a stamped letter from the repairing garage, its business licence and the repair invoice, emailed to the authority with a reply received before exit. This is time-limited — confirm it was completed.')}
+];
+</script>
+
+<script>
+/* =================================================================
+   RENDER
+   ================================================================= */
+const L = ()=>document.body.dataset.lang;
+const tx = o => (typeof o==='string') ? o : o[L()];
+const fmt = (n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const dObj = s => new Date(s+'T00:00:00Z');
+const yrs = (a,b)=> (dObj(b)-dObj(a))/(365.2425*86400000);
+
+const KIND = {
+  reg:      {c:'#171a20', z:'首次登記',   e:'First registration'},
+  major:    {c:'#e82127', z:'大修',       e:'Major repair'},
+  minor:    {c:'#3457dc', z:'一般維修',   e:'Routine repair'},
+  diag:     {c:'#8e8e93', z:'檢測',       e:'Diagnosis'},
+  decline:  {c:'#b8730a', z:'婉拒／未修', e:'Declined / no work'},
+  goodwill: {c:'#2f6b46', z:'善意保養',   e:'Goodwill'},
+  retrofit: {c:'#6b3fb5', z:'升級改裝',   e:'Retrofit / upgrade'},
+  thirdparty:{c:'#c2410c',z:'第三方維修', e:'Third-party repair'},
+  pending:   {c:'#b8730a', z:'口述待補單據', e:'Reported — invoice pending'}
+};
+const kz = k => L()==='zh' ? KIND[k].z : KIND[k].e;
+
+const LAST_ODO = 301510, LAST_D = '2026-07-07', AGE = yrs(REG.firstReg,'2026-08-06');
+const HKD_TOT = EVENTS.filter(e=>e.cur==='HKD'&&e.cost!==null).reduce((s,e)=>s+e.cost,0);
+const CNY_TOT = EVENTS.filter(e=>e.cur==='CNY'&&e.cost!==null).reduce((s,e)=>s+e.cost,0);
+/* reman LDU parts warranty — from the handwritten annotation on the 18 Oct 2024 invoice */
+const LDU_W = {from:'2024-10-18', odo:261187, yrs:4, km:80000, endDate:'2028-10-18', endOdo:341187};
+const WIN_KM  = 301510-216050;
+
+/* ---------------- identity strip ---------------- */
+function ident(){
+  const rows=[
+    [T('車輛識別號 VIN','VIN'), '<span class="mono">'+REG.vin+'</span>'],
+    [T('型號／年份','Model / year'), REG.model+' · 2016'],
+    [T('首次登記','First registered'), '2016-03-18'],
+    [T('車身／顏色','Body / colour'), (L()==='zh'?'四門房車 · 白色':'Saloon · White')],
+    [T('額定功率','Rated power'), REG.power],
+    [T('前任車主','Previous owners'), REG.prevOwners+(L()==='zh'?' 名':'')]
+  ];
+  document.getElementById('ident').innerHTML = rows.map(r=>
+    `<div><div class="lbl">${tx(r[0])}</div><div class="v">${r[1]}</div></div>`).join('');
+  document.getElementById('stamp').textContent = L()==='zh'?'車隊管理格式 · 內部文件':'Fleet management format · internal';
+}
+
+/* ---------------- KPIs ---------------- */
+function kpis(){
+  const perYear = LAST_ODO/yrs(REG.firstReg,LAST_D);
+  const k=[
+    {l:T('累計里程','Total odometer'), v:fmt(LAST_ODO), u:' km',
+     n:T('讀數日期 2026-07-07','Reading of 7 Jul 2026')},
+    {l:T('車齡','Vehicle age'), v:AGE.toFixed(1), u:(L()==='zh'?' 年':' yr'),
+     n:T('首次登記 2016-03-18','First registered 18 Mar 2016')},
+    {l:T('年均里程','Annual distance'), v:fmt(Math.round(perYear/100)*100), u:' km/yr',
+     n:T('持續高強度使用模式','Sustained heavy-duty cycle')},
+    {l:T('記錄期間維修支出','Documented spend'), v:fmt(HKD_TOT,0), u:' HKD',
+     n:T('另加 ¥'+fmt(CNY_TOT,0)+' 人民幣（電池維修）','plus ¥'+fmt(CNY_TOT,0)+' CNY (battery repair)')},
+    {l:T('每公里維修成本','Cost per km'), v:(HKD_TOT/WIN_KM).toFixed(2), u:' HKD/km', alert:true,
+     n:T('2023-01 → 2026-07，共 '+fmt(WIN_KM)+' km','Jan 2023 → Jul 2026, '+fmt(WIN_KM)+' km')}
+  ];
+  document.getElementById('kpis').innerHTML = k.map(x=>
+    `<div class="kpi${x.alert?' alert':''}"><div class="lbl">${tx(x.l)}</div>
+     <div class="v num">${x.v}<small>${x.u}</small></div>
+     <div class="n">${tx(x.n)}</div></div>`).join('');
+}
+
+/* ---------------- chart 1: odometer timeline ---------------- */
+function chartTimeline(){
+  const W=760,H=560, m={t:66,r:22,b:76,l:82};
+  const x0=dObj('2016-01-01').getTime(), x1=dObj('2026-12-31').getTime();
+  const yMax=320000;
+  const X=t=>m.l+(t-x0)/(x1-x0)*(W-m.l-m.r);
+  const Y=v=>H-m.b-(v/yMax)*(H-m.t-m.b);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+
+  for(let v=0;v<=300000;v+=50000){
+    s+=`<line x1="${m.l}" y1="${Y(v)}" x2="${W-m.r}" y2="${Y(v)}" stroke="${v?'#ededee':'#c8c9ca'}" stroke-width="1"/>`;
+    s+=`<text x="${m.l-11}" y="${Y(v)+4.5}" text-anchor="end" font-size="12" fill="#5c5e62" font-family="inherit">${v/1000}k</text>`;
+  }
+  s+=`<text x="${m.l-11}" y="${Y(yMax)+4}" text-anchor="end" font-size="11" fill="#8e8e93" font-weight="600">km</text>`;
+  for(let y=2016;y<=2026;y++){
+    const t=dObj(y+'-01-01').getTime();
+    s+=`<line x1="${X(t)}" y1="${H-m.b}" x2="${X(t)}" y2="${H-m.b+6}" stroke="#c8c9ca"/>`;
+    s+=`<text x="${X(t)}" y="${H-m.b+22}" text-anchor="middle" font-size="12" fill="#5c5e62">${y}</text>`;
+  }
+  s+=`<line x1="${m.l}" y1="${H-m.b}" x2="${W-m.r}" y2="${H-m.b}" stroke="#171a20" stroke-width="1.3"/>`;
+
+  const b0=X(dObj('2024-08-22').getTime()), b1=X(dObj('2024-10-18').getTime());
+  s+=`<rect x="${b0}" y="${m.t}" width="${Math.max(b1-b0,2.5)}" height="${H-m.t-m.b}" fill="#e82127" opacity=".09"/>`;
+  s+=`<line x1="${(b0+b1)/2}" y1="${H-m.b-34}" x2="${(b0+b1)/2}" y2="${Y(255000)}" stroke="#e82127" stroke-width="1" opacity=".5"/>`;
+  s+=`<text x="${(b0+b1)/2}" y="${H-m.b-19}" text-anchor="middle" font-size="12" fill="#e82127" font-weight="600">${L()==='zh'?'停駛 57 日（VOR）':'57 days off road (VOR)'}</text>`;
+
+  const pts=ODO.map(p=>`${X(dObj(p.d).getTime())},${Y(p.km)}`).join(' ');
+  s+=`<polyline points="${pts}" fill="none" stroke="#171a20" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+  EVENTS.forEach(e=>{
+    const km = (e.odo!==null&&e.odo!==undefined) ? e.odo : e.odoEst;
+    const cx=X(dObj(e.d).getTime()), cy=Y(km), col=KIND[e.kind].c;
+    const est = (e.odo===null||e.odo===undefined);
+    s+=`<circle cx="${cx}" cy="${cy}" r="6" fill="${est?'#fff':col}" stroke="${col}" stroke-width="2.2"/>`;
+  });
+
+  const CALL = [
+    {d:'2016-03-18', km:0,      z:'首次登記 2016-03',              e:'First registered Mar 2016',         k:'reg',        dx:42,  dy:56,  a:'start'},
+    {d:'2023-01-27', km:216050, z:'CCS 快充改裝 · 216,050 km',      e:'CCS retrofit · 216,050 km',         k:'retrofit',   dx:-14, dy:-24, a:'end'},
+    {d:'2024-10-18', km:261187, z:'大修 · 後驅動總成 + 冷氣壓縮機',  e:'Major · rear drive unit + A/C',     k:'major',      dx:-22, dy:86,  a:'end'},
+    {d:'2026-02-15', km:291600, z:'迫力碟／皮（口述待補單據）',      e:'Brakes (reported, invoice pending)',k:'pending',    dx:-16, dy:170, a:'end'},
+    {d:'2026-05-05', km:297197, z:'電池組模組級維修（第三方）',      e:'HV pack module repair (3rd party)', k:'thirdparty', dx:-12, dy:-58, a:'end'},
+    {d:'2026-07-07', km:301510, z:'LTE 改裝 · 301,510 km',         e:'LTE retrofit · 301,510 km',         k:'retrofit',   dx:-6,  dy:-24, a:'end'}
+  ];
+  CALL.forEach(c=>{
+    const cx=X(dObj(c.d).getTime()), cy=Y(c.km), col=KIND[c.k].c;
+    const tx2=cx+c.dx, ty=cy+c.dy;
+    s+=`<path d="M${cx},${cy+(c.dy<0?-8:8)} L${cx},${ty+(c.dy<0?5:-11)} L${tx2+(c.a==='end'?5:-5)},${ty+(c.dy<0?5:-11)}"
+         fill="none" stroke="${col}" stroke-width="1" opacity=".5"/>`;
+    s+=`<text x="${tx2}" y="${ty}" text-anchor="${c.a}" font-size="12.5" font-weight="600" fill="${col}">${L()==='zh'?c.z:c.e}</text>`;
+  });
+  s+='</svg>';
+  document.getElementById('chart-timeline').innerHTML=s;
+
+  document.getElementById('legend-timeline').innerHTML =
+    Object.keys(KIND).map(k=>`<span><i style="background:${KIND[k].c}"></i>${kz(k)}</span>`).join('')
+    + `<span><i style="background:#fff;border:2px solid #c2410c"></i>${L()==='zh'?'里程為內插估算值':'odometer interpolated (estimated)'}</span>`;
+}
+
+/* ---------------- chart 2: component lifespan timeline ---------------- */
+const ST = {
+  watch: {c:'#e82127', z:'需重點監察（保用已滿．容量未知）', e:'watch closely — warranty expired, capacity unknown'},
+  met:   {c:'#3457dc', z:'於預期壽命區間內更換',   e:'replaced within the expected-life band'},
+  early: {c:'#b8730a', z:'早夭 — 遠早於預期即更換', e:'premature — replaced far too early'},
+  ok:    {c:'#2f6b46', z:'在役，預期壽命尚遠',     e:'in service, plenty of expected life left'},
+  none:  {c:'#8e8e93', z:'無可靠公開壽命基準',     e:'no reliable published benchmark'}
+};
+function chartLife(){
+  const rowH=48, W=760, m={t:58,r:196,b:42,l:250};
+  const H=m.t+m.b+LIFE.length*rowH;
+  const t0=dObj('2016-01-01').getTime(), t1=dObj('2032-06-30').getTime();
+  const XR=W-m.r;
+  const X=d=>m.l+(dObj(d).getTime()-t0)/(t1-t0)*(W-m.l-m.r);
+  const TODAY_X=X('2026-08-06');
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+
+  for(let y=2016;y<=2032;y++){
+    const x=X(y+'-01-01');
+    s+=`<line x1="${x}" y1="${m.t-14}" x2="${x}" y2="${H-m.b+4}" stroke="#ededee" stroke-width="1"/>`;
+    if(y%2===0) s+=`<text x="${x}" y="${m.t-21}" text-anchor="middle" font-size="12" fill="#8e8e93">${y}</text>`;
+  }
+  // today
+  s+=`<line x1="${TODAY_X}" y1="${m.t-14}" x2="${TODAY_X}" y2="${H-m.b+16}" stroke="#171a20" stroke-width="1.3" stroke-dasharray="4 3"/>`;
+  s+=`<text x="${TODAY_X}" y="${H-m.b+29}" text-anchor="middle" font-size="11" font-weight="600" fill="#171a20">${L()==='zh'?'今日':'today'}</text>`;
+
+  LIFE.forEach((c,i)=>{
+    const y=m.t+i*rowH, cy=y+13;
+    const col=ST[c.state].c;
+    const xa=X(c.from), xb=c.to?X(c.to):TODAY_X;
+
+    // expected-life band or marker (drawn behind)
+    if(c.expA){
+      const ba=X(c.expA), bbRaw=X(c.expB), bb=Math.min(bbRaw,XR);
+      s+=`<rect x="${ba}" y="${cy-14}" width="${Math.max(bb-ba,2)}" height="28" fill="#171a20" opacity=".07"/>`;
+      if(bbRaw>XR){ s+=`<path d="M${XR+3},${cy-8} l9,8 l-9,8 z" fill="#171a20" opacity=".28"/>`; }
+      const clamp=bbRaw>XR;
+      s+=`<text x="${clamp?ba+2:(ba+bb)/2}" y="${cy+27}" text-anchor="${clamp?'start':'middle'}" font-size="10" fill="#8e8e93">${tx(c.expN)}</text>`;
+    }
+    if(c.warr){
+      const xw=X(c.warr), above=!!(c.expA||c.exp);
+      s+=`<line x1="${xw}" y1="${cy-16}" x2="${xw}" y2="${cy+16}" stroke="#5c5e62" stroke-width="1.1"/>`;
+      s+=`<rect x="${xw-4}" y="${above?cy+16:cy-23}" width="8" height="7" fill="#5c5e62"/>`;
+      s+=`<text x="${xw}" y="${above?cy-21:cy+27}" text-anchor="middle" font-size="10" fill="#5c5e62">${tx(c.warrN)}</text>`;
+    }
+    if(c.exp){
+      const xe=X(c.exp);
+      s+=`<line x1="${xe}" y1="${cy-15}" x2="${xe}" y2="${cy+15}" stroke="#171a20" stroke-width="1.2" stroke-dasharray="3 2.5"/>`;
+      s+=`<path d="M${xe},${cy-19} l4.5,5 l-4.5,5 l-4.5,-5 z" fill="#171a20"/>`;
+      s+=`<text x="${xe}" y="${cy+27}" text-anchor="middle" font-size="10" fill="#5c5e62">${tx(c.expN)}</text>`;
+    }
+    // life bar
+    const w=Math.max(xb-xa,3);
+    if(c.dashed){
+      s+=`<rect x="${xa}" y="${cy-7}" width="${w}" height="14" fill="none" stroke="${col}" stroke-width="1.4" stroke-dasharray="5 3"/>`;
+    } else {
+      s+=`<rect x="${xa}" y="${cy-7}" width="${w}" height="14" fill="${col}" ${c.state==='none'?'opacity=".55"':''}/>`;
+    }
+    // start cap + end cap
+    s+=`<rect x="${xa-1}" y="${cy-11}" width="2" height="22" fill="${col}"/>`;
+    if(c.to){ s+=`<rect x="${xb-1}" y="${cy-11}" width="2" height="22" fill="${col}"/>`;
+              s+=`<text x="${xb+7}" y="${cy-9}" font-size="9.5" fill="${col}" font-weight="600">${c.to.slice(0,7)}</text>`; }
+    else    { s+=`<path d="M${xb},${cy-8} l11,8 l-11,8 z" fill="${col}"/>`; }
+    // interim marker (e.g. module repair)
+    if(c.mark){ const xm=X(c.mark.d);
+      s+=`<circle cx="${xm}" cy="${cy}" r="5" fill="#fff" stroke="#c2410c" stroke-width="2"/>`;
+      }
+
+    // labels
+    s+=`<text x="${m.l-13}" y="${cy}" text-anchor="end" font-size="13" font-weight="600" fill="#171a20">${tx(c.n)}</text>`;
+    s+=`<text x="${m.l-13}" y="${cy+14}" text-anchor="end" font-size="10" fill="#8e8e93">${tx(c.sub)}</text>`;
+    s+=`<text x="${W-6}" y="${cy-2}" text-anchor="end" font-size="12.5" font-weight="600" fill="${col}">${tx(c.life)}</text>`;
+    s+=`<text x="${W-6}" y="${cy+12}" text-anchor="end" font-size="10" fill="#8e8e93">${c.from.slice(0,7)} ▶ ${c.to?c.to.slice(0,7):(L()==='zh'?'在役':'in service')}</text>`;
+  });
+  s+='</svg>';
+  document.getElementById('chart-life').innerHTML=s;
+  document.getElementById('legend-life').innerHTML =
+    Object.keys(ST).map(k=>`<span><i class="bar" style="background:${ST[k].c}"></i>${L()==='zh'?ST[k].z:ST[k].e}</span>`).join('')
+    + `<span><i class="bar" style="background:#e2e2e3"></i>${L()==='zh'?'預期壽命區間':'expected-life band'}</span>`
+    + `<span style="white-space:nowrap">◆ ${L()==='zh'?'預期壽命屆滿日':'expected end of life'}</span>`
+    + `<span style="white-space:nowrap"><i class="bar" style="background:#5c5e62;height:7px;width:9px"></i>${L()==='zh'?'保用屆滿日（商業條款，非壽命）':'warranty end (a commercial term, not a life estimate)'}</span>`
+    + `<span style="white-space:nowrap"><i style="background:#fff;border:2px solid #c2410c"></i>${L()==='zh'?'2026-05 電池組模組級維修':'May 2026 HV pack module repair'}</span>`;
+}
+
+/* ---------------- chart 3: cost by category ---------------- */
+function chartCost(){
+  const cats=[
+    {n:T('驅動總成（翻新 LDU、油液、工時）','Drive unit (reman LDU, fluids, labour)'), v:42612.00, c:'#e82127'},
+    {n:T('冷氣系統（壓縮機、支架、乾燥劑）','A/C system (compressor, mounting, desiccant)'), v:14819.62, c:'#3457dc'},
+    {n:T('車身與水撥','Body &amp; wipers'), v:5514.00, c:'#8e8e93'},
+    {n:T('電氣（12V 電池 / 車匙）','Electrical (12 V battery / key fob)'), v:4444.00, c:'#2f6b46'},
+    {n:T('升級改裝 CCS / LTE','Retrofits — CCS / LTE'), v:4032.00, c:'#6b3fb5'},
+    {n:T('獨立檢測工時','Standalone diagnostic labour'), v:1500.00, c:'#b8730a'}
+  ];
+  const tot=cats.reduce((s,c)=>s+c.v,0);
+  const W=760, barH=20, gap=30, m={t:14,l:290,r:96};
+  const H=m.t+cats.length*(barH+gap);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  cats.forEach((c,i)=>{
+    const y=m.t+i*(barH+gap), w=(c.v/tot)*(W-m.l-m.r);
+    s+=`<text x="${m.l-14}" y="${y+15}" text-anchor="end" font-size="13" fill="#171a20" font-weight="600">${tx(c.n)}</text>`;
+    s+=`<rect x="${m.l}" y="${y}" width="${W-m.l-m.r}" height="${barH}" fill="#f0f0f1"/>`;
+    s+=`<rect x="${m.l}" y="${y}" width="${w}" height="${barH}" fill="${c.c}"/>`;
+    s+=`<text x="${W-m.r+10}" y="${y+15}" font-size="12.5" fill="#171a20" font-weight="600">${(c.v/tot*100).toFixed(0)}%</text>`;
+    s+=`<text x="${m.l-14}" y="${y+30}" text-anchor="end" font-size="11" fill="#8e8e93">HKD ${fmt(c.v,2)}</text>`;
+  });
+  s+='</svg>';
+  document.getElementById('chart-cost').innerHTML=
+    `<div class="lbl" style="margin-bottom:12px">${L()==='zh'?'支出分佈（港幣，記錄期間合計 HKD 72,921.62）':'Spend by category (HKD, documented total 72,921.62)'}</div>`+s+
+    `<div class="tiny" style="margin-top:10px">${L()==='zh'
+      ?'單一 2024-10-18 大修佔記錄期間總支出 78%。不含中山電池維修 ¥11,892（人民幣，另計），亦不含約 2026-02 之迫力碟／皮更換（單據未存檔）。'
+      :'The single 18 Oct 2024 repair accounts for 78% of all documented spend. Excludes the ¥11,892 CNY Zhongshan battery repair (reported separately) and the ≈Feb 2026 brake job (no invoice on file).'}</div>`;
+}
+
+/* ---------------- tables ---------------- */
+function tblLog(){
+  const h=[T('日期','Date'),T('里程 km','Odo km'),T('地點 / 工單','Site / RO'),T('類別','Type'),T('工序內容','Work performed'),T('金額','Amount')];
+  let s='<thead><tr>'+h.map((x,i)=>`<th class="${i===1||i===5?'r':''}">${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
+  EVENTS.forEach(e=>{
+    const km=(e.odo!==null&&e.odo!==undefined)?fmt(e.odo):`<span class="dim">≈${fmt(e.odoEst)}*</span>`;
+    const amt = e.cost===null ? '<span class="dim">—</span>'
+      : e.cost===0 ? '<span class="dim">0.00</span>'
+      : (e.cur==='CNY'?'¥':'') + fmt(e.cost,2);
+    s+=`<tr>
+      <td class="num" style="white-space:nowrap;font-weight:600">${e.approx?'≈ '+e.d.slice(0,7):e.d}</td>
+      <td class="r num">${km}</td>
+      <td style="min-width:104px">${tx(e.site)}<div class="mono" style="color:#8e8e93;margin-top:2px">${tx(e.ro)}</div>
+        ${e.adv!=='—'?`<div class="tiny" style="margin-top:1px">${e.adv}</div>`:''}</td>
+      <td><span class="pill ${e.kind==='major'||e.kind==='thirdparty'?'p-red':e.kind==='decline'?'p-amb':e.kind==='goodwill'?'p-ok':e.kind==='retrofit'?'p-blue':'p-grey'}">${kz(e.kind)}</span></td>
+      <td>${tx(e.work)}</td>
+      <td class="r num" style="white-space:nowrap;font-weight:${e.cost>10000?600:400}">${amt}</td></tr>`;
+  });
+  s+=`<tr class="tot"><td colspan="5">${L()==='zh'?'記錄期間合計（港幣）':'Documented total (HKD)'}</td><td class="r num">${fmt(HKD_TOT,2)}</td></tr>`;
+  s+=`<tr class="tot" style="border-top:none"><td colspan="5" style="border-top:none">${L()==='zh'?'另計 — 中山電池維修（人民幣）':'Separately — Zhongshan battery repair (CNY)'}</td><td class="r num" style="border-top:none">¥${fmt(CNY_TOT,2)}</td></tr>`;
+  s+='</tbody>';
+  document.getElementById('tbl-log').innerHTML=s;
+}
+
+function tblCost(){
+  const rows=[
+    [T('有單據之入廠次數','Visits with an invoice on file'),'9'],
+    [T('其中原廠 Tesla 工單','Of which Tesla invoices'),'8'],
+    [T('其中第三方維修','Of which third-party'),'1'],
+    [T('口述但無單據','Reported, no invoice'),(L()==='zh'?'1（迫力碟／皮）':'1 (brake discs/pads)')],
+    [T('原廠工時費率','Tesla labour rate'),'HKD 1,500 / hr'],
+    [T('原廠工時（有列明者）','Tesla labour hours (where itemised)'),'8.54 h'],
+    [T('保用／善意承擔項目','Warranty &amp; goodwill items'),(L()==='zh'?'安全氣袋回收、冷卻液補注、HK$2,985 折讓':'Airbag recall, coolant top-up, HK$2,985 discount')],
+    [T('記錄期間總支出','Documented spend'),'HKD '+fmt(HKD_TOT,2)],
+    [T('記錄期間行駛里程','Distance in window'),fmt(WIN_KM)+' km'],
+    [T('每公里維修成本','Cost per kilometre'),'HKD '+(HKD_TOT/WIN_KM).toFixed(3)+' / km'],
+    [T('每年平均維修支出','Average annual spend'),'HKD '+fmt(HKD_TOT/yrs('2023-01-27','2026-07-07'),0)+' / yr']
+  ];
+  document.getElementById('tbl-cost').innerHTML =
+    `<thead><tr><th>${L()==='zh'?'指標':'Metric'}</th><th class="r">${L()==='zh'?'數值':'Value'}</th></tr></thead><tbody>`+
+    rows.map(r=>`<tr><td>${tx(r[0])}</td><td class="r num" style="font-weight:500">${r[1]}</td></tr>`).join('')+'</tbody>';
+}
+
+function tblParts(){
+  const h=[T('零件編號','Part no.'),T('部件','Component'),T('安裝日期','Fitted'),T('安裝里程','Odo at fit'),T('金額','Cost'),T('保用狀態','Warranty status')];
+  document.getElementById('tbl-parts').innerHTML =
+    '<thead><tr>'+h.map((x,i)=>`<th class="${i===3||i===4?'r':''}">${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    PARTS.map(p=>`<tr>
+      <td class="mono" style="white-space:nowrap">${tx(p.p)}</td>
+      <td>${tx(p.n)}</td>
+      <td class="num" style="white-space:nowrap">${p.d}</td>
+      <td class="r num">${typeof p.odo==='number'?fmt(p.odo):p.odo}</td>
+      <td class="r num">${p.cost}</td>
+      <td><span class="pill p-${p.s}">${tx(p.w)}</span></td></tr>`).join('')+'</tbody>';
+}
+
+function tblSched(){
+  const h=[T('保養項目','Item'),T('官方週期','Official interval'),T('最後紀錄','Last recorded'),T('狀態','Status'),T('說明','Comment')];
+  const st={red:T('逾期／無紀錄','Overdue / no record'),amb:T('待確認','To confirm'),ok:T('已完成','Done'),grey:T('不適用','N/A')};
+  document.getElementById('tbl-sched').innerHTML =
+    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    SCHED.map(r=>`<tr>
+      <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td>${tx(r.last)}</td>
+      <td><span class="pill p-${r.st}">${tx(st[r.st])}</span></td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
+}
+
+function actions(){
+  const pl={red:T('高','High'),amb:T('中','Medium'),blue:T('行政','Admin')};
+  document.getElementById('list-actions').innerHTML = ACTIONS.map(a=>
+    `<li><b>${tx(a.t)}</b> <span class="pill p-${a.p}" style="margin-left:6px">${tx(pl[a.p])}</span>
+     <div class="dim" style="margin-top:4px">${tx(a.b)}</div></li>`).join('');
+}
+
+function prov(){
+  const zh = `<h4>資料來源</h4>
+  本報告全部數據取自 <span class="mono">I#S WK2605057840006075.pdf</span>（18 頁掃描正本）：8 張 Tesla Motors HK Limited 原廠工單、1 張中山市雙電新能源汽車服務有限公司報價單、1 份香港運輸署車輛登記文件、1 份內地車管所出境備案指引、1 份中山維修商營業執照。壽命基準取自 Tesla 官方保用文件及 service.tesla.com 保養週期頁；LDU 與 12V 電池之壽命範圍為維修業／車主社群估算，已於圖表標示。
+  <h4 style="margin-top:9px">存疑及未能核實事項</h4>
+  <b>① 車牌不一致</b> — 工單載 VY1428，登記文件載 VM3645（同一 VIN），未能從檔案判定原因。<br>
+  <b>② 一張無日期工單</b> — 檔案內有一頁「2 of 2」之 Tesla 工單，總額 HK$66,371.58（零件 58,211.58 ＋ 工時 8,160.00，含冷氣壓縮機及高壓斷電程序），但缺第 1 頁，無工單號、日期及里程。其內容與 2024 年之冷氣／驅動總成維修高度相關，最可能為 2024-09-27 遭婉拒之報價，但無法確認，故<b>未計入任何合計數字</b>。<br>
+  <b>③ 中山維修無里程紀錄</b> — 2026-05-05 之電池維修單無入廠里程，圖表所示 ≈297,200 km 為按前後兩次讀數線性內插之估算值，並以空心標記顯示。<br>
+  <b>④ 手寫批註（已逐字放大核對）</b> — 2024-10-18 工單頁首手寫「☆ 摩打 4年 or 80000 km 零件保養」，車輛資料下方另有「☆ 1年 or 20000 km 冷氣泵 零件保養」。此為本報告採用之翻新驅動總成保用條款來源。2024-08-22 工單底部另有手寫中文註記，經放大後仍有部分字迹無法確認，最可能意思為「已更換摩打及冷氣泵」，故不作引用。手寫批註並非 Tesla 正式保用文件。<br>
+  <b>⑤ 迫力碟／皮：車主口述，單據未存檔</b> — 車主表示約於 2026 年 2 月前後更換迫力碟及迫力皮，本檔案內並無相關單據，日期、里程、規格及金額均未經核實，已於工單表及時間軸以「口述待補單據」標示，並排除於所有合計之外。<br>
+  <b>⑥ 輪胎無任何單據</b> — 2023-01 前輪僅餘 2mm，其後必曾更換，但檔案內無輪胎紀錄，屬檔案缺漏而非未曾保養。<br>
+  <b>⑦ 幣別換算</b> — 港幣與人民幣金額分別列示，未作合併換算，以免引入未經核實之匯率。<br>
+  <b>⑧ 客戶姓名／電話／地址</b> — 掃描件上已遭人手塗黑，本報告不作還原。`;
+
+  const en = `<h4>Sources</h4>
+  Every figure in this report is transcribed from <span class="mono">I#S WK2605057840006075.pdf</span> (18 scanned original pages): 8 Tesla Motors HK Limited service invoices, 1 quotation from Zhongshan Shuangdian New Energy Vehicle Service Co. Ltd, 1 Hong Kong Transport Department vehicle registration document, 1 Mainland vehicle-administration exit-filing instruction sheet, and 1 business licence for the Zhongshan workshop. Life benchmarks come from Tesla's warranty documentation and the service.tesla.com maintenance-interval page; the LDU and 12 V battery ranges are repair-industry / owner-community estimates and are labelled as such on the chart.
+  <h4 style="margin-top:9px">Unresolved and unverified items</h4>
+  <b>① Registration-mark conflict</b> — invoices show VY1428, the registration document shows VM3645 for the same VIN. The cause cannot be determined from the file.<br>
+  <b>② One undated invoice page</b> — the file contains a Tesla invoice page marked "2 of 2" totalling HK$66,371.58 (parts 58,211.58 + labour 8,160.00, including an A/C compressor and an HV disablement procedure), but page 1 is missing, so there is no RO number, date or odometer. Its content overlaps closely with the 2024 A/C and drive-unit work and it is most likely the quotation declined on 27 Sep 2024 — but this cannot be confirmed, so it is <b>excluded from every total</b> in this report.<br>
+  <b>③ No odometer for the Zhongshan repair</b> — the 5 May 2026 battery invoice carries no mileage. The ≈297,200 km shown on the chart is a linear interpolation between the readings either side of it and is drawn as a hollow marker.<br>
+  <b>④ Handwritten annotations (magnified and read character by character)</b> — the 18 Oct 2024 invoice carries "☆ motor — 4 years or 80,000 km parts warranty" at the head of the page, and "☆ 1 year or 20,000 km — A/C compressor parts warranty" below the vehicle details. These are the source of the reman drive-unit warranty term used in this report. The 22 Aug 2024 invoice has a further handwritten Chinese note; even magnified, several characters remain unreadable — the likely sense is "motor and A/C compressor already replaced", so it is not quoted. A handwritten note is not a formal Tesla warranty document.<br>
+  <b>⑤ Brake discs/pads — owner-reported, no invoice</b> — you report discs and pads were replaced around February 2026. No such invoice is in this file, so date, odometer, specification and cost are unverified. The entry is marked "reported — invoice pending" in the log and on the timeline, and is excluded from every total.<br>
+  <b>⑥ No tyre invoices at all</b> — the fronts were at 2 mm in Jan 2023, so tyres must have been replaced since, yet no tyre record exists in the file. A paperwork gap, not evidence of neglect.<br>
+  <b>⑦ Currency</b> — HKD and CNY totals are kept separate; no combined figure is given, to avoid introducing an unverified exchange rate.<br>
+  <b>⑧ Customer name, phone and address</b> — redacted by hand on the scans; not reconstructed here.`;
+  document.getElementById('prov').innerHTML = `<div class="zh-only">${zh}</div><div class="en-only">${en}</div>`;
+}
+
+function renderAll(){
+  ident(); kpis(); chartTimeline(); chartLife(); chartCost();
+  tblLog(); tblCost(); tblParts(); tblSched(); actions(); prov();
+}
+function setLang(l){
+  document.body.dataset.lang=l;
+  document.documentElement.lang = l==='zh'?'zh-Hant':'en';
+  document.getElementById('btn-zh').classList.toggle('on',l==='zh');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  renderAll();
+}
+renderAll();
+</script>
+</body>
+</html>
