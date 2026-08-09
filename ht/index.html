@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henderson Transpacific 亨德森環太 — 車輛檔案與分析系統 Vehicle Records &amp; Analytics</title>
+<style>
+:root{
+  --navy:#0e1b2c; --steel:#33475e; --teal:#0e9aa7; --paper:#f6f7f8;
+  --faint:#64748b; --line:#d5dbe1; --hair:#e6eaee;
+  --ok:#2f6b46; --amber:#b8730a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--navy); background:var(--paper); font-size:14px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.lbl{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+/* ---------- brand ---------- */
+.brandmark{display:flex;align-items:center;gap:10px}
+.brandmark svg{flex:0 0 auto;display:block}
+.wordmark{font-size:13px;font-weight:600;letter-spacing:.3em;text-transform:uppercase}
+.wordmark span{color:var(--teal)}
+.cnname{font-size:9.5px;letter-spacing:.1em;margin-top:2px;opacity:.75}
+
+/* ---------- header / hero ---------- */
+header.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+header.top .cta{font-size:11px;font-weight:600;letter-spacing:.05em;padding:9px 18px;border:1px solid rgba(255,255,255,.35);border-radius:3px;text-decoration:none;white-space:nowrap}
+.hero{background:linear-gradient(155deg,var(--navy) 0%,#122536 60%,var(--steel) 130%);color:#fff}
+.hero .top .cnname,.hero .top .lbl{color:rgba(255,255,255,.6)}
+.hero-inner{padding:52px 0 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1{font-size:34px;font-weight:600;line-height:1.28;letter-spacing:.005em}
+.hero h1 .en{display:block;font-size:16px;font-weight:400;color:rgba(255,255,255,.72);margin-top:10px;letter-spacing:.01em}
+.hero p.value{margin-top:18px;font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.86);max-width:52ch}
+.hero .btnrow{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;padding:11px 20px;border-radius:3px;text-decoration:none;border:1px solid transparent}
+.btn.pri{background:var(--teal);color:#fff}
+.btn.ghost{border-color:rgba(255,255,255,.4);color:#fff}
+.hero-panel{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:22px 24px}
+.hero-panel .stat{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:12px}
+.hero-panel .stat:last-child{border-bottom:none}
+.hero-panel .stat b{font-weight:600}
+.hero-panel .stat .v{color:var(--teal);font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:46px 0}
+section.tint{background:#fff;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+h2.sec-title{font-size:20px;font-weight:600;letter-spacing:.005em}
+h2.sec-title .en{display:block;font-size:11.5px;font-weight:500;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.sec-head{margin-bottom:26px}
+
+/* ---------- module cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:22px 22px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:var(--teal);box-shadow:0 6px 18px rgba(14,27,44,.08)}
+.card .tag{display:inline-block;font-size:8.6px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);border-radius:2px;padding:2px 7px;margin-bottom:12px;width:fit-content}
+.card h3{font-size:15px;font-weight:600}
+.card h3 .en{display:block;font-size:10.5px;font-weight:500;color:var(--faint);margin-top:3px;letter-spacing:.03em}
+.card p{font-size:11.8px;color:var(--steel);line-height:1.6;margin-top:10px;flex:1}
+.card .go{margin-top:14px;font-size:11px;font-weight:600;color:var(--teal)}
+
+/* ---------- benefits ---------- */
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.benefit{padding:0}
+.benefit .n{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.06em}
+.benefit h4{font-size:13px;font-weight:600;margin-top:8px}
+.benefit h4 .en{display:block;font-size:10px;font-weight:500;color:var(--faint);margin-top:2px}
+.benefit p{font-size:11.5px;color:var(--steel);margin-top:7px;line-height:1.6}
+
+/* ---------- pricing ---------- */
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.plan{background:#fff;border:1px solid var(--line);border-radius:6px;padding:22px 20px;display:flex;flex-direction:column}
+.plan.hi{border-color:var(--teal);box-shadow:0 6px 20px rgba(14,154,167,.12);position:relative}
+.plan.hi:before{content:"建議 Recommended";position:absolute;top:-11px;left:20px;background:var(--teal);color:#fff;font-size:8.6px;font-weight:600;letter-spacing:.1em;padding:3px 9px;border-radius:2px;text-transform:uppercase}
+.plan .pname{font-size:14px;font-weight:600}
+.plan .pname .en{display:block;font-size:10px;font-weight:500;color:var(--faint);margin-top:2px}
+.plan .price{margin-top:14px;font-size:23px;font-weight:600;letter-spacing:-.01em}
+.plan .price small{font-size:11px;font-weight:500;color:var(--faint)}
+.plan .exsign{display:inline-block;font-size:8.6px;font-weight:600;letter-spacing:.08em;color:var(--amber);border:1px solid #e0b96a;background:#fdf8ee;border-radius:2px;padding:1px 6px;margin-top:6px}
+.plan ul{list-style:none;margin-top:16px;flex:1}
+.plan li{font-size:11.5px;color:var(--steel);padding:6px 0 6px 16px;border-bottom:1px solid var(--hair);position:relative;line-height:1.5}
+.plan li:before{content:"✓";position:absolute;left:0;color:var(--teal);font-weight:700;font-size:10.5px}
+.plan li:last-child{border-bottom:none}
+
+/* ---------- contact ---------- */
+.contact{background:var(--navy);color:#fff;border-radius:8px;padding:36px 40px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.contact h3{font-size:18px;font-weight:600}
+.contact h3 .en{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.68);margin-top:5px}
+.contact .fields{font-size:11.5px;color:rgba(255,255,255,.78);margin-top:10px;line-height:1.8}
+.contact .fields b{color:#fff;font-weight:600}
+
+/* ---------- footer ---------- */
+footer.site{padding:22px 0 34px;text-align:center;font-size:9.5px;letter-spacing:.06em;color:var(--faint)}
+
+@media (max-width:860px){
+  .hero-inner{grid-template-columns:1fr}
+  .cards,.benefits,.pricing{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .cards,.benefits,.pricing{grid-template-columns:1fr}
+  .contact{flex-direction:column;align-items:flex-start}
+}
+@media print{
+  body{background:#fff}
+  .hero{background:#fff;color:var(--navy);border-bottom:2px solid var(--navy)}
+  .hero .top .cnname,.hero .top .lbl,.hero h1 .en,.hero p.value{color:var(--steel)!important}
+  .hero-panel{background:#fff;border-color:var(--line)}
+  .hero-panel .stat{color:var(--navy)}
+  header.top .cta{display:none}
+  .hero .btnrow{display:none}
+  .contact{background:#fff;color:var(--navy);border:1px solid var(--line)}
+  .contact .fields,.contact h3 .en{color:var(--steel)!important}
+  section{padding:28px 0}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <header class="top">
+      <div class="brandmark">
+        <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#fff"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e1b2c">HT</text></svg>
+        <div>
+          <div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div>
+          <div class="cnname">亨德森環太</div>
+        </div>
+      </div>
+      <a class="cta" href="#contact">聯絡我們 Contact us</a>
+    </header>
+
+    <div class="hero-inner">
+      <div>
+        <h1>車廠級車輛檔案系統<span class="en">Instrument-grade vehicle records for your workshop</span></h1>
+        <p class="value">為每一部進場的客戶車輛,建立終身可追溯的專業維修檔案 —
+          留住客戶、建立信任,並為工場開闢新收入來源。<br>
+          <span style="color:rgba(255,255,255,.66)">Give every customer car a professional, lifetime-tracked service record — the retention, trust and new revenue line an independent EV shop needs.</span></p>
+        <div class="btnrow">
+          <a class="btn pri" href="#modules">查看示範 View the demos</a>
+          <a class="btn ghost" href="#pricing">查看價格 See pricing</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="lbl" style="color:rgba(255,255,255,.55);margin-bottom:10px">示範系統 · 即時數據 Live demo system</div>
+        <div class="stat"><span>工作台模組 Console modules</span><b class="v">7</b></div>
+        <div class="stat"><span>報告章節 Report sections</span><b class="v">8</b></div>
+        <div class="stat"><span>遙測更新頻率 Telemetry refresh</span><b class="v">1 hr</b></div>
+        <div class="stat"><span>資料儲存 Data storage</span><b>本機優先 Local-first</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="modules">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">三大產品模組<span class="en">Three product modules</span></h2>
+    </div>
+    <div class="cards">
+      <a class="card" href="workshop-console.html">
+        <span class="tag">Console</span>
+        <h3>工作台<span class="en">Workshop Console</span></h3>
+        <p>車輛登記冊、工單、車型速查、診斷速查、高壓安全規程 — 一部工場日常運作的核心系統,三層自動存檔,資料留在本機。</p>
+        <span class="go">開啟示範 Open demo →</span>
+      </a>
+      <a class="card" href="sample-record.html">
+        <span class="tag">Report</span>
+        <h3>車輛檔案報告<span class="en">Vehicle Record Report — real 300,000 km case study</span></h3>
+        <p>雙語、附圖表的單車終身維修紀錄 — 里程時間軸、部件壽命分析、費用分析、待辦建議,可直接列印交予客戶。真實案例：一部行駛 30 萬公里的 2016 Model S。</p>
+        <span class="go">查看真實案例 View real case study →</span>
+      </a>
+      <a class="card" href="telemetry.html">
+        <span class="tag">Live</span>
+        <h3>電池健康遙測<span class="en">Battery Telemetry — real 300,000 km case study</span></h3>
+        <p>每小時透過官方車廠 API 自動記錄續航數據,免安裝硬件,長期趨勢一目了然 — 此頁為同一部真實車輛的即時連線數據。</p>
+        <span class="go">查看即時數據 View live data →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">工場為何要買<span class="en">Why shops buy</span></h2>
+    </div>
+    <div class="benefits">
+      <div class="benefit">
+        <div class="n">01</div>
+        <h4>客戶回頭率<span class="en">Customer retention</span></h4>
+        <p>完整檔案令客戶下次保養自然回到同一間工場,而不是隨便找一間。</p>
+      </div>
+      <div class="benefit">
+        <div class="n">02</div>
+        <h4>可對外收費的交付物<span class="en">A paid deliverable</span></h4>
+        <p>車輛檔案報告本身可作為向客戶收費的專業服務,而不只是內部紀錄。</p>
+      </div>
+      <div class="benefit">
+        <div class="n">03</div>
+        <h4>糾紛保障<span class="en">Dispute protection</span></h4>
+        <p>逐項記錄的維修歷史,在保用或責任爭議時是工場最有力的證據。</p>
+      </div>
+      <div class="benefit">
+        <div class="n">04</div>
+        <h4>提升轉售價值<span class="en">Higher resale value</span></h4>
+        <p>齊全的紀錄令客戶車輛轉售更有價,客戶滿意度與轉介率同步提升。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sec-title">價格方案<span class="en">Pricing</span> <span class="exsign">示例 Example</span></h2>
+    </div>
+    <div class="pricing">
+      <div class="plan">
+        <div class="pname">入門<span class="en">Starter</span></div>
+        <div class="price">HK$88<small> / 份報告</small></div>
+        <span class="exsign">示例價 Example</span>
+        <ul>
+          <li>按份數付費 Pay per report</li>
+          <li>車輛檔案報告 Vehicle record report</li>
+          <li>雙語 PDF 列印 Bilingual print / PDF</li>
+          <li>適合初次試用 Good for a first try</li>
+        </ul>
+      </div>
+      <div class="plan hi">
+        <div class="pname">專業<span class="en">Pro</span></div>
+        <div class="price">HK$1,280<small> / 月・不限車輛</small></div>
+        <span class="exsign">示例價 Example</span>
+        <ul>
+          <li>不限車輛數量 Unlimited vehicles</li>
+          <li>工作台全功能 Full Workshop Console</li>
+          <li>工單、診斷、車型速查 Job cards, diagnostics, model reference</li>
+          <li>三層自動存檔 3-tier auto-save</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="pname">旗艦<span class="en">Fleet+Telemetry</span></div>
+        <div class="price">HK$2,480<small> / 月・不限車輛</small></div>
+        <span class="exsign">示例價 Example</span>
+        <ul>
+          <li>包含專業方案全部功能 Everything in Pro</li>
+          <li>電池健康遙測 Live battery telemetry</li>
+          <li>每小時自動記錄 Hourly auto-logging</li>
+          <li>官方車廠 API,免安裝硬件 OEM API, no hardware</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <h3>準備好為你的工場升級記錄系統?<span class="en">Ready to upgrade your workshop's record-keeping?</span></h3>
+        <div class="fields">
+          <div>電郵 Email — <b>sales@hendersontranspacific.example</b></div>
+          <div>電話 Tel — <b>+852 0000 0000</b>（示例 placeholder）</div>
+        </div>
+      </div>
+      <a class="btn pri" href="mailto:sales@hendersontranspacific.example">預約示範 Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">Henderson Transpacific · Vehicle Records &amp; Analytics · 示範版 Demo</footer>
+
+</body>
+</html>

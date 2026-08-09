@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>電池健康遙測 Battery Telemetry — 示範 Live Demo · Henderson Transpacific</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7;
+  --muted:#33475e;
+  --faint:#64748b;
+  --line:#d5dbe1;
+  --hair:#e6eaee;
+  --panel:#f6f7f8;
+  --red:#c0392b;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+h1,p,div{margin:0;}
+
+body{
+  background:#eef2f4;
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  padding:40px 16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.card{
+  max-width:760px;
+  margin:0 auto;
+  background:#fff;
+  padding:34px 36px;
+  box-shadow:0 1px 3px rgba(0,0,0,.12),0 10px 30px rgba(0,0,0,.08);
+}
+
+/* header */
+header{
+  padding-bottom:20px;
+  margin-bottom:26px;
+  border-bottom:1px solid var(--line);
+}
+.topline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.wordmark{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.44em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.wordmark .a{color:var(--accent);}
+.plate{
+  border:1.5px solid var(--ink);
+  border-radius:3px;
+  padding:4px 12px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.06em;
+  color:var(--ink);
+  white-space:nowrap;
+}
+h1{
+  font-size:27px;
+  font-weight:600;
+  line-height:1.3;
+  margin:16px 0 7px;
+}
+h1 .en{font-weight:400;color:var(--muted);}
+.subtitle{
+  font-size:12.5px;
+  color:var(--muted);
+  letter-spacing:.01em;
+}
+
+/* shared section-header pattern */
+.section-label{
+  font-size:10.5px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--faint);
+  margin:0 0 12px;
+}
+
+/* stat row */
+.stat-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:18px;
+  padding-bottom:22px;
+  margin-bottom:24px;
+  border-bottom:1px solid var(--hair);
+}
+.stat-block{min-width:150px;}
+.stat-delta{text-align:right;}
+.stat-value{
+  font-size:40px;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.stat-value .unit{
+  font-size:16px;
+  font-weight:500;
+  color:var(--muted);
+}
+.stat-value--delta{
+  font-size:22px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.stat-value--delta .delta-pct{
+  font-size:15px;
+  font-weight:500;
+  color:var(--muted);
+}
+.stat-caption{
+  font-size:11.5px;
+  color:var(--faint);
+  margin-top:7px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* explainer */
+.explainer{
+  font-size:12.5px;
+  color:var(--muted);
+  line-height:1.65;
+  margin:0 0 28px;
+  max-width:64ch;
+}
+.explainer .en{
+  display:block;
+  color:var(--faint);
+  font-size:11.5px;
+  margin-top:5px;
+}
+
+/* chart */
+.chart-section{margin-bottom:6px;}
+.chart-wrap{width:100%;}
+.chart-wrap svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.chart-wrap svg text{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  font-variant-numeric:tabular-nums;
+}
+.grid-line{stroke:var(--hair);stroke-width:1;}
+.axis-label{fill:var(--faint);font-size:10px;}
+.series-line{stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
+.series-dot{fill:var(--accent);}
+.single-dot{fill:var(--accent);}
+.chart-caption{fill:var(--muted);font-size:12px;}
+.sample-note{
+  font-size:11px;
+  color:var(--faint);
+  text-align:right;
+  margin-top:10px;
+  font-variant-numeric:tabular-nums;
+}
+.loading-note{font-size:12.5px;color:var(--faint);padding:60px 0;text-align:center;}
+
+/* error panel */
+.error-panel{
+  text-align:center;
+  padding:52px 20px;
+  margin:0 0 28px;
+  border:1px dashed var(--line);
+  border-radius:4px;
+  color:var(--muted);
+}
+.error-panel .error-title{
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  margin:0 0 6px;
+}
+.error-panel .error-title .en{
+  display:block;
+  font-weight:400;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:3px;
+}
+.error-panel .error-sub{
+  font-size:12px;
+  color:var(--faint);
+}
+
+/* footer */
+footer{
+  border-top:1px solid var(--hair);
+  padding-top:20px;
+  margin-top:28px;
+}
+.source-note{
+  font-size:11.5px;
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 16px;
+}
+.source-note .en{
+  display:block;
+  color:var(--faint);
+  font-size:10.5px;
+  margin-top:4px;
+}
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.last-loaded{
+  font-size:11px;
+  color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+.refresh-btn{
+  -webkit-appearance:none;
+  appearance:none;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--ink);
+  background:#fff;
+  border:1.5px solid var(--ink);
+  border-radius:3px;
+  padding:7px 16px;
+  cursor:pointer;
+  transition:background .15s ease,color .15s ease;
+}
+.refresh-btn:hover{background:var(--ink);color:#fff;}
+.refresh-btn:active{transform:translateY(1px);}
+.refresh-btn:disabled{opacity:.5;cursor:default;}
+
+.brandmark{display:flex;align-items:center;gap:9px}
+.brandmark svg{flex:0 0 auto;display:block}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+.demobar{background:var(--accent);color:#fff;text-align:center;font-size:10px;font-weight:600;letter-spacing:.05em;padding:7px 10px;margin:-34px -36px 26px;border-radius:0}
+.ht-tag{text-align:center;font-size:9.5px;color:var(--faint);letter-spacing:.05em}
+@media print{
+  body{background:#fff;padding:0;}
+  .card{box-shadow:none;margin:0;max-width:100%;padding:12px 4px;}
+  .refresh-btn{display:none;}
+  @page{size:A4;margin:14mm;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="demobar">真實案例 · Live real-vehicle data</div>
+  <header>
+    <div class="topline">
+      <div class="brandmark">
+        <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>
+        <div>
+          <div class="wordmark">HENDERSON <span class="a">TRANSPACIFIC</span></div>
+          <div class="cnname">亨德森環太</div>
+        </div>
+      </div>
+      <div class="plate">SC 291</div>
+    </div>
+    <h1>電池健康遙測 <span class="en">Battery Telemetry — Demo</span></h1>
+    <p class="subtitle">2016 Model S 70 kWh · 右駕 RHD · VIN …122555 · ~303,610 km</p>
+    <p class="subtitle" style="margin-top:5px">每小時自動記錄 · 官方車廠 API · 不需安裝硬件 <span class="en">hourly, official OEM API, no hardware install</span></p>
+  </header>
+
+  <main id="content">
+    <p class="loading-note">載入中 Loading…</p>
+  </main>
+
+  <div id="errorPanel" class="error-panel" hidden>
+    <p class="error-title">資料暫時無法載入 <span class="en">Data temporarily unavailable</span></p>
+    <p class="error-sub">請稍後再試，或使用下方「重新整理」按鈕。 Please try again later, or use the Refresh button below.</p>
+  </div>
+
+  <footer>
+    <p class="section-label">資料來源 Data Source</p>
+    <p class="source-note">數據每小時經官方車廠 Fleet API 自動記錄；只公開每日彙總續航（不含位置、里程）。<span class="en">Auto-logged hourly via the vehicle manufacturer's official Fleet API; only the daily aggregate range is published (no location or odometer).</span></p>
+    <div class="footer-row">
+      <p class="last-loaded">最後載入 Last loaded: <span id="lastLoaded">—</span></p>
+      <button id="refreshBtn" class="refresh-btn" type="button">重新整理 Refresh</button>
+    </div>
+    <p class="ht-tag" style="margin-top:14px">Henderson Transpacific · Vehicle Records &amp; Analytics · 示範版 Demo</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_6F3mS-75R7Ik7C0xkvOargB9IzTsTDwkzn41-o8TyVmSwvFwATlRCsQxRZ1VyS7DO80aVhWD_GYe/pub?gid=1641969254&single=true&output=csv";
+
+  var content = document.getElementById('content');
+  var errorPanel = document.getElementById('errorPanel');
+  var lastLoadedEl = document.getElementById('lastLoaded');
+  var refreshBtn = document.getElementById('refreshBtn');
+
+  /* ---------- CSV parsing ---------- */
+
+  function parseCSV(text) {
+    var rows = [];
+    var row = [];
+    var field = '';
+    var inQuotes = false;
+    var i = 0;
+    var len = text.length;
+
+    while (i < len) {
+      var c = text.charAt(i);
+
+      if (inQuotes) {
+        if (c === '"') {
+          if (text.charAt(i + 1) === '"') { field += '"'; i += 2; continue; }
+          inQuotes = false; i += 1; continue;
+        }
+        field += c; i += 1; continue;
+      }
+
+      if (c === '"') { inQuotes = true; i += 1; continue; }
+      if (c === ',') { row.push(field); field = ''; i += 1; continue; }
+      if (c === '\r') {
+        if (text.charAt(i + 1) === '\n') { i += 1; }
+        row.push(field); rows.push(row); row = []; field = ''; i += 1; continue;
+      }
+      if (c === '\n') {
+        row.push(field); rows.push(row); row = []; field = ''; i += 1; continue;
+      }
+      field += c; i += 1;
+    }
+
+    if (field.length > 0 || row.length > 0) {
+      row.push(field);
+      rows.push(row);
+    }
+
+    while (rows.length && rows[rows.length - 1].length === 1 && rows[rows.length - 1][0].trim() === '') {
+      rows.pop();
+    }
+
+    return rows;
+  }
+
+  function rowsToRecords(rows) {
+    if (!rows.length) return [];
+
+    var header = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    var dateIdx = header.indexOf('date');
+    var valIdx = header.indexOf('projected_100pct_km');
+    if (dateIdx === -1 || valIdx === -1) {
+      throw new Error('Missing expected CSV columns');
+    }
+
+    var byDate = {};
+    var order = [];
+
+    for (var r = 1; r < rows.length; r += 1) {
+      var cols = rows[r];
+      if (!cols || (cols.length === 1 && cols[0].trim() === '')) continue;
+
+      var dateRaw = (cols[dateIdx] || '').trim();
+      var valRaw = (cols[valIdx] || '').trim();
+
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateRaw)) continue;
+      if (valRaw === '') continue;
+
+      var value = Number(valRaw);
+      if (!isFinite(value)) continue;
+
+      if (!Object.prototype.hasOwnProperty.call(byDate, dateRaw)) order.push(dateRaw);
+      byDate[dateRaw] = value; /* last occurrence for a given date wins */
+    }
+
+    var records = order.map(function (dateStr) {
+      var parts = dateStr.split('-');
+      var y = Number(parts[0]), m = Number(parts[1]), d = Number(parts[2]);
+      return { dateStr: dateStr, value: byDate[dateStr], ts: Date.UTC(y, m - 1, d) };
+    });
+
+    records.sort(function (a, b) { return a.ts - b.ts; });
+    return records;
+  }
+
+  /* ---------- number / date formatting ---------- */
+
+  function fmtInt(n) {
+    return Math.round(n).toLocaleString('en-US');
+  }
+
+  function fmtTick(v, step) {
+    var decimals = step < 1 ? 1 : 0;
+    return v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+
+  function fmtDateTick(ts) {
+    var d = new Date(ts);
+    var y = d.getUTCFullYear();
+    var m = String(d.getUTCMonth() + 1);
+    var day = String(d.getUTCDate());
+    if (m.length < 2) m = '0' + m;
+    if (day.length < 2) day = '0' + day;
+    return y + '-' + m + '-' + day;
+  }
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+  function fmtTimestamp(d) {
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) + ' ' +
+           pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds());
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  /* ---------- chart geometry ---------- */
+
+  var W = 688, H = 320;
+  var MARGIN_L = 48, MARGIN_R = 14, MARGIN_T = 14, MARGIN_B = 32;
+  var PLOT_W = W - MARGIN_L - MARGIN_R;
+  var PLOT_H = H - MARGIN_T - MARGIN_B;
+
+  function minMax(arr) {
+    var min = Infinity, max = -Infinity;
+    for (var i = 0; i < arr.length; i += 1) {
+      if (arr[i] < min) min = arr[i];
+      if (arr[i] > max) max = arr[i];
+    }
+    return [min, max];
+  }
+
+  function computeYDomain(values) {
+    var mm = minMax(values);
+    var min = mm[0], max = mm[1];
+    if (min === max) {
+      var delta = Math.max(Math.abs(min) * 0.05, 5);
+      return [min - delta, max + delta];
+    }
+    var pad = (max - min) * 0.05;
+    return [min - pad, max + pad];
+  }
+
+  function niceStep(rawStep) {
+    if (!isFinite(rawStep) || rawStep <= 0) return 1;
+    var exponent = Math.floor(Math.log(rawStep) / Math.LN10);
+    var fraction = rawStep / Math.pow(10, exponent);
+    var niceFraction;
+    if (fraction <= 1) niceFraction = 1;
+    else if (fraction <= 2) niceFraction = 2;
+    else if (fraction <= 5) niceFraction = 5;
+    else niceFraction = 10;
+    return niceFraction * Math.pow(10, exponent);
+  }
+
+  function computeYTicks(min, max, targetCount) {
+    var span = max - min;
+    var step = niceStep(span / Math.max(targetCount - 1, 1));
+    var ticks = [];
+    var v = Math.ceil(min / step) * step;
+    var guard = 0;
+    while (v <= max + step * 1e-6 && guard < 200) {
+      ticks.push(Math.round(v * 10000) / 10000);
+      v += step;
+      guard += 1;
+    }
+    if (!ticks.length) ticks.push(Math.round(((min + max) / 2) * 100) / 100);
+    return { ticks: ticks, step: step };
+  }
+
+  function computeXTicks(xMin, xMax, targetCount) {
+    var ticks = [];
+    var n = Math.max(targetCount - 1, 1);
+    for (var i = 0; i <= n; i += 1) {
+      ticks.push(xMin + (xMax - xMin) * (i / n));
+    }
+    return ticks;
+  }
+
+  function buildSingleDotSVG(rec) {
+    var cx = W / 2, cy = H / 2 - 8;
+    return '' +
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="電池健康趨勢圖，目前僅一筆數據">' +
+        '<title>電池健康趨勢 Battery Health Trend</title>' +
+        '<circle class="single-dot" cx="' + cx + '" cy="' + cy + '" r="5"></circle>' +
+        '<text class="chart-caption" x="' + cx + '" y="' + (cy - 18) + '" text-anchor="middle">' + esc(rec.dateStr) + ' · ' + esc(fmtInt(rec.value)) + ' km</text>' +
+        '<text class="chart-caption" x="' + cx + '" y="' + (cy + 30) + '" text-anchor="middle">收集數據中 · Collecting data</text>' +
+      '</svg>';
+  }
+
+  function buildLineChartSVG(records) {
+    var values = records.map(function (r) { return r.value; });
+    var yDomain = computeYDomain(values);
+    var yMin = yDomain[0], yMax = yDomain[1];
+    var xMin = records[0].ts, xMax = records[records.length - 1].ts;
+
+    function xScale(ts) {
+      return MARGIN_L + (xMax === xMin ? 0 : (ts - xMin) / (xMax - xMin) * PLOT_W);
+    }
+    function yScale(v) {
+      return MARGIN_T + (1 - (v - yMin) / (yMax - yMin)) * PLOT_H;
+    }
+
+    var yt = computeYTicks(yMin, yMax, 5);
+    var xTicks = computeXTicks(xMin, xMax, 4);
+
+    var gridSvg = '';
+    yt.ticks.forEach(function (t) {
+      var y = yScale(t);
+      gridSvg += '<line class="grid-line" x1="' + MARGIN_L + '" y1="' + y.toFixed(2) + '" x2="' + (W - MARGIN_R) + '" y2="' + y.toFixed(2) + '"></line>';
+      gridSvg += '<text class="axis-label" x="' + (MARGIN_L - 8) + '" y="' + (y + 3.2).toFixed(2) + '" text-anchor="end">' + esc(fmtTick(t, yt.step)) + '</text>';
+    });
+
+    var xLabelSvg = '';
+    var prevLabel = null;
+    xTicks.forEach(function (ts, i) {
+      var label = fmtDateTick(ts);
+      if (label === prevLabel) return; /* avoid two adjacent ticks showing the same date on short spans */
+      prevLabel = label;
+      var x = xScale(ts);
+      var anchor = 'middle';
+      if (i === 0) anchor = 'start';
+      else if (i === xTicks.length - 1) anchor = 'end';
+      xLabelSvg += '<text class="axis-label" x="' + x.toFixed(2) + '" y="' + (H - MARGIN_B + 18) + '" text-anchor="' + anchor + '">' + esc(label) + '</text>';
+    });
+
+    var pointsAttr = records.map(function (r) {
+      return xScale(r.ts).toFixed(2) + ',' + yScale(r.value).toFixed(2);
+    }).join(' ');
+
+    var markerSvg = '';
+    if (records.length <= 60) {
+      markerSvg = records.map(function (r) {
+        return '<circle class="series-dot" cx="' + xScale(r.ts).toFixed(2) + '" cy="' + yScale(r.value).toFixed(2) + '" r="2.6"></circle>';
+      }).join('');
+    }
+
+    return '' +
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="電池健康趨勢圖 Battery health trend chart">' +
+        '<title>電池健康趨勢 Battery Health Trend</title>' +
+        gridSvg +
+        xLabelSvg +
+        '<polyline class="series-line" fill="none" points="' + pointsAttr + '"></polyline>' +
+        markerSvg +
+      '</svg>';
+  }
+
+  /* ---------- render ---------- */
+
+  function renderAll(records) {
+    var latest = records[records.length - 1];
+    var first = records[0];
+    var hasHistory = records.length > 1;
+    var deltaKm = latest.value - first.value;
+    var deltaPct = first.value !== 0 ? (deltaKm / first.value * 100) : null;
+    var sign = deltaKm > 0 ? '+' : '';
+
+    var deltaLine = '—';
+    if (hasHistory) {
+      deltaLine = sign + fmtInt(deltaKm) + ' km';
+      if (deltaPct !== null) {
+        deltaLine += ' <span class="delta-pct">(' + sign + deltaPct.toFixed(1) + '%)</span>';
+      }
+    }
+    var deltaCaption = hasHistory
+      ? ('自首次記錄 since first record · ' + esc(first.dateStr))
+      : '尚無足夠歷史數據比較 Not enough history yet';
+
+    var statRowHtml =
+      '<section class="stat-row">' +
+        '<div class="stat-block">' +
+          '<div class="stat-value">' + esc(fmtInt(latest.value)) + ' <span class="unit">km</span></div>' +
+          '<div class="stat-caption">最新讀數 Latest reading · ' + esc(latest.dateStr) + '</div>' +
+        '</div>' +
+        '<div class="stat-block stat-delta">' +
+          '<div class="stat-value stat-value--delta">' + deltaLine + '</div>' +
+          '<div class="stat-caption">' + deltaCaption + '</div>' +
+        '</div>' +
+      '</section>';
+
+    var explainerHtml =
+      '<p class="explainer">「滿充預估續航」是將目前顯示的續航里程，依電量比例換算至 100% 充電時的數值，作為電池健康的參考指標；請關注長期趨勢，而非單次讀數的高低。' +
+      '<span class="en">Projected full-charge range extrapolates the displayed rated range to a 100% charge as a proxy for battery pack health — watch the trend over time, not any single reading.</span>' +
+      '</p>';
+
+    var chartInner = records.length === 1 ? buildSingleDotSVG(records[0]) : buildLineChartSVG(records);
+    var recordCountLabel = records.length.toLocaleString('en-US') + ' 筆每日彙總記錄 daily records';
+
+    var chartHtml =
+      '<section class="chart-section">' +
+        '<p class="section-label">續航趨勢 Range Trend (km)</p>' +
+        '<div class="chart-wrap">' + chartInner + '</div>' +
+        '<p class="sample-note">' + esc(recordCountLabel) + '</p>' +
+      '</section>';
+
+    content.innerHTML = statRowHtml + explainerHtml + chartHtml;
+  }
+
+  function showLoading() {
+    content.innerHTML = '<p class="loading-note">載入中 Loading…</p>';
+  }
+
+  function showError() {
+    content.innerHTML = '';
+    errorPanel.hidden = false;
+  }
+
+  function hideError() {
+    errorPanel.hidden = true;
+  }
+
+  function setLastLoaded() {
+    lastLoadedEl.textContent = fmtTimestamp(new Date());
+  }
+
+  /* ---------- fetch + boot ---------- */
+
+  function loadData() {
+    refreshBtn.disabled = true;
+    showLoading();
+
+    var bustUrl = CSV_URL + (CSV_URL.indexOf('?') === -1 ? '?' : '&') + '_ts=' + Date.now();
+
+    fetch(bustUrl, { cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (text) {
+        if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+        var rows = parseCSV(text);
+        var records = rowsToRecords(rows);
+        if (!records.length) throw new Error('No valid rows in CSV');
+        renderAll(records);
+        hideError();
+        setLastLoaded();
+      })
+      .catch(function () {
+        showError();
+      })
+      .then(function () {
+        refreshBtn.disabled = false;
+      });
+  }
+
+  refreshBtn.addEventListener('click', loadData);
+  loadData();
+}());
+</script>
+</body>
+</html>
