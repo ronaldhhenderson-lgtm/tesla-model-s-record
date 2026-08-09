@@ -219,6 +219,10 @@ h3.sub3{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:upperc
       <div class="rule"><span class="zh-only">原廠週期 vs 本車實際頻率</span><span class="en-only">OEM interval vs how often it actually falls due here</span></div>
     </div>
     <table id="tbl-sched"></table>
+    <div class="tiny" style="margin-top:10px">
+      <span class="zh-only">價格為 2026 年大灣區第三方維修廠估算範圍，未經逐間核實，落單前請向維修廠確認</span>
+      <span class="en-only">Estimated 2026 ranges for Greater Bay Area independent shops, not individually verified — confirm with your shop before ordering</span>
+    </div>
     <div class="note" style="margin-top:12px">
       <h4><span class="zh-only">為何本車的里程類項目來得特別快</span><span class="en-only">Why the km-based items come round so fast on this car</span></h4>
       <div class="zh-only">香港私家車年均里程一般遠低於本車。此車以約 29,200 km／年行駛，凡以里程計算的保養項目（輪胎調位、迫力檢查、輪胎更換）<b>一年會來三次以上</b>，而以年份計算的項目（迫力油、車廂濾網）則維持不變。把兩者混在同一張「每年保養」清單上，是高里程車最常見的保養漏洞。</div>
@@ -401,23 +405,23 @@ const SCHED=[
  /* -- 未來更換計劃（10年）Future Replacement Plan (10-yr) --
     projected forward from 2026-08 @ 303,619 km at the long-run 29,200 km/yr */
  {g:'future', i:T('冷氣性能檢查（入夏前）','A/C performance check (pre-summer)'), mo:'12', o:'—',
-  f:T('下次到期 2027-04','Next due 2027-04'), s:T('建議（本報告）','Recommended here'),
+  f:T('下次到期 2027-04','Next due 2027-04'), s:T('建議（本報告）','Recommended here'), rmb:T('¥150–400（含冷媒補充）','¥150–400 (incl. refrigerant top-up)'),
   c:T('壓縮機同時為電池散熱，發現異聲／製冷力下降即需處理','Compressor also chills the HV battery — act immediately on noise or weak cooling')},
  {g:'future', i:T('冷氣乾燥劑包','A/C desiccant bag'), mo:'48', o:T('~120,000 km','~120,000 km'),
-  f:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'), s:T('Tesla 官方','Tesla official'),
+  f:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'), s:T('Tesla 官方','Tesla official'), rmb:T('¥600–1,200（含抽真空、重新加注）','¥600–1,200 (incl. evacuation & recharge)'),
   c:T('Tesla 官方對 2012–20 Model S 曾建議定期更換；每次開啟冷媒系統時亦應同時更換','Tesla previously recommended periodic replacement on 2012–20 Model S; also replace whenever the refrigerant circuit is opened')},
  {g:'future', i:T('冷氣壓縮機（預防性）','A/C compressor (preventive)'), mo:'—', o:T('~150,000 km 內，或異聲／製冷力下降時立即更換','Within ~150,000 km, or immediately on noise / weak cooling'),
-  f:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'), s:T('車主社群／維修業經驗（非原廠）','Owner-community & repair-trade experience, not OEM'),
+  f:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'), s:T('車主社群／維修業經驗（非原廠）','Owner-community & repair-trade experience, not OEM'), rmb:T('¥2,500–6,000（原廠件另計）','¥2,500–6,000 (OEM part costs more)'),
   c:T('無官方週期；高里程車預防性更換，因兼負電池冷卻，失效會令電池過熱','No official interval — preventive for a high-mileage car; failure risks HV battery overheating since the compressor also cools the pack')},
  {g:'future', i:T('冷媒 R134a + PAG 油','Refrigerant R134a + PAG oil'), mo:'—', o:T('隨系統開啟時更換','Whenever the system is opened'),
-  f:T('與乾燥劑包同步','With the desiccant bag'), s:'—', c:'—'},
+  f:T('與乾燥劑包同步','With the desiccant bag'), s:'—', rmb:T('已含於上兩項（單獨做 ¥300–600）','Included in the two items above (standalone ¥300–600)'), c:'—'},
  {g:'future', i:T('傳動 ATF 齒輪油（翻新 LDU）','Drive-unit ATF (reman LDU)'), mo:'~41', o:T('100,000 km','100,000 km'),
-  f:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'), s:T('車主社群經驗（非原廠）','Owner-community practice, not OEM'),
+  f:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'), s:T('車主社群經驗（非原廠）','Owner-community practice, not OEM'), rmb:T('¥300–600','¥300–600'),
   c:T('官方稱免更換；高里程及翻新驅動單元經驗做法','Tesla says not required — community high-mileage practice for reman units')},
  {g:'future', i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), mo:'60', o:T('~150,000 km','~150,000 km'),
-  f:T('2031-08 @ ~450,000 km','2031-08 @ ~450,000 km'), s:T('Tesla 官方（長效）','Tesla official (long-life)'),
+  f:T('2031-08 @ ~450,000 km','2031-08 @ ~450,000 km'), s:T('Tesla 官方（長效）','Tesla official (long-life)'), rmb:T('¥800–1,800','¥800–1,800'),
   c:T('官方稱長效；長期持有建議全量更換，平時每年檢查液位','Tesla says long-life — recommend a full change for long-term ownership, with an annual level check')},
- {g:'future', i:T('註','Note'), mo:'—', o:'—', f:'—', s:'—',
+ {g:'future', i:T('註','Note'), mo:'—', o:'—', f:'—', s:'—', rmb:'—',
   c:T('本車（2016）無熱泵 — 採 PTC 電阻加熱器，無預防更換週期，失效才更換','This 2016 car has no heat pump — it uses a PTC resistive heater, which has no preventive-replacement interval and is replaced only on failure')}
 ];
 
@@ -500,14 +504,15 @@ function tblSched(){
              yr:T('每年','Annual'),
              multi:T('多年期','Multi-year'),
              future:T('未來更換計劃（10年）— 按 2026-08 · 303,619 km · 年均 29,200 km 推算','Future Replacement Plan (10-yr) — projected from 2026-08 · 303,619 km · 29,200 km/yr')};
-  const h=[T('項目','Item'),T('原廠／標準週期','OEM or standard interval'),T('月','Months'),T('本車實際頻率／下次到期','How often here / next due'),T('來源','Source'),T('備註','Note')];
+  const h=[T('項目','Item'),T('原廠／標準週期','OEM or standard interval'),T('月','Months'),T('本車實際頻率／下次到期','How often here / next due'),T('來源','Source'),T('中山/珠海第三方參考價（人民幣）','Zhongshan/Zhuhai indep. shop est. (RMB)'),T('備註','Note')];
   let s='<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
   ['km','yr','multi','future'].forEach(g=>{
-    s+=`<tr><td colspan="6" style="border-bottom:1px solid var(--ink);padding-top:12px"><span class="lbl">${tx(grp[g])}</span></td></tr>`;
+    s+=`<tr><td colspan="7" style="border-bottom:1px solid var(--ink);padding-top:12px"><span class="lbl">${tx(grp[g])}</span></td></tr>`;
     SCHED.filter(r=>r.g===g).forEach(r=>{
       s+=`<tr><td style="font-weight:600;min-width:104px">${tx(r.i)}</td><td>${tx(r.o)}</td>
           <td class="num" style="white-space:nowrap">${r.mo?tx(r.mo):'—'}</td>
-          <td style="font-weight:500">${tx(r.f)}</td><td class="dim" style="white-space:nowrap">${tx(r.s)}</td><td>${tx(r.c)}</td></tr>`;
+          <td style="font-weight:500">${tx(r.f)}</td><td class="dim" style="white-space:nowrap">${tx(r.s)}</td>
+          <td class="num" style="white-space:nowrap">${r.rmb?tx(r.rmb):'—'}</td><td>${tx(r.c)}</td></tr>`;
     });
   });
   document.getElementById('tbl-sched').innerHTML=s+'</tbody>';
