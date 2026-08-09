@@ -278,6 +278,10 @@ body[data-lang="en"] .zh-only{display:none}
       <div class="rule"><span class="zh-only">按 2026-08 · 303,619 km · 年均 29,200 km 推算</span><span class="en-only">Projected from 2026-08 · 303,619 km · 29,200 km/yr</span></div>
     </div>
     <table id="tbl-future"></table>
+    <div class="tiny" style="margin-top:10px">
+      <span class="zh-only">價格為 2026 年大灣區第三方維修廠估算範圍，未經逐間核實，落單前請向維修廠確認</span>
+      <span class="en-only">Estimated 2026 ranges for Greater Bay Area independent shops, not individually verified — confirm with your shop before ordering</span>
+    </div>
   </section>
 
   <!-- ======================= ACTIONS ======================= -->
@@ -485,24 +489,24 @@ const SCHED = [
    due carries both the projected calendar date and the projected odometer. */
 const FUTURE = [
   {i:T('冷氣性能檢查（入夏前）','A/C performance check (pre-summer)'), int:T('每 12 個月','Every 12 months'),
-   due:T('2027-04','2027-04'),
+   due:T('2027-04','2027-04'), rmb:T('¥150–400（含冷媒補充）','¥150–400 (incl. refrigerant top-up)'),
    c:T('壓縮機同時為電池散熱，發現異聲／製冷力下降即需處理','Compressor also chills the HV battery — act immediately on noise or weak cooling')},
   {i:T('冷氣乾燥劑包','A/C desiccant bag'), int:T('每 48 個月 / ~120,000 km','Every 48 months / ~120,000 km'),
-   due:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'),
+   due:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'), rmb:T('¥600–1,200（含抽真空、重新加注）','¥600–1,200 (incl. evacuation & recharge)'),
    c:T('Tesla 官方對 2012–20 Model S 曾建議定期更換；每次開啟冷媒系統時亦應同時更換','Tesla previously recommended periodic replacement on 2012–20 Model S; also replace whenever the refrigerant circuit is opened')},
   {i:T('冷氣壓縮機（預防性）','A/C compressor (preventive)'), int:T('建議 ~150,000 km 內更換一次，或於出現異聲／製冷力下降時立即更換','Within ~150,000 km, or immediately on noise / weak cooling'),
-   due:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'),
+   due:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'), rmb:T('¥2,500–6,000（原廠件另計）','¥2,500–6,000 (OEM part costs more)'),
    c:T('無官方週期；高里程車預防性更換，因兼負電池冷卻，失效會令電池過熱','No official interval — preventive for a high-mileage car; failure risks HV battery overheating since the compressor also cools the pack')},
   {i:T('冷媒 R134a + PAG 油','Refrigerant R134a + PAG oil'), int:T('隨系統開啟時更換','Whenever the system is opened'),
-   due:T('與乾燥劑包同步','With the desiccant bag'),
+   due:T('與乾燥劑包同步','With the desiccant bag'), rmb:T('已含於上兩項（單獨做 ¥300–600）','Included in the two items above (standalone ¥300–600)'),
    c:'—'},
   {i:T('傳動 ATF 齒輪油（翻新 LDU）','Drive-unit ATF (reman LDU)'), int:T('每 100,000 km / ~41 個月','Every 100,000 km / ~41 months'),
-   due:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'),
+   due:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'), rmb:T('¥300–600','¥300–600'),
    c:T('官方稱免更換；高里程及翻新驅動單元經驗做法','Tesla says not required — community high-mileage practice for reman units')},
-  {i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), int:T('每 60 個月 / ~150,000 km','Every 60 months / ~150,000 km'),
+  {i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), int:T('每 60 個月 / ~150,000 km','Every 60 months / ~150,000 km'), rmb:T('¥800–1,800','¥800–1,800'),
    due:T('2031-08 @ ~450,000 km','2031-08 @ ~450,000 km'),
    c:T('官方稱長效；長期持有建議全量更換，平時每年檢查液位','Tesla says long-life — recommend a full change for long-term ownership, with an annual level check')},
-  {i:T('註','Note'), int:'—', due:'—',
+  {i:T('註','Note'), int:'—', due:'—', rmb:'—',
    c:T('本車（2016）無熱泵 — 採 PTC 電阻加熱器，無預防更換週期，失效才更換','This 2016 car has no heat pump — it uses a PTC resistive heater, which has no preventive-replacement interval and is replaced only on failure')}
 ];
 
@@ -843,11 +847,12 @@ function tblSched(){
 }
 
 function tblFuture(){
-  const h=[T('保養項目','Item'),T('週期（月／公里）','Interval (months / km)'),T('預計下次到期（日期／里程）','Projected next due (date / odo)'),T('說明','Rationale')];
+  const h=[T('保養項目','Item'),T('週期（月／公里）','Interval (months / km)'),T('預計下次到期（日期／里程）','Projected next due (date / odo)'),T('中山/珠海第三方參考價（人民幣）','Zhongshan/Zhuhai indep. shop est. (RMB)'),T('說明','Rationale')];
   document.getElementById('tbl-future').innerHTML =
     '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
     FUTURE.map(r=>`<tr>
-      <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
+      <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td>
+      <td class="num" style="white-space:nowrap">${tx(r.rmb)}</td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
 }
 
 function actions(){
