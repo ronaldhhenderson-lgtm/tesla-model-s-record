@@ -271,10 +271,19 @@ body[data-lang="en"] .zh-only{display:none}
     <table id="tbl-sched"></table>
   </section>
 
+  <!-- ======================= FUTURE REPLACEMENT PLAN ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">07 — 未來更換計劃（10年）</span><span class="en-only">07 — Future Replacement Plan (10-yr)</span></h2>
+      <div class="rule"><span class="zh-only">按 2026-08 · 303,619 km · 年均 29,200 km 推算</span><span class="en-only">Projected from 2026-08 · 303,619 km · 29,200 km/yr</span></div>
+    </div>
+    <table id="tbl-future"></table>
+  </section>
+
   <!-- ======================= ACTIONS ======================= -->
   <section>
     <div class="shead">
-      <h2><span class="zh-only">07 — 待辦事項與建議</span><span class="en-only">07 — Open Items &amp; Recommendations</span></h2>
+      <h2><span class="zh-only">08 — 待辦事項與建議</span><span class="en-only">08 — Open Items &amp; Recommendations</span></h2>
       <div class="rule"><span class="zh-only">按風險排序</span><span class="en-only">Ranked by risk</span></div>
     </div>
     <ol class="actions" id="list-actions"></ol>
@@ -283,7 +292,7 @@ body[data-lang="en"] .zh-only{display:none}
   <!-- ======================= PROVENANCE ======================= -->
   <section>
     <div class="shead">
-      <h2><span class="zh-only">08 — 資料來源與存疑事項</span><span class="en-only">08 — Data Provenance &amp; Unresolved Items</span></h2>
+      <h2><span class="zh-only">09 — 資料來源與存疑事項</span><span class="en-only">09 — Data Provenance &amp; Unresolved Items</span></h2>
       <div class="rule"><span class="zh-only">未經核實者已明確標示</span><span class="en-only">Unverified items are flagged explicitly</span></div>
     </div>
     <div class="note warn" id="prov"></div>
@@ -374,7 +383,13 @@ const EVENTS = [
   {d:'2026-07-07', kind:'retrofit', odo:301510, ro:'2030S0000338064', sv:'SV02C385E2', site:T('Tesla 屯門服務中心','Tesla Tuen Mun SvC'),
    adv:'Jerome Li', cost:1550.00, cur:'HKD',
    work:T('4G／LTE 數據機改裝（1067726-00-A，HK$1,550）連 EU LTE 連線 PCBA + u-blox GPS（1054968-02-C），適用中國／香港／日本。因全球 3G 網絡退役，原 3G 數據機將失去連線；香港中國移動已於 2025-06-30 停用 3G，數碼通獲准由 2026-10-09 起停用。免工時費。',
-          '4G/LTE modem retrofit (1067726-00-A, HK$1,550) with EU LTE connectivity PCBA + u-blox GPS (1054968-02-C), China/Hong Kong/Japan variant. Required because the original 3G modem loses connectivity as networks retire 3G — CMHK ceased 3G on 30 Jun 2025 and SmarTone is approved to cease from 9 Oct 2026. No labour charged.')}
+          '4G/LTE modem retrofit (1067726-00-A, HK$1,550) with EU LTE connectivity PCBA + u-blox GPS (1054968-02-C), China/Hong Kong/Japan variant. Required because the original 3G modem loses connectivity as networks retire 3G — CMHK ceased 3G on 30 Jun 2025 and SmarTone is approved to cease from 9 Oct 2026. No labour charged.')},
+
+  {d:'2026-08-15', approx:true, kind:'thirdparty', odo:null, odoEst:303619, ro:T('未載','Not recorded'), sv:'—',
+   site:T('中山市雙電新能源汽車服務有限公司（特斯拉專修）','Zhongshan Shuangdian New Energy Vehicle Service Co. Ltd (independent Tesla specialist)'),
+   adv:'陳民強', cost:null, cur:'HKD',
+   work:T('冷氣乾燥瓶蓋及乾燥劑包更換；傳動系統 ATF 齒輪油更換 2 美夸脫；乙二醇電池冷卻液補充 1 美加侖。與 2026-05 電池組模組級維修同一供應商。日期及里程取自車輛遙測數據，非單據記錄，均屬估算值；金額未載。',
+          'A/C desiccant bottle cap and desiccant bag replaced; drive-unit ATF gear oil changed, 2 US qt; ethylene-glycol battery coolant topped up, 1 US gal. Same vendor as the May 2026 HV pack module-level repair. Date and odometer are estimated from vehicle telemetry, not an invoice; cost not recorded.')}
 ];
 
 /* ------- component life: pct = achieved / benchmark ------- */
@@ -463,6 +478,32 @@ const SCHED = [
    c:T('上次有紀錄之量度為 2023-01-27（前後 4mm）；車主表示碟及皮已於約六個月前更換，惟單據未存檔 — 需補回以完成紀錄','Last recorded measurement 27 Jan 2023 (4 mm F/R). Owner reports discs and pads were replaced ≈6 months ago, but no invoice is on file — obtain it to close the record')},
   {i:T('迫力卡鉗保養','Brake caliper service'), int:T('每年（融雪鹽地區）','Annually (salted-road regions)'), last:'—', st:'grey',
    c:T('香港不適用','Not applicable in Hong Kong')}
+];
+
+/* ---- future replacement plan, 10-yr horizon ----
+   Projected forward from 2026-08 @ 303,619 km at the long-run 29,200 km/yr.
+   due carries both the projected calendar date and the projected odometer. */
+const FUTURE = [
+  {i:T('冷氣性能檢查（入夏前）','A/C performance check (pre-summer)'), int:T('每 12 個月','Every 12 months'),
+   due:T('2027-04','2027-04'),
+   c:T('壓縮機同時為電池散熱，發現異聲／製冷力下降即需處理','Compressor also chills the HV battery — act immediately on noise or weak cooling')},
+  {i:T('冷氣乾燥劑包','A/C desiccant bag'), int:T('每 48 個月 / ~120,000 km','Every 48 months / ~120,000 km'),
+   due:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'),
+   c:T('Tesla 官方對 2012–20 Model S 曾建議定期更換；每次開啟冷媒系統時亦應同時更換','Tesla previously recommended periodic replacement on 2012–20 Model S; also replace whenever the refrigerant circuit is opened')},
+  {i:T('冷氣壓縮機（預防性）','A/C compressor (preventive)'), int:T('建議 ~150,000 km 內更換一次，或於出現異聲／製冷力下降時立即更換','Within ~150,000 km, or immediately on noise / weak cooling'),
+   due:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'),
+   c:T('無官方週期；高里程車預防性更換，因兼負電池冷卻，失效會令電池過熱','No official interval — preventive for a high-mileage car; failure risks HV battery overheating since the compressor also cools the pack')},
+  {i:T('冷媒 R134a + PAG 油','Refrigerant R134a + PAG oil'), int:T('隨系統開啟時更換','Whenever the system is opened'),
+   due:T('與乾燥劑包同步','With the desiccant bag'),
+   c:'—'},
+  {i:T('傳動 ATF 齒輪油（翻新 LDU）','Drive-unit ATF (reman LDU)'), int:T('每 100,000 km / ~41 個月','Every 100,000 km / ~41 months'),
+   due:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'),
+   c:T('官方稱免更換；高里程及翻新驅動單元經驗做法','Tesla says not required — community high-mileage practice for reman units')},
+  {i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), int:T('每 60 個月 / ~150,000 km','Every 60 months / ~150,000 km'),
+   due:T('2031-08 @ ~450,000 km','2031-08 @ ~450,000 km'),
+   c:T('官方稱長效；長期持有建議全量更換，平時每年檢查液位','Tesla says long-life — recommend a full change for long-term ownership, with an annual level check')},
+  {i:T('註','Note'), int:'—', due:'—',
+   c:T('本車（2016）無熱泵 — 採 PTC 電阻加熱器，無預防更換週期，失效才更換','This 2016 car has no heat pump — it uses a PTC resistive heater, which has no preventive-replacement interval and is replaced only on failure')}
 ];
 
 const ACTIONS = [
@@ -801,6 +842,14 @@ function tblSched(){
       <td><span class="pill p-${r.st}">${tx(st[r.st])}</span></td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
 }
 
+function tblFuture(){
+  const h=[T('保養項目','Item'),T('週期（月／公里）','Interval (months / km)'),T('預計下次到期（日期／里程）','Projected next due (date / odo)'),T('說明','Rationale')];
+  document.getElementById('tbl-future').innerHTML =
+    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    FUTURE.map(r=>`<tr>
+      <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
+}
+
 function actions(){
   const pl={red:T('高','High'),amb:T('中','Medium'),blue:T('行政','Admin')};
   document.getElementById('list-actions').innerHTML = ACTIONS.map(a=>
@@ -837,7 +886,7 @@ function prov(){
 
 function renderAll(){
   ident(); kpis(); chartTimeline(); chartLife(); chartCost();
-  tblLog(); tblCost(); tblParts(); tblSched(); actions(); prov();
+  tblLog(); tblCost(); tblParts(); tblSched(); tblFuture(); actions(); prov();
 }
 function setLang(l){
   document.body.dataset.lang=l;
