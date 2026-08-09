@@ -484,30 +484,118 @@ const SCHED = [
    c:T('香港不適用','Not applicable in Hong Kong')}
 ];
 
-/* ---- future replacement plan, 10-yr horizon ----
+/* ---- future replacement plan, 10-yr horizon, full car ----
    Projected forward from 2026-08 @ 303,619 km at the long-run 29,200 km/yr.
-   due carries both the projected calendar date and the projected odometer. */
+   due carries both the projected calendar date and the projected odometer, where known.
+   Brake pad/rotor and 12V rows are cross-checked against the actual EVENTS/LIFE entries
+   (2026-02-15 owner-reported brake job; 12V battery #3 fitted 2025-05-21) rather than
+   projected from a generic baseline. */
+const FUTGRP = {
+  ac:     T('冷氣與流體','A/C & Fluids'),
+  brakes: T('制動','Brakes'),
+  susp:   T('懸掛轉向','Suspension & Steering'),
+  elec:   T('電氣','Electrical'),
+  tyres:  T('輪胎','Tyres & Wheels'),
+  body:   T('車身','Body'),
+  hv:     T('高壓系統','HV System')
+};
 const FUTURE = [
-  {i:T('冷氣性能檢查（入夏前）','A/C performance check (pre-summer)'), int:T('每 12 個月','Every 12 months'),
+  /* -- A/C & fluids -- */
+  {grp:'ac', i:T('冷氣性能檢查（入夏前）','A/C performance check (pre-summer)'), int:T('每 12 個月','Every 12 months'),
    due:T('2027-04','2027-04'), rmb:T('¥150–400（含冷媒補充）','¥150–400 (incl. refrigerant top-up)'),
    c:T('壓縮機同時為電池散熱，發現異聲／製冷力下降即需處理','Compressor also chills the HV battery — act immediately on noise or weak cooling')},
-  {i:T('冷氣乾燥劑包','A/C desiccant bag'), int:T('每 48 個月 / ~120,000 km','Every 48 months / ~120,000 km'),
+  {grp:'ac', i:T('冷氣乾燥劑包','A/C desiccant bag'), int:T('每 48 個月 / ~120,000 km','Every 48 months / ~120,000 km'),
    due:T('2030-08 @ ~420,000 km（其後 2034-08）','2030-08 @ ~420,000 km (then 2034-08)'), rmb:T('¥600–1,200（含抽真空、重新加注）','¥600–1,200 (incl. evacuation & recharge)'),
    c:T('Tesla 官方對 2012–20 Model S 曾建議定期更換；每次開啟冷媒系統時亦應同時更換','Tesla previously recommended periodic replacement on 2012–20 Model S; also replace whenever the refrigerant circuit is opened')},
-  {i:T('冷氣壓縮機（預防性）','A/C compressor (preventive)'), int:T('建議 ~150,000 km 內更換一次，或於出現異聲／製冷力下降時立即更換','Within ~150,000 km, or immediately on noise / weak cooling'),
+  {grp:'ac', i:T('冷氣壓縮機（預防性）','A/C compressor (preventive)'), int:T('建議 ~150,000 km 內更換一次，或於出現異聲／製冷力下降時立即更換','Within ~150,000 km, or immediately on noise / weak cooling'),
    due:T('~2031 @ ~450,000 km','~2031 @ ~450,000 km'), rmb:T('¥2,500–6,000（原廠件另計）','¥2,500–6,000 (OEM part costs more)'),
    c:T('無官方週期；高里程車預防性更換，因兼負電池冷卻，失效會令電池過熱','No official interval — preventive for a high-mileage car; failure risks HV battery overheating since the compressor also cools the pack')},
-  {i:T('冷媒 R134a + PAG 油','Refrigerant R134a + PAG oil'), int:T('隨系統開啟時更換','Whenever the system is opened'),
+  {grp:'ac', i:T('冷媒 R134a + PAG 油','Refrigerant R134a + PAG oil'), int:T('隨系統開啟時更換','Whenever the system is opened'),
    due:T('與乾燥劑包同步','With the desiccant bag'), rmb:T('已含於上兩項（單獨做 ¥300–600）','Included in the two items above (standalone ¥300–600)'),
    c:'—'},
-  {i:T('傳動 ATF 齒輪油（翻新 LDU）','Drive-unit ATF (reman LDU)'), int:T('每 100,000 km / ~41 個月','Every 100,000 km / ~41 months'),
+  {grp:'ac', i:T('傳動 ATF 齒輪油（翻新 LDU）','Drive-unit ATF (reman LDU)'), int:T('每 100,000 km / ~41 個月','Every 100,000 km / ~41 months'),
    due:T('~2030-01 @ ~404,000 km（其後 ~2033-06）','~2030-01 @ ~404,000 km (then ~2033-06)'), rmb:T('¥300–600','¥300–600'),
    c:T('官方稱免更換；高里程及翻新驅動單元經驗做法','Tesla says not required — community high-mileage practice for reman units')},
-  {i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), int:T('每 60 個月 / ~150,000 km','Every 60 months / ~150,000 km'), rmb:T('¥800–1,800','¥800–1,800'),
+  {grp:'ac', i:T('電池冷卻液（全量更換）','Battery coolant G-48, full replacement'), int:T('每 60 個月 / ~150,000 km','Every 60 months / ~150,000 km'), rmb:T('¥800–1,800','¥800–1,800'),
    due:T('2031-08 @ ~450,000 km','2031-08 @ ~450,000 km'),
    c:T('官方稱長效；長期持有建議全量更換，平時每年檢查液位','Tesla says long-life — recommend a full change for long-term ownership, with an annual level check')},
-  {i:T('註','Note'), int:'—', due:'—', rmb:'—',
-   c:T('本車（2016）無熱泵 — 採 PTC 電阻加熱器，無預防更換週期，失效才更換','This 2016 car has no heat pump — it uses a PTC resistive heater, which has no preventive-replacement interval and is replaced only on failure')}
+  {grp:'ac', i:T('散熱器／冷凝器清洗','Radiator & A/C condenser external cleaning'), int:T('每 24 個月（多塵／多柳絮環境每 12 個月）','Every 24 months (12 in dusty areas)'),
+   due:T('2028-08','2028-08'), rmb:T('¥200–500','¥200–500'),
+   c:T('車頭散熱器鰭片積聚沙塵雜物會令冷氣及電池散熱效率下降，清洗屬低成本高回報預防項目','Front radiator fins clog with debris, degrading A/C and battery cooling — low-cost, high-value prevention')},
+  {grp:'ac', i:T('註','Note'), int:'—', due:'—', rmb:'—',
+   c:T('本車（2016）無熱泵 — 採 PTC 電阻加熱器，無預防更換週期，失效才更換','This 2016 car has no heat pump — it uses a PTC resistive heater, which has no preventive-replacement interval and is replaced only on failure')},
+
+  /* -- brakes -- */
+  {grp:'brakes', i:T('制動皮','Brake pads'), int:T('檢查每 12 個月；更換 ~60,000 km（再生制動延壽）','Inspect every 12 months; replace ~60,000 km (regen braking extends life)'),
+   due:T('~2028-03 @ ~351,600 km','~2028-03 @ ~351,600 km'), rmb:T('¥800–2,000 前後軸連工時','¥800–2,000 front + rear, incl. labour'),
+   c:T('實際更換日期為 2026-02（車主口述，單據未存檔，估算里程 ≈291,600 km）；本列由該日期推算，屬估算值','Actual replacement ≈Feb 2026 (owner-reported, no invoice on file, estimated at ≈291,600 km) — this row is projected from that date and is an estimate')},
+  {grp:'brakes', i:T('制動碟','Brake rotors'), int:T('~120,000 km / ~48 個月','~120,000 km / ~48 months'),
+   due:T('~2030-02 @ ~420,000 km','~2030-02 @ ~420,000 km'), rmb:T('¥1,200–3,000/軸','¥1,200–3,000 per axle'),
+   c:T('與制動皮同一單，實際更換日期為 2026-02（車主口述，單據未存檔）','Same job as the pads — actual replacement ≈Feb 2026 (owner-reported, no invoice on file)')},
+  {grp:'brakes', i:T('制動液','Brake fluid'), int:T('測試每 24 個月，更換每 48 個月','Test every 24 months, replace every 48 months'),
+   due:T('待確認上次更換日期','To confirm last change date'), rmb:T('¥200–400','¥200–400'),
+   c:T('本檔案內從未見迫力油紀錄，車齡已 10.4 年 — 建議立即測試','No brake-fluid record has ever appeared in this file, and the car is 10.4 yr old — test now')},
+  {grp:'brakes', i:T('卡鉗清潔潤滑','Caliper clean & lube'), int:T('每 12 個月 / 20,000 km（Tesla 官方建議）','Every 12 months / 20,000 km (Tesla official recommendation)'),
+   due:T('2027-08','2027-08'), rmb:T('¥200–500','¥200–500'),
+   c:T('回充制動令迫力極少使用，鏽蝕不易磨走','Regen braking means the pads rarely scrub rust off the calipers')},
+
+  /* -- suspension & steering -- */
+  {grp:'susp', i:T('前懸掛上擺臂／前拉桿','Front upper & fore links'), int:T('檢查每 12 個月；高里程車預期 ~100,000 km 更換（Model S 通病，異響先兆）','Inspect every 12 months; expect replacement ~100,000 km on a high-mileage car (known Model S weak point — noise is the precursor)'),
+   due:T('預留 ~2029','Budget ~2029'), rmb:T('¥600–1,500/邊（副廠）','¥600–1,500 per side (aftermarket)'),
+   c:T('中國市場曾就此召回（2020），美國僅調查未召回；本車 2016-03 生產，屬受關注批次','China recalled this component in 2020; the US investigated but did not recall it. This car (built Mar 2016) falls in the batch of concern')},
+  {grp:'susp', i:T('避震機','Shock absorbers'), int:T('~150,000 km，按狀態更換','~150,000 km, on-condition'),
+   due:T('~2031','~2031'), rmb:T('¥800–2,500/支（副廠）','¥800–2,500 per unit (aftermarket)'),
+   c:T('無官方週期，按乘坐質感及滲油狀態判斷','No official interval — judge by ride quality and any fluid leakage')},
+  {grp:'susp', i:T('轉向拉桿球頭','Tie rods & ball joints'), int:T('檢查每 12 個月，按狀態更換','Inspect every 12 months, replace on condition'),
+   due:'—', rmb:T('¥300–800/件','¥300–800 per piece'),
+   c:T('轉向異響或方向盤鬆曠為先兆','Steering noise or play in the wheel is the precursor')},
+  {grp:'susp', i:T('半軸及防塵套','Halfshafts & CV boots'), int:T('檢查每 12 個月（起步「咯咯」聲即換）','Inspect every 12 months (clunk on takeoff = replace)'),
+   due:'—', rmb:T('¥1,000–2,500/支','¥1,000–2,500 per shaft'),
+   c:T('防塵套破裂會令塵沙入侵萬向節，加速磨損','A torn boot lets grit into the joint and accelerates wear')},
+  {grp:'susp', i:T('輪轂軸承','Wheel bearings'), int:T('~150,000–200,000 km，按狀態更換（嗡嗡聲隨車速變化）','~150,000–200,000 km, on-condition (speed-varying hum)'),
+   due:'—', rmb:T('¥500–1,200/個','¥500–1,200 per corner'),
+   c:T('注意與胎噪區分','Distinguish from tyre road noise')},
+
+  /* -- electrical -- */
+  {grp:'elec', i:T('12V 輔助電池','12 V AGM battery'), int:T('每 36–48 個月','Every 36–48 months'),
+   due:T('2028-05 至 2029-05（由現役 #3 電池 2025-05-21 起算）','2028-05 to 2029-05 (36–48 months from the #3 battery fitted 2025-05-21)'), rmb:T('¥800–1,500','¥800–1,500'),
+   c:T('現役 #3 電池 2025-05-21 裝上，12 個月／20,000 km 保用已屆滿','The in-service #3 battery was fitted 2025-05-21; its 12 mo / 20,000 km warranty has expired')},
+  {grp:'elec', i:T('MCU1 eMMC 升級','MCU1 eMMC / daughterboard'), int:T('一次性 — 確認是否已升級（2016 車 MCU1 通病，未升級遲早黑屏）','One-time — confirm if already done (known MCU1 failure mode on 2016 cars; screen eventually blacks out if unaddressed)'),
+   due:T('儘快確認（VIN 查核）','ASAP — confirm by VIN'), rmb:T('¥1,500–3,500','¥1,500–3,500'),
+   c:T('NHTSA 21V-035 免費召回，本車服務紀錄內未見執行','Free under NHTSA recall 21V-035 — not found in this car\'s service history')},
+  {grp:'elec', i:T('冷卻水泵','Coolant pumps'), int:T('與電池冷卻液全量更換同步檢查／更換，按狀態','On-condition — inspect/replace alongside the full battery-coolant change'),
+   due:T('2031-08','2031-08'), rmb:T('¥600–1,500/個','¥600–1,500 per pump'),
+   c:T('無獨立公開壽命基準，隨冷卻液大保養一併檢查最經濟','No independent published life — cheapest to inspect alongside the major coolant service')},
+
+  /* -- tyres & wheels -- */
+  {grp:'tyres', i:T('換位','Rotation'), int:T('每 10,000 km（Tesla 官方）','Every 10,000 km (Tesla official)'),
+   due:T('每 ~4 個月一次','Recurs ≈ every 4 months'), rmb:T('¥50–150','¥50–150'),
+   c:T('高里程車一年到期 3 次以上','Falls due more than 3× a year on a high-mileage car')},
+  {grp:'tyres', i:T('更換','Replacement'), int:T('~45,000 km / ~19 個月','~45,000 km / ~19 months'),
+   due:T('~2027-08','~2027-08'), rmb:T('¥700–1,500/條（245/45R19）','¥700–1,500 per tyre (245/45R19)'),
+   c:T('本車無任何輪胎單據，此為一般消耗品估算週期，非車主實際紀錄','No tyre invoice exists anywhere in this file — this is a generic consumable estimate, not an actual record for this car')},
+  {grp:'tyres', i:T('四輪定位','Alignment'), int:T('每 12 個月或換胎時','Every 12 months or at tyre replacement'),
+   due:T('2027-08','2027-08'), rmb:T('¥200–500','¥200–500'),
+   c:T('建議隨換胎一併做','Recommended alongside tyre replacement')},
+
+  /* -- body -- */
+  {grp:'body', i:T('車廂濾芯','Cabin filter'), int:T('每 12 個月（大灣區濕熱）','Every 12 months (Greater Bay Area heat & humidity)'),
+   due:T('2027-08','2027-08'), rmb:T('¥100–300','¥100–300'),
+   c:T('零件 1072736-00-B','Part 1072736-00-B')},
+  {grp:'body', i:T('雨刮','Wipers'), int:T('每 12 個月','Every 12 months'),
+   due:T('2027-08','2027-08'), rmb:T('¥60–200','¥60–200'),
+   c:T('連同未完成的水撥臂歸位故障一併處理','Close out the outstanding wiper-arm park fault at the same time')},
+  {grp:'body', i:T('門柄（第一代）','Door handles (Gen1)'), int:T('壞先換（初代通病，預留預算）','Replace on failure (known Gen1 weak point — budget for it)'),
+   due:'—', rmb:T('¥300–1,000/門（維修件）','¥300–1,000 per door (repair kit)'),
+   c:T('2014–2016 Model S 已知弱項，美國有集體訴訟指更換件亦有同一缺陷','Documented weak point on 2014–2016 cars; a US class action alleges replacement handles share the defect')},
+
+  /* -- HV system -- */
+  {grp:'hv', i:T('高壓電池','HV battery'), int:T('即時遙測監察中 — 每小時自動記錄；警戒線：推算滿電續航 <300 km 或年跌幅 >5% 即檢查','Live telemetry monitoring — hourly automatic logging; alert threshold: projected full-charge range <300 km or year-on-year drop >5% triggers inspection'),
+   due:T('持續監察中','Continuous monitoring'), rmb:T('¥0（自建系統）','¥0 (self-built system)'),
+   c:T('見下方即時遙測小工具；閾值為本報告建議，非原廠門檻','See the live-telemetry widget below; thresholds are this report\'s own suggestion, not an OEM figure'), live:true},
+  {grp:'hv', i:T('驅動單元（翻新）','Drive unit (reman)'), int:T('保用至 2028-10；ATF 週期見上表','Warranty to Oct 2028; ATF interval as in the table above'),
+   due:T('監察異響','Monitor for noise'), rmb:'—',
+   c:T('里程上限早於日曆保用到期，見第 08 節建議','The mileage cap is reached before the calendar warranty date — see section 08')}
 ];
 
 const ACTIONS = [
@@ -848,11 +936,48 @@ function tblSched(){
 
 function tblFuture(){
   const h=[T('保養項目','Item'),T('週期（月／公里）','Interval (months / km)'),T('預計下次到期（日期／里程）','Projected next due (date / odo)'),T('中山/珠海第三方參考價（人民幣）','Zhongshan/Zhuhai indep. shop est. (RMB)'),T('說明','Rationale')];
-  document.getElementById('tbl-future').innerHTML =
-    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
-    FUTURE.map(r=>`<tr>
-      <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td>
-      <td class="num" style="white-space:nowrap">${tx(r.rmb)}</td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
+  let s='<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
+  Object.keys(FUTGRP).forEach(g=>{
+    const rows=FUTURE.filter(r=>r.grp===g);
+    if(!rows.length) return;
+    s+=`<tr><td colspan="5" style="border-bottom:1px solid var(--ink);padding-top:12px"><span class="lbl">${tx(FUTGRP[g])}</span></td></tr>`;
+    rows.forEach(r=>{
+      s+=`<tr><td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td>
+        <td class="num" style="white-space:nowrap">${tx(r.rmb)}</td><td>${tx(r.c)}${r.live?`<div class="tiny" id="battery-live" style="margin-top:4px">${L()==='zh'?'讀取中…':'loading…'}</div>`:''}</td></tr>`;
+    });
+  });
+  document.getElementById('tbl-future').innerHTML = s+'</tbody>';
+  battRender();
+}
+
+/* ---------------- live HV battery telemetry (best-effort; never blocks render/print) ---------------- */
+const BATT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_6F3mS-75R7Ik7C0xkvOargB9IzTsTDwkzn41-o8TyVmSwvFwATlRCsQxRZ1VyS7DO80aVhWD_GYe/pub?gid=1641969254&single=true&output=csv';
+const BATT_LINK = 'telemetry.html';
+let BATT = {ok:false};
+function battRender(){
+  const el = document.getElementById('battery-live');
+  if(!el) return;
+  if(BATT.ok){
+    el.innerHTML = L()==='zh'
+      ? `最新推算滿電續航 <b>${BATT.km} km</b>（${BATT.date}） · <a href="${BATT_LINK}" target="_blank" rel="noopener">詳細數據 →</a>`
+      : `Latest projected range <b>${BATT.km} km</b> (${BATT.date}) · <a href="${BATT_LINK}" target="_blank" rel="noopener">Full data →</a>`;
+  } else {
+    el.textContent = L()==='zh' ? '—（離線 offline）' : '—（offline）';
+  }
+}
+function battFetch(){
+  try{
+    fetch(BATT_CSV_URL).then(res=>{
+      if(!res.ok) throw new Error('bad response');
+      return res.text();
+    }).then(text=>{
+      const rows = text.trim().split(/\r?\n/).slice(1).filter(Boolean);
+      if(!rows.length) throw new Error('no rows');
+      const last = rows[rows.length-1].split(',');
+      BATT = {ok:true, date:(last[0]||'').trim(), km:(last[1]||'').trim()};
+      battRender();
+    }).catch(()=>{ BATT={ok:false}; battRender(); });
+  }catch(e){ BATT={ok:false}; battRender(); }
 }
 
 function actions(){
@@ -901,6 +1026,7 @@ function setLang(l){
   renderAll();
 }
 renderAll();
+battFetch();
 </script>
 </body>
 </html>
