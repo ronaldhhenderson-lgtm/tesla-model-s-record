@@ -634,13 +634,42 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  e = e || {};
+  var q = (e.parameter || {});
+
+  // --- owner bootstrap helpers (safe: create-only / read the owner's own SETUP tab) ---
+  if (q.setup === 'health') {
+    var names = [];
+    try { getSS().getSheets().forEach(function (sh) { names.push(sh.getName()); }); } catch (err2) {
+      return jsonOutput({ ok: false, error: String(err2) });
+    }
+    return jsonOutput({ ok: true, service: 'HT backend', sheets: names, shops: countShopsSafe() });
+  }
+  if (q.setup === 'init') {
+    try {
+      var msg = setupStep1_CreateSheets();
+      return jsonOutput({ ok: true, result: msg });
+    } catch (err3) { return jsonOutput({ ok: false, error: String(err3) }); }
+  }
+  if (q.setup === 'accounts') {
+    try {
+      var msg2 = setupStep2_CreateAccounts();
+      return jsonOutput({ ok: true, result: msg2 });
+    } catch (err4) { return jsonOutput({ ok: false, error: String(err4) }); }
+  }
+
   var payload = {};
   try {
-    payload = JSON.parse(e.parameter.p);
+    payload = JSON.parse(q.p);
   } catch (err) {
     payload = {};
   }
   return jsonOutput(respond(payload));
+}
+
+/** Count of shop accounts — never returns names, salts or hashes. */
+function countShopsSafe() {
+  try { return sheetToObjects(getSheet('shops')).length; } catch (e) { return -1; }
 }
 
 // ---------------------------------------------------------------------------
