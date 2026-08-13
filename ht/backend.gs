@@ -647,6 +647,83 @@ function doGet(e) {
 // Owner-only setup menu (Sheet UI only — never exposed over HTTP)
 // ---------------------------------------------------------------------------
 
+
+// ---------------------------------------------------------------------------
+// STANDALONE SETUP — run these from the Apps Script editor (Run ▸ pick function)
+// The HT Admin menu only exists for bound scripts; these work standalone.
+// ---------------------------------------------------------------------------
+
+/** STEP 1 — creates all data sheets plus a SETUP tab you type accounts into. */
+function setupStep1_CreateSheets() {
+  initSheets();
+  var ss = getSS();
+  var sh = ss.getSheetByName('SETUP');
+  if (!sh) {
+    sh = ss.insertSheet('SETUP', 0);
+    sh.getRange('A1:D1').setValues([['shop_id', 'shop_name', 'new_password', 'status']]);
+    sh.getRange('A1:D1').setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.getRange('A3').setValue('HOW TO USE 用法:');
+    sh.getRange('A4').setValue('1. Type shop_id / shop_name / new_password in row 2 (and more rows for more shops).');
+    sh.getRange('A5').setValue('2. In the Apps Script editor run: setupStep2_CreateAccounts');
+    sh.getRange('A6').setValue('3. The password cell is WIPED automatically once hashed. Never keep it here.');
+    sh.setColumnWidth(1, 140); sh.setColumnWidth(2, 200);
+    sh.setColumnWidth(3, 160); sh.setColumnWidth(4, 320);
+  }
+  Logger.log('Sheets ready. Now type an account into the SETUP tab, then run setupStep2_CreateAccounts.');
+  return 'OK — sheets created. Fill the SETUP tab, then run setupStep2_CreateAccounts.';
+}
+
+/** STEP 2 — hashes each password from the SETUP tab, creates the account, wipes the plaintext. */
+function setupStep2_CreateAccounts() {
+  var ss = getSS();
+  var sh = ss.getSheetByName('SETUP');
+  if (!sh) return 'Run setupStep1_CreateSheets first.';
+  var last = sh.getLastRow();
+  var done = 0, msgs = [];
+  for (var r = 2; r <= last; r++) {
+    var shopId = String(sh.getRange(r, 1).getValue() || '').trim().toLowerCase();
+    var name   = String(sh.getRange(r, 2).getValue() || '').trim();
+    var pass   = String(sh.getRange(r, 3).getValue() || '');
+    if (!shopId || !pass) continue;
+    if (pass.length < 8) { sh.getRange(r, 4).setValue('REJECTED: password must be at least 8 characters'); continue; }
+    var salt = makeSalt();
+    var hash = sha256Hex(salt + pass);
+    var shops = getSheet('shops');
+    var existing = findShopById(shopId);
+    if (existing) {
+      var rows = sheetToObjects(shops);
+      for (var i = 0; i < rows.length; i++) {
+        if (String(rows[i].shopId) === shopId) {
+          shops.getRange(i + 2, 3).setValue(salt);
+          shops.getRange(i + 2, 4).setValue(hash);
+          shops.getRange(i + 2, 5).setValue(true);
+          if (name) shops.getRange(i + 2, 2).setValue(name);
+          break;
+        }
+      }
+      msgs.push(shopId + ': password updated');
+    } else {
+      shops.appendRow([shopId, name || shopId, salt, hash, true, new Date()]);
+      msgs.push(shopId + ': account created');
+    }
+    sh.getRange(r, 3).clearContent();               // wipe plaintext password
+    sh.getRange(r, 4).setValue('DONE ' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ' — password stored hashed, plaintext wiped');
+    done++;
+  }
+  var out = done ? ('Processed ' + done + ' account(s): ' + msgs.join('; ')) : 'Nothing to process — type shop_id and new_password in row 2 of the SETUP tab.';
+  Logger.log(out);
+  return out;
+}
+
+/** Optional check — lists shop IDs (never passwords). */
+function setupStep3_ListShops() {
+  var rows = sheetToObjects(getSheet('shops'));
+  var out = rows.map(function (r) { return r.shopId + ' (' + r.name + ') active=' + r.active; }).join('\n') || 'no shops yet';
+  Logger.log(out);
+  return out;
+}
+
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('HT Admin')
