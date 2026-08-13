@@ -1171,5 +1171,12 @@ function setLang(l){
 renderAll();
 battFetch();
 </script>
+<button id="a4print" onclick="window.print()" title="列印或另存 PDF Print or save as PDF"
+ style="position:fixed;right:18px;bottom:18px;z-index:999;display:flex;align-items:center;gap:7px;
+ padding:10px 16px;border:0;border-radius:24px;background:#171a20;color:#fff;font:600 13px/1 'Inter','Noto Sans TC',sans-serif;
+ letter-spacing:.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28)">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+列印 A4 Print</button>
+<style>@media print{#a4print{display:none!important}}</style>
 </body>
 </html>
