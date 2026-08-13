@@ -77,6 +77,9 @@ th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-tra
   color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;white-space:nowrap}
 td{padding:7px 7px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.42}
 th+th,td+td{padding-left:9px}
+#tbl-future,#tbl-sched{table-layout:fixed}
+#tbl-future th,#tbl-sched th{white-space:normal;line-height:1.3}
+#tbl-future td,#tbl-sched td{overflow-wrap:break-word;word-break:normal}
 tr:last-child td{border-bottom:1px solid var(--line)}
 .r{text-align:right}
 td.r,th.r{padding-right:0}
@@ -1071,7 +1074,7 @@ function tblSched(){
   const h=[T('保養項目','Item'),T('官方週期','Official interval'),T('最後紀錄','Last recorded'),T('狀態','Status'),T('說明','Comment')];
   const st={red:T('逾期／無紀錄','Overdue / no record'),amb:T('待確認','To confirm'),ok:T('已完成','Done'),grey:T('不適用','N/A')};
   document.getElementById('tbl-sched').innerHTML =
-    '<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
+    '<colgroup><col style="width:14%"><col style="width:14%"><col style="width:19%"><col style="width:11%"><col style="width:42%"></colgroup>'+'<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>'+
     SCHED.map(r=>`<tr>
       <td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td>${tx(r.last)}</td>
       <td><span class="pill p-${r.st}">${tx(st[r.st])}</span></td><td>${tx(r.c)}</td></tr>`).join('')+'</tbody>';
@@ -1079,14 +1082,14 @@ function tblSched(){
 
 function tblFuture(){
   const h=[T('保養項目','Item'),T('週期（月／公里）','Interval (months / km)'),T('預計下次到期（日期／里程）','Projected next due (date / odo)'),T('中山/珠海第三方參考價（人民幣）','Zhongshan/Zhuhai indep. shop est. (RMB)'),T('說明','Rationale')];
-  let s='<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
+  let s='<colgroup><col style="width:15%"><col style="width:15%"><col style="width:19%"><col style="width:19%"><col style="width:32%"></colgroup>'+'<thead><tr>'+h.map(x=>`<th>${tx(x)}</th>`).join('')+'</tr></thead><tbody>';
   Object.keys(FUTGRP).forEach(g=>{
     const rows=FUTURE.filter(r=>r.grp===g);
     if(!rows.length) return;
     s+=`<tr><td colspan="5" style="border-bottom:1px solid var(--ink);padding-top:12px"><span class="lbl">${tx(FUTGRP[g])}</span></td></tr>`;
     rows.forEach(r=>{
-      s+=`<tr><td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num" style="white-space:nowrap">${tx(r.due)}</td>
-        <td class="num" style="white-space:nowrap">${tx(r.rmb)}</td><td>${tx(r.c)}${r.live?`<div class="tiny" id="battery-live" style="margin-top:4px">${L()==='zh'?'讀取中…':'loading…'}</div>`:''}</td></tr>`;
+      s+=`<tr><td style="font-weight:500">${tx(r.i)}</td><td>${tx(r.int)}</td><td class="num">${tx(r.due)}</td>
+        <td class="num">${tx(r.rmb)}</td><td>${tx(r.c)}${r.live?`<div class="tiny" id="battery-live" style="margin-top:4px">${L()==='zh'?'讀取中…':'loading…'}</div>`:''}</td></tr>`;
     });
   });
   document.getElementById('tbl-future').innerHTML = s+'</tbody>';
@@ -1173,7 +1176,7 @@ battFetch();
 </script>
 <button id="a4print" onclick="window.print()" title="列印或另存 PDF Print or save as PDF"
  style="position:fixed;right:18px;bottom:18px;z-index:999;display:flex;align-items:center;gap:7px;
- padding:10px 16px;border:0;border-radius:24px;background:#171a20;color:#fff;font:600 13px/1 'Inter','Noto Sans TC',sans-serif;
+ padding:10px 16px;border:0;border-radius:24px;background:#171a20;color:#fff;font:600 12.5px/1 'Inter','Noto Sans TC',sans-serif;white-space:nowrap;
  letter-spacing:.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28)">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
 列印 A4 Print</button>
