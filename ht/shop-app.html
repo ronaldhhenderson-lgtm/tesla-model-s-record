@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henderson Transpacific 工作台 Workshop Console</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7; --muted:#33475e; --faint:#64748b;
+  --line:#d5dbe1; --hair:#e6eaee; --panel:#f6f7f8; --panel2:#fbfcfd; --paper:#f6f7f8;
+  --red:#c0392b; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);background:var(--paper);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-weight:600;letter-spacing:.01em}
+button,input,select,textarea{font-family:inherit}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--mono)}
+a{color:var(--blue)}
+
+/* ---------- bilingual helper ---------- */
+.bi{display:inline-flex;align-items:baseline;gap:.36em;flex-wrap:wrap}
+.bi .t-en{font-size:.76em;color:var(--faint)}
+body[data-lang="en"] .bi .t-zh{font-size:.76em;color:var(--faint)}
+body[data-lang="en"] .bi .t-en{font-size:1em;color:inherit}
+.zh-only{display:inline}
+.en-only{display:none}
+body[data-lang="en"] .zh-only{display:none}
+body[data-lang="en"] .en-only{display:inline}
+.blk.zh-only{display:block}
+.blk.en-only{display:none}
+body[data-lang="en"] .blk.zh-only{display:none}
+body[data-lang="en"] .blk.en-only{display:block}
+
+/* ---------- brandmark ---------- */
+.brandmark{display:flex;align-items:center;gap:10px}
+.brandmark svg{flex:0 0 auto;display:block;width:19px;height:19px}
+.wordmark{font-size:10.5px;font-weight:600;letter-spacing:.24em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--accent)}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+
+/* ---------- buttons ---------- */
+button,.btn{font:inherit;font-size:11.5px;font-weight:600;letter-spacing:.05em;padding:9px 14px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;border-radius:3px;
+  white-space:nowrap;min-height:38px;line-height:1.15}
+button:hover{background:var(--panel)}
+button:disabled{opacity:.5;cursor:default;background:var(--panel)}
+button.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+button.pri:hover{background:#000}
+button.pri:disabled{background:var(--ink);opacity:.5}
+button.dgr{color:var(--red);border-color:#d9a9a5}
+button.dgr:hover{background:#fbeceb}
+button.acc{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.acc:hover{background:#0b7f8a}
+button.link{border:none;background:none;padding:2px 4px;color:var(--blue);min-height:auto;font-weight:600}
+button.sm{font-size:10.5px;padding:6px 10px;min-height:32px}
+button.ic{padding:8px 10px}
+
+/* ---------- forms ---------- */
+label{display:block;font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:5px}
+input,select,textarea{font-size:13.5px;padding:9px 10px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:3px;width:100%;min-height:38px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+textarea{resize:vertical;min-height:60px;line-height:1.5}
+.fld{margin-bottom:12px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.formrow{display:flex;gap:10px;justify-content:flex-end;margin-top:6px;flex-wrap:wrap}
+.err-txt{color:var(--red);font-size:11.5px;margin-top:4px}
+
+/* ---------- cards / layout ---------- */
+.app-shell{max-width:1180px;margin:0 auto;min-height:100vh;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.06)}
+.card{border:1px solid var(--hair);background:#fff;padding:16px 18px}
+.card+.card{margin-top:12px}
+
+/* ---------- top bar ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:12px 24px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.topbar .shopinfo{text-align:right}
+.topbar .shopname{font-size:12.5px;font-weight:600}
+.topbar .shoprole{font-size:10px;color:var(--faint);margin-top:1px}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+
+/* ---------- toolbar / search ---------- */
+.toolbar{display:flex;gap:10px;align-items:center;padding:16px 24px 4px;flex-wrap:wrap}
+.searchwrap{position:relative;flex:1 1 260px;max-width:420px}
+.searchwrap input{padding-left:30px}
+.searchwrap:before{content:"⌕";position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:14px}
+main{padding:16px 24px 60px}
+
+/* ---------- vehicle table/list ---------- */
+.vtable{border:1px solid var(--hair)}
+.vrow{display:grid;grid-template-columns:118px 1.4fr 1fr 130px 130px 190px;gap:10px;
+  align-items:center;padding:12px 14px;border-bottom:1px solid var(--hair);background:#fff;cursor:pointer}
+.vrow:hover{background:var(--panel2)}
+.vrow.head{cursor:default;background:var(--panel);font-size:8.6px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint)}
+.vrow.head:hover{background:var(--panel)}
+.vrow:last-child{border-bottom:none}
+.vrow .cell{min-width:0}
+.vrow .cell .modelname{font-size:13px;font-weight:500}
+.vrow .cell .modelyear{font-size:11px;color:var(--faint)}
+.vrow .cell.vin{font-size:11px;color:var(--muted);word-break:break-all}
+.vrow .rowactions{display:flex;gap:6px;justify-content:flex-end}
+.platebadge{border:1.5px solid var(--ink);border-radius:3px;padding:4px 10px;font-weight:600;
+  letter-spacing:.07em;font-size:13.5px;display:inline-block;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:top}
+.platebadge.sm{font-size:11.5px;padding:3px 8px}
+.vrow .cell.platecell{overflow:hidden}
+
+/* ---------- chips ---------- */
+.chip{display:inline-block;font-size:8.8px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
+.chip-red{color:var(--red);border-color:var(--red);background:#fbeceb}
+.chip-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.chip-teal{color:var(--accent);border-color:#8fd0d6;background:#e6f5f6}
+.chip-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+
+/* ---------- empty state ---------- */
+.empty{padding:40px 20px;text-align:center;color:var(--faint);font-size:12.5px;border:1px dashed var(--line)}
+
+/* ---------- detail header ---------- */
+.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  padding:16px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.detail-ident{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.detail-kv{font-size:12px;color:var(--muted)}
+.detail-kv b{color:var(--ink);font-weight:600}
+.backbtn{font-size:11px;color:var(--muted);background:none;border:none;padding:4px 0;cursor:pointer;
+  display:flex;align-items:center;gap:4px;min-height:auto;font-weight:600}
+.backbtn:hover{color:var(--ink);background:none}
+
+/* ---------- tabs ---------- */
+nav.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);padding:0 24px;overflow-x:auto}
+nav.tabs button{border:none;background:none;border-bottom:2px solid transparent;border-radius:0;
+  padding:12px 16px;font-size:11.5px;letter-spacing:.06em;color:var(--muted);min-height:44px}
+nav.tabs button:hover{background:var(--panel2);color:var(--ink)}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* ---------- record list ---------- */
+.rec-list{border:1px solid var(--hair)}
+.rec-row{padding:13px 16px;border-bottom:1px solid var(--hair);display:grid;
+  grid-template-columns:92px 100px 110px 1.6fr 110px 130px 150px;gap:12px;align-items:start;background:#fff}
+.rec-row:last-child{border-bottom:none}
+.rec-row .work{font-size:12.5px}
+.rec-row .parts{font-size:11px;color:var(--faint);margin-top:2px}
+.rec-row .cost{font-weight:600;font-size:12.5px}
+.rec-row .rowactions{display:flex;gap:6px;justify-content:flex-end}
+
+/* ---------- plan list ---------- */
+.plan-row{padding:13px 16px;border-bottom:1px solid var(--hair);display:grid;
+  grid-template-columns:1.7fr 130px 140px 140px 110px 130px;gap:12px;align-items:center;background:#fff}
+.plan-row:last-child{border-bottom:none}
+.plan-row .itemname .zh{font-size:12.5px;font-weight:500}
+.plan-row .itemname .en{font-size:10.5px;color:var(--faint)}
+.plan-list{border:1px solid var(--hair)}
+
+/* ---------- KPI strip (report) ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin:14px 0}
+.kpi{background:#fff;padding:12px 14px}
+.kpi .v{font-size:19px;font-weight:600;margin-top:5px}
+.kpi .v small{font-size:11px;font-weight:500;color:var(--muted)}
+
+/* ---------- generic table (report) ---------- */
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:8.6px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);padding:0 8px 6px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 8px 8px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+th:first-child,td:first-child{padding-left:0}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+
+/* ---------- report ---------- */
+.report-sheet{padding:20px 4px}
+.report-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:16px;flex-wrap:wrap}
+.report-sec{margin-top:22px}
+.report-sec h3.rh{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:10px}
+
+/* ---------- login ---------- */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink);padding:24px}
+.login-card{width:100%;max-width:380px;background:#fff;padding:36px 30px 30px;border-radius:5px;
+  box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.login-card .brandmark{justify-content:center}
+.login-card h1{font-size:16px;text-align:center;margin-top:16px;letter-spacing:.01em}
+.login-card .sub{text-align:center;margin-top:4px;font-size:11px;color:var(--faint)}
+.login-field{margin-top:16px}
+.login-btn{width:100%;margin-top:22px}
+.login-err{margin-top:16px;padding:11px 13px;background:#fbeceb;border-left:3px solid var(--red);
+  color:#8a281f;font-size:12px;line-height:1.55;border-radius:2px}
+.login-notice{margin-top:16px;padding:11px 13px;background:#fdf8ee;border-left:3px solid var(--amber);
+  color:#6b4c00;font-size:12px;line-height:1.5;border-radius:2px}
+.login-lang{position:fixed;top:16px;right:16px}
+.login-lang button{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)}
+.login-lang button:hover{background:rgba(255,255,255,.16)}
+
+/* ---------- setup / session banners ---------- */
+.banner{padding:9px 24px;font-size:11.5px;line-height:1.5;text-align:center}
+.banner.warn{background:#fdf8ee;color:#6b4c00;border-bottom:1px solid #e0b96a}
+.banner.bad{background:#fbeceb;color:#8a281f;border-bottom:1px solid #d9a9a5}
+.banner code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:2px;font-family:var(--mono)}
+
+/* ---------- modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(14,27,44,.55);display:flex;align-items:center;
+  justify-content:center;padding:18px;z-index:1000}
+.modalbox{background:#fff;max-width:460px;width:100%;padding:22px 22px 20px;border-radius:5px;
+  box-shadow:0 24px 70px rgba(0,0,0,.35);max-height:88vh;overflow:auto}
+.modalbox h3{font-size:13.5px;margin-bottom:10px}
+.modal-msg{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+
+/* ---------- toast ---------- */
+.toastwrap{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:8px;
+  z-index:1100;max-width:320px;width:calc(100% - 32px)}
+.toast{padding:11px 14px;border-radius:3px;font-size:12px;line-height:1.45;background:#fff;
+  border-left:3px solid var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.toast.ok{border-left-color:var(--ok)}
+.toast.bad{border-left-color:var(--red)}
+
+/* ---------- loadbar ---------- */
+#loadbar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1200;
+  opacity:0;transition:width .4s ease,opacity .25s ease}
+#loadbar.on{opacity:1;width:60%}
+.savestat{font-size:9.5px;font-weight:600;letter-spacing:.05em;padding:6px 10px;border-radius:2px;
+  border:1px solid #a9c9b6;background:#f2f8f4;color:var(--ok);white-space:nowrap}
+
+/* ---------- footer ---------- */
+.ht-foot{padding:16px 24px;text-align:center;font-size:9.5px;letter-spacing:.08em;color:var(--faint);
+  border-top:1px solid var(--hair)}
+
+/* ---------- responsive ---------- */
+@media (max-width:700px){
+  .topbar{padding:10px 14px}
+  .toolbar{padding:12px 14px 4px}
+  main{padding:12px 14px 60px}
+  .detail-head{padding:12px 14px}
+  nav.tabs{padding:0 14px}
+  nav.tabs button{flex:1;padding:12px 6px;font-size:10.5px}
+  .grid.g2,.grid.g3,.grid.g4{grid-template-columns:1fr}
+  .vrow.head{display:none}
+  .vrow{grid-template-columns:1fr;gap:4px;padding:13px 14px;border:1px solid var(--hair);
+    border-radius:4px;margin:8px 14px;border-bottom:1px solid var(--hair)}
+  .vtable{border:none;background:transparent}
+  .vrow .cell{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:2px 0}
+  .vrow .cell[data-label]:before{content:attr(data-label);color:var(--faint);font-size:9.5px;
+    text-transform:uppercase;letter-spacing:.06em;flex:0 0 auto}
+  .vrow .cell.platecell{padding-bottom:6px}
+  .vrow .cell.platecell:before{display:none}
+  .vrow .rowactions{justify-content:flex-start;padding-top:8px}
+  .rec-row{grid-template-columns:1fr;gap:4px;padding:13px 14px;border:1px solid var(--hair);
+    border-radius:4px;margin-bottom:8px}
+  .rec-row .cell{display:flex;justify-content:space-between;gap:10px}
+  .rec-row .cell[data-label]:before{content:attr(data-label);color:var(--faint);font-size:9.5px;
+    text-transform:uppercase;letter-spacing:.06em}
+  .rec-list{border:none;background:transparent}
+  .plan-row{grid-template-columns:1fr;gap:6px;padding:13px 14px;border:1px solid var(--hair);
+    border-radius:4px;margin-bottom:8px}
+  .plan-row .cell{display:flex;justify-content:space-between;gap:10px}
+  .plan-row .cell[data-label]:before{content:attr(data-label);color:var(--faint);font-size:9.5px;
+    text-transform:uppercase;letter-spacing:.06em}
+  .plan-list{border:none;background:transparent}
+  .rec-row.head,.plan-row.head{display:none}
+  .kpis{grid-template-columns:1fr 1fr}
+  button,.btn{min-height:40px}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tablewrap table{min-width:640px}
+}
+
+/* ---------- print ---------- */
+@page{size:A4 portrait;margin:12mm 10mm}
+@media print{
+  body{background:#fff}
+  .app-shell{box-shadow:none;max-width:none}
+  .noprint{display:none!important}
+  main{padding:0}
+  .report-sheet{padding:0}
+  table{font-size:10pt}
+  tr,.card{break-inside:avoid}
+  .kpis{break-inside:avoid}
+}
+</style>
+</head>
+<body data-lang="zh">
+
+<!-- ===================================================================
+     API CONFIG — set this to your Apps Script web-app /exec URL.
+     =================================================================== -->
+<script>const API = '';  // paste Apps Script web-app /exec URL here</script>
+
+<div id="loadbar" class="noprint"></div>
+<div id="banner-root" class="noprint"></div>
+<div id="app"></div>
+<div id="modal-root" class="noprint"></div>
+<div class="toastwrap noprint" id="toast-root"></div>
+
+<script>
+"use strict";
+/* =====================================================================
+   CONSTANTS
+   ===================================================================== */
+const TOKEN_KEY = 'ht_shop_token';
+const SHOPNAME_KEY = 'ht_shop_name';
+const REMEMBER_SHOP_KEY = 'ht_shop_id_remember';
+
+const HT_MONOGRAM = '<svg width="19" height="19" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>';
+const WORDMARK = '<div class="brandmark"><span aria-hidden="true">'+HT_MONOGRAM+'</span><div><div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div><div class="cnname">亨德森環太</div></div></div>';
+
+const CATEGORIES = [
+  {v:'scheduled', zh:'定期保養', en:'Scheduled'},
+  {v:'repair',    zh:'維修',     en:'Repair'},
+  {v:'inspection',zh:'檢查',     en:'Inspection'},
+  {v:'accident',  zh:'事故',     en:'Accident'},
+  {v:'other',     zh:'其他',     en:'Other'}
+];
+const CURRENCIES = ['HKD','RMB','USD'];
+const CUR_SYM = {HKD:'HK$', RMB:'¥', USD:'US$'};
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+let LANG = 'zh';
+let TOKEN = sessionStorage.getItem(TOKEN_KEY) || '';
+let SHOP_NAME = sessionStorage.getItem(SHOPNAME_KEY) || '';
+let VIEW = TOKEN ? 'list' : 'login';
+
+let VEHICLES = [];
+let SEARCH = '';
+let CUR_VEH = null;      // full vehicle object currently open
+let CUR_TAB = 'records';
+let RECORDS = [];
+let PLAN = [];
+let REPORT = null;
+
+let BUSY = false;
+let SAVING = false;
+let LOGIN_BUSY = false;
+let LOGIN_ERR = '';
+let SESSION_NOTICE = false;
+
+let VEH_FORM = null;     // {mode:'add'|'edit', v:{...}}
+let REC_FORM = null;     // {mode:'add'|'edit', r:{...}}
+let MODAL = null;        // {html, dismissable}
+let TOASTS = [];
+let TOAST_SEQ = 1;
+
+/* =====================================================================
+   HELPERS
+   ===================================================================== */
+function esc(s){
+  return String(s===undefined||s===null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function bi(zh,en){
+  return '<span class="bi"><span class="t-zh">'+zh+'</span><span class="t-en">'+en+'</span></span>';
+}
+function fmtDate(s){
+  if(!s) return '—';
+  const str = String(s);
+  const m = str.match(/^(\d{4}-\d{2}-\d{2})/);
+  if(m) return m[1];
+  const d = new Date(str);
+  if(isNaN(d.getTime())) return esc(str);
+  return d.toISOString().slice(0,10);
+}
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function fmtNum(n){
+  const v = Number(n);
+  if(!isFinite(v)) return '0';
+  return v.toLocaleString('en-US');
+}
+function fmtOdo(n){ return fmtNum(n) + ' km'; }
+function fmtMoney(n,cur){
+  const v = Number(n)||0;
+  const sym = CUR_SYM[cur] || (cur?cur+' ':'');
+  return sym + v.toLocaleString('en-US',{maximumFractionDigits:2});
+}
+function catLabel(v){
+  const c = CATEGORIES.find(x=>x.v===v);
+  return c ? bi(c.zh,c.en) : bi(esc(v||'—'),esc(v||'—'));
+}
+function planParts(item){
+  const s = String(item||'');
+  const i = s.indexOf('｜');
+  if(i===-1) return {zh:s, en:s};
+  return {zh:s.slice(0,i), en:s.slice(i+1)};
+}
+function stateChip(state){
+  const map = {
+    overdue:{cls:'chip-red', zh:'逾期', en:'Overdue'},
+    due:    {cls:'chip-amb', zh:'將到期', en:'Due'},
+    ok:     {cls:'chip-teal',zh:'已完成', en:'OK'},
+    none:   {cls:'chip-grey',zh:'未設定', en:'None'}
+  };
+  const c = map[state] || map.none;
+  return '<span class="chip '+c.cls+'">'+bi(c.zh,c.en)+'</span>';
+}
+function uid(){ return 'x'+(TOAST_SEQ++)+Math.random().toString(36).slice(2,8); }
+
+/* =====================================================================
+   API — must avoid CORS preflight: text/plain body, no custom headers.
+   ===================================================================== */
+async function api(action, payload){
+  const r = await fetch(API, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(Object.assign({action, token: TOKEN}, payload||{}))});
+  return await r.json();
+}
+
+// call() wraps api() with busy state, error toasts and global auth handling.
+async function call(action, payload, opts){
+  opts = opts || {};
+  if(!API){
+    render();
+    toast('bad', '尚未連接後端 — 無法執行操作', 'Backend not connected — action unavailable');
+    return {ok:false, error:'no-api'};
+  }
+  setBusy(true, !!opts.save);
+  try{
+    const res = await api(action, payload);
+    if(res && res.ok===false){
+      if(res.error==='auth'){
+        handleAuthExpired();
+        return res;
+      }
+      toast('bad', '操作失敗 '+esc(res.error||''), 'Action failed: '+esc(res.error||''));
+    }
+    return res;
+  }catch(err){
+    toast('bad', '無法連接後端，請檢查網址或網絡', 'Could not reach the backend — check the URL or your connection');
+    return {ok:false, error:String(err && err.message || err)};
+  }finally{
+    setBusy(false, false);
+  }
+}
+
+function setBusy(b, isSave){
+  BUSY = b;
+  if(isSave!==undefined) SAVING = b && isSave;
+  const bar = document.getElementById('loadbar');
+  if(bar) bar.className = BUSY ? 'on' : '';
+  renderTopStatus();
+}
+function renderTopStatus(){
+  const el = document.getElementById('savestat-slot');
+  if(!el) return;
+  el.innerHTML = SAVING ? '<span class="savestat">'+bi('儲存中…','Saving…')+'</span>' : '';
+}
+
+function handleAuthExpired(){
+  TOKEN=''; SHOP_NAME='';
+  sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(SHOPNAME_KEY);
+  VIEW='login'; SESSION_NOTICE=true; LOGIN_ERR='';
+  VEHICLES=[]; CUR_VEH=null; RECORDS=[]; PLAN=[]; REPORT=null;
+  VEH_FORM=null; REC_FORM=null; MODAL=null;
+  render();
+}
+
+/* =====================================================================
+   TOASTS
+   ===================================================================== */
+function toast(kind, zh, en){
+  const id = uid();
+  TOASTS.push({id, kind, zh, en});
+  renderToasts();
+  setTimeout(()=>{ TOASTS = TOASTS.filter(t=>t.id!==id); renderToasts(); }, 4200);
+}
+function renderToasts(){
+  const root = document.getElementById('toast-root');
+  if(!root) return;
+  root.innerHTML = TOASTS.map(t=>'<div class="toast '+(t.kind==='ok'?'ok':'bad')+'">'+bi(t.zh,t.en)+'</div>').join('');
+}
+
+/* =====================================================================
+   MODAL
+   ===================================================================== */
+function openModal(html){ MODAL = {html}; renderModal(); }
+function closeModal(){ MODAL = null; renderModal(); }
+function renderModal(){
+  const root = document.getElementById('modal-root');
+  if(!MODAL){ root.innerHTML=''; return; }
+  root.innerHTML = '<div class="overlay" id="modal-overlay"><div class="modalbox">'+MODAL.html+'</div></div>';
+  const ov = document.getElementById('modal-overlay');
+  if(ov) ov.addEventListener('click', e=>{ if(e.target===ov) closeModal(); });
+}
+
+/* =====================================================================
+   INIT / LOAD
+   ===================================================================== */
+async function loadVehicles(){
+  const res = await call('vehicles', {});
+  if(res && res.ok) VEHICLES = res.vehicles || [];
+  return res;
+}
+async function loadRecords(vehicleId){
+  const res = await call('records', {vehicleId});
+  if(res && res.ok) RECORDS = res.records || [];
+  return res;
+}
+async function loadPlan(vehicleId){
+  const res = await call('plan', {vehicleId});
+  if(res && res.ok) PLAN = res.items || [];
+  return res;
+}
+async function loadReport(vehicleId){
+  const res = await call('report', {vehicleId});
+  if(res && res.ok) REPORT = res;
+  return res;
+}
+
+/* =====================================================================
+   RENDER ROOT
+   ===================================================================== */
+function render(){
+  document.body.dataset.lang = LANG;
+  renderBanner();
+  const root = document.getElementById('app');
+  if(VIEW==='login') root.innerHTML = viewLogin();
+  else if(VIEW==='list') root.innerHTML = viewList();
+  else if(VIEW==='detail') root.innerHTML = viewDetail();
+  renderTopStatus();
+  renderModal();
+  renderToasts();
+  wireGlobalEvents();
+}
+
+function renderBanner(){
+  const root = document.getElementById('banner-root');
+  let html = '';
+  if(!API){
+    html += '<div class="banner warn">'+bi(
+      '尚未連接後端 — 請貼上 Apps Script 網址至檔案頂部的 <code>API</code> 常數',
+      'Backend not connected — paste your Apps Script URL into the <code>API</code> constant near the top of this file'
+    )+'</div>';
+  }
+  if(VIEW==='login' && SESSION_NOTICE){
+    html += '<div class="banner bad">'+bi('登入已逾時，請重新登入','Session expired — please sign in again')+'</div>';
+  }
+  root.innerHTML = html;
+}
+
+function wireGlobalEvents(){
+  // Enter-to-submit on login fields
+  const s = document.getElementById('in-shop');
+  const p = document.getElementById('in-pass');
+  if(s) s.addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+  if(p) p.addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+}
+
+/* =====================================================================
+   VIEW — LOGIN
+   ===================================================================== */
+function viewLogin(){
+  const remembered = localStorage.getItem(REMEMBER_SHOP_KEY) || '';
+  return `
+  <div class="login-lang noprint">${langToggleHtml()}</div>
+  <div class="login-wrap">
+    <div class="login-card">
+      ${WORDMARK}
+      <h1>${bi('工作台 · 登入','Workshop Console · Sign in')}</h1>
+      <div class="sub">${bi('車輛檔案管理系統','Vehicle record management system')}</div>
+
+      <div class="login-field">
+        <label>${bi('商戶編號','Shop ID')}</label>
+        <input id="in-shop" type="text" autocomplete="username" value="${esc(remembered)}" ${LOGIN_BUSY?'disabled':''}>
+      </div>
+      <div class="login-field">
+        <label>${bi('密碼','Password')}</label>
+        <input id="in-pass" type="password" autocomplete="current-password" ${LOGIN_BUSY?'disabled':''}>
+      </div>
+      <button class="pri login-btn" id="btn-login" onclick="doLogin()" ${LOGIN_BUSY?'disabled':''}>
+        ${LOGIN_BUSY ? bi('登入中…','Signing in…') : bi('登入','Sign in')}
+      </button>
+      ${LOGIN_ERR ? '<div class="login-err">'+loginErrHtml()+'</div>' : ''}
+    </div>
+  </div>`;
+}
+function loginErrHtml(){
+  if(LOGIN_ERR==='need-fields') return bi('請輸入商戶編號及密碼','Please enter a shop ID and password');
+  return bi('登入失敗：商戶編號或密碼不正確','Sign-in failed — incorrect shop ID or password')
+    + '<br><span class="mono" style="font-size:10px;color:var(--faint)">'+esc(LOGIN_ERR)+'</span>';
+}
+function langToggleHtml(){
+  return `<button class="sm" onclick="toggleLang()">${LANG==='zh'?'EN':'繁中'}</button>`;
+}
+
+async function doLogin(){
+  if(LOGIN_BUSY) return;
+  const shopEl = document.getElementById('in-shop');
+  const passEl = document.getElementById('in-pass');
+  const shop = shopEl ? shopEl.value.trim() : '';
+  const pass = passEl ? passEl.value : '';
+  if(!shop || !pass){ LOGIN_ERR='need-fields'; render(); return; }
+  LOGIN_BUSY = true; LOGIN_ERR=''; render();
+  const res = await call('login', {shop, pass});
+  LOGIN_BUSY = false;
+  if(res && res.ok){
+    TOKEN = res.token; SHOP_NAME = res.shopName || shop;
+    sessionStorage.setItem(TOKEN_KEY, TOKEN);
+    sessionStorage.setItem(SHOPNAME_KEY, SHOP_NAME);
+    localStorage.setItem(REMEMBER_SHOP_KEY, shop);
+    SESSION_NOTICE = false; LOGIN_ERR='';
+    VIEW = 'list';
+    await loadVehicles();
+    toast('ok','登入成功','Signed in');
+  } else if(res){
+    LOGIN_ERR = res.error || 'unknown';
+  }
+  render();
+}
+
+async function doLogout(){
+  await call('logout', {});
+  TOKEN=''; SHOP_NAME='';
+  sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(SHOPNAME_KEY);
+  VIEW='login'; VEHICLES=[]; CUR_VEH=null; RECORDS=[]; PLAN=[]; REPORT=null;
+  SESSION_NOTICE=false;
+  VEH_FORM=null; REC_FORM=null; MODAL=null;
+  render();
+}
+
+function toggleLang(){ LANG = LANG==='zh'?'en':'zh'; render(); }
+
+/* =====================================================================
+   VIEW — SHARED TOPBAR
+   ===================================================================== */
+function topbarHtml(){
+  return `
+  <div class="topbar noprint">
+    ${WORDMARK}
+    <div class="topbar-actions">
+      <div id="savestat-slot"></div>
+      <div class="shopinfo">
+        <div class="shopname">${esc(SHOP_NAME || '—')}</div>
+        <div class="shoprole">${bi('工作台 Workshop Console','')}</div>
+      </div>
+      <button class="sm" onclick="toggleLang()">${LANG==='zh'?'EN':'繁中'}</button>
+      <button class="sm" onclick="doLogout()">${bi('登出','Sign out')}</button>
+    </div>
+  </div>`;
+}
+
+/* =====================================================================
+   VIEW — VEHICLE LIST
+   ===================================================================== */
+function filteredVehicles(){
+  const q = SEARCH.trim().toLowerCase();
+  if(!q) return VEHICLES;
+  return VEHICLES.filter(v=>
+    (String(v.plate||'').toLowerCase().includes(q)) ||
+    (String(v.vin||'').toLowerCase().includes(q)) ||
+    (String(v.owner||'').toLowerCase().includes(q))
+  );
+}
+
+function viewList(){
+  const list = filteredVehicles();
+  return `
+  ${topbarHtml()}
+  <div class="toolbar noprint">
+    <div class="searchwrap">
+      <input id="veh-search" type="text" placeholder="${LANG==='zh'?'搜尋車牌／VIN／車主':'Search plate / VIN / owner'}" value="${esc(SEARCH)}" oninput="onSearchInput(this.value)">
+    </div>
+    <button class="pri" onclick="openVehicleForm()">${bi('＋ 新增車輛','Add vehicle')}</button>
+  </div>
+  <main>
+    ${VEHICLES.length===0 ? emptyVehiclesHtml() : vehicleTableHtml(list)}
+  </main>
+  <div class="ht-foot noprint">Henderson Transpacific · Vehicle Records &amp; Analytics</div>
+  ${VEH_FORM ? '' : ''}
+  `;
+}
+function emptyVehiclesHtml(){
+  return `<div class="empty">${bi('尚未有車輛紀錄，按「新增車輛」開始','No vehicles yet — use "Add vehicle" to start')}</div>`;
+}
+function vehicleTableHtml(list){
+  if(list.length===0){
+    return `<div class="empty">${bi('沒有符合搜尋的車輛','No vehicles match your search')}</div>`;
+  }
+  const head = `<div class="vrow head">
+    <div>${bi('車牌','Plate')}</div>
+    <div>${bi('型號','Model')}</div>
+    <div>${bi('車主','Owner')}</div>
+    <div>${bi('里程','Odometer')}</div>
+    <div>${bi('更新日期','Updated')}</div>
+    <div></div>
+  </div>`;
+  const rows = list.map(v=>`
+    <div class="vrow" data-act="open-vehicle" data-id="${esc(v.id)}">
+      <div class="cell platecell"><span class="platebadge sm">${esc(v.plate||'—')}</span></div>
+      <div class="cell" data-label="${LANG==='zh'?'型號':'Model'}"><span class="modelname">${esc(v.model||'—')}</span> <span class="modelyear">${esc(v.year||'')}</span></div>
+      <div class="cell" data-label="${LANG==='zh'?'車主':'Owner'}">${esc(v.owner||'—')}</div>
+      <div class="cell num" data-label="${LANG==='zh'?'里程':'Odo'}">${fmtOdo(v.odo)}</div>
+      <div class="cell" data-label="${LANG==='zh'?'更新':'Updated'}">${fmtDate(v.updated)}</div>
+      <div class="rowactions">
+        <button class="sm" data-act="edit-vehicle" data-id="${esc(v.id)}">${LANG==='zh'?'編輯':'Edit'}</button>
+        <button class="sm dgr" data-act="delete-vehicle" data-id="${esc(v.id)}">${LANG==='zh'?'刪除':'Delete'}</button>
+      </div>
+    </div>`).join('');
+  return `<div class="vtable">${head}${rows}</div>`;
+}
+function onSearchInput(v){ SEARCH=v; renderListBody(); }
+function renderListBody(){
+  // lightweight re-render of just the vehicle table to preserve search focus
+  const list = filteredVehicles();
+  const main = document.querySelector('#app main');
+  if(main) main.innerHTML = VEHICLES.length===0 ? emptyVehiclesHtml() : vehicleTableHtml(list);
+}
+
+/* ---- vehicle form modal ---- */
+function openVehicleForm(id){
+  const v = id ? VEHICLES.find(x=>x.id===id) : null;
+  VEH_FORM = {mode: v?'edit':'add', v: v?Object.assign({},v):{plate:'',vin:'',model:'',year:'',owner:'',odo:'',notes:''}};
+  openModal(vehicleFormHtml());
+}
+function vehicleFormHtml(){
+  const f = VEH_FORM;
+  const v = f.v;
+  const title = f.mode==='edit' ? bi('編輯車輛','Edit vehicle') : bi('新增車輛','Add vehicle');
+  return `
+  <h3>${title}</h3>
+  <div class="grid g2">
+    <div class="fld"><label>${bi('車牌','Plate')} *</label><input id="vf-plate" value="${esc(v.plate)}"></div>
+    <div class="fld"><label>${bi('VIN','VIN')}</label><input id="vf-vin" value="${esc(v.vin)}"></div>
+    <div class="fld"><label>${bi('型號','Model')}</label><input id="vf-model" value="${esc(v.model)}"></div>
+    <div class="fld"><label>${bi('年份','Year')}</label><input id="vf-year" type="number" value="${esc(v.year)}"></div>
+    <div class="fld"><label>${bi('車主','Owner')}</label><input id="vf-owner" value="${esc(v.owner)}"></div>
+    <div class="fld"><label>${bi('里程 km','Odometer km')}</label><input id="vf-odo" type="number" value="${esc(v.odo)}"></div>
+  </div>
+  <div class="fld"><label>${bi('備註','Notes')}</label><textarea id="vf-notes">${esc(v.notes)}</textarea></div>
+  <div id="vf-err" class="err-txt"></div>
+  <div class="modal-actions">
+    <button onclick="closeModal()">${bi('取消','Cancel')}</button>
+    <button class="pri" id="vf-save" onclick="saveVehicleForm()">${bi('儲存','Save')}</button>
+  </div>`;
+}
+async function saveVehicleForm(){
+  const btn = document.getElementById('vf-save');
+  if(btn.disabled) return;
+  const plate = document.getElementById('vf-plate').value.trim();
+  if(!plate){
+    document.getElementById('vf-err').innerHTML = bi('請輸入車牌','Plate is required');
+    return;
+  }
+  btn.disabled = true;
+  const vehicle = {
+    plate,
+    vin: document.getElementById('vf-vin').value.trim(),
+    model: document.getElementById('vf-model').value.trim(),
+    year: document.getElementById('vf-year').value,
+    owner: document.getElementById('vf-owner').value.trim(),
+    odo: document.getElementById('vf-odo').value,
+    notes: document.getElementById('vf-notes').value.trim()
+  };
+  if(VEH_FORM.mode==='edit') vehicle.id = VEH_FORM.v.id;
+  const res = await call('vehicleSave', {vehicle}, {save:true});
+  if(btn) btn.disabled = false;
+  if(res && res.ok){
+    closeModal();
+    VEH_FORM = null;
+    toast('ok','已儲存車輛','Vehicle saved');
+    await loadVehicles();
+    if(CUR_VEH && res.vehicle && CUR_VEH.id===res.vehicle.id) CUR_VEH = res.vehicle;
+    render();
+  }
+}
+
+/* ---- delete vehicle modal (typed plate confirmation) ---- */
+function openDeleteVehicleModal(id){
+  const v = VEHICLES.find(x=>x.id===id);
+  if(!v) return;
+  openModal(deleteVehicleHtml(v));
+}
+function deleteVehicleHtml(v){
+  return `
+  <h3>${bi('刪除車輛','Delete vehicle')}</h3>
+  <div class="modal-msg">
+    ${bi('此操作無法復原，將一併移除此車輛的維修紀錄。請輸入車牌以確認：','This cannot be undone and will remove this vehicle&#39;s records too. Type the plate to confirm:')}
+    <div style="margin-top:8px"><span class="platebadge sm">${esc(v.plate)}</span></div>
+  </div>
+  <div class="fld"><input id="dv-confirm" oninput="checkDeleteMatch('${esc(v.id)}','${esc(v.plate).replace(/'/g,"\\'")}')" placeholder="${esc(v.plate)}"></div>
+  <div class="modal-actions">
+    <button onclick="closeModal()">${bi('取消','Cancel')}</button>
+    <button class="dgr" id="dv-btn" data-id="${esc(v.id)}" disabled onclick="confirmDeleteVehicle('${esc(v.id)}')">${bi('刪除','Delete')}</button>
+  </div>`;
+}
+function checkDeleteMatch(id, plate){
+  const input = document.getElementById('dv-confirm');
+  const btn = document.getElementById('dv-btn');
+  if(!input || !btn) return;
+  btn.disabled = input.value.trim() !== plate;
+}
+async function confirmDeleteVehicle(id){
+  const btn = document.getElementById('dv-btn');
+  if(!btn || btn.disabled) return;
+  btn.disabled = true;
+  const res = await call('vehicleDelete', {id}, {save:true});
+  if(res && res.ok){
+    closeModal();
+    toast('ok','已刪除車輛','Vehicle deleted');
+    if(CUR_VEH && CUR_VEH.id===id){ VIEW='list'; CUR_VEH=null; }
+    await loadVehicles();
+    render();
+  } else if(btn){
+    btn.disabled = false;
+  }
+}
+
+/* =====================================================================
+   VIEW — VEHICLE DETAIL
+   ===================================================================== */
+async function openVehicleDetail(id){
+  const v = VEHICLES.find(x=>x.id===id);
+  if(!v) return;
+  CUR_VEH = v; VIEW='detail'; CUR_TAB='records'; RECORDS=[]; PLAN=[]; REPORT=null;
+  render();
+  await loadRecords(v.id);
+  render();
+}
+function backToList(){ VIEW='list'; CUR_VEH=null; render(); loadVehicles(); }
+
+function viewDetail(){
+  const v = CUR_VEH;
+  if(!v) return `<main><div class="empty">${bi('找不到車輛','Vehicle not found')}</div></main>`;
+  return `
+  ${topbarHtml()}
+  <div class="detail-head noprint">
+    <div>
+      <button class="backbtn" onclick="backToList()">← ${bi('返回車輛列表','Back to vehicles')}</button>
+      <div class="detail-ident" style="margin-top:8px">
+        <span class="platebadge">${esc(v.plate||'—')}</span>
+        <div class="detail-kv"><b>${esc(v.model||'—')}</b> ${esc(v.year||'')}</div>
+        <div class="detail-kv">${bi('車主','Owner')} <b>${esc(v.owner||'—')}</b></div>
+        <div class="detail-kv mono" style="font-size:11px">VIN ${esc(v.vin||'—')}</div>
+        <div class="detail-kv num">${fmtOdo(v.odo)}</div>
+      </div>
+    </div>
+    <div class="rowactions" style="display:flex;gap:8px">
+      <button class="sm" onclick="openVehicleForm('${esc(v.id)}')">${bi('編輯車輛','Edit vehicle')}</button>
+      <button class="sm dgr" onclick="openDeleteVehicleModal('${esc(v.id)}')">${bi('刪除','Delete')}</button>
+    </div>
+  </div>
+  <nav class="tabs noprint">
+    <button class="${CUR_TAB==='records'?'on':''}" onclick="switchTab('records')">${bi('維修紀錄','Records')}</button>
+    <button class="${CUR_TAB==='plan'?'on':''}" onclick="switchTab('plan')">${bi('保養計劃','Plan')}</button>
+    <button class="${CUR_TAB==='report'?'on':''}" onclick="switchTab('report')">${bi('報告','Report')}</button>
+  </nav>
+  <main id="tabcontent">
+    ${CUR_TAB==='records' ? recordsTabHtml() : CUR_TAB==='plan' ? planTabHtml() : reportTabHtml()}
+  </main>
+  <div class="ht-foot noprint">Henderson Transpacific · Vehicle Records &amp; Analytics</div>`;
+}
+
+async function switchTab(tab){
+  CUR_TAB = tab;
+  render();
+  if(tab==='records' && RECORDS.length===0) { await loadRecords(CUR_VEH.id); render(); }
+  else if(tab==='plan'){ await loadPlan(CUR_VEH.id); render(); }
+  else if(tab==='report'){ await loadReport(CUR_VEH.id); render(); }
+}
+
+/* ---------------- RECORDS TAB ---------------- */
+function recordsTabHtml(){
+  const rows = RECORDS.slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
+  return `
+  <div class="toolbar noprint" style="padding:0 0 12px">
+    <div style="flex:1"></div>
+    <button class="pri" onclick="openRecordForm()">${bi('＋ 新增工單','Add record')}</button>
+  </div>
+  ${REC_FORM ? '' : ''}
+  ${rows.length===0 ? `<div class="empty">${bi('尚未有維修紀錄','No service records yet')}</div>` : recordListHtml(rows)}
+  `;
+}
+function recordListHtml(rows){
+  const head = `<div class="rec-row head" style="background:var(--panel);font-size:8.6px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)">
+    <div>${bi('日期','Date')}</div><div>${bi('里程','Odo')}</div><div>${bi('類別','Category')}</div>
+    <div>${bi('工作內容','Work')}</div><div>${bi('費用','Cost')}</div><div>${bi('廠商／技師','Vendor/Tech')}</div><div></div>
+  </div>`;
+  const body = rows.map(r=>`
+    <div class="rec-row">
+      <div class="cell" data-label="${LANG==='zh'?'日期':'Date'}">${fmtDate(r.date)}</div>
+      <div class="cell num" data-label="${LANG==='zh'?'里程':'Odo'}">${r.odo!==''&&r.odo!==undefined&&r.odo!==null?fmtOdo(r.odo):'—'}</div>
+      <div class="cell" data-label="${LANG==='zh'?'類別':'Category'}">${catLabel(r.category)}</div>
+      <div class="cell" data-label="${LANG==='zh'?'工作內容':'Work'}">
+        <div class="work">${esc(r.work||'—')}</div>
+        ${r.parts?'<div class="parts">'+esc(r.parts)+'</div>':''}
+      </div>
+      <div class="cell cost num" data-label="${LANG==='zh'?'費用':'Cost'}">${r.cost?fmtMoney(r.cost,r.currency):'—'}</div>
+      <div class="cell" data-label="${LANG==='zh'?'廠商/技師':'Vendor/Tech'}">${esc(r.vendor||'—')}${r.tech?' / '+esc(r.tech):''}</div>
+      <div class="rowactions">
+        <button class="sm" data-act="edit-record" data-id="${esc(r.id)}">${LANG==='zh'?'編輯':'Edit'}</button>
+        <button class="sm dgr" data-act="delete-record" data-id="${esc(r.id)}">${LANG==='zh'?'刪除':'Delete'}</button>
+      </div>
+    </div>`).join('');
+  return `<div class="rec-list">${head}${body}</div>`;
+}
+
+function openRecordForm(id){
+  const r = id ? RECORDS.find(x=>x.id===id) : null;
+  REC_FORM = {mode: r?'edit':'add', r: r?Object.assign({},r):{
+    date: todayISO(), odo: CUR_VEH ? CUR_VEH.odo : '', category:'scheduled', work:'', parts:'', cost:'', currency:'HKD', vendor:'', tech:'', notes:''
+  }};
+  openModal(recordFormHtml());
+}
+function recordFormHtml(){
+  const f = REC_FORM, r = f.r;
+  const title = f.mode==='edit' ? bi('編輯工單','Edit record') : bi('新增工單','Add record');
+  const catOpts = CATEGORIES.map(c=>`<option value="${c.v}" ${r.category===c.v?'selected':''}>${LANG==='zh'?c.zh:c.en} ${LANG==='zh'?c.en:c.zh}</option>`).join('');
+  const curOpts = CURRENCIES.map(c=>`<option value="${c}" ${r.currency===c?'selected':''}>${c}</option>`).join('');
+  return `
+  <h3>${title}</h3>
+  <div class="grid g2">
+    <div class="fld"><label>${bi('日期','Date')} *</label><input id="rf-date" type="date" value="${esc(fmtDate(r.date)==='—'?todayISO():fmtDate(r.date))}"></div>
+    <div class="fld"><label>${bi('里程 km','Odometer km')}</label><input id="rf-odo" type="number" value="${esc(r.odo)}"></div>
+    <div class="fld"><label>${bi('類別','Category')}</label><select id="rf-category">${catOpts}</select></div>
+    <div class="fld"><label>${bi('廠商','Vendor')}</label><input id="rf-vendor" value="${esc(r.vendor)}"></div>
+    <div class="fld"><label>${bi('技師','Technician')}</label><input id="rf-tech" value="${esc(r.tech)}"></div>
+    <div class="fld"><label>${bi('費用','Cost')}</label>
+      <div style="display:flex;gap:6px">
+        <input id="rf-cost" type="number" step="0.01" value="${esc(r.cost)}" style="flex:2">
+        <select id="rf-currency" style="flex:1">${curOpts}</select>
+      </div>
+    </div>
+  </div>
+  <div class="fld"><label>${bi('工作內容','Work performed')}</label><textarea id="rf-work">${esc(r.work)}</textarea></div>
+  <div class="fld"><label>${bi('更換零件','Parts')}</label><textarea id="rf-parts">${esc(r.parts)}</textarea></div>
+  <div class="fld"><label>${bi('備註','Notes')}</label><textarea id="rf-notes">${esc(r.notes)}</textarea></div>
+  <div id="rf-err" class="err-txt"></div>
+  <div class="modal-actions">
+    <button onclick="closeModal()">${bi('取消','Cancel')}</button>
+    <button class="pri" id="rf-save" onclick="saveRecordForm()">${bi('儲存','Save')}</button>
+  </div>`;
+}
+async function saveRecordForm(){
+  const btn = document.getElementById('rf-save');
+  if(btn.disabled) return;
+  const date = document.getElementById('rf-date').value;
+  if(!date){ document.getElementById('rf-err').innerHTML = bi('請輸入日期','Date is required'); return; }
+  btn.disabled = true;
+  const record = {
+    date,
+    odo: document.getElementById('rf-odo').value,
+    category: document.getElementById('rf-category').value,
+    vendor: document.getElementById('rf-vendor').value.trim(),
+    tech: document.getElementById('rf-tech').value.trim(),
+    cost: document.getElementById('rf-cost').value,
+    currency: document.getElementById('rf-currency').value,
+    work: document.getElementById('rf-work').value.trim(),
+    parts: document.getElementById('rf-parts').value.trim(),
+    notes: document.getElementById('rf-notes').value.trim()
+  };
+  if(REC_FORM.mode==='edit') record.id = REC_FORM.r.id;
+  const res = await call('recordSave', {vehicleId: CUR_VEH.id, record}, {save:true});
+  if(btn) btn.disabled = false;
+  if(res && res.ok){
+    closeModal(); REC_FORM=null;
+    toast('ok','已儲存工單','Record saved');
+    await loadRecords(CUR_VEH.id);
+    render();
+  }
+}
+function openDeleteRecordModal(id){
+  const r = RECORDS.find(x=>x.id===id);
+  if(!r) return;
+  openModal(`
+    <h3>${bi('刪除工單','Delete record')}</h3>
+    <div class="modal-msg">${bi('確定要刪除此工單嗎？此操作無法復原。','Delete this record? This cannot be undone.')}<br>
+      <b>${fmtDate(r.date)}</b> — ${esc(r.work||'—')}</div>
+    <div class="modal-actions">
+      <button onclick="closeModal()">${bi('取消','Cancel')}</button>
+      <button class="dgr" id="dr-btn" onclick="confirmDeleteRecord('${esc(id)}')">${bi('刪除','Delete')}</button>
+    </div>`);
+}
+async function confirmDeleteRecord(id){
+  const btn = document.getElementById('dr-btn');
+  if(!btn || btn.disabled) return;
+  btn.disabled = true;
+  const res = await call('recordDelete', {id}, {save:true});
+  if(res && res.ok){
+    closeModal();
+    toast('ok','已刪除工單','Record deleted');
+    await loadRecords(CUR_VEH.id);
+    render();
+  } else if(btn){ btn.disabled = false; }
+}
+
+/* ---------------- PLAN TAB ---------------- */
+function planTabHtml(){
+  if(PLAN.length===0){
+    return `<div class="empty">
+      ${bi('此車輛尚未建立保養計劃','No maintenance plan for this vehicle yet')}
+      <div style="margin-top:14px"><button class="pri" onclick="seedPlan()">${bi('建立標準保養計劃','Create standard plan')}</button></div>
+    </div>`;
+  }
+  const order = {overdue:0, due:1, ok:2, none:3};
+  const rows = PLAN.slice().sort((a,b)=> (order[a.state]??9)-(order[b.state]??9));
+  const head = `<div class="plan-row head" style="background:var(--panel);font-size:8.6px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)">
+    <div>${bi('項目','Item')}</div><div>${bi('週期','Interval')}</div><div>${bi('上次完成','Last done')}</div>
+    <div>${bi('下次到期','Next due')}</div><div>${bi('狀態','State')}</div><div></div>
+  </div>`;
+  const body = rows.map(p=>{
+    const nm = planParts(p.item);
+    const interval = [p.months?p.months+(LANG==='zh'?' 個月':' mo'):'', p.km?fmtNum(p.km)+' km':''].filter(Boolean).join(' / ') || '—';
+    const last = p.lastDate ? fmtDate(p.lastDate)+(p.lastOdo?' · '+fmtOdo(p.lastOdo):'') : '—';
+    const next = (p.nextDate||p.nextOdo) ? [p.nextDate?fmtDate(p.nextDate):'', p.nextOdo?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · ') : '—';
+    return `
+    <div class="plan-row">
+      <div class="cell itemname"><div class="zh">${esc(nm.zh)}</div><div class="en">${esc(nm.en)}</div></div>
+      <div class="cell" data-label="${LANG==='zh'?'週期':'Interval'}">${interval}</div>
+      <div class="cell" data-label="${LANG==='zh'?'上次':'Last'}">${last}</div>
+      <div class="cell" data-label="${LANG==='zh'?'下次到期':'Next due'}">${next}</div>
+      <div class="cell" data-label="${LANG==='zh'?'狀態':'State'}">${stateChip(p.state)}</div>
+      <div class="rowactions"><button class="sm acc" data-act="tick-plan" data-id="${esc(p.id)}">${bi('完成','Mark done')}</button></div>
+    </div>`;
+  }).join('');
+  return `<div class="plan-list">${head}${body}</div>`;
+}
+async function seedPlan(){
+  const res = await call('planSeed', {vehicleId: CUR_VEH.id}, {save:true});
+  if(res && res.ok){
+    toast('ok','已建立標準保養計劃','Standard plan created');
+    await loadPlan(CUR_VEH.id);
+    render();
+  }
+}
+function openPlanTickModal(id){
+  const p = PLAN.find(x=>x.id===id);
+  if(!p) return;
+  const nm = planParts(p.item);
+  openModal(`
+    <h3>${bi('標記完成','Mark done')}</h3>
+    <div class="modal-msg"><b>${esc(nm.zh)}</b> <span style="color:var(--faint)">${esc(nm.en)}</span></div>
+    <div class="grid g2">
+      <div class="fld"><label>${bi('完成日期','Date done')}</label><input id="pt-date" type="date" value="${todayISO()}"></div>
+      <div class="fld"><label>${bi('里程 km','Odometer km')}</label><input id="pt-odo" type="number" value="${esc(CUR_VEH.odo||'')}"></div>
+    </div>
+    <div class="modal-actions">
+      <button onclick="closeModal()">${bi('取消','Cancel')}</button>
+      <button class="pri" id="pt-btn" onclick="confirmPlanTick('${esc(id)}')">${bi('確認','Confirm')}</button>
+    </div>`);
+}
+async function confirmPlanTick(id){
+  const btn = document.getElementById('pt-btn');
+  if(!btn || btn.disabled) return;
+  btn.disabled = true;
+  const date = document.getElementById('pt-date').value || todayISO();
+  const odo = document.getElementById('pt-odo').value;
+  const res = await call('planTick', {vehicleId: CUR_VEH.id, itemId:id, date, odo}, {save:true});
+  if(res && res.ok){
+    closeModal();
+    toast('ok','已更新保養計劃','Plan updated');
+    await loadPlan(CUR_VEH.id);
+    render();
+  } else if(btn){ btn.disabled = false; }
+}
+
+/* ---------------- REPORT TAB ---------------- */
+function reportTabHtml(){
+  if(!REPORT){
+    return `<div class="empty">${bi('正在載入報告…','Loading report…')}</div>`;
+  }
+  const v = REPORT.vehicle || {};
+  const s = REPORT.summary || {};
+  const records = (REPORT.records||[]).slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
+  const due = (REPORT.plan||[]).filter(p=>p.state==='overdue'||p.state==='due')
+    .sort((a,b)=> (a.state==='overdue'?0:1)-(b.state==='overdue'?0:1));
+
+  return `
+  <div class="toolbar noprint" style="padding:0 0 14px">
+    <div style="flex:1"></div>
+    <button class="pri" onclick="window.print()">${bi('列印 A4','Print A4')}</button>
+  </div>
+  <div class="report-sheet">
+    <div class="report-head">
+      <div>
+        ${WORDMARK}
+        <h2 style="margin-top:10px;font-size:16px">${bi('車輛維修報告','Vehicle Service Report')}</h2>
+      </div>
+      <div style="text-align:right">
+        <span class="platebadge">${esc(v.plate||'—')}</span>
+        <div class="detail-kv" style="margin-top:6px">${esc(v.model||'—')} ${esc(v.year||'')}</div>
+        <div class="detail-kv">${bi('車主','Owner')} ${esc(v.owner||'—')}</div>
+        <div class="detail-kv mono" style="font-size:10.5px">VIN ${esc(v.vin||'—')}</div>
+        <div class="tiny detail-kv" style="margin-top:4px">${bi('報告日期','Report date')} ${todayISO()}</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('總費用','Total cost')}</div><div class="v">${fmtMoney(s.totalCost, s.currency)}</div></div>
+      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('紀錄數目','Records')}</div><div class="v">${fmtNum(s.recordCount)}</div></div>
+      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('首次／最近','First / last')}</div><div class="v" style="font-size:13px">${fmtDate(s.firstDate)} → ${fmtDate(s.lastDate)}</div></div>
+      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('目前里程','Current odo')}</div><div class="v">${fmtOdo(s.odo)}</div></div>
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('維修紀錄明細','Service record detail')}</h3>
+      ${records.length===0 ? `<div class="empty">${bi('沒有紀錄','No records')}</div>` : reportRecordsTable(records)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('待辦保養項目','Upcoming maintenance')}</h3>
+      ${due.length===0 ? `<div class="empty">${bi('沒有逾期或即將到期的項目','Nothing overdue or due soon')}</div>` : reportDueTable(due)}
+    </div>
+  </div>`;
+}
+function reportRecordsTable(records){
+  return `<div class="tablewrap"><table>
+    <thead><tr>
+      <th>${bi('日期','Date')}</th><th>${bi('里程','Odo')}</th><th>${bi('類別','Category')}</th>
+      <th>${bi('工作內容','Work')}</th><th>${bi('零件','Parts')}</th><th class="r">${bi('費用','Cost')}</th><th>${bi('廠商/技師','Vendor/Tech')}</th>
+    </tr></thead>
+    <tbody>${records.map(r=>`<tr>
+      <td>${fmtDate(r.date)}</td>
+      <td class="num">${r.odo!==''&&r.odo!==undefined&&r.odo!==null?fmtOdo(r.odo):'—'}</td>
+      <td>${catLabel(r.category)}</td>
+      <td>${esc(r.work||'—')}</td>
+      <td>${esc(r.parts||'—')}</td>
+      <td class="r num">${r.cost?fmtMoney(r.cost,r.currency):'—'}</td>
+      <td>${esc(r.vendor||'—')}${r.tech?' / '+esc(r.tech):''}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+function reportDueTable(due){
+  return `<div class="tablewrap"><table>
+    <thead><tr><th>${bi('項目','Item')}</th><th>${bi('下次到期','Next due')}</th><th>${bi('狀態','State')}</th></tr></thead>
+    <tbody>${due.map(p=>{
+      const nm = planParts(p.item);
+      const next = (p.nextDate||p.nextOdo) ? [p.nextDate?fmtDate(p.nextDate):'', p.nextOdo?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · ') : '—';
+      return `<tr><td>${esc(nm.zh)} <span style="color:var(--faint)">${esc(nm.en)}</span></td><td>${next}</td><td>${stateChip(p.state)}</td></tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+/* =====================================================================
+   DELEGATED EVENTS (row-level actions with data-act / data-id)
+   ===================================================================== */
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-act]');
+  if(!el) return;
+  const act = el.dataset.act, id = el.dataset.id;
+  if(act==='open-vehicle') openVehicleDetail(id);
+  else if(act==='edit-vehicle'){ e.stopPropagation(); openVehicleForm(id); }
+  else if(act==='delete-vehicle'){ e.stopPropagation(); openDeleteVehicleModal(id); }
+  else if(act==='edit-record'){ e.stopPropagation(); openRecordForm(id); }
+  else if(act==='delete-record'){ e.stopPropagation(); openDeleteRecordModal(id); }
+  else if(act==='tick-plan'){ e.stopPropagation(); openPlanTickModal(id); }
+});
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+(async function init(){
+  render();
+  if(TOKEN){
+    VIEW='list';
+    await loadVehicles();
+    render();
+  }
+})();
+</script>
+</body>
+</html>
