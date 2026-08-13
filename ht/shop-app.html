@@ -164,11 +164,23 @@ nav.tabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
 .plan-list{border:1px solid var(--hair)}
 
 /* ---------- KPI strip (report) ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
   border:1px solid var(--hair);margin:14px 0}
 .kpi{background:#fff;padding:12px 14px}
 .kpi .v{font-size:19px;font-weight:600;margin-top:5px}
 .kpi .v small{font-size:11px;font-weight:500;color:var(--muted)}
+.kpi .lbl{font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
+.kpi .n{font-size:9px;color:var(--faint);margin-top:4px;line-height:1.35}
+
+/* ---------- report chart / legend ---------- */
+.chartsvg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:12px;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.report-sec{margin-top:26px}
+.report-sec h3.rh{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:12px}
+.report-sec .rsub{font-size:10.5px;color:var(--faint);margin:-6px 0 12px}
+.report-note{background:var(--panel);border-left:2px solid var(--ink);padding:10px 12px;font-size:10.5px;line-height:1.55}
 
 /* ---------- generic table (report) ---------- */
 table{width:100%;border-collapse:collapse;font-size:11.5px}
@@ -286,7 +298,10 @@ tr:last-child td{border-bottom:1px solid var(--line)}
   .report-sheet{padding:0}
   table{font-size:10pt}
   tr,.card{break-inside:avoid}
-  .kpis{break-inside:avoid}
+  .kpis,.kpi{break-inside:avoid}
+  .report-sec{break-before:auto}
+  .report-sec h3.rh{break-after:avoid}
+  thead{display:table-header-group}
 }
 </style>
 </head>
@@ -359,6 +374,8 @@ let TOAST_SEQ = 1;
 function esc(s){
   return String(s===undefined||s===null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+// treats 0 as a present value — only null/undefined/'' count as "missing"
+function hasVal(x){ return x!==undefined && x!==null && x!==''; }
 function bi(zh,en){
   return '<span class="bi"><span class="t-zh">'+zh+'</span><span class="t-en">'+en+'</span></span>';
 }
@@ -1010,8 +1027,8 @@ function planTabHtml(){
   const body = rows.map(p=>{
     const nm = planParts(p.item);
     const interval = [p.months?p.months+(LANG==='zh'?' 個月':' mo'):'', p.km?fmtNum(p.km)+' km':''].filter(Boolean).join(' / ') || '—';
-    const last = p.lastDate ? fmtDate(p.lastDate)+(p.lastOdo?' · '+fmtOdo(p.lastOdo):'') : '—';
-    const next = (p.nextDate||p.nextOdo) ? [p.nextDate?fmtDate(p.nextDate):'', p.nextOdo?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · ') : '—';
+    const last = p.lastDate ? fmtDate(p.lastDate)+(hasVal(p.lastOdo)?' · '+fmtOdo(p.lastOdo):'') : '—';
+    const next = (p.nextDate||hasVal(p.nextOdo)) ? [p.nextDate?fmtDate(p.nextDate):'', hasVal(p.nextOdo)?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · ') : '—';
     return `
     <div class="plan-row">
       <div class="cell itemname"><div class="zh">${esc(nm.zh)}</div><div class="en">${esc(nm.en)}</div></div>
@@ -1063,55 +1080,137 @@ async function confirmPlanTick(id){
   } else if(btn){ btn.disabled = false; }
 }
 
-/* ---------------- REPORT TAB ---------------- */
-function reportTabHtml(){
-  if(!REPORT){
-    return `<div class="empty">${bi('正在載入報告…','Loading report…')}</div>`;
-  }
-  const v = REPORT.vehicle || {};
-  const s = REPORT.summary || {};
-  const records = (REPORT.records||[]).slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
-  const due = (REPORT.plan||[]).filter(p=>p.state==='overdue'||p.state==='due')
-    .sort((a,b)=> (a.state==='overdue'?0:1)-(b.state==='overdue'?0:1));
-
-  return `
-  <div class="toolbar noprint" style="padding:0 0 14px">
-    <div style="flex:1"></div>
-    <button class="pri" onclick="window.print()">${bi('列印 A4','Print A4')}</button>
-  </div>
-  <div class="report-sheet">
-    <div class="report-head">
-      <div>
-        ${WORDMARK}
-        <h2 style="margin-top:10px;font-size:16px">${bi('車輛維修報告','Vehicle Service Report')}</h2>
-      </div>
-      <div style="text-align:right">
-        <span class="platebadge">${esc(v.plate||'—')}</span>
-        <div class="detail-kv" style="margin-top:6px">${esc(v.model||'—')} ${esc(v.year||'')}</div>
-        <div class="detail-kv">${bi('車主','Owner')} ${esc(v.owner||'—')}</div>
-        <div class="detail-kv mono" style="font-size:10.5px">VIN ${esc(v.vin||'—')}</div>
-        <div class="tiny detail-kv" style="margin-top:4px">${bi('報告日期','Report date')} ${todayISO()}</div>
-      </div>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('總費用','Total cost')}</div><div class="v">${fmtMoney(s.totalCost, s.currency)}</div></div>
-      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('紀錄數目','Records')}</div><div class="v">${fmtNum(s.recordCount)}</div></div>
-      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('首次／最近','First / last')}</div><div class="v" style="font-size:13px">${fmtDate(s.firstDate)} → ${fmtDate(s.lastDate)}</div></div>
-      <div class="kpi"><div class="lbl" style="font-size:8.6px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase">${bi('目前里程','Current odo')}</div><div class="v">${fmtOdo(s.odo)}</div></div>
-    </div>
-
-    <div class="report-sec">
-      <h3 class="rh">${bi('維修紀錄明細','Service record detail')}</h3>
-      ${records.length===0 ? `<div class="empty">${bi('沒有紀錄','No records')}</div>` : reportRecordsTable(records)}
-    </div>
-
-    <div class="report-sec">
-      <h3 class="rh">${bi('待辦保養項目','Upcoming maintenance')}</h3>
-      ${due.length===0 ? `<div class="empty">${bi('沒有逾期或即將到期的項目','Nothing overdue or due soon')}</div>` : reportDueTable(due)}
-    </div>
-  </div>`;
+/* ---------------- REPORT TAB (flagship) ---------------- */
+function insufficientNote(){
+  return `<div class="empty">${bi('資料不足 — 隨紀錄累積自動完善','Insufficient data — more will appear automatically as records accumulate')}</div>`;
 }
+function parseISO(d){ return new Date(String(d).slice(0,10)+'T00:00:00Z'); }
+function yearsBetweenD(d1,d2){ return (parseISO(d2)-parseISO(d1))/(365.2425*86400000); }
+function monthsBetweenD(d1,d2){
+  const a=parseISO(d1), b=parseISO(d2);
+  let m=(b.getUTCFullYear()-a.getUTCFullYear())*12+(b.getUTCMonth()-a.getUTCMonth());
+  if(b.getUTCDate()<a.getUTCDate()) m -= 1;
+  return m;
+}
+function addMonthsISO(dateStr, months){
+  const d = parseISO(dateStr);
+  const total = d.getUTCMonth() + Math.round(months);
+  const y = d.getUTCFullYear() + Math.floor(total/12);
+  const m = ((total%12)+12)%12;
+  const day = d.getUTCDate();
+  const daysInMonth = new Date(Date.UTC(y,m+1,0)).getUTCDate();
+  const nd = new Date(Date.UTC(y,m,Math.min(day,daysInMonth)));
+  return nd.toISOString().slice(0,10);
+}
+
+function reportDerivedStats(rep){
+  const records = rep.records||[];
+  const s = rep.summary||{};
+  let serviceYears = null;
+  if(s.firstDate && s.lastDate && s.firstDate!==s.lastDate) serviceYears = yearsBetweenD(s.firstDate, s.lastDate);
+  const withOdo = records.filter(r=>r.date && r.odo!==''&&r.odo!==null&&r.odo!==undefined)
+    .map(r=>({date:fmtDate(r.date)==='—'?r.date:r.date, odo:Number(r.odo)}))
+    .filter(p=>p.date)
+    .sort((a,b)=> a.date<b.date?-1:(a.date>b.date?1:0));
+  let avgAnnualKm = null;
+  if(withOdo.length>=2){
+    const first=withOdo[0], last=withOdo[withOdo.length-1];
+    const dy = yearsBetweenD(first.date, last.date);
+    const dOdo = last.odo-first.odo;
+    if(dy>(1/24) && dOdo>0) avgAnnualKm = dOdo/dy;
+  }
+  return {serviceYears, avgAnnualKm, withOdo};
+}
+
+/* ---- section 3: mileage timeline ---- */
+function reportTimelineChart(points){
+  if(!points || points.length<2) return insufficientNote();
+  const W=760,H=270,m={t:16,r:20,b:56,l:64};
+  const times = points.map(p=>parseISO(p.date).getTime());
+  const x0=Math.min(...times), x1raw=Math.max(...times);
+  const x1 = x1raw>x0 ? x1raw : x0+86400000;
+  const yMax = Math.max(...points.map(p=>p.odo))*1.1 || 1;
+  const X=t=>m.l+(t-x0)/(x1-x0)*(W-m.l-m.r);
+  const Y=v=>H-m.b-(v/yMax)*(H-m.t-m.b);
+  let s=`<svg class="chartsvg" viewBox="0 0 ${W} ${H}" role="img">`;
+  const steps=4;
+  for(let i=0;i<=steps;i++){
+    const val=yMax/steps*i, y=Y(val);
+    s+=`<line x1="${m.l}" y1="${y}" x2="${W-m.r}" y2="${y}" stroke="${i?'#e9edf1':'#c3cad2'}" stroke-width="1"/>`;
+    s+=`<text x="${m.l-10}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#33475e">${fmtNum(Math.round(val))}</text>`;
+  }
+  s+=`<line x1="${m.l}" y1="${H-m.b}" x2="${W-m.r}" y2="${H-m.b}" stroke="#0e1b2c" stroke-width="1.2"/>`;
+  const pts = points.map(p=>`${X(parseISO(p.date).getTime())},${Y(p.odo)}`).join(' ');
+  s+=`<polyline points="${pts}" fill="none" stroke="#0e9aa7" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  points.forEach((p,i)=>{
+    const cx=X(parseISO(p.date).getTime()), cy=Y(p.odo);
+    s+=`<circle cx="${cx}" cy="${cy}" r="3.4" fill="#0e1b2c" stroke="#fff" stroke-width="1.4"/>`;
+    const alt = i%2===0;
+    const ly = alt ? cy-11 : cy+18;
+    s+=`<text x="${cx}" y="${ly}" text-anchor="middle" font-size="8" fill="#33475e" transform="rotate(-32 ${cx} ${ly})">${esc(fmtDate(p.date))}</text>`;
+  });
+  s+='</svg>';
+  return `<div class="card">${s}</div>`;
+}
+
+/* ---- section 4: cost analysis ---- */
+function svgHBar(rows, cur){
+  const tot = rows.reduce((a,r)=>a+r.v,0);
+  if(!rows.length || tot<=0) return insufficientNote();
+  const W=680, barH=18, gap=14, m={t:6,l:220,r:76};
+  const H=m.t+rows.length*(barH+gap);
+  let s=`<svg class="chartsvg" viewBox="0 0 ${W} ${H}" role="img">`;
+  rows.forEach((r,i)=>{
+    const y=m.t+i*(barH+gap);
+    const w=(r.v/tot)*(W-m.l-m.r);
+    const label = LANG==='zh'?r.zh:r.en;
+    s+=`<text x="${m.l-12}" y="${y+13}" text-anchor="end" font-size="11.5" fill="#0e1b2c" font-weight="600">${esc(label)}</text>`;
+    s+=`<rect x="${m.l}" y="${y}" width="${W-m.l-m.r}" height="${barH}" fill="#f0f0f1"/>`;
+    s+=`<rect x="${m.l}" y="${y}" width="${Math.max(w,1.5)}" height="${barH}" fill="#0e9aa7"/>`;
+    s+=`<text x="${W-m.r+8}" y="${y+13}" font-size="11" fill="#0e1b2c" font-weight="600">${(r.v/tot*100).toFixed(0)}%</text>`;
+    s+=`<text x="${m.l-12}" y="${y+27}" text-anchor="end" font-size="9.5" fill="#64748b">${esc(fmtMoney(r.v,cur))}</text>`;
+  });
+  s+='</svg>';
+  return s;
+}
+function reportCostAnalysis(records){
+  const currencies = Array.from(new Set(records.filter(r=>(Number(r.cost)||0)>0 && r.currency).map(r=>r.currency)));
+  if(currencies.length===0) return insufficientNote();
+  let out='';
+  currencies.forEach(cur=>{
+    const catMap={}; CATEGORIES.forEach(c=>catMap[c.v]=0);
+    let other=0;
+    records.filter(r=>r.currency===cur).forEach(r=>{
+      const val=Number(r.cost)||0; if(val<=0) return;
+      if(catMap.hasOwnProperty(r.category)) catMap[r.category]+=val; else other+=val;
+    });
+    const rows = CATEGORIES.map(c=>({zh:c.zh,en:c.en,v:catMap[c.v]})).filter(r=>r.v>0);
+    if(other>0) rows.push({zh:'其他',en:'Other',v:other});
+    const tot = rows.reduce((a,r)=>a+r.v,0);
+    out += `<div class="card" style="margin-top:12px">
+      <div class="lbl" style="margin-bottom:10px">${bi('支出分佈','Spend by category')} — <span class="mono">${esc(cur)}</span></div>
+      ${svgHBar(rows,cur)}
+      <div style="margin-top:10px;font-size:12px;font-weight:600;border-top:1px solid var(--hair);padding-top:8px">${bi('總計','Total')} <span class="mono">${esc(cur)}</span> — ${esc(fmtMoney(tot,cur))}</div>
+    </div>`;
+    const yearMap={};
+    records.filter(r=>r.currency===cur && r.date).forEach(r=>{
+      const val=Number(r.cost)||0; if(val<=0) return;
+      const y=String(r.date).slice(0,4);
+      yearMap[y]=(yearMap[y]||0)+val;
+    });
+    const years=Object.keys(yearMap).sort();
+    if(years.length>1){
+      const rows2=years.map(y=>({zh:y,en:y,v:yearMap[y]}));
+      out += `<div class="card" style="margin-top:12px">
+        <div class="lbl" style="margin-bottom:10px">${bi('按年度分佈','Spend by year')} — <span class="mono">${esc(cur)}</span></div>
+        ${svgHBar(rows2,cur)}
+      </div>`;
+    }
+  });
+  return out;
+}
+
+/* ---- section 5: existing full record table ---- */
 function reportRecordsTable(records){
   return `<div class="tablewrap"><table>
     <thead><tr>
@@ -1129,15 +1228,361 @@ function reportRecordsTable(records){
     </tr>`).join('')}</tbody>
   </table></div>`;
 }
-function reportDueTable(due){
+
+/* ---- section 6: parts register ---- */
+function reportPartsRegister(records, vehicle){
+  const entries=[];
+  records.forEach(r=>{
+    if(!r.parts) return;
+    String(r.parts).split(/[\n,;、，；]+/).map(x=>x.trim()).filter(Boolean).forEach(t=>{
+      entries.push({text:t, date:r.date, odo:r.odo});
+    });
+  });
+  if(entries.length===0) return insufficientNote();
+  entries.sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
+  const curOdo = Number(vehicle.odo)||0;
+  const today = todayISO();
+  const body = entries.map(e=>{
+    let ageStr='—';
+    if(e.date){
+      const m = monthsBetweenD(e.date, today);
+      const kmSince = (e.odo!==''&&e.odo!==null&&e.odo!==undefined && curOdo) ? (curOdo-Number(e.odo)) : null;
+      const bits=[];
+      if(m!=null && m>=0) bits.push(m+(LANG==='zh'?' 個月':' mo'));
+      if(kmSince!=null && kmSince>=0) bits.push(fmtNum(kmSince)+' km');
+      if(bits.length) ageStr = bits.join(' · ');
+    }
+    return `<tr>
+      <td>${esc(e.text)}</td>
+      <td>${fmtDate(e.date)}</td>
+      <td class="num">${e.odo!==''&&e.odo!==null&&e.odo!==undefined?fmtOdo(e.odo):'—'}</td>
+      <td>${ageStr}</td>
+    </tr>`;
+  }).join('');
   return `<div class="tablewrap"><table>
-    <thead><tr><th>${bi('項目','Item')}</th><th>${bi('下次到期','Next due')}</th><th>${bi('狀態','State')}</th></tr></thead>
-    <tbody>${due.map(p=>{
-      const nm = planParts(p.item);
-      const next = (p.nextDate||p.nextOdo) ? [p.nextDate?fmtDate(p.nextDate):'', p.nextOdo?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · ') : '—';
-      return `<tr><td>${esc(nm.zh)} <span style="color:var(--faint)">${esc(nm.en)}</span></td><td>${next}</td><td>${stateChip(p.state)}</td></tr>`;
-    }).join('')}</tbody>
+    <thead><tr><th>${bi('零件','Part')}</th><th>${bi('裝上日期','Fitted date')}</th><th>${bi('裝上里程','Fitted odo')}</th><th>${bi('已服役','In service')}</th></tr></thead>
+    <tbody>${body}</tbody>
   </table></div>`;
+}
+
+/* ---- section 7: maintenance plan status ---- */
+function reportPlanStatusTable(plan){
+  if(!plan || plan.length===0) return insufficientNote();
+  const order={overdue:0,due:1,ok:2,none:3};
+  const rows = plan.slice().sort((a,b)=>(order[a.state]??9)-(order[b.state]??9));
+  const body = rows.map(p=>{
+    const nm=planParts(p.item);
+    const interval=[p.months?p.months+(LANG==='zh'?' 個月':' mo'):'', p.km?fmtNum(p.km)+' km':''].filter(Boolean).join(' / ')||'—';
+    const last=p.lastDate?fmtDate(p.lastDate)+(hasVal(p.lastOdo)?' · '+fmtOdo(p.lastOdo):''):'—';
+    const next=(p.nextDate||hasVal(p.nextOdo))?[p.nextDate?fmtDate(p.nextDate):'', hasVal(p.nextOdo)?fmtOdo(p.nextOdo):''].filter(Boolean).join(' · '):'—';
+    return `<tr>
+      <td>${esc(nm.zh)} <span style="color:var(--faint)">${esc(nm.en)}</span></td>
+      <td>${interval}</td><td>${last}</td><td>${next}</td><td>${stateChip(p.state)}</td>
+    </tr>`;
+  }).join('');
+  return `<div class="tablewrap"><table>
+    <thead><tr><th>${bi('項目','Item')}</th><th>${bi('週期','Interval')}</th><th>${bi('上次完成','Last done')}</th><th>${bi('下次到期','Next due')}</th><th>${bi('狀態','State')}</th></tr></thead>
+    <tbody>${body}</tbody>
+  </table></div>`;
+}
+
+/* ---- section 8: future maintenance suggestions ---- */
+function reportFutureSuggestions(plan, vehicle, derived){
+  if(!plan || plan.length===0){
+    return `<div class="empty">${bi('尚未建立保養計劃 — 請先在「保養計劃」分頁建立標準保養計劃','No maintenance plan yet — create the standard plan in the Plan tab first')}</div>`;
+  }
+  let avgKmYear = derived.avgAnnualKm;
+  let usedFallback = false;
+  if(!avgKmYear || avgKmYear<=0){ avgKmYear=15000; usedFallback=true; }
+  const today = todayISO();
+  const curOdo = Number(vehicle.odo)||0;
+  const buckets = {};
+  let any=false;
+  plan.forEach(p=>{
+    const monthsInt = p.months ? Number(p.months) : (p.km ? (Number(p.km)/avgKmYear*12) : null);
+    const kmInt = p.km ? Number(p.km) : (p.months ? (Number(p.months)/12*avgKmYear) : null);
+    if(!monthsInt && !kmInt) return;
+    let baseDate = p.nextDate || p.lastDate || today;
+    let baseOdo = hasVal(p.nextOdo) ? Number(p.nextOdo) : (hasVal(p.lastOdo) ? Number(p.lastOdo) : curOdo);
+    if(!p.nextDate && !p.lastDate){ baseDate = today; baseOdo = curOdo; }
+    // fast-forward a possibly overdue base point so projections land in the future, not the past
+    let guard=0;
+    if(monthsInt) while(baseDate < today && guard++<1000) baseDate = addMonthsISO(baseDate, monthsInt);
+    guard=0;
+    if(kmInt) while(baseOdo < curOdo && guard++<1000) baseOdo += kmInt;
+    const nm = planParts(p.item);
+    for(let k=1;k<=3;k++){
+      let d=baseDate, o=baseOdo;
+      if(monthsInt) d = addMonthsISO(baseDate, monthsInt*k);
+      if(kmInt) o = Math.round(baseOdo + kmInt*k);
+      const yr = String(d).slice(0,4);
+      if(!buckets[yr]) buckets[yr]=[];
+      buckets[yr].push({zh:nm.zh, en:nm.en, odo:o, date:d});
+      any=true;
+    }
+  });
+  if(!any) return insufficientNote();
+  const years = Object.keys(buckets).sort();
+  let body='';
+  years.forEach(y=>{
+    const items = buckets[y].sort((a,b)=> a.date<b.date?-1:(a.date>b.date?1:0));
+    body += `<tr><td colspan="3" style="font-weight:600;background:var(--panel);border-bottom:1px solid var(--line)">${esc(y)}</td></tr>`;
+    items.forEach(it=>{
+      body += `<tr>
+        <td>${esc(it.zh)} <span style="color:var(--faint)">${esc(it.en)}</span></td>
+        <td class="num">${fmtOdo(it.odo)}</td>
+        <td>${bi('按時完成以維持行車安全及保值','Complete on schedule to preserve safety and resale value')}</td>
+      </tr>`;
+    });
+  });
+  const assumptionNote = usedFallback
+    ? bi('推算採用預設年均里程 15,000 km（此車歷史紀錄不足，無法從數據推算實際使用率）', "Projection uses a default 15,000 km/yr assumption — this vehicle's history is too short to derive its own rate")
+    : bi('推算採用本車實際年均里程 '+fmtNum(Math.round(avgKmYear))+' km（由維修紀錄推算）', "Projection uses this vehicle's actual average of "+fmtNum(Math.round(avgKmYear))+' km/yr, derived from its service records');
+  return `<div class="tablewrap"><table>
+    <thead><tr><th>${bi('到期項目','Due item')}</th><th>${bi('預計里程','Projected odo')}</th><th>${bi('建議','Recommendation')}</th></tr></thead>
+    <tbody>${body}</tbody>
+  </table></div>
+  <div class="report-note" style="margin-top:10px">
+    ${assumptionNote}<br>
+    ${bi('以上按現行使用模式推算，僅供參考，實際到期應於每次入廠時重新核對','These are estimates based on current usage — verify actual due points at each visit')}
+  </div>`;
+}
+
+/* ---- section 9: component map, dot colours driven by plan state ---- */
+const CALLOUTS = [
+  {x1:50,y1:23,x2:210,y2:272,cx:210,cy:272,tx:50,tyA:16,tyB:27,anchor:'start',
+   zh:'12V 電池',en:'12V battery', kZh:['12v'], kEn:['12v']},
+  {x1:230,y1:53,x2:292,y2:265,cx:292,cy:265,tx:230,tyA:46,tyB:57,anchor:'middle',
+   zh:'輪胎',en:'Tyres ×4', kZh:['輪胎'], kEn:['tyre']},
+  {x1:410,y1:23,x2:350,y2:221,cx:350,cy:221,tx:410,tyA:16,tyB:27,anchor:'middle',
+   zh:'車廂濾芯',en:'Cabin filter', kZh:['車廂濾芯'], kEn:['cabin filter']},
+  {x1:590,y1:53,x2:400,y2:196,cx:400,cy:196,tx:590,tyA:46,tyB:57,anchor:'middle',
+   zh:'冷氣檢查',en:'A/C check', kZh:['冷氣性能檢查','冷氣檢查'], kEn:['a/c performance','a/c check']},
+  {x1:770,y1:23,x2:520,y2:231,cx:520,cy:231,tx:770,tyA:16,tyB:27,anchor:'middle',
+   zh:'車門柄',en:'Door handles', kZh:['車門柄'], kEn:['door handle']},
+  {x1:950,y1:53,x2:742,y2:253,cx:742,cy:253,tx:950,tyA:46,tyB:57,anchor:'end',
+   zh:'避震',en:'Shocks', kZh:['避震'], kEn:['shock']},
+  {x1:50,y1:381,x2:110,y2:296,cx:110,cy:296,tx:50,tyA:392,tyB:403,anchor:'start',
+   zh:'散熱器清洗',en:'Radiator cleaning', kZh:['散熱器'], kEn:['radiator']},
+  {x1:179,y1:413,x2:160,y2:308,cx:160,cy:308,tx:179,tyA:424,tyB:435,anchor:'middle',
+   zh:'冷氣壓縮機',en:'A/C compressor', kZh:['冷氣壓縮機'], kEn:['a/c compressor']},
+  {x1:307,y1:381,x2:250,y2:307,cx:250,cy:307,tx:307,tyA:392,tyB:403,anchor:'middle',
+   zh:'制動碟',en:'Rotors', kZh:['制動碟'], kEn:['rotor']},
+  {x1:436,y1:413,x2:296,y2:330,cx:296,cy:330,tx:436,tyA:424,tyB:435,anchor:'middle',
+   zh:'前擺臂',en:'Control arms (front)', kZh:['前懸掛擺臂','前擺臂'], kEn:['control arm']},
+  {x1:564,y1:381,x2:500,y2:339,cx:500,cy:339,tx:564,tyA:392,tyB:403,anchor:'middle',
+   zh:'高壓電池',en:'HV battery', kZh:['高壓電池'], kEn:['hv battery']},
+  {x1:693,y1:413,x2:712,y2:334,cx:712,cy:334,tx:693,tyA:424,tyB:435,anchor:'middle',
+   zh:'ATF／冷卻液',en:'ATF & coolant', kZh:['atf','冷卻液'], kEn:['atf','coolant']},
+  {x1:821,y1:381,x2:750,y2:307,cx:750,cy:307,tx:821,tyA:392,tyB:403,anchor:'middle',
+   zh:'半軸',en:'Halfshafts', kZh:['半軸'], kEn:['halfshaft']},
+  {x1:950,y1:413,x2:774,y2:286,cx:774,cy:286,tx:950,tyA:424,tyB:435,anchor:'end',
+   zh:'卡鉗保養',en:'Caliper service', kZh:['卡鉗'], kEn:['caliper']}
+];
+function calloutState(c, plan){
+  const order={overdue:3,due:2,ok:1,none:0};
+  let best=null;
+  (plan||[]).forEach(p=>{
+    const nm = planParts(p.item);
+    const zhLow = nm.zh, enLow = nm.en.toLowerCase();
+    const hit = c.kZh.some(k=>zhLow.includes(k)) || c.kEn.some(k=>enLow.includes(k));
+    if(hit && (best===null || order[p.state]>order[best])) best=p.state;
+  });
+  return best;
+}
+function calloutColor(state){
+  if(state==='overdue') return '#c0392b';
+  if(state==='due') return '#b8730a';
+  if(state==='ok') return '#0e9aa7';
+  return '#64748b';
+}
+function reportComponentMap(plan){
+  let s = `<svg class="chartsvg" viewBox="0 0 1000 444" role="img" aria-label="Vehicle component map" style="overflow:visible">
+  <line x1="40" y1="366" x2="960" y2="366" stroke="#33475e" stroke-width="1" opacity=".4"/>
+  <rect x="330" y="334" width="340" height="16" rx="8" fill="none" stroke="#0e9aa7" stroke-width="2.5"/>
+  <rect x="690" y="316" width="80" height="30" rx="6" fill="none" stroke="#33475e" stroke-width="2.2"/>
+  <path d="M 96 342 C 86 334 80 322 80 312 C 80 302 86 294 100 288 C 118 280 150 272 200 262 C 250 252 296 244 326 232 C 342 226 356 218 372 204 C 398 182 424 160 452 148 C 480 138 504 134 530 134 C 562 134 592 139 628 148 C 672 160 720 179 764 196 C 802 211 838 217 868 217 C 888 217 899 214 904 210 C 909 216 911 226 910 238 C 908 262 903 292 896 314 C 892 328 886 338 876 342 L 820 342 A 70 70 0 0 0 680 342 L 320 342 A 70 70 0 0 0 180 342 Z" fill="#f2f2f3" stroke="#0e1b2c" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M 128 280 C 300 254 620 218 868 223" fill="none" stroke="#0e1b2c" stroke-width="1.2" opacity=".35"/>
+  <path d="M 376 202 C 402 180 428 160 456 149 C 486 138 506 134 528 133" fill="none" stroke="#0e1b2c" stroke-width="1.4" opacity=".45"/>
+  <circle cx="250" cy="307" r="59" fill="#0e1b2c"/><circle cx="250" cy="307" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+  <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="250" y1="307" x2="250" y2="277"/><line x1="250" y1="307" x2="278" y2="298"/><line x1="250" y1="307" x2="268" y2="332"/><line x1="250" y1="307" x2="232" y2="332"/><line x1="250" y1="307" x2="222" y2="298"/></g>
+  <circle cx="750" cy="307" r="59" fill="#0e1b2c"/><circle cx="750" cy="307" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+  <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="750" y1="307" x2="750" y2="277"/><line x1="750" y1="307" x2="778" y2="298"/><line x1="750" y1="307" x2="768" y2="332"/><line x1="750" y1="307" x2="732" y2="332"/><line x1="750" y1="307" x2="722" y2="298"/></g>`;
+  CALLOUTS.forEach(c=>{
+    const state = calloutState(c, plan);
+    const col = calloutColor(state);
+    s += `<line x1="${c.x1}" y1="${c.y1}" x2="${c.x2}" y2="${c.y2}" stroke="${col}" stroke-width="1.3" opacity=".8"/>
+    <circle cx="${c.cx}" cy="${c.cy}" r="5.5" fill="${col}" stroke="#fff" stroke-width="1.4"/>
+    <text x="${c.tx}" y="${c.tyA}" text-anchor="${c.anchor}" font-size="12.5" font-weight="700" fill="#0e1b2c">${esc(c.zh)}</text>
+    <text x="${c.tx}" y="${c.tyB}" text-anchor="${c.anchor}" font-size="8.5" fill="#33475e">${esc(c.en)}</text>`;
+  });
+  s += '</svg>';
+  return `<div class="card">${s}
+    <div class="legend">
+      <span><i style="background:#0e9aa7"></i>${bi('已完成','OK')}</span>
+      <span><i style="background:#b8730a"></i>${bi('將到期','Due soon')}</span>
+      <span><i style="background:#c0392b"></i>${bi('逾期','Overdue')}</span>
+      <span><i style="background:#64748b"></i>${bi('未有對應保養項目','No matching plan item')}</span>
+    </div>
+  </div>`;
+}
+
+/* ---- section 10: prevention logic infographic (generic, ported as-is) ---- */
+const PREVENTION_SVG = `<svg class="chartsvg" viewBox="0 0 1000 430" role="img" aria-label="Failure chain vs prevention" style="overflow:visible">
+  <rect x="20" y="16" width="960" height="94" rx="10" fill="#fbeceb"/>
+  <text x="34" y="34" font-size="12.5" font-weight="700" fill="#c0392b">壞先修 · Run-to-failure</text>
+  <line x1="265.0" y1="62" x2="277.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+  <path d="M277.0,57 L285.0,62 L277.0,67 Z" fill="#c0392b"/>
+  <line x1="515.0" y1="62" x2="532.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+  <path d="M532.0,57 L540.0,62 L532.0,67 Z" fill="#c0392b"/>
+  <line x1="760.0" y1="62" x2="782.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+  <path d="M782.0,57 L790.0,62 L782.0,67 Z" fill="#c0392b"/>
+  <rect x="35" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+  <text x="150" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">壓縮機異響被忽略</text>
+  <text x="150" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Compressor noise ignored</text>
+  <rect x="285" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+  <text x="400" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">冷氣＋電池冷卻失效</text>
+  <text x="400" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">A/C &amp; battery cooling lost</text>
+  <rect x="540" y="39" width="220" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+  <text x="650" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">電池過熱降級／受損</text>
+  <text x="650" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Pack overheats &amp; degrades</text>
+  <rect x="790" y="39" width="200" height="46" rx="10" fill="#c0392b" stroke="#c0392b" stroke-width="1.8" opacity="1"/>
+  <text x="890" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">¥30,000+ ＋停駛數週</text>
+  <text x="890" y="73" text-anchor="middle" font-size="8.8" fill="#ffffff">Repair ¥30,000+ &amp; weeks off-road</text>
+  <rect x="20" y="122" width="960" height="94" rx="10" fill="#e6f5f5"/>
+  <text x="34" y="140" font-size="12.5" font-weight="700" fill="#0e9aa7">預防性 · Preventive</text>
+  <line x1="325.0" y1="152" x2="342.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+  <path d="M342.0,147 L350.0,152 L342.0,157 Z" fill="#0e9aa7"/>
+  <line x1="650.0" y1="152" x2="732.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+  <path d="M732.0,147 L740.0,152 L732.0,157 Z" fill="#0e9aa7"/>
+  <rect x="35" y="129" width="290" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+  <text x="180" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">每年檢查 ¥150–400</text>
+  <text x="180" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Annual check</text>
+  <rect x="350" y="129" width="300" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+  <text x="500" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">見先兆即預防更換 ¥2,500–6,000</text>
+  <text x="500" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Preventive swap on first sign</text>
+  <rect x="740" y="129" width="220" height="46" rx="10" fill="#0e9aa7" stroke="#0e9aa7" stroke-width="1.8" opacity="1"/>
+  <text x="850" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">車照行，零停駛</text>
+  <text x="850" y="163" text-anchor="middle" font-size="8.8" fill="#ffffff">Zero downtime</text>
+  <text x="30" y="230" font-size="12" font-weight="700" fill="#0e1b2c">預防成本 vs 後果成本 · Prevention cost vs consequence cost</text>
+  <text x="250" y="255.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">預防 Prevention</text>
+  <rect x="260" y="240" width="55" height="22" rx="4" fill="#0e9aa7"/>
+  <text x="323" y="255.0" font-size="10.5" fill="#33475e">~¥3,000</text>
+  <text x="250" y="289.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">後果 Consequence</text>
+  <rect x="260" y="274" width="550" height="22" rx="4" fill="#c0392b"/>
+  <text x="818" y="289.0" font-size="10.5" fill="#33475e">~¥30,000+</text>
+  <text x="30" y="318" font-size="10.5" fill="#33475e">一個部件的預防成本，通常係佢引發後果嘅十分之一 · Prevention typically costs ~1/10 of the failure it prevents</text>
+  <text x="30" y="338" font-size="11.5" font-weight="700" fill="#0e1b2c">小部件保護大部件 · A small part protects an expensive one</text>
+  <circle cx="122" cy="370" r="32" fill="none" stroke="#0e9aa7" stroke-width="2.2"/>
+  <text x="122" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">乾燥劑包</text>
+  <text x="122" y="380" text-anchor="middle" font-size="8" fill="#33475e">Desiccant</text>
+  <text x="122" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥600–1,200</text>
+  <line x1="158" y1="370" x2="199" y2="370" stroke="#33475e" stroke-width="1.6"/>
+  <path d="M199,366 L206,370 L199,374 Z" fill="#33475e"/>
+  <text x="182" y="362" text-anchor="middle" font-size="8" fill="#33475e">保護 protects</text>
+  <circle cx="249" cy="370" r="39" fill="none" stroke="#0e9aa7" stroke-width="2.2"/>
+  <text x="249" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">壓縮機</text>
+  <text x="249" y="380" text-anchor="middle" font-size="8" fill="#33475e">Compressor</text>
+  <text x="249" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥2,500–6,000</text>
+  <line x1="292" y1="370" x2="333" y2="370" stroke="#33475e" stroke-width="1.6"/>
+  <path d="M333,366 L340,370 L333,374 Z" fill="#33475e"/>
+  <text x="316" y="362" text-anchor="middle" font-size="8" fill="#33475e">保護 protects</text>
+  <circle cx="391" cy="370" r="47" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+  <text x="391" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">高壓電池</text>
+  <text x="391" y="380" text-anchor="middle" font-size="8" fill="#33475e">HV battery</text>
+  <text x="391" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥30,000+</text>
+</svg>`;
+
+/* ---- main assembly ---- */
+function reportTabHtml(){
+  if(!REPORT){
+    return `<div class="empty">${bi('正在載入報告…','Loading report…')}</div>`;
+  }
+  const v = REPORT.vehicle || {};
+  const s = REPORT.summary || {};
+  const plan = REPORT.plan || [];
+  const recordsDesc = (REPORT.records||[]).slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
+  const derived = reportDerivedStats(REPORT);
+
+  return `
+  <div class="toolbar noprint" style="padding:0 0 14px">
+    <div style="flex:1"></div>
+    <button class="pri" onclick="window.print()">${bi('列印 A4','Print A4')}</button>
+  </div>
+  <div class="report-sheet">
+    <div class="report-head">
+      <div>
+        ${WORDMARK}
+        <h2 style="margin-top:10px;font-size:16px">${bi('車輛維修檔案','Vehicle Service Record')}</h2>
+      </div>
+      <div style="text-align:right">
+        <span class="platebadge">${esc(v.plate||'—')}</span>
+        <div class="detail-kv" style="margin-top:6px">${esc(v.model||'—')} ${esc(v.year||'')}</div>
+        <div class="detail-kv">${bi('車主','Owner')} ${esc(v.owner||'—')}</div>
+        <div class="detail-kv mono" style="font-size:10.5px">VIN ${esc(v.vin||'—')}</div>
+        <div class="tiny detail-kv" style="margin-top:4px">${bi('報告日期','Report date')} ${todayISO()} · ${bi('目前里程','Current odo')} ${fmtOdo(v.odo)}</div>
+      </div>
+    </div>
+    <div class="tiny" style="margin-top:8px;color:var(--faint)">${bi('本報告由 Henderson Transpacific 系統自動生成，數據來源為維修廠工單紀錄','Auto-generated from workshop job-card records by the Henderson Transpacific system')}</div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">${bi('總費用','Total cost')}</div><div class="v">${fmtMoney(s.totalCost, s.currency)}</div></div>
+      <div class="kpi"><div class="lbl">${bi('紀錄數目','Records')}</div><div class="v">${fmtNum(s.recordCount)}</div></div>
+      <div class="kpi"><div class="lbl">${bi('首次／最近','First / last')}</div><div class="v" style="font-size:13px">${fmtDate(s.firstDate)} → ${fmtDate(s.lastDate)}</div></div>
+      <div class="kpi"><div class="lbl">${bi('目前里程','Current odo')}</div><div class="v">${fmtOdo(s.odo)}</div></div>
+      <div class="kpi"><div class="lbl">${bi('服務年期','Service span')}</div><div class="v">${derived.serviceYears!=null?derived.serviceYears.toFixed(1)+(LANG==='zh'?' 年':' yr'):'—'}</div></div>
+      <div class="kpi"><div class="lbl">${bi('平均每年里程','Avg. annual distance')}</div><div class="v">${derived.avgAnnualKm!=null?fmtNum(Math.round(derived.avgAnnualKm))+' km/yr':'—'}</div></div>
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('里程時間軸','Mileage timeline')}</h3>
+      ${reportTimelineChart(derived.withOdo)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('費用分析','Cost analysis')}</h3>
+      ${reportCostAnalysis(REPORT.records||[])}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('維修紀錄明細','Service record detail')}</h3>
+      ${recordsDesc.length===0 ? `<div class="empty">${bi('沒有紀錄','No records')}</div>` : reportRecordsTable(recordsDesc)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('零件登記冊','Parts register')}</h3>
+      ${reportPartsRegister(REPORT.records||[], v)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('保養計劃狀態','Maintenance plan status')}</h3>
+      ${reportPlanStatusTable(plan)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('未來保養建議','Future maintenance suggestions')}</h3>
+      ${reportFutureSuggestions(plan, v, derived)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('部件位置圖','Component map')}</h3>
+      ${reportComponentMap(plan)}
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('預防性更換邏輯','Prevention logic')}</h3>
+      <div class="card">${PREVENTION_SVG}</div>
+    </div>
+
+    <div class="report-sec">
+      <h3 class="rh">${bi('附註','Notes')}</h3>
+      <div class="report-note">
+        ${bi('本報告的所有數據均來自本維修廠所記錄的工單，未有紀錄的項目本報告不會作出假設或聲稱。','All data in this report comes from job cards recorded by this workshop; items with no record are not assumed or claimed.')}<br>
+        ${bi('「未來保養建議」屬推算，僅供參考，不構成保養承諾。','The Future Maintenance Suggestions section consists of estimates only and is not a service commitment.')}<br>
+        ${bi('報告生成於 '+todayISO()+'，由 '+esc(SHOP_NAME||'—')+' 製作。', 'Report generated on '+todayISO()+' by '+esc(SHOP_NAME||'—')+'.')}
+      </div>
+    </div>
+  </div>`;
 }
 
 /* =====================================================================
