@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>車輛檔案 — 在檔報告 Vehicle File — Active Report · UJ 713 · Henderson Transpacific</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7; --muted:#33475e; --faint:#64748b;
+  --line:#d5dbe1; --hair:#e6eaee; --panel:#f6f7f8; --panel2:#fbfcfd;
+  --red:#c0392b; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink); background:#eef2f4; font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{width:210mm; min-height:297mm; margin:16px auto; background:#fff;
+  padding:14mm 13mm 13mm; position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10);}
+h1{font-size:22px;font-weight:600;letter-spacing:.02em;line-height:1.25}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+h3{font-size:12.5px;font-weight:600;letter-spacing:.01em;margin-bottom:6px}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.5px;color:var(--muted);line-height:1.45}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-size:10px;letter-spacing:-.01em}
+b,strong{font-weight:600}
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.wordmark{font-size:10.5px;font-weight:600;letter-spacing:.24em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--accent)}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:17px;
+  font-weight:600;letter-spacing:.09em;display:inline-block}
+.hd-right{text-align:right;flex:0 0 auto}
+.stamp-new{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+.fill-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hair);margin-top:15px}
+.fill-cell{padding:9px 12px 10px;border-bottom:1px solid var(--hair)}
+.fill-cell:nth-child(4n+1),.fill-cell:nth-child(4n+2),.fill-cell:nth-child(4n+3){border-right:1px solid var(--hair)}
+.fill-cell:nth-child(n+5){border-bottom:none}
+.fill-val{margin-top:4px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:8.2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fbeceb}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-teal{color:var(--accent);border-color:#9fd3d7;background:#eaf7f8}
+section{margin-top:20px;break-inside:avoid}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:10px}
+.shead .rule{font-size:9px;color:var(--faint);letter-spacing:.04em;text-align:right}
+table{width:100%;border-collapse:collapse;font-size:10.3px;table-layout:fixed}
+th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;
+  white-space:normal;line-height:1.3}
+td{padding:6px 7px 6px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.4;
+  overflow-wrap:break-word}
+th+th,td+td{padding-left:8px}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+td.r,th.r{padding-right:0}
+.tot td{border-bottom:none;border-top:1.5px solid var(--ink);font-weight:600;padding-top:8px;font-size:11px}
+.dim{color:var(--muted)}
+.yearcard{border:1px solid var(--hair);padding:10px 12px 9px;margin-top:10px;break-inside:avoid}
+.yearcard-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;
+  border-bottom:1px solid var(--hair);padding-bottom:6px}
+.yearcard-head .yn{font-size:13.5px;font-weight:600}
+.yearcard-head .yk{font-size:10px;color:var(--faint)}
+.yearcard-head .ys{font-size:11px;font-weight:600;color:var(--accent)}
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.6px;line-height:1.55}
+.note.warn{border-left-color:var(--red);background:#fbeceb}
+.note.accent{border-left-color:var(--accent);background:#eaf7f8}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+ol.checklist{list-style:none}
+ol.checklist li{position:relative;padding:8px 0 8px 28px;border-bottom:1px solid var(--hair);
+  font-size:10.3px;line-height:1.5}
+ol.checklist li:before{content:'';position:absolute;left:0;top:9px;width:12px;height:12px;
+  border:1.5px solid var(--ink);border-radius:2px}
+ol.checklist li:last-child{border-bottom:none}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.card{border:1px solid var(--hair);padding:12px 13px 9px;background:#fff;break-inside:avoid}
+.foot{margin-top:22px;padding-top:9px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint);letter-spacing:.03em}
+.brandmark{display:flex;align-items:center;gap:9px}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+#pbtn{position:fixed;right:18px;bottom:18px;z-index:99;background:var(--ink);color:#fff;border:0;
+  border-radius:24px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 14px rgba(0,0,0,.28);white-space:nowrap}
+@page{size:A4 portrait;margin:11mm 10mm 10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none;break-after:page}
+  .sheet:last-of-type{break-after:auto}
+  #pbtn,.noprint{display:none!important}
+  section,.card,table,.note,.fill-grid,.yearcard{break-inside:avoid}
+  tr{break-inside:avoid} thead{display:table-header-group}
+  section{margin-top:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ SHEET 1 ════════════════ -->
+<div class="sheet">
+  <div class="masthead">
+    <div>
+      <div class="brandmark">
+        <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>
+        <div>
+          <div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div>
+          <div class="cnname">亨德森環太 · 車輛檔案系統</div>
+        </div>
+      </div>
+      <h1 style="margin-top:9px">車輛檔案 — 在檔報告<br>Vehicle File — Active Report</h1>
+      <div class="sub" style="margin-top:4px">已完成部件核對 · 已更新十年計劃 · 已納入預防性維修策略</div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">UJ 713</div>
+      <div class="tiny" style="margin-top:7px">前用車牌 VY1428<br>報告日期 2026-08-17</div>
+      <div style="margin-top:6px"><span class="stamp-new">在檔 · ACTIVE</span></div>
+    </div>
+  </div>
+
+  <div class="fill-grid">
+    <div class="fill-cell"><div class="lbl">車牌 Plate</div><div class="fill-val">UJ 713</div></div>
+    <div class="fill-cell"><div class="lbl">VIN 車架號</div><div class="fill-val mono" style="font-size:11px">5YJSB7E15GF122555</div></div>
+    <div class="fill-cell"><div class="lbl">廠牌型號 Make &amp; model</div><div class="fill-val">Tesla Model S 70</div></div>
+    <div class="fill-cell"><div class="lbl">年份 / 驅動 Year</div><div class="fill-val">2016 · RHD</div></div>
+    <div class="fill-cell"><div class="lbl">首次登記 First registered</div><div class="fill-val">2016-03-18</div></div>
+    <div class="fill-cell"><div class="lbl">現時里程 Odometer</div><div class="fill-val">≈ 303,600 km</div></div>
+    <div class="fill-cell"><div class="lbl">車齡 Age</div><div class="fill-val">10 年 5 個月</div></div>
+    <div class="fill-cell"><div class="lbl">建檔 File opened</div><div class="fill-val">2026-08-06</div></div>
+  </div>
+
+  <!-- ══ 01 ══ -->
+  <section>
+    <div class="shead"><h2>01 — 檔案狀態 File Status</h2><div class="rule">截至 2026-08-17</div></div>
+
+    <table>
+      <colgroup><col style="width:26%"><col style="width:24%"><col style="width:50%"></colgroup>
+      <tbody>
+        <tr><td><b>資料來源 Source</b></td><td>Tesla 原廠發票 18 頁</td><td class="dim">2026-08-06 逐頁核對；另加中山雙電新能源 HV 維修單一份</td></tr>
+        <tr><td><b>已記錄支出</b></td><td class="num">HK$72,921.62<br>+ ¥11,892</td><td class="dim">2023-01 → 2026-07 期間 85,460 km，折合 <b>HK$0.853/km</b>。人民幣部分獨立計算，未換算。</td></tr>
+        <tr><td><b>行駛強度</b></td><td class="num">長期 ≈29,200 km/年<br>近 12 個月 ≈24,700</td><td class="dim">香港私家車平均約 12,000 km/年 —— 此車約為 <b>2 倍</b>。所有保養間距按里程優先、月份次之。</td></tr>
+        <tr><td><b>檔案完整度</b></td><td><span class="pill p-amb">3 項缺件</span></td><td class="dim">迫力碟/皮單據、輪胎單據、HV 維修後量測數據 —— 三者皆缺，見第 03 節。</td></tr>
+        <tr><td><b>現行保養</b></td><td><span class="pill p-ok">再造驅動單元</span></td><td class="dim">4 年或 80,000 km，<b>以里程先到為準 ≈341,187 km</b>（推算 2027-11 至 2028-02），早於 2028-10-18 之日曆期限。</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note accent" style="margin-top:11px">
+      <h4>本報告與「開檔報告」之分別</h4>
+      標準開檔報告用於全新客戶、無往績、全欄 TBC。<b>本車已完成完整往績核對</b>，故本報告為「在檔報告」：
+      第 02 節逐項核對已更換部件及其保養狀態，第 05 節嘅十年計劃已按實際更換日期重新起算，
+      而唔係由零開始推算。
+    </div>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 1 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 02 ══ -->
+  <section>
+    <div class="shead"><h2>02 — 已更換部件核對 Replaced Components — Verified</h2><div class="rule">全部有單據支持，除另註明</div></div>
+
+    <table>
+      <colgroup><col style="width:5%"><col style="width:25%"><col style="width:10%"><col style="width:11%"><col style="width:11%"><col style="width:38%"></colgroup>
+      <thead><tr><th>#</th><th>部件 Component</th><th>日期</th><th class="r">里程 km</th><th class="r">費用 HK$</th><th>保養 / 狀態</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>鑰匙扣 Key fob <span class="mono">1455938-00-B</span></td><td class="num">2023-01-27</td><td class="r num">216,050</td><td class="r num">—</td><td class="dim">連編程。同單 HK$4,011 含以下第 2 項</td></tr>
+        <tr><td class="num">2</td><td>CCS Combo II 充電改裝 <span class="mono">1516761-00-A</span> + 充電 ECU/線束 <span class="mono">1489302-00-B</span></td><td class="num">2023-01-27</td><td class="r num">216,050</td><td class="r num">4,011</td><td><span class="pill p-ok">已完成</span> <span class="dim">pre-Jun-2016 車必要改裝</span></td></tr>
+        <tr><td class="num">3</td><td>右前門上鉸 <span class="mono">6009549-00-F</span></td><td class="num">2023-07-04</td><td class="r num">224,440</td><td class="r num">—</td><td class="dim">同單 HK$4,551</td></tr>
+        <tr><td class="num">4</td><td>雨刮模組 <span class="mono">1028699-00-C</span> + 右雨刮臂 <span class="mono">1546995-00-B</span></td><td class="num">2023-07-04</td><td class="r num">224,440</td><td class="r num">4,551</td><td><span class="pill p-red">相關故障未解</span> <span class="dim">見第 03 節</span></td></tr>
+        <tr><td class="num">5</td><td>副駕駛氣囊（召回）<span class="mono">1463363-99-B</span></td><td class="num">2023-07-04</td><td class="r num">224,440</td><td class="r num">0</td><td><span class="pill p-ok">召回完成</span> <span class="dim">NHTSA 19V-002，原廠保養免費</span></td></tr>
+        <tr><td class="num">6</td><td><b>再造驅動單元 Reman LDU</b> <span class="mono">1025598-00-U</span></td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">37,250</td><td><span class="pill p-ok">保養中</span> <b>4 年 / 80,000 km</b><br><span class="dim">→ 2028-10-18 <b>或 341,187 km</b>（里程先到）</span></td></tr>
+        <tr><td class="num">7</td><td><b>冷氣壓縮機 A/C compressor</b> <span class="mono">1028398-00-J</span></td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">10,779</td><td><span class="pill p-amb">已過保</span> 1 年 / 20,000 km<br><span class="dim">已使用 ≈42,400 km · 見第 04 節維修策略</span></td></tr>
+        <tr><td class="num">8</td><td>乾燥瓶蓋 + 乾燥劑包 · O-ring ×2</td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">—</td><td class="dim">隨壓縮機更換（開系統必換件）</td></tr>
+        <tr><td class="num">9</td><td>ATF 傳動油 ×2 夸脫</td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">392</td><td class="dim">隨驅動單元更換</td></tr>
+        <tr><td class="num">10</td><td>乙二醇冷卻液 1 加侖</td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">380</td><td><span class="pill p-amb">曾補液</span> <span class="dim">2024-11-21 冷卻液偏低，2,550 km 後補回（廠方善意，HK$0）</span></td></tr>
+        <tr><td class="num">11</td><td>左前門上鉸</td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">783</td><td class="dim">左右兩邊上鉸現已齊全</td></tr>
+        <tr><td class="num">12</td><td>12V 輔助電池 #1 <span class="mono">1083774-00-B</span></td><td class="num">2024-10-18</td><td class="r num">261,187</td><td class="r num">1,321</td><td><span class="pill p-red">7 個月即失效</span></td></tr>
+        <tr><td class="num">13</td><td>冷氣壓縮機支架 <span class="mono">6007369-00-D</span> · <span class="mono">1028402-00-C</span> · 8× <span class="mono">1007055-00-C</span></td><td class="num">2025-05-21</td><td class="r num">273,678</td><td class="r num">2,894</td><td class="dim">壓縮機本體未動，只換支架及螺絲</td></tr>
+        <tr><td class="num">14</td><td><b>12V 輔助電池 #2</b></td><td class="num">2025-05-21</td><td class="r num">273,678</td><td class="r num">1,594</td><td><span class="pill p-red">重點觀察</span> <span class="dim">#1 只用 7 個月 / 12,491 km。寄生電流從未量度。</span></td></tr>
+        <tr><td class="num">15</td><td><b>高壓電池組模組級維修</b><br><span class="dim">中山市雙電新能源汽車服務（非授權）</span></td><td class="num">2026-05-05</td><td class="r num">無記錄</td><td class="r num">¥11,892</td><td class="dim">電池組拆裝、全模組絕緣處理、1 模組維修、全組均衡、3 塊採集板、透氣閥升級、氣密測試。<b>維修後量測數據未取得</b></td></tr>
+        <tr><td class="num">16</td><td>迫力碟 + 迫力皮</td><td class="num">≈2026-02</td><td class="r num">無記錄</td><td class="r num">無記錄</td><td><span class="pill p-red">單據缺失</span> <span class="dim">車主口述。日期／里程／規格／費用全缺，未計入總數</span></td></tr>
+        <tr><td class="num">17</td><td>LTE/4G 模組 <span class="mono">1067726-00-A</span> + EU LTE PCBA/u-blox GPS <span class="mono">1054968-02-C</span></td><td class="num">2026-07-07</td><td class="r num">301,510</td><td class="r num">1,550</td><td><span class="pill p-ok">已完成</span> <span class="dim">與 MCU1 eMMC 召回無關，勿混淆</span></td></tr>
+        <tr class="tot"><td></td><td>已記錄合計（不含缺單項目及人民幣部分）</td><td></td><td></td><td class="r num">72,921.62</td><td class="dim">另 ¥11,892 CNY</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 2 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 03 ══ -->
+  <section style="margin-top:0">
+    <div class="shead"><h2>03 — 未完成 · 待核實 Outstanding &amp; To Verify</h2><div class="rule">按風險排序</div></div>
+
+    <table>
+      <colgroup><col style="width:5%"><col style="width:12%"><col style="width:31%"><col style="width:52%"></colgroup>
+      <thead><tr><th>#</th><th>風險</th><th>項目</th><th>說明 / 下一步</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><span class="pill p-red">安全</span></td><td>手掣卡鉗齒輪召回 <span class="mono">17V-260</span></td><td>2012-07 至 2016-11 出廠適用，<b>本車在範圍內，維修紀錄中未見完成</b>。憑 VIN 向 Tesla 查證，免費。</td></tr>
+        <tr><td class="num">2</td><td><span class="pill p-red">安全</span></td><td>EPAS 轉向螺栓腐蝕召回 <span class="mono">18V-204</span></td><td>2016-04 前出廠適用，<b>本車在範圍內，未見完成</b>。憑 VIN 查證，免費。</td></tr>
+        <tr><td class="num">3</td><td><span class="pill p-red">安全</span></td><td>前下連桿 fore-link <span class="mono">1041570 / 1041575-00-A</span></td><td>問題集中於 2016 年 1–5 月出廠批次 —— <b>本車出廠月份正落在此窗口內</b>。下次入廠要求目視檢查。</td></tr>
+        <tr><td class="num">4</td><td><span class="pill p-amb">功能</span></td><td>MCU1 eMMC 召回 <span class="mono">21V-035</span></td><td>2012-05 至 2018-03 適用。7 月裝嘅 LTE 模組<b>唔等於</b>做咗呢個召回。免費、無里程上限，值得即刻查。</td></tr>
+        <tr><td class="num">5</td><td><span class="pill p-amb">功能</span></td><td>雨刮臂唔歸位</td><td><b>2025-05-21 已報價，客戶暫緩，至今未做。</b>香港雨季，屬實用安全項。</td></tr>
+        <tr><td class="num">6</td><td><span class="pill p-amb">預防</span></td><td>12V 寄生電流測試 + PCS 健康檢查</td><td>連續兩粒 12V 電池，其中一粒 7 個月即死。<b>從未做過根因量測。</b>換第三粒之前必須先做，否則只係重覆買電池。</td></tr>
+        <tr><td class="num">7</td><td><span class="pill p-amb">預防</span></td><td>迫力油</td><td><b>10.4 年車齡，全無更換記錄。</b>吸濕性液體，沸點下降 = 高溫連續煞車失效風險。先做含水量測試（HK$0–200），再決定。</td></tr>
+        <tr><td class="num">8</td><td><span class="pill p-grey">舒適</span></td><td>冷氣濾網</td><td>全無記錄。香港濕度年均 78%，濾網長期不換會生霉。低成本項。</td></tr>
+        <tr><td class="num">9</td><td><span class="pill p-grey">資料</span></td><td>迫力碟/皮單據</td><td>≈2026-02 已更換（車主口述），<b>無單據</b>。向該車行索取，補回日期、里程、規格、費用。</td></tr>
+        <tr><td class="num">10</td><td><span class="pill p-grey">資料</span></td><td>輪胎單據</td><td><b>整份檔案完全無輪胎記錄。</b>30 萬公里車，輪胎必然換過多次。至少補回現有一套嘅安裝日期及規格。</td></tr>
+        <tr><td class="num">11</td><td><span class="pill p-grey">資料</span></td><td>HV 電池維修後數據</td><td>向中山雙電索取：模組電壓分佈、絕緣阻值、氣密測試結果。<b>呢啲係你日後 ScanMyTesla 讀數嘅比較基準</b>，冇咗就冇得對照。</td></tr>
+        <tr><td class="num">12</td><td><span class="pill p-grey">行政</span></td><td>車牌 UJ 713 / VY1428 / VM3645</td><td>登記文件顯示 VM3645，發票顯示 VY1428，現用 UJ 713。同一 VIN。應為賣方保留車牌（TD129）。更新保險、隧道、停車場登記。</td></tr>
+        <tr><td class="num">13</td><td><span class="pill p-grey">行政</span></td><td>年度驗車 Certificate of Roadworthiness</td><td>6 年以上私家車每年續牌必驗，HK$585。確認現時證書有效期。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 3 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 04 ══ -->
+  <section>
+    <div class="shead"><h2>04 — 預防性維修策略：修，而唔係換 Repair-Not-Replace</h2><div class="rule">20 年持有前提</div></div>
+
+    <div class="note accent">
+      <h4>原則</h4>
+      持有 20 年嘅車，同持有 3 年嘅車，維修邏輯係相反嘅。3 年車求快、求原廠、求保養內；
+      <b>20 年車求嘅係「同一個部件可以修幾多次」</b>。凡係高單價、機械結構簡單、損耗集中喺易損件（軸承、油封、襯套）嘅部件，
+      都應該建立「拆下 → 台架翻新 → 裝回或入備件庫」嘅循環，而唔係每次都買新件。
+    </div>
+
+    <h3 style="margin-top:14px">4.1　冷氣壓縮機 — 已核實可翻新</h3>
+
+    <table class="wrap">
+      <colgroup><col style="width:24%"><col style="width:76%"></colgroup>
+      <tbody>
+        <tr><td><b>現裝零件</b></td><td><span class="mono">1028398-00-J</span> · 2024-10-18 裝上 · 已行駛 ≈42,400 km · <b>保養已過期</b>（1 年 / 20,000 km）</td></tr>
+        <tr><td><b>可翻新性</b></td><td><span class="pill p-ok">已核實</span> 市面維修套件明確列明適用於 <span class="mono">1028398-00-*</span>、<span class="mono">1042442-00-*</span>、<span class="mono">1063369-00-*</span> —— <b>第一個就係你部車嘅零件號</b>。適用年份 2012-02 至 2016-03，本車 2016-03 出廠，屬適用範圍尾段。</td></tr>
+        <tr><td><b>套件內容</b></td><td>基本版：<b>軸承 3 粒（16003 · 6202 W9 · 6004 W10）+ 高速潤滑油</b><br>完整版：另加 6 塊金屬墊片、1 塊橡膠墊片、1 個特殊油封</td></tr>
+        <tr><td><b>⚠ 重要更正</b></td><td><b>呢啲套件係換軸承，唔係換葉片。</b>我搵唔到任何 Tesla 壓縮機嘅葉片／轉子維修件。呢款壓縮機嘅典型損耗係<b>軸承磨損</b> —— 徵狀係運轉異響、冷氣效率下降，最終卡死。所以「送廠翻新」實際做嘅係<b>換軸承 + 油封 + 重新注油</b>，唔係修葉片。策略方向啱，只係項目名要改。</td></tr>
+        <tr><td><b>套件價格（實查）</b></td><td>EVANNEX 軸承版 US$299.95 ≈ <b>HK$2,340</b>　·　PFI 完整版 US$500 ≈ <b>HK$3,900</b>（現時缺貨）</td></tr>
+        <tr><td><b>你講嘅 HK$700</b></td><td><span class="pill p-ok">完全合理</span> 16003 / 6202 / 6004 <b>係標準工業軸承尺寸</b>，SKF、NSK、NTN 同規格件每粒只需數十港元。品牌套件賣嘅係包裝同說明書。<br><b>但要小心</b>：<span class="mono">W9</span> / <span class="mono">W10</span> 係寬度／游隙變體代號，唔可以求其買普通 6202 或 6004 頂替 —— 買之前要同賣家核實完整代號。</td></tr>
+        <tr><td><b>工時</b></td><td>套件供應商註明台架拆裝約 <b>2 小時</b>，附拆裝說明及影片。</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:14px">4.2　成本對照 — 你嘅估算 vs 全包實算</h3>
+    <table>
+      <colgroup><col style="width:42%"><col style="width:19%"><col style="width:19%"><col style="width:20%"></colgroup>
+      <thead><tr><th>項目</th><th class="r">你嘅估算</th><th class="r">保守實算</th><th>備註</th></tr></thead>
+      <tbody>
+        <tr><td>維修套件（軸承＋油封＋油）</td><td class="r num">700</td><td class="r num">700 – 2,340</td><td class="dim">副廠軸承 vs 品牌套件</td></tr>
+        <tr><td>台架翻新工時（2 小時）</td><td class="r num">300</td><td class="r num">400 – 700</td><td class="dim">壓縮機離車之後嘅工</td></tr>
+        <tr><td>壓縮機拆／裝（含高壓斷電程序）</td><td class="r num">—</td><td class="r num">800 – 1,500</td><td class="dim"><b>你漏咗呢項。</b>HV 部件，唔係普通拆裝</td></tr>
+        <tr><td>雪種回收 + 抽真空 + 加注</td><td class="r num">—</td><td class="r num">400 – 800</td><td class="dim"><b>你漏咗呢項。</b>要回收機，唔可以放空</td></tr>
+        <tr><td>O-ring ×2 + 乾燥劑包（開系統必換）</td><td class="r num">—</td><td class="r num">200 – 400</td><td class="dim">你 2024 年嗰張單已經有呢兩項</td></tr>
+        <tr class="tot"><td>翻新方案全包</td><td class="r num">1,000</td><td class="r num">2,500 – 5,700</td><td></td></tr>
+        <tr><td class="dim">對照：換全新 Tesla 原廠件</td><td class="r num dim">—</td><td class="r num"><b>10,779</b> + 工時</td><td class="dim">2024-10-18 實際付出嘅價</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note" style="margin-top:11px">
+      <h4>結論</h4>
+      你嘅估算漏咗拆裝同雪種服務兩項，所以 HK$1,000 偏低。但<b>就算按我最保守嘅 HK$5,700 計，仍然比換新件平約 47%；按 HK$2,500 計則平 77%。</b>
+      策略成立，只係要用真數落去做決定，唔好用 HK$1,000 去同車廠傾價 —— 傾唔到，反而失預算。
+    </div>
+
+  </section>
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 4 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <section style="margin-top:0">
+    <h3>4.3　更重要嘅一步：由「維修策略」升級做「備件策略」</h3>
+    <div class="note accent">
+      翻新方案有個先天缺點：<b>壓縮機壞嗰日，架車要停低等你翻新完先開得。</b>台架 2 小時只係其中一環，
+      連拆裝、等件、雪種服務，隨時停三日。<br><br>
+      <b>建議做法：而家去買一個二手 <span class="mono">1028398</span> 壓縮機（淘寶／拆車件市場），離線翻新好，放入備件庫。</b>
+      壞嗰日直接換上，一日內完事；換落嚟嗰個再慢慢翻新，變成下一個備件。<br><br>
+      咁樣循環落去，<b>你部車嘅冷氣系統就再冇「等件」呢個風險，而每次更換嘅邊際成本只係一套軸承。</b>
+      呢個先係 20 年持有嘅正解 —— 唔係修得幾平，而係停幾耐。
+    </div>
+  </section>
+
+  <section style="margin-top:0">
+    <div class="shead"><h2>04 —（續）其他適用「修 vs 換」嘅部件</h2><div class="rule">逐項判斷</div></div>
+    <table>
+      <colgroup><col style="width:22%"><col style="width:14%"><col style="width:64%"></colgroup>
+      <thead><tr><th>部件</th><th>判斷</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>驅動單元 Drive unit</td><td><span class="pill p-grey">暫不處理</span></td><td>現裝已係再造件，保養有效至 341,187 km。<b>保養屆滿前必須檢查</b>（見第 05 節）。屆滿後再造 vs 二手翻新可再議。</td></tr>
+        <tr><td>12V 輔助電池</td><td><span class="pill p-red">先查根因</span></td><td>消耗品，不可翻新。但兩粒連續短命係<b>徵狀唔係原因</b>。未做寄生電流測試前買第三粒，等於重覆付款。</td></tr>
+        <tr><td>迫力卡鉗 Calipers</td><td><span class="pill p-ok">保養可延壽</span></td><td>EV 動能回收令機械煞車少用，香港高濕 → 卡鉗滑銷生鏽卡死。<b>每年清潔潤滑一次</b>，可避免整個卡鉗更換。</td></tr>
+        <tr><td>MCU1 主機</td><td><span class="pill p-amb">先行召回</span></td><td>eMMC 可以自行更換晶片（技術上可行），但<b>召回免費、無里程上限</b>。先用召回，唔好自己動手。</td></tr>
+        <tr><td>門把手 Door handles</td><td><span class="pill p-ok">可翻新</span></td><td>pre-refresh Model S 門把手係已知損耗件，市面有齒輪／微動開關維修套件。壞一個唔使換成組。</td></tr>
+        <tr><td>懸掛襯套 Bushings</td><td><span class="pill p-ok">單件更換</span></td><td>30 萬公里必然老化。多數可單獨壓出更換，唔使換成支擺臂 —— 但要有壓床同工具。</td></tr>
+        <tr><td>雪種管路 O-ring</td><td><span class="pill p-teal">同步更換</span></td><td>每次開冷氣系統就換。單價極低，漏雪種嘅返工成本極高。</td></tr>
+        <tr><td>充電口 Charge port</td><td><span class="pill p-ok">可翻新</span></td><td>閂鎖電機係已知損耗件，有單獨零件。整個充電口總成更換係浪費。</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn" style="margin-top:11px">
+      <h4>唔適用「修」嘅界線</h4>
+      <b>任何影響煞車、轉向、安全氣囊、高壓絕緣嘅部件，一律換新件、用原廠或同等認證件。</b>
+      省錢策略只適用於舒適性同輔助系統。呢條界線唔可以模糊 —— 一部 30 萬公里、10 年車齡嘅車，
+      安全裕度本身已經比新車細。
+    </div>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 5 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 05 ══ -->
+  <section>
+    <div class="shead"><h2>05 — 十年計劃（已按實際更換日期重新起算）</h2><div class="rule">月份 + 里程雙單位 · 按 25,000 km/年推算</div></div>
+
+    <div class="yearcard">
+      <div class="yearcard-head"><span class="yn">即時 — 90 日內</span><span class="yk">2026-08 → 2026-11 · ≈303,600 → 310,000 km</span><span class="ys">HK$1,500 – 4,500</span></div>
+      <table><colgroup><col style="width:46%"><col style="width:22%"><col style="width:32%"></colgroup>
+      <tbody>
+        <tr><td>三項召回憑 VIN 查證（17V-260 手掣 · 18V-204 轉向 · 21V-035 eMMC）</td><td class="num">HK$0</td><td class="dim">全部免費，只需時間</td></tr>
+        <tr><td>前下連桿 fore-link 目視檢查</td><td class="num">併入例檢</td><td class="dim">出廠批次在範圍內</td></tr>
+        <tr><td><b>12V 寄生電流測試 + PCS 健康檢查</b></td><td class="num">HK$800 – 1,500</td><td class="dim">換第三粒電池之前必做</td></tr>
+        <tr><td>迫力油含水量測試（未必要換）</td><td class="num">HK$0 – 200</td><td class="dim">10.4 年無記錄</td></tr>
+        <tr><td>冷氣濾網更換</td><td class="num">HK$300 – 600</td><td class="dim">香港濕度，低成本高回報</td></tr>
+        <tr><td>雨刮臂歸位故障修復</td><td class="num">HK$400 – 1,200</td><td class="dim">2025-05 起未解決</td></tr>
+        <tr><td>索取迫力／輪胎單據、HV 維修後數據</td><td class="num">HK$0</td><td class="dim">補完檔案缺口</td></tr>
+        <tr><td>OBD 診斷線材 + ScanMyTesla 基線</td><td class="num">HK$500 – 700</td><td class="dim">見另冊《診斷線材採購指引》</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="yearcard">
+      <div class="yearcard-head"><span class="yn">2027</span><span class="yk">≈328,000 km</span><span class="ys">HK$8,000 – 16,000</span></div>
+      <table><colgroup><col style="width:46%"><col style="width:22%"><col style="width:32%"></colgroup>
+      <tbody>
+        <tr><td><b>★ 驅動單元保養屆滿前全面檢查</b></td><td class="num">HK$1,000 – 1,500</td><td class="dim">≈341,187 km 到期，2027 年底前必做</td></tr>
+        <tr><td>12V 電池（第三粒，視乎根因結果）</td><td class="num">HK$1,300 – 1,600</td><td class="dim">若寄生電流已修復，壽命應延長</td></tr>
+        <tr><td>輪胎（推算周期到期）</td><td class="num">HK$4,000 – 8,000</td><td class="dim">四條，視規格</td></tr>
+        <tr><td>卡鉗清潔潤滑 + 年度檢查</td><td class="num">HK$800 – 1,500</td><td class="dim">每年一次</td></tr>
+        <tr><td>懸掛襯套／避震器檢查</td><td class="num">HK$500 – 1,000</td><td class="dim">30 萬公里以上必檢</td></tr>
+        <tr><td>年檢 + 續牌</td><td class="num">HK$585 + 牌費</td><td class="dim">EV 牌費按功率分級</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="yearcard">
+      <div class="yearcard-head"><span class="yn">2028</span><span class="yk">≈353,000 km</span><span class="ys">HK$12,000 – 25,000</span></div>
+      <table><colgroup><col style="width:46%"><col style="width:22%"><col style="width:32%"></colgroup>
+      <tbody>
+        <tr><td><b>冷卻液更換（距上次 4 年 / ≈92,000 km）</b></td><td class="num">HK$1,200 – 2,000</td><td class="dim">上次 2024-10-18</td></tr>
+        <tr><td><b>ATF 傳動油（距上次 ≈92,000 km）</b></td><td class="num">HK$800 – 1,500</td><td class="dim">上次 2024-10-18</td></tr>
+        <tr><td><b>乾燥瓶 + 乾燥劑（距上次 4 年）</b></td><td class="num">HK$600 – 1,200</td><td class="dim">建議與下項同期做，慳一次雪種服務</td></tr>
+        <tr><td><b>★ 冷氣壓縮機翻新（軸承 + 油封）</b></td><td class="num">HK$2,500 – 5,700</td><td class="dim">見第 04 節。換新件為 HK$10,779+</td></tr>
+        <tr><td>迫力油更換</td><td class="num">HK$600 – 1,200</td><td class="dim">兩年周期</td></tr>
+        <tr><td>驅動單元保養屆滿（2028-10-18 或先到里程）</td><td class="num">—</td><td class="dim">屆滿後自費，預留應急金</td></tr>
+        <tr><td>卡鉗保養 · 冷氣濾網 · 年檢</td><td class="num">HK$1,700 – 3,300</td><td class="dim">例行</td></tr>
+      </tbody></table>
+    </div>
+
+  </section>
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 6 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <section style="margin-top:0">
+    <div class="shead"><h2>05 —（續）十年計劃</h2><div class="rule">後段</div></div>
+    <div class="yearcard">
+      <div class="yearcard-head"><span class="yn">2029 – 2031</span><span class="yk">≈378,000 → 428,000 km</span><span class="ys">HK$30,000 – 70,000 累計</span></div>
+      <table><colgroup><col style="width:46%"><col style="width:22%"><col style="width:32%"></colgroup>
+      <tbody>
+        <tr><td>懸掛全面翻新（襯套、避震、球頭）</td><td class="num">HK$8,000 – 18,000</td><td class="dim">中山／珠海 ¥3,000–7,000 可考慮</td></tr>
+        <tr><td>輪胎 ×2 輪</td><td class="num">HK$8,000 – 16,000</td><td class="dim">按 40,000 km 周期</td></tr>
+        <tr><td>迫力碟／皮（距 2026-02 約 4–5 年）</td><td class="num">HK$4,000 – 9,000</td><td class="dim">EV regen 令碟皮壽命長</td></tr>
+        <tr><td>驅動單元風險窗口（保養外）</td><td class="num">HK$0 – 40,000</td><td class="dim">再造件 vs 二手翻新，屆時再議</td></tr>
+        <tr><td>12V ×2 次 · 冷卻液 · 迫力油 · 例行</td><td class="num">HK$8,000 – 14,000</td><td class="dim">例行累計</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="yearcard">
+      <div class="yearcard-head"><span class="yn">2032 – 2036</span><span class="yk">≈453,000 → 553,000 km</span><span class="ys">HK$60,000 – 150,000 累計</span></div>
+      <table><colgroup><col style="width:46%"><col style="width:22%"><col style="width:32%"></colgroup>
+      <tbody>
+        <tr><td><b>高壓電池組 — 主要決策點</b></td><td class="num">HK$40,000 – 120,000</td><td class="dim">2026-05 已做模組級維修。中山模組級再修遠平過整組更換，屆時視容量衰減曲線決定</td></tr>
+        <tr><td>冷氣壓縮機第二次翻新</td><td class="num">HK$2,500 – 5,700</td><td class="dim">若已建立備件庫則更低</td></tr>
+        <tr><td>車身／密封條／門把手翻新</td><td class="num">HK$5,000 – 12,000</td><td class="dim">20 年車齡的橡膠件</td></tr>
+        <tr><td>例行保養累計（5 年）</td><td class="num">HK$25,000 – 40,000</td><td class="dim">冷卻液、迫力、輪胎、12V、年檢</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 7 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 06 ══ -->
+  <section style="margin-top:0">
+    <div class="shead"><h2>06 — 十年費用輪廓 Ten-Year Cost Outlook</h2><div class="rule">港幣 · 不含高壓電池更換之極端情境</div></div>
+
+    <div class="card">
+      <svg viewBox="0 0 900 250" role="img" aria-label="十年費用預算圖">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#33475e"/></marker></defs>
+        <!-- axes -->
+        <line x1="54" y1="205" x2="880" y2="205" stroke="#0e1b2c" stroke-width="1.2"/>
+        <g font-size="10.5" fill="#64748b" font-family="Inter,Helvetica,Arial,sans-serif">
+          <text x="46" y="209" text-anchor="end">0</text>
+          <text x="46" y="160" text-anchor="end">20k</text>
+          <text x="46" y="115" text-anchor="end">40k</text>
+          <text x="46" y="70" text-anchor="end">60k</text>
+          <text x="46" y="28" text-anchor="end">80k</text>
+        </g>
+        <g stroke="#e6eaee" stroke-width="1">
+          <line x1="54" y1="156" x2="880" y2="156"/><line x1="54" y1="111" x2="880" y2="111"/>
+          <line x1="54" y1="66" x2="880" y2="66"/><line x1="54" y1="24" x2="880" y2="24"/>
+        </g>
+        <!-- bars: [label, low, high] HK$k -->
+        <g>
+          <!-- 2026 rest -->
+          <rect x="78"  y="196" width="52" height="9"  fill="#0e9aa7" opacity=".35"/><rect x="78"  y="196" width="52" height="9"  fill="none" stroke="#0e9aa7"/>
+          <rect x="168" y="169" width="52" height="36" fill="#0e9aa7" opacity=".35"/><rect x="168" y="169" width="52" height="36" fill="none" stroke="#0e9aa7"/>
+          <rect x="258" y="149" width="52" height="56" fill="#0e9aa7" opacity=".35"/><rect x="258" y="149" width="52" height="56" fill="none" stroke="#0e9aa7"/>
+          <rect x="348" y="160" width="52" height="45" fill="#0e9aa7" opacity=".35"/><rect x="348" y="160" width="52" height="45" fill="none" stroke="#0e9aa7"/>
+          <rect x="438" y="160" width="52" height="45" fill="#0e9aa7" opacity=".35"/><rect x="438" y="160" width="52" height="45" fill="none" stroke="#0e9aa7"/>
+          <rect x="528" y="160" width="52" height="45" fill="#0e9aa7" opacity=".35"/><rect x="528" y="160" width="52" height="45" fill="none" stroke="#0e9aa7"/>
+          <rect x="618" y="115" width="52" height="90" fill="#c0392b" opacity=".28"/><rect x="618" y="115" width="52" height="90" fill="none" stroke="#c0392b"/>
+          <rect x="708" y="169" width="52" height="36" fill="#0e9aa7" opacity=".35"/><rect x="708" y="169" width="52" height="36" fill="none" stroke="#0e9aa7"/>
+          <rect x="798" y="169" width="52" height="36" fill="#0e9aa7" opacity=".35"/><rect x="798" y="169" width="52" height="36" fill="none" stroke="#0e9aa7"/>
+        </g>
+        <g font-size="10" fill="#33475e" font-family="Inter,Helvetica,Arial,sans-serif" text-anchor="middle">
+          <text x="104" y="222">2026*</text><text x="194" y="222">2027</text><text x="284" y="222">2028</text>
+          <text x="374" y="222">2029</text><text x="464" y="222">2030</text><text x="554" y="222">2031</text>
+          <text x="644" y="222">2032–33</text><text x="734" y="222">2034</text><text x="824" y="222">2035–36</text>
+        </g>
+        <g font-size="9.5" fill="#64748b" font-family="Inter,Helvetica,Arial,sans-serif" text-anchor="middle">
+          <text x="104" y="192">≤4.5k</text><text x="194" y="165">8–16k</text><text x="284" y="145">12–25k</text>
+          <text x="374" y="156">10–20k</text><text x="464" y="156">10–20k</text><text x="554" y="156">10–20k</text>
+          <text x="644" y="111" fill="#c0392b" font-weight="600">HV 決策點</text><text x="734" y="165">8–16k</text><text x="824" y="165">8–16k</text>
+        </g>
+        <text x="54" y="243" font-size="9.5" fill="#64748b" font-family="Inter,Helvetica,Arial,sans-serif">* 2026 只計餘下 90 日　·　柱高為區間上限　·　單位 HK$</text>
+      </svg>
+      <div class="legend" style="display:flex;gap:22px;margin-top:10px;font-size:10.3px;color:#33475e">
+        <span><span style="display:inline-block;width:16px;height:10px;background:#0e9aa7;opacity:.5;border:1px solid #0e9aa7;margin-right:6px"></span>例行保養及可預期更換</span>
+        <span><span style="display:inline-block;width:16px;height:10px;background:#c0392b;opacity:.4;border:1px solid #c0392b;margin-right:6px"></span>重大決策窗口</span>
+      </div>
+    </div>
+
+    <table style="margin-top:12px">
+      <colgroup><col style="width:40%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup>
+      <thead><tr><th>情境</th><th class="r">十年合計</th><th class="r">每年平均</th><th class="r">每公里</th></tr></thead>
+      <tbody>
+        <tr><td>樂觀（無重大故障，電池維持）</td><td class="r num">HK$105,000</td><td class="r num">10,500</td><td class="r num">0.42</td></tr>
+        <tr><td>基準（一次驅動單元、一次電池模組維修）</td><td class="r num">HK$185,000</td><td class="r num">18,500</td><td class="r num">0.74</td></tr>
+        <tr><td>悲觀（驅動單元 + 整組電池更換）</td><td class="r num">HK$300,000</td><td class="r num">30,000</td><td class="r num">1.20</td></tr>
+        <tr class="tot"><td>對照：2023-01 至 2026-07 實際</td><td class="r num">HK$72,922 / 3.5 年</td><td class="r num">20,835</td><td class="r num">0.853</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:10px">
+      實際過往三年半嘅 HK$0.853/km <b>已經包含一次驅動單元更換（HK$37,250）同一次冷氣壓縮機更換（HK$10,779）</b> —— 即係話最貴嗰兩件事已經發生咗。
+      基準情境嘅 0.74/km 略低於實際，係合理嘅：驅動單元有保養、電池已做模組維修、而預防性維修策略開始生效。
+      十年推算按 25,000 km/年，共 250,000 km。
+    </div>
+  </section>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>Sheet 8 / 9</span></div>
+</div>
+
+<div class="sheet">
+  <!-- ══ 07 ══ -->
+  <section>
+    <div class="shead"><h2>07 — 90 日行動清單 Priority Actions</h2><div class="rule">逐項打勾</div></div>
+    <ol class="checklist">
+      <li><b>憑 VIN 向 Tesla 查證三項召回</b>（17V-260 手掣卡鉗 · 18V-204 轉向螺栓 · 21V-035 MCU eMMC）—— 全部免費，其中兩項屬安全關鍵</li>
+      <li><b>做 12V 寄生電流測試 + PCS 健康檢查</b> —— 換第三粒電池之前必做，否則只係重覆買電池</li>
+      <li>迫力油含水量測試 —— 10.4 年車齡完全無記錄，先測後決定</li>
+      <li>更換冷氣濾網 —— 從無記錄，香港濕度考慮</li>
+      <li>修復雨刮臂歸位故障 —— 2025-05 起未解決</li>
+      <li>向該車行索取迫力碟／皮單據（≈2026-02），補回日期、里程、規格、費用</li>
+      <li>向中山雙電索取 HV 維修後量測數據 —— 模組電壓分佈、絕緣阻值、氣密測試結果</li>
+      <li>下次入廠時要求目視檢查前下連桿 fore-link（出廠批次在問題窗口內）</li>
+      <li>購置 OBD 診斷線材，建立 ScanMyTesla 電芯基線讀數</li>
+      <li>物色一個二手 <span class="mono">1028398</span> 壓縮機，開始建立備件庫（見第 04.3 節）</li>
+      <li>更新保險、隧道、停車場之車牌登記（UJ 713）</li>
+      <li>確認年度驗車證書有效期及續牌狀態</li>
+    </ol>
+  </section>
+
+  <div class="note warn" style="margin-top:16px">
+    <h4>本報告之未核實事項 — 照直講</h4>
+    <b>1. 十年推算按 25,000 km/年。</b>若使用模式改變，所有里程觸發點需重算。<br>
+    <b>2. 費用區間為市場行情推估</b>，非報價。中山／珠海價格一般為香港 40–60%，但保養、責任、往返成本需自行權衡。<br>
+    <b>3. 三項召回狀態未經 VIN 查證</b> —— 本報告只能確認「維修紀錄中未見完成」，唔等於未做。<br>
+    <b>4. 壓縮機翻新套件</b>：零件號適用性已由供應商列明，但<b>我未親自驗證過呢部車嘅壓縮機拆開之後同套件完全吻合</b>。落單前建議先拆開確認軸承型號。<br>
+    <b>5. 驅動單元 4 年／80,000 km 保養</b>係發票上嘅手寫註記，<b>並非 Tesla 正式合約文件</b>。應向 Tesla 索取書面確認。
+  </div>
+
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 5YJSB7E15GF122555 · 2026-08-17</span><span>Sheet 9 / 9</span></div>
+</div>
+
+<button id="pbtn" onclick="window.print()">列印 A4 · Print</button>
+</body>
+</html>
