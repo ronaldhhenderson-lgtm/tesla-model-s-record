@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>電池儀錶板 Battery Dashboard · VY1428 · UJ 713</title>
+<style>
+:root{
+  color-scheme:light;
+  --surface:#fcfcfb; --plane:#f9f9f7;
+  --ink:#0b0b0b; --ink2:#52514e; --mut:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --goodtxt:#006300;
+  --seq1:#cde2fb; --seq3:#86b6ef; --seq5:#3987e5; --seq7:#256abf; --seq9:#104281;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --surface:#1a1a19; --plane:#0d0d0d;
+  --ink:#fff; --ink2:#c3c2b7; --mut:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --goodtxt:#0ca30c;
+  --seq1:#104281; --seq3:#184f95; --seq5:#256abf; --seq7:#3987e5; --seq9:#86b6ef;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plane); color:var(--ink);
+  font:14px/1.6 system-ui,-apple-system,"Segoe UI","PingFang HK","Noto Sans TC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 18px 60px}
+
+/* ---------- masthead ---------- */
+.mast{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand svg{width:20px;height:20px;flex:none}
+.bn{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;line-height:1.25}
+.bn span{display:block;font-size:8.5px;letter-spacing:.1em;color:var(--mut);font-weight:500}
+.mtitle{text-align:right}
+.mtitle h1{margin:0;font-size:19px;letter-spacing:-.01em}
+.mtitle p{margin:2px 0 0;font-size:10px;color:var(--mut);letter-spacing:.05em}
+.idbar{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--ring);border-radius:4px;
+  overflow:hidden;margin-bottom:18px;background:var(--surface)}
+.idbar div{flex:1 1 130px;padding:7px 11px;border-right:1px solid var(--ring)}
+.idbar div:last-child{border-right:0}
+.idbar b{display:block;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.idbar i{font-style:normal;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- section ---------- */
+section{background:var(--surface);border:1px solid var(--ring);border-radius:6px;
+  padding:16px 18px 18px;margin-bottom:16px}
+h2{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 12px;
+  padding-bottom:7px;border-bottom:1px solid var(--grid);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+h2 em{font-style:normal;color:var(--s1);font-size:13px;font-weight:700;letter-spacing:0}
+h2 small{margin-left:auto;font-size:9.5px;letter-spacing:.04em;color:var(--mut);text-transform:none;font-weight:500}
+h3{font-size:12px;margin:16px 0 8px;letter-spacing:.02em;color:var(--ink2)}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px}
+.tile{border:1px solid var(--ring);border-radius:5px;padding:10px 12px;background:var(--plane)}
+.tile .lb{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600;
+  display:flex;align-items:center;gap:5px}
+.tile .vl{font-size:25px;font-weight:600;line-height:1.15;margin-top:3px;letter-spacing:-.02em}
+.tile .vl small{font-size:12px;font-weight:500;color:var(--ink2);letter-spacing:0}
+.tile .sub{font-size:10.5px;color:var(--mut);margin-top:1px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;
+  letter-spacing:.05em;padding:2px 7px;border-radius:10px;border:1px solid currentColor;margin-top:5px}
+
+/* ---------- hero ---------- */
+.hero{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:4px}
+.hero .big{font-size:52px;font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.hero .big span{font-size:18px;font-weight:500;color:var(--ink2)}
+.hero .side{font-size:11.5px;color:var(--ink2);line-height:1.5}
+
+/* ---------- chart ---------- */
+.chartbox{position:relative;margin-top:6px}
+.chartbox svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--surface);
+  font-size:11px;line-height:1.45;padding:6px 9px;border-radius:4px;white-space:nowrap;
+  opacity:0;transition:opacity .1s;z-index:5;font-variant-numeric:tabular-nums;
+  box-shadow:0 2px 10px rgba(0,0,0,.22)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:10.5px;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal}
+.legend b{width:11px;height:11px;border-radius:2px;display:inline-block}
+
+/* ---------- controls ---------- */
+.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+button,select,input[type=text],input[type=number],input[type=date]{
+  font:inherit;font-size:12.5px;color:var(--ink);background:var(--surface);
+  border:1px solid var(--axis);border-radius:5px;padding:6px 11px}
+button{cursor:pointer;font-weight:600;transition:.12s}
+button:hover{background:var(--plane);border-color:var(--ink2)}
+button.pri{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+button.pri:hover{opacity:.86}
+button.sm{padding:4px 9px;font-size:11.5px;font-weight:500}
+label.fld{display:flex;flex-direction:column;gap:3px;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mut);font-weight:600}
+label.fld input,label.fld select{text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
+
+/* ---------- dropzone ---------- */
+.drop{border:2px dashed var(--axis);border-radius:8px;padding:26px 18px;text-align:center;
+  color:var(--ink2);transition:.15s;cursor:pointer;background:var(--plane)}
+.drop.on{border-color:var(--s1);background:color-mix(in srgb,var(--s1) 7%,var(--plane))}
+.drop b{display:block;font-size:14px;color:var(--ink);margin-bottom:3px}
+.drop small{font-size:11px;color:var(--mut)}
+
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+  font-weight:700;padding:0 8px 6px;border-bottom:1px solid var(--ink);white-space:normal;line-height:1.3}
+td{padding:6px 8px;border-bottom:1px solid var(--grid);vertical-align:top;font-variant-numeric:tabular-nums}
+td.tx{font-variant-numeric:normal}
+.scroll{overflow-x:auto}
+details{margin-top:10px;border-top:1px solid var(--grid);padding-top:8px}
+summary{cursor:pointer;font-size:11px;color:var(--ink2);font-weight:600}
+details table{margin-top:8px}
+
+/* ---------- map grid ---------- */
+.mapg{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px}
+.mapg label{display:flex;flex-direction:column;gap:3px;font-size:9px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--mut);font-weight:600}
+.mapg select{font-size:11.5px;text-transform:none;letter-spacing:0;font-weight:400;
+  padding:5px 8px;max-width:100%}
+.mapg select.hit{border-color:var(--good)}
+
+/* ---------- notes ---------- */
+.note{border-left:3px solid var(--s1);background:color-mix(in srgb,var(--s1) 5%,var(--surface));
+  padding:9px 13px;border-radius:0 4px 4px 0;font-size:11.5px;color:var(--ink2);margin-top:12px}
+.note b{color:var(--ink)}
+.note.gray{border-left-color:var(--mut);background:var(--plane)}
+.status-msg{font-size:11.5px;color:var(--mut);padding:10px 0}
+
+.thr{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+.thr td{padding:5px 8px;border-bottom:1px solid var(--grid)}
+.thr td:first-child{width:120px;font-weight:600;font-variant-numeric:normal}
+.thr .sw{display:inline-flex;align-items:center;gap:6px}
+
+.fab{position:fixed;right:16px;bottom:16px;display:flex;gap:8px;z-index:40}
+.fab button{box-shadow:0 3px 14px rgba(0,0,0,.26);border-radius:22px;padding:10px 17px}
+
+footer{font-size:9.5px;color:var(--mut);text-align:center;padding:18px 0 0;
+  border-top:1px solid var(--grid);margin-top:20px}
+
+@media print{
+  body{background:#fff}
+  .fab,.drop,.row button,details{display:none!important}
+  section{break-inside:avoid;border-color:#ccc}
+  .wrap{max-width:none;padding:0}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════ MASTHEAD ══════ -->
+  <div class="mast">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="7" stroke="currentColor" stroke-width="2.4"/><path d="M12 11v18M28 11v18M12 20h16" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <div class="bn">Henderson Transpacific<span>亨德森環太 · 車輛檔案系統</span></div>
+    </div>
+    <div class="mtitle">
+      <h1>電池儀錶板 Battery Dashboard</h1>
+      <p>FLEET API TELEMETRY + SCAN MY TESLA CELL-LEVEL IMPORT</p>
+    </div>
+  </div>
+
+  <div class="idbar">
+    <div><b>車輛 Vehicle</b><i>2016 Model S 70</i></div>
+    <div><b>車牌 Plate</b><i>UJ 713</i></div>
+    <div><b>VIN</b><i>5YJSB7E15GF122555</i></div>
+    <div><b>首次登記</b><i>2016-03-18</i></div>
+    <div><b>本頁更新</b><i id="nowStamp">—</i></div>
+  </div>
+
+  <div class="row">
+    <button class="sm" onclick="toggleTheme()">◐ 深色 / 淺色</button>
+    <button class="sm" onclick="loadFleet()">↻ 重新載入遙測</button>
+    <span id="srcState" class="status-msg" style="padding:0"></span>
+  </div>
+
+  <!-- ══════ 01 FLEET API ══════ -->
+  <section>
+    <h2><em>01</em> 常駐遙測 Continuous Telemetry <small>Tesla Fleet API · 每小時自動記錄 · 零耗電</small></h2>
+
+    <div class="hero">
+      <div>
+        <div class="lb" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600">推算滿電續航 Projected 100% Range</div>
+        <div class="big" id="heroKm">—<span> km</span></div>
+      </div>
+      <div class="side" id="heroSide">載入中…</div>
+    </div>
+
+    <div class="chartbox" id="cbFleet">
+      <svg id="svgFleet" viewBox="0 0 900 260" role="img" aria-label="推算滿電續航趨勢圖"></svg>
+      <div class="tip" id="tipFleet"></div>
+    </div>
+    <div class="legend">
+      <i><b style="background:var(--s1)"></b>推算滿電續航 Projected range</i>
+      <i><b style="background:var(--axis)"></b>首個讀數基準 First reading</i>
+    </div>
+
+    <details>
+      <summary>數據表 Data table（無障礙 / 核對用）</summary>
+      <div class="scroll"><table id="tblFleet"></table></div>
+    </details>
+
+    <div class="note gray">
+      <b>點解睇「推算滿電續航」而唔係 SOC？</b> Fleet API 唔會直接俾電池容量。呢個數字 = 剩餘續航 ÷ 可用電量 × 100，
+      即係將任何電量狀態換算成「如果充到 100% 會有幾遠」。只取電量 ≥ 50% 嘅樣本，因為低電量時 BMS 估算誤差較大。
+      呢個係<b>趨勢指標</b>，唔係實驗室容量測試 —— 睇斜率，唔好執著單日數字。
+    </div>
+  </section>
+
+  <!-- ══════ 02 SCANMYTESLA IMPORT ══════ -->
+  <section>
+    <h2><em>02</em> 電芯級匯入 Cell-Level Import <small>Scan My Tesla CSV · 每季一次</small></h2>
+
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="上載 Scan My Tesla CSV">
+      <b>拖 CSV 入嚟，或者撳一下揀檔案</b>
+      <small>Scan My Tesla → 撳紅色錄影掣 → 檔案存喺手機 Internal Storage / Download 資料夾</small>
+      <input type="file" id="file" accept=".csv,.txt,text/csv" hidden>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <button class="sm" onclick="loadDemo()">載入示範數據 Demo</button>
+      <button class="sm" onclick="clearImport()">清除 Clear</button>
+      <span id="impState" class="status-msg" style="padding:0"></span>
+    </div>
+
+    <div id="mapPanel" hidden>
+      <h3>欄位對應 Column mapping <span style="font-weight:400;color:var(--mut);font-size:11px">— 自動偵測；如果認錯咗，喺下面手動改</span></h3>
+      <div class="mapg" id="mapg"></div>
+    </div>
+
+    <div id="smtOut" hidden>
+      <h3>本次讀數 This session</h3>
+      <div class="tiles" id="smtTiles"></div>
+
+      <div id="cellWrap" hidden>
+        <h3>電芯組偏差 Cell-group deviation from pack mean</h3>
+        <div class="chartbox" id="cbCell">
+          <svg id="svgCell" viewBox="0 0 900 258" role="img" aria-label="各電芯組相對全包平均電壓嘅偏差"></svg>
+          <div class="tip" id="tipCell"></div>
+        </div>
+        <div class="legend">
+          <i><b style="background:var(--s1)"></b>高於平均 Above mean</i>
+          <i><b style="background:var(--crit)"></b>低於平均 Below mean</i>
+          <i><b style="background:var(--axis)"></b>全包平均 = 0 基準</i>
+          <i>▼ / ▲ 直接標示極值 Extremes labelled</i>
+        </div>
+        <div class="note gray" style="margin-top:8px">
+          畫嘅係<b>相對全包平均嘅偏差（mV）</b>，唔係絕對電壓 —— 因為電芯電壓只喺 3.7–3.9 V 之間郁，
+          畫絕對值嘅柱狀圖會有零點造假問題。偏差圖有真正嘅零基準，而且一眼睇得出邊組拖後腿。
+          滑過任何一柱可以睇返絕對電壓。
+        </div>
+      </div>
+
+      <div id="tsWrap" hidden>
+        <h3>時間序列 Time series
+          <select id="tsPick" onchange="drawTS()" style="margin-left:8px;font-size:11.5px;padding:4px 8px"></select>
+        </h3>
+        <div class="chartbox" id="cbTS">
+          <svg id="svgTS" viewBox="0 0 900 220" role="img" aria-label="所選參數時間序列"></svg>
+          <div class="tip" id="tipTS"></div>
+        </div>
+      </div>
+
+      <h3>判讀 Assessment</h3>
+      <div id="verdict"></div>
+
+      <details>
+        <summary>原始欄位一覽 Detected columns</summary>
+        <div class="scroll"><table id="tblCols"></table></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ 03 QUARTERLY LOG ══════ -->
+  <section>
+    <h2><em>03</em> 季度體檢記錄 Quarterly Log <small>每季一次 · 六項核心數字</small></h2>
+
+    <div class="row">
+      <label class="fld">日期 Date<input type="date" id="q_date"></label>
+      <label class="fld">里程 km<input type="number" id="q_odo" style="width:100px" placeholder="303619"></label>
+      <label class="fld">最高電芯 V<input type="number" step="0.001" id="q_cmax" style="width:96px"></label>
+      <label class="fld">最低電芯 V<input type="number" step="0.001" id="q_cmin" style="width:96px"></label>
+      <label class="fld">模組溫差 °C<input type="number" step="0.1" id="q_dt" style="width:88px"></label>
+      <label class="fld">DC-DC V<input type="number" step="0.01" id="q_dcdc" style="width:88px"></label>
+      <label class="fld">12V 靜態 V<input type="number" step="0.01" id="q_v12" style="width:88px"></label>
+      <button class="pri" onclick="addQ()">＋ 加入記錄</button>
+      <button class="sm" onclick="fillFromImport()">↙ 由匯入數據填入</button>
+    </div>
+
+    <div class="scroll"><table id="tblQ"></table></div>
+
+    <div class="row" style="margin-top:12px">
+      <button class="sm" onclick="exportQ('json')">⤓ 匯出 JSON</button>
+      <button class="sm" onclick="exportQ('csv')">⤓ 匯出 CSV</button>
+      <button class="sm" onclick="document.getElementById('qfile').click()">⤒ 匯入 JSON</button>
+      <input type="file" id="qfile" accept=".json" hidden>
+    </div>
+
+    <div class="note">
+      <b>⚠ 呢一頁唔會自動儲存。</b> 記錄只存喺你部機嘅記憶體，重新整理就冇。填完即刻撳<b>「匯出 JSON」</b>，
+      檔案放入 HT 車輛檔案。下次開返呢一頁，撳「匯入 JSON」就接返上次嘅記錄。
+      咁樣做係刻意嘅 —— 記錄應該係一份你揸住嘅檔案，唔係困喺瀏覽器入面。
+    </div>
+  </section>
+
+  <!-- ══════ 04 THRESHOLDS ══════ -->
+  <section>
+    <h2><em>04</em> 判讀標準 Interpretation Thresholds <small>業界經驗值 · 非 Tesla 官方規格</small></h2>
+
+    <div class="scroll">
+    <table class="thr">
+      <tr><td>電芯壓差<br><span style="font-weight:400;color:var(--mut);font-size:10px">Cell imbalance</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--good)"></span>✓ ≤ 25 mV 優</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--warn)"></span>△ 25–50 正常</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--serious)"></span>⚠ 50–90 留意</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--crit)"></span>✕ &gt; 90 需檢查</span></td></tr>
+      <tr><td>模組溫差<br><span style="font-weight:400;color:var(--mut);font-size:10px">Module ΔT</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--good)"></span>✓ ≤ 4 °C</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--warn)"></span>△ 4–8 °C</span></td>
+        <td colspan="2"><span class="sw"><span class="dot" style="background:var(--crit)"></span>✕ &gt; 8 °C — 疑似冷卻液流量／氣泡問題</span></td></tr>
+      <tr><td>12V 靜態電壓<br><span style="font-weight:400;color:var(--mut);font-size:10px">12V resting</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--good)"></span>✓ ≥ 12.6 V</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--warn)"></span>△ 12.4–12.6</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--serious)"></span>⚠ 12.2–12.4</span></td>
+        <td><span class="sw"><span class="dot" style="background:var(--crit)"></span>✕ &lt; 12.2 — 準備更換</span></td></tr>
+      <tr><td>DC-DC 輸出<br><span style="font-weight:400;color:var(--mut);font-size:10px">DC-DC output</span></td>
+        <td colspan="2"><span class="sw"><span class="dot" style="background:var(--good)"></span>✓ 13.8–14.6 V（補電中）</span></td>
+        <td colspan="2"><span class="sw"><span class="dot" style="background:var(--crit)"></span>✕ 持續 &lt; 13.5 或 &gt; 15.0 — 轉換器異常</span></td></tr>
+    </table>
+    </div>
+
+    <div class="note gray">
+      <b>誠實聲明 —</b> 以上界線係<b>業界／車主社群長期使用嘅經驗值</b>，我搵唔到 Tesla 官方公開規格文件，所以唔會扮成官方數字。
+      用法：睇<b>你自己嘅趨勢</b>比睇絕對值有用得多 —— 同一部車、同一測量條件下，壓差由 30 mV 升到 70 mV，
+      比「70 mV 係咪合格」更有意義。<br><br>
+      <b>測量條件會大幅影響讀數：</b>啱啱充完電或者啱啱大力加速完，壓差會暫時偏高；電量極低時亦然。
+      為咗可比較，建議<b>固定喺 SOC 40–70%、靜置 20 分鐘以上</b>先讀數，每季都用同一個條件。
+    </div>
+  </section>
+
+  <footer>
+    Henderson Transpacific 亨德森環太 · 車輛檔案系統 · VY1428 / UJ 713<br>
+    遙測數據來自你自己 Google 帳戶下嘅 Fleet API 記錄；電芯數據由 Scan My Tesla 本機匯入。HT 唔會中央儲存任何車輛資料。
+  </footer>
+</div>
+
+<div class="fab">
+  <button class="pri" onclick="window.print()">列印 A4</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   HT Battery Dashboard — VY1428
+   No external libraries. No browser storage (by design).
+   ═══════════════════════════════════════════════════════════ */
+
+const FLEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_6F3mS-75R7Ik7C0xkvOargB9IzTsTDwkzn41-o8TyVmSwvFwATlRCsQxRZ1VyS7DO80aVhWD_GYe/pub?gid=1641969254&single=true&output=csv';
+
+const $ = id => document.getElementById(id);
+const fmt = (n,d=0) => n==null||isNaN(n) ? '—' : Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+$('nowStamp').textContent = new Date().toISOString().slice(0,10);
+$('q_date').value = new Date().toISOString().slice(0,10);
+
+function toggleTheme(){
+  const r=document.documentElement;
+  r.dataset.theme = r.dataset.theme==='dark' ? 'light':'dark';
+  drawFleet(); if(SMT.rows) { drawCell(); drawTS(); }
+}
+
+/* ── robust CSV parser: handles quotes, , or ; delimiter ───── */
+function parseCSV(text){
+  text = text.replace(/^﻿/,'').replace(/\r\n?/g,'\n');
+  const head = text.slice(0, text.indexOf('\n')<0 ? text.length : text.indexOf('\n'));
+  const delim = (head.split(';').length > head.split(',').length) ? ';' : ',';
+  const rows=[]; let row=[], cell='', q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cell+='"';i++;} else q=false; } else cell+=c; }
+    else if(c==='"') q=true;
+    else if(c===delim){ row.push(cell); cell=''; }
+    else if(c==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; }
+    else cell+=c;
+  }
+  if(cell.length||row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r=>r.some(v=>String(v).trim()!==''));
+}
+function num(v){
+  if(v==null) return NaN;
+  let s=String(v).trim();
+  if(!s) return NaN;
+  // "3,712" euro-decimal → 3.712  (only when there is no dot present)
+  if(s.includes(',') && !s.includes('.')) s=s.replace(',','.');
+  s=s.replace(/[^0-9eE+\-.]/g,'');
+  const n=parseFloat(s);
+  return isNaN(n)?NaN:n;
+}
+
+/* ═══════════ 01 · FLEET API ═══════════ */
+let FLEET=[];
+async function loadFleet(){
+  $('srcState').textContent='遙測載入中…';
+  try{
+    const ctl = new AbortController();
+    const to = setTimeout(()=>ctl.abort(), 15000);
+    const r = await fetch(FLEET_CSV + '&_=' + Date.now(), {signal:ctl.signal});
+    clearTimeout(to);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const rows = parseCSV(await r.text());
+    const hdr = rows.shift().map(h=>h.trim().toLowerCase());
+    const iD=hdr.findIndex(h=>/date/.test(h)),
+          iK=hdr.findIndex(h=>/proj|100/.test(h)),
+          iN=hdr.findIndex(h=>/sample/.test(h));
+    FLEET = rows.map(r=>({d:(r[iD]||'').trim(), km:num(r[iK]), n:num(r[iN])||1}))
+                .filter(o=>o.d && !isNaN(o.km) && o.km>0)
+                .sort((a,b)=>a.d<b.d?-1:1);
+    $('srcState').textContent = FLEET.length ? `遙測：${FLEET.length} 日數據，最新 ${FLEET[FLEET.length-1].d}` : '遙測：暫時未有數據';
+    renderFleet();
+  }catch(e){
+    $('srcState').textContent = '遙測未能載入（' + e.message + '）— 需要網絡連線，或者 Google Sheet 未發佈。';
+    $('heroSide').textContent = '未有遙測數據。其他部分照常可以用。';
+  }
+}
+function renderFleet(){
+  if(!FLEET.length){ $('heroSide').textContent='未有遙測數據。'; return; }
+  const last=FLEET[FLEET.length-1], first=FLEET[0];
+  $('heroKm').innerHTML = fmt(last.km) + '<span> km</span>';
+  const dK = last.km-first.km, days = Math.max(1,(new Date(last.d)-new Date(first.d))/864e5);
+  const pct = first.km ? (dK/first.km*100) : 0;
+  const good = dK>=0;
+  $('heroSide').innerHTML =
+    `最新讀數 <b>${last.d}</b><br>` +
+    `首個讀數 ${first.d} · ${fmt(first.km)} km<br>` +
+    `<span style="color:${good?'var(--goodtxt)':'var(--ink2)'};font-weight:600">` +
+    `${good?'▲':'▼'} ${fmt(Math.abs(dK))} km（${pct>=0?'+':''}${pct.toFixed(1)}%）</span>` +
+    ` 於 ${Math.round(days)} 日內`;
+  drawFleet(); tableFleet();
+}
+function drawFleet(){
+  const svg=$('svgFleet'); svg.innerHTML='';
+  if(FLEET.length<1) return;
+  const W=900,H=260,L=52,R=16,T=14,B=32;
+  const xs=(i)=> FLEET.length<2 ? (L+(W-L-R)/2) : L+i*(W-L-R)/(FLEET.length-1);
+  const vs=FLEET.map(o=>o.km);
+  let lo=Math.min(...vs), hi=Math.max(...vs);
+  const pad=Math.max(4,(hi-lo)*0.22); lo=Math.floor((lo-pad)/5)*5; hi=Math.ceil((hi+pad)/5)*5;
+  const ys=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo||1));
+  const g=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  // gridlines + y ticks
+  for(let i=0;i<=4;i++){
+    const v=lo+(hi-lo)*i/4, y=ys(v);
+    svg.appendChild(g('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:cssv('--grid'),'stroke-width':1}));
+    const t=g('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':11,fill:cssv('--mut')});
+    t.textContent=Math.round(v); svg.appendChild(t);
+  }
+  // baseline (first reading) reference
+  const y0=ys(FLEET[0].km);
+  svg.appendChild(g('line',{x1:L,x2:W-R,y1:y0,y2:y0,stroke:cssv('--axis'),'stroke-width':1.5,'stroke-dasharray':'5 4'}));
+
+  // x labels (max 6)
+  const step=Math.max(1,Math.ceil(FLEET.length/6));
+  FLEET.forEach((o,i)=>{ if(i%step===0||i===FLEET.length-1){
+    const t=g('text',{x:xs(i),y:H-10,'text-anchor':'middle','font-size':10.5,fill:cssv('--mut')});
+    t.textContent=o.d.slice(5); svg.appendChild(t);
+  }});
+  svg.appendChild(g('line',{x1:L,x2:W-R,y1:H-B,y2:H-B,stroke:cssv('--axis'),'stroke-width':1}));
+
+  if(FLEET.length>1){
+    const d=FLEET.map((o,i)=>`${i?'L':'M'}${xs(i).toFixed(1)},${ys(o.km).toFixed(1)}`).join(' ');
+    svg.appendChild(g('path',{d,fill:'none',stroke:cssv('--s1'),'stroke-width':2,
+      'stroke-linejoin':'round','stroke-linecap':'round'}));
+  }
+  // markers + hover targets
+  FLEET.forEach((o,i)=>{
+    svg.appendChild(g('circle',{cx:xs(i),cy:ys(o.km),r:FLEET.length>40?2.5:4,
+      fill:cssv('--s1'),stroke:cssv('--surface'),'stroke-width':2}));
+    const hit=g('rect',{x:xs(i)-9,y:T,width:18,height:H-T-B,fill:'transparent',style:'cursor:crosshair'});
+    hit.addEventListener('mouseenter',ev=>showTip('tipFleet','cbFleet',ev,
+      `<b>${o.d}</b><br>${fmt(o.km)} km · ${o.n} 個樣本`));
+    hit.addEventListener('mouseleave',()=>$('tipFleet').style.opacity=0);
+    svg.appendChild(hit);
+  });
+}
+function showTip(tid,bid,ev,html){
+  const tip=$(tid), box=$(bid).getBoundingClientRect();
+  tip.innerHTML=html; tip.style.opacity=1;
+  const x=ev.clientX-box.left, y=ev.clientY-box.top;
+  tip.style.left=Math.min(Math.max(4,x+12), box.width-tip.offsetWidth-4)+'px';
+  tip.style.top=Math.max(4,y-tip.offsetHeight-10)+'px';
+}
+function tableFleet(){
+  const t=$('tblFleet');
+  t.innerHTML='<thead><tr><th>日期</th><th>推算滿電續航 km</th><th>樣本數</th></tr></thead><tbody>'+
+    FLEET.slice(-40).reverse().map(o=>`<tr><td>${o.d}</td><td>${fmt(o.km)}</td><td>${o.n}</td></tr>`).join('')+
+    '</tbody>';
+}
+
+/* ═══════════ 02 · SCAN MY TESLA IMPORT ═══════════ */
+/* Scan My Tesla logs whichever parameters are on the selected tab, so the
+   header set is NOT fixed. We fuzzy-match, then let the user correct. */
+const FIELDS=[
+  {k:'time',  lb:'時間 Time',            re:/^(time|date|timestamp|時間)/i,               unit:''},
+  {k:'cmin',  lb:'最低電芯電壓 Cell min', re:/(cell|brick).*(min)|min.*(cell|brick)/i,     unit:'V'},
+  {k:'cmax',  lb:'最高電芯電壓 Cell max', re:/(cell|brick).*(max)|max.*(cell|brick)/i,     unit:'V'},
+  {k:'cavg',  lb:'平均電芯電壓 Cell avg', re:/(cell|brick).*(avg|mean|average)/i,          unit:'V'},
+  {k:'cdif',  lb:'電芯壓差 Imbalance',    re:/imbalance|(cell|brick).*(diff|delta|spread)/i,unit:'V'},
+  {k:'tmin',  lb:'最低溫 Temp min',       re:/temp.*min|min.*temp/i,                       unit:'°C'},
+  {k:'tmax',  lb:'最高溫 Temp max',       re:/temp.*max|max.*temp/i,                       unit:'°C'},
+  {k:'dcdc',  lb:'DC-DC 輸出',            re:/dc.?dc/i,                                    unit:'V'},
+  {k:'v12',   lb:'12V 電池',              re:/(^|[^0-9])12\s*v|12v.*(bat|volt)/i,          unit:'V'},
+  {k:'packv', lb:'Pack 總電壓',           re:/(pack|hv|battery).*(volt)/i,                 unit:'V'},
+  {k:'packa', lb:'Pack 電流',             re:/(pack|hv|battery).*(current|amp)/i,          unit:'A'},
+  {k:'soc',   lb:'SOC',                   re:/soc|state.*charge/i,                         unit:'%'},
+  {k:'nomf',  lb:'標稱滿電容量 Nominal full', re:/nominal.*full|full.*pack.*k?wh/i,        unit:'kWh'},
+  {k:'nomr',  lb:'標稱剩餘 Nominal remaining', re:/nominal.*remain|remain.*energy/i,       unit:'kWh'},
+  {k:'odo',   lb:'里程 Odometer',         re:/odo/i,                                       unit:'km'},
+];
+const SMT={hdr:null,rows:null,map:{},cells:[],summary:{}};
+
+$('drop').addEventListener('click',()=>$('file').click());
+$('drop').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')$('file').click()});
+$('file').addEventListener('change',e=>{ if(e.target.files[0]) readFile(e.target.files[0]) });
+['dragenter','dragover'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.add('on')}));
+['dragleave','drop'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.remove('on')}));
+$('drop').addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f) readFile(f) });
+
+function readFile(f){
+  const fr=new FileReader();
+  fr.onload=()=>ingest(fr.result, f.name);
+  fr.readAsText(f);
+}
+function ingest(text,name){
+  const rows=parseCSV(text);
+  if(rows.length<2){ $('impState').textContent='讀唔到內容 — 檔案似乎冇資料列。'; return; }
+  SMT.hdr = rows.shift().map(h=>h.trim());
+  SMT.rows = rows;
+  autoMap(); buildMapUI(); compute(); render();
+  $('impState').textContent = `已載入 ${name||'CSV'} — ${SMT.rows.length} 行 · ${SMT.hdr.length} 欄`;
+  $('mapPanel').hidden=false; $('smtOut').hidden=false;
+}
+function autoMap(){
+  SMT.map={};
+  FIELDS.forEach(f=>{
+    const i = SMT.hdr.findIndex(h=>f.re.test(h));
+    SMT.map[f.k] = i>=0 ? i : -1;
+  });
+  // per-cell-group columns: "Cell 1", "brick03", "Cell voltage 12" …
+  SMT.cells = SMT.hdr.map((h,i)=>({h,i}))
+    .filter(o=>/^(cell|brick)[^a-z]*\d+$|(cell|brick).*\bv?\s*\d+$/i.test(o.h.trim()) &&
+               !/min|max|avg|mean|diff|delta|imbal|count|number|num\b/i.test(o.h))
+    .sort((a,b)=>(parseInt(a.h.match(/\d+/)[0])-parseInt(b.h.match(/\d+/)[0])));
+}
+function buildMapUI(){
+  const wrap=$('mapg'); wrap.innerHTML='';
+  FIELDS.forEach(f=>{
+    const l=document.createElement('label');
+    const opts = ['<option value="-1">— 冇 / 唔用 —</option>']
+      .concat(SMT.hdr.map((h,i)=>`<option value="${i}"${SMT.map[f.k]===i?' selected':''}>${esc(h)}</option>`));
+    l.innerHTML = `${esc(f.lb)}<select data-k="${f.k}" class="${SMT.map[f.k]>=0?'hit':''}">${opts.join('')}</select>`;
+    l.querySelector('select').addEventListener('change',ev=>{
+      SMT.map[f.k]=+ev.target.value;
+      ev.target.classList.toggle('hit', +ev.target.value>=0);
+      compute(); render();
+    });
+    wrap.appendChild(l);
+  });
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* column → numeric series (median used as the representative reading) */
+function col(k){
+  const i=SMT.map[k]; if(i==null||i<0) return null;
+  const v=SMT.rows.map(r=>num(r[i])).filter(n=>!isNaN(n));
+  return v.length?v:null;
+}
+const med = a => { const s=[...a].sort((x,y)=>x-y); const m=s.length>>1;
+  return s.length%2 ? s[m] : (s[m-1]+s[m])/2; };
+/* Scan My Tesla may report cell voltage in V (3.7) or mV (3700) */
+const toV = v => v==null?null : (v>100 ? v/1000 : v);
+
+function compute(){
+  const S={};
+  const g=k=>{const c=col(k); return c?med(c):null;};
+  S.cmin=toV(g('cmin')); S.cmax=toV(g('cmax')); S.cavg=toV(g('cavg'));
+  let d=g('cdif'); S.cdif = d!=null ? (d>1? d : d*1000) : null;   // → mV
+  if(S.cdif==null && S.cmin!=null && S.cmax!=null) S.cdif=(S.cmax-S.cmin)*1000;
+  S.tmin=g('tmin'); S.tmax=g('tmax');
+  S.dt = (S.tmin!=null&&S.tmax!=null) ? S.tmax-S.tmin : null;
+  S.dcdc=g('dcdc'); S.v12=g('v12');
+  S.packv=g('packv'); S.packa=g('packa'); S.soc=g('soc');
+  S.nomf=g('nomf'); S.nomr=g('nomr'); S.odo=g('odo');
+
+  // last-row snapshot of per-cell columns (a distribution needs one instant)
+  S.cellVals=null;
+  if(SMT.cells.length>=8){
+    for(let r=SMT.rows.length-1;r>=0;r--){
+      const v=SMT.cells.map(c=>toV(num(SMT.rows[r][c.i])));
+      if(v.every(x=>!isNaN(x)&&x>2&&x<5)){ S.cellVals=v; S.cellRow=r; break; }
+    }
+  }
+  if(S.cellVals){
+    S.cmin=Math.min(...S.cellVals); S.cmax=Math.max(...S.cellVals);
+    S.cavg=S.cellVals.reduce((a,b)=>a+b,0)/S.cellVals.length;
+    S.cdif=(S.cmax-S.cmin)*1000;
+  }
+  SMT.summary=S;
+}
+
+/* status helper: returns [colorVar, icon, label] */
+function stat(kind,v){
+  if(v==null||isNaN(v)) return ['--mut','–','未有數據'];
+  if(kind==='cdif') return v<=25?['--good','✓','優']:v<=50?['--warn','△','正常']:v<=90?['--serious','⚠','留意']:['--crit','✕','需檢查'];
+  if(kind==='dt')   return v<=4 ?['--good','✓','優']:v<=8 ?['--warn','△','正常']:['--crit','✕','需檢查'];
+  if(kind==='v12')  return v>=12.6?['--good','✓','良好']:v>=12.4?['--warn','△','尚可']:v>=12.2?['--serious','⚠','留意']:['--crit','✕','準備更換'];
+  if(kind==='dcdc') return (v>=13.8&&v<=14.6)?['--good','✓','正常']:(v>=13.5&&v<=15.0)?['--warn','△','邊緣']:['--crit','✕','異常'];
+  return ['--mut','–',''];
+}
+function tile(lb,val,unit,sub,kind,raw){
+  const [c,ic,txt]= kind?stat(kind,raw):['--mut','',''];
+  return `<div class="tile">
+    <div class="lb">${kind?`<span class="dot" style="background:var(${c})"></span>`:''}${esc(lb)}</div>
+    <div class="vl">${val}${unit?`<small> ${unit}</small>`:''}</div>
+    ${sub?`<div class="sub">${sub}</div>`:''}
+    ${kind?`<div class="pill" style="color:var(${c})">${ic} ${txt}</div>`:''}
+  </div>`;
+}
+function render(){
+  const S=SMT.summary;
+  $('smtTiles').innerHTML = [
+    tile('電芯壓差 Imbalance', S.cdif==null?'—':fmt(S.cdif,0),'mV',
+         S.cmin!=null?`${S.cmin.toFixed(3)} – ${S.cmax.toFixed(3)} V`:'', 'cdif', S.cdif),
+    tile('模組溫差 Module ΔT', S.dt==null?'—':fmt(S.dt,1),'°C',
+         S.tmin!=null?`${fmt(S.tmin,1)} – ${fmt(S.tmax,1)} °C`:'', 'dt', S.dt),
+    tile('12V 電池', S.v12==null?'—':S.v12.toFixed(2),'V','靜置讀數為準','v12',S.v12),
+    tile('DC-DC 輸出', S.dcdc==null?'—':S.dcdc.toFixed(2),'V','補電中量度','dcdc',S.dcdc),
+    tile('標稱滿電容量', S.nomf==null?'—':fmt(S.nomf,1),'kWh',
+         S.nomf!=null?`相對 70.0 kWh 原廠標稱 ${(S.nomf/70*100).toFixed(1)}%`:'原廠標稱值僅供參考'),
+    tile('Pack 電壓', S.packv==null?'—':fmt(S.packv,1),'V',
+         S.packa!=null?`電流 ${fmt(S.packa,1)} A`:''),
+    tile('SOC', S.soc==null?'—':fmt(S.soc,1),'%', S.odo!=null?`里程 ${fmt(S.odo)} km`:''),
+    tile('取樣', fmt(SMT.rows.length),'行', SMT.cells.length?`偵測到 ${SMT.cells.length} 個電芯組欄位`:'未見逐組電芯欄位'),
+  ].join('');
+
+  $('cellWrap').hidden = !S.cellVals;
+  if(S.cellVals) drawCell();
+
+  // time-series picker: any mapped numeric field with ≥3 points
+  const pick=$('tsPick'); const prev=pick.value;
+  const avail=FIELDS.filter(f=>f.k!=='time'&&SMT.map[f.k]>=0&&(col(f.k)||[]).length>=3);
+  pick.innerHTML=avail.map(f=>`<option value="${f.k}">${esc(f.lb)}</option>`).join('');
+  $('tsWrap').hidden = !avail.length;
+  if(avail.length){
+    if(avail.some(f=>f.k===prev)) pick.value=prev;
+    else { const pref=['cdif','cmin','v12','dcdc','packv','soc'].find(k=>avail.some(f=>f.k===k));
+           if(pref) pick.value=pref; }
+    drawTS();
+  }
+
+  // verdict
+  const items=[];
+  const push=(kind,v,label,fmtv)=>{ if(v==null||isNaN(v))return;
+    const [c,ic,txt]=stat(kind,v);
+    items.push(`<tr><td class="tx"><span class="sw"><span class="dot" style="background:var(${c})"></span>${ic} ${label}</span></td>
+      <td>${fmtv}</td><td class="tx" style="color:var(${c});font-weight:600">${txt}</td></tr>`); };
+  push('cdif',S.cdif,'電芯壓差',fmt(S.cdif,0)+' mV');
+  push('dt',S.dt,'模組溫差',fmt(S.dt,1)+' °C');
+  push('v12',S.v12,'12V 電池',S.v12?S.v12.toFixed(2)+' V':'');
+  push('dcdc',S.dcdc,'DC-DC 輸出',S.dcdc?S.dcdc.toFixed(2)+' V':'');
+  $('verdict').innerHTML = items.length
+    ? `<div class="scroll"><table><thead><tr><th>項目</th><th>讀數</th><th>判定</th></tr></thead><tbody>${items.join('')}</tbody></table></div>
+       <div class="note gray" style="margin-top:10px">判定按第 04 節嘅經驗界線。<b>單次讀數唔足以下結論</b> —— 加入季度記錄，睇趨勢。</div>`
+    : '<div class="status-msg">未有足夠已對應嘅欄位。喺上面「欄位對應」揀返正確嘅欄位。</div>';
+
+  $('tblCols').innerHTML='<thead><tr><th>#</th><th>欄位名 Column</th><th>對應 Mapped to</th><th>首個數值</th></tr></thead><tbody>'+
+    SMT.hdr.map((h,i)=>{
+      const f=FIELDS.find(f=>SMT.map[f.k]===i);
+      const isCell=SMT.cells.some(c=>c.i===i);
+      return `<tr><td>${i}</td><td class="tx">${esc(h)}</td><td class="tx" style="color:${f||isCell?'var(--goodtxt)':'var(--mut)'}">${f?esc(f.lb):isCell?'電芯組':'—'}</td><td class="tx">${esc((SMT.rows[0]||[])[i]??'')}</td></tr>`;
+    }).join('')+'</tbody>';
+}
+
+/* Deviation-from-mean bar chart: a TRUE zero baseline, so bar length is honest.
+   (Plotting absolute 3.7–3.9 V as bars would be a truncated-axis lie.) */
+function drawCell(){
+  const S=SMT.summary, v=S.cellVals; if(!v) return;
+  const svg=$('svgCell'); svg.innerHTML='';
+  const W=900,H=258,L=58,R=16,T=26,B=44;
+  const dev=v.map(x=>(x-S.cavg)*1000);                 // mV
+  const n=dev.length, bw=(W-L-R)/n, gap=Math.min(2,bw*0.28);
+  const iMin=dev.indexOf(Math.min(...dev)), iMax=dev.indexOf(Math.max(...dev));
+  const span=Math.max(4, Math.max(Math.abs(Math.min(...dev)),Math.abs(Math.max(...dev)))*1.35);
+  const ys=d=>T+(H-T-B)*(1-(d+span)/(2*span));
+  const y0=ys(0);
+  const g=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  for(let i=0;i<=4;i++){
+    const d=-span+2*span*i/4, y=ys(d);
+    if(Math.abs(d)>0.01) svg.appendChild(g('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:cssv('--grid'),'stroke-width':1}));
+    const t=g('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':11,fill:cssv('--mut')});
+    t.textContent=(d>0?'+':'')+d.toFixed(0); svg.appendChild(t);
+  }
+  const ylb=g('text',{x:L-8,y:T-10,'text-anchor':'end','font-size':10,fill:cssv('--mut')});
+  ylb.textContent='mV'; svg.appendChild(ylb);
+
+  dev.forEach((d,i)=>{
+    const x=L+i*bw+gap/2, w=Math.max(1,bw-gap);
+    const y=d>=0?ys(d):y0, h=Math.max(1.5,Math.abs(ys(d)-y0));
+    const r=Math.min(4,w/2);
+    svg.appendChild(g('rect',{x,y,width:w,height:h,rx:r,ry:r,
+      fill: d>=0 ? cssv('--s1') : cssv('--crit')}));
+  });
+  // zero baseline drawn over the bars
+  svg.appendChild(g('line',{x1:L,x2:W-R,y1:y0,y2:y0,stroke:cssv('--axis'),'stroke-width':1.5}));
+  const ztxt='全包平均 '+S.cavg.toFixed(3)+' V';
+  svg.appendChild(g('rect',{x:W-R-ztxt.length*7.4,y:y0-17,width:ztxt.length*7.4,height:13,
+    fill:cssv('--surface'),opacity:.92}));
+  const zt=g('text',{x:W-R,y:y0-7,'text-anchor':'end','font-size':10.5,fill:cssv('--mut')});
+  zt.textContent=ztxt; svg.appendChild(zt);
+
+  // label the two extremes only (icon + value, never colour alone)
+  [[iMin,'▼'],[iMax,'▲']].forEach(([i,ic])=>{
+    if(i<0) return;
+    const cx=Math.min(W-R-30,Math.max(L+30,L+i*bw+bw/2));
+    const d=dev[i], above=d>=0;
+    const t=g('text',{x:cx,y:above?ys(d)-7:ys(d)+15,'text-anchor':'middle','font-size':10.5,
+      fill:cssv('--ink'),'font-weight':700});
+    t.textContent=`${ic} #${i+1}  ${d>0?'+':''}${d.toFixed(0)} mV`;
+    svg.appendChild(t);
+  });
+
+  dev.forEach((d,i)=>{
+    const hit=g('rect',{x:L+i*bw,y:T,width:bw,height:H-T-B,fill:'transparent',style:'cursor:crosshair'});
+    hit.addEventListener('mouseenter',ev=>showTip('tipCell','cbCell',ev,
+      `<b>${esc(SMT.cells[i].h)}</b><br>絕對 ${v[i].toFixed(3)} V<br>離平均 ${d>0?'+':''}${d.toFixed(1)} mV`));
+    hit.addEventListener('mouseleave',()=>$('tipCell').style.opacity=0);
+    svg.appendChild(hit);
+  });
+
+  const stepL=Math.max(1,Math.ceil(n/16));
+  dev.forEach((_,i)=>{ if(i%stepL===0){
+    const t=g('text',{x:L+i*bw+bw/2,y:H-12,'text-anchor':'middle','font-size':10,fill:cssv('--mut')});
+    t.textContent=i+1; svg.appendChild(t);
+  }});
+  const xl=g('text',{x:(L+W-R)/2,y:H-1,'text-anchor':'middle','font-size':10,fill:cssv('--mut')});
+  xl.textContent='電芯組編號 Cell group'; svg.appendChild(xl);
+}
+
+function drawTS(){
+  const k=$('tsPick').value; if(!k) return;
+  const i=SMT.map[k]; if(i<0) return;
+  const f=FIELDS.find(f=>f.k===k);
+  let series=SMT.rows.map((r,ri)=>({i:ri,v:num(r[i])})).filter(o=>!isNaN(o.v));
+  if(/^c(min|max|avg)$/.test(k)) series=series.map(o=>({...o,v:toV(o.v)}));
+  if(series.length<2) return;
+  const svg=$('svgTS'); svg.innerHTML='';
+  const W=900,H=220,L=58,R=14,T=14,B=28;
+  const xs=j=>L+j*(W-L-R)/(series.length-1);
+  const vs=series.map(o=>o.v);
+  let lo=Math.min(...vs),hi=Math.max(...vs);
+  const pad=Math.max((hi-lo)*0.2, Math.abs(hi)*0.002+1e-6); lo-=pad; hi+=pad;
+  const ys=v=>T+(H-T-B)*(1-(v-lo)/(hi-lo||1));
+  const g=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const kk in a)e.setAttribute(kk,a[kk]);return e;};
+  const dec = (hi-lo)<1 ? 3 : (hi-lo)<20 ? 2 : 0;
+  for(let q=0;q<=4;q++){
+    const val=lo+(hi-lo)*q/4,y=ys(val);
+    svg.appendChild(g('line',{x1:L,x2:W-R,y1:y,y2:y,stroke:cssv('--grid'),'stroke-width':1}));
+    const t=g('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':11,fill:cssv('--mut')});
+    t.textContent=val.toFixed(dec); svg.appendChild(t);
+  }
+  const d=series.map((o,j)=>`${j?'L':'M'}${xs(j).toFixed(1)},${ys(o.v).toFixed(1)}`).join(' ');
+  svg.appendChild(g('path',{d,fill:'none',stroke:cssv('--s1'),'stroke-width':2,
+    'stroke-linejoin':'round','stroke-linecap':'round'}));
+  svg.appendChild(g('line',{x1:L,x2:W-R,y1:H-B,y2:H-B,stroke:cssv('--axis'),'stroke-width':1}));
+  const lab=g('text',{x:L,y:H-8,'font-size':10.5,fill:cssv('--mut')});
+  lab.textContent=`樣本序 1 → ${series.length}　·　${f.lb}${f.unit?' ('+f.unit+')':''}`;
+  svg.appendChild(lab);
+  const stepH=Math.max(1,Math.floor(series.length/70));
+  series.forEach((o,j)=>{ if(j%stepH) return;
+    const hit=g('rect',{x:xs(j)-6,y:T,width:12,height:H-T-B,fill:'transparent',style:'cursor:crosshair'});
+    hit.addEventListener('mouseenter',ev=>showTip('tipTS','cbTS',ev,
+      `第 ${o.i+1} 行<br><b>${o.v.toFixed(dec)} ${f.unit}</b>`));
+    hit.addEventListener('mouseleave',()=>$('tipTS').style.opacity=0);
+    svg.appendChild(hit);
+  });
+}
+function clearImport(){
+  SMT.hdr=SMT.rows=null; SMT.cells=[]; SMT.summary={};
+  $('mapPanel').hidden=true; $('smtOut').hidden=true;
+  $('impState').textContent=''; $('file').value='';
+}
+function loadDemo(){
+  // Synthetic 96-cell-group sample so the layout can be reviewed before the cable arrives.
+  const hdr=['Time','SOC','Pack voltage','Pack current','Battery temp min','Battery temp max',
+             'DC-DC voltage','12V battery voltage','Nominal full pack'];
+  for(let i=1;i<=96;i++) hdr.push('Cell '+i);
+  const rows=[];
+  for(let r=0;r<24;r++){
+    const base=3.812 - r*0.0006;
+    const row=[`2026-08-17 14:${String(r*2).padStart(2,'0')}`,
+      (62-r*0.15).toFixed(1),(366+Math.sin(r/3)*2).toFixed(1),(-4+Math.sin(r/2)*3).toFixed(1),
+      (27.4+Math.sin(r/5)*0.4).toFixed(1),(30.1+Math.sin(r/4)*0.5).toFixed(1),
+      (14.12+Math.sin(r/6)*0.06).toFixed(2),(12.68).toFixed(2),(61.4).toFixed(1)];
+    for(let c=0;c<96;c++){
+      let v=base + Math.sin(c*1.7)*0.006 + Math.cos(c*0.6)*0.004;
+      if(c===41) v-=0.031;            // one weak group, as real packs show
+      if(c===77) v+=0.011;
+      row.push(v.toFixed(3));
+    }
+    rows.push(row);
+  }
+  ingest([hdr,...rows].map(r=>r.join(',')).join('\n'),'DEMO-sample.csv');
+  $('impState').textContent='已載入示範數據（合成，唔係你部車嘅真實讀數）— 用嚟預覽版面。';
+}
+
+/* ═══════════ 03 · QUARTERLY LOG ═══════════ */
+let QL=[];
+function addQ(){
+  const v=id=>{const e=$(id); return e.value===''?null:(e.type==='number'?parseFloat(e.value):e.value)};
+  const r={date:v('q_date'),odo:v('q_odo'),cmax:v('q_cmax'),cmin:v('q_cmin'),
+           dt:v('q_dt'),dcdc:v('q_dcdc'),v12:v('q_v12')};
+  if(!r.date){ alert('請填日期'); return; }
+  r.cdif = (r.cmax!=null&&r.cmin!=null) ? (r.cmax-r.cmin)*1000 : null;
+  QL.push(r); QL.sort((a,b)=>a.date<b.date?-1:1); renderQ();
+  ['q_odo','q_cmax','q_cmin','q_dt','q_dcdc','q_v12'].forEach(id=>$(id).value='');
+}
+function fillFromImport(){
+  const S=SMT.summary;
+  if(!S||S.cdif==null&&S.v12==null){ alert('未有匯入數據。'); return; }
+  if(S.cmax!=null)$('q_cmax').value=S.cmax.toFixed(3);
+  if(S.cmin!=null)$('q_cmin').value=S.cmin.toFixed(3);
+  if(S.dt!=null)  $('q_dt').value  =S.dt.toFixed(1);
+  if(S.dcdc!=null)$('q_dcdc').value=S.dcdc.toFixed(2);
+  if(S.v12!=null) $('q_v12').value =S.v12.toFixed(2);
+  if(S.odo!=null) $('q_odo').value =Math.round(S.odo);
+}
+function renderQ(){
+  const t=$('tblQ');
+  if(!QL.length){ t.innerHTML='<tbody><tr><td class="tx" style="color:var(--mut);border:0;padding:12px 0">未有記錄。填上面嘅欄位，或者匯入之前儲存嘅 JSON。</td></tr></tbody>'; return; }
+  const cell=(kind,v,txt)=>{ if(v==null) return '<td>—</td>';
+    const [c,ic]=stat(kind,v); return `<td style="color:var(${c});font-weight:600">${ic} ${txt}</td>`; };
+  t.innerHTML='<thead><tr><th>日期</th><th>里程 km</th><th>最高 V</th><th>最低 V</th><th>壓差 mV</th><th>溫差 °C</th><th>DC-DC V</th><th>12V</th><th></th></tr></thead><tbody>'+
+    QL.map((r,i)=>`<tr>
+      <td class="tx">${r.date}</td><td>${r.odo==null?'—':fmt(r.odo)}</td>
+      <td>${r.cmax==null?'—':r.cmax.toFixed(3)}</td><td>${r.cmin==null?'—':r.cmin.toFixed(3)}</td>
+      ${cell('cdif',r.cdif,r.cdif==null?'':fmt(r.cdif,0))}
+      ${cell('dt',r.dt,r.dt==null?'':fmt(r.dt,1))}
+      ${cell('dcdc',r.dcdc,r.dcdc==null?'':r.dcdc.toFixed(2))}
+      ${cell('v12',r.v12,r.v12==null?'':r.v12.toFixed(2))}
+      <td><button class="sm" onclick="QL.splice(${i},1);renderQ()">刪</button></td></tr>`).join('')+'</tbody>';
+}
+function exportQ(kind){
+  if(!QL.length){ alert('未有記錄可以匯出。'); return; }
+  let blob,name;
+  if(kind==='json'){
+    blob=new Blob([JSON.stringify({vehicle:'VY1428',plate:'UJ 713',
+      vin:'5YJSB7E15GF122555',exported:new Date().toISOString(),records:QL},null,2)],
+      {type:'application/json'});
+    name='VY1428-quarterly-battery-log.json';
+  }else{
+    const h=['date','odo_km','cell_max_V','cell_min_V','imbalance_mV','module_dT_C','dcdc_V','v12_V'];
+    blob=new Blob(['﻿'+[h.join(',')].concat(QL.map(r=>
+      [r.date,r.odo,r.cmax,r.cmin,r.cdif==null?'':r.cdif.toFixed(0),r.dt,r.dcdc,r.v12]
+      .map(x=>x==null?'':x).join(','))).join('\n')],{type:'text/csv'});
+    name='VY1428-quarterly-battery-log.csv';
+  }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+$('qfile').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const fr=new FileReader();
+  fr.onload=()=>{ try{
+      const j=JSON.parse(fr.result);
+      const rec=Array.isArray(j)?j:(j.records||[]);
+      QL=rec.filter(r=>r&&r.date); QL.sort((a,b)=>a.date<b.date?-1:1); renderQ();
+    }catch(err){ alert('JSON 讀唔到：'+err.message); } };
+  fr.readAsText(f); e.target.value='';
+});
+
+/* ═══════════ boot ═══════════ */
+renderQ();
+loadFleet();
+window.addEventListener('resize',()=>{ drawFleet(); if(SMT.summary.cellVals) drawCell(); if(SMT.rows) drawTS(); });
+</script>
+</body>
+</html>

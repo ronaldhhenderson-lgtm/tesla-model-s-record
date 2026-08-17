@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>重生 · 一部越野车的大修纪事 — REBORN — Henderson Transpacific</title>
+<style>
+:root{
+  --paper:#f4efe4;
+  --ink:#1c1a17;
+  --ink-soft:#43403a;
+  --blue:#2c5560;     /* printer's blue-black — replaces teal */
+  --sepia:#7a4a24;     /* replaces rust */
+  --serif:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;
+  --sans:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:#dcdad5;
+  font-family:var(--sans);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+svg{display:block}
+.page{
+  width:210mm;
+  height:297mm;
+  margin:14px auto;
+  background-color:var(--paper);
+  position:relative;
+  overflow:hidden;
+  padding:22mm 20mm 18mm;
+  box-shadow:0 2px 4px rgba(0,0,0,.10),0 14px 34px rgba(0,0,0,.16);
+  break-after:page;
+  page-break-after:always;
+}
+.page:last-of-type{break-after:auto;page-break-after:auto}
+
+/* ---------- shared type ---------- */
+.wordmark{font-size:9.5px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--ink)}
+.wordmark b{color:var(--blue);font-weight:600}
+.wordmark-cn{font-size:8.5px;color:var(--ink-soft);letter-spacing:.14em;margin-top:2px}
+.brandrow{display:flex;align-items:center;gap:9px}
+.brandrow svg{flex:0 0 auto}
+
+.chapter-no{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:16px;
+  letter-spacing:.5em;
+  color:var(--ink-soft);
+  opacity:.7;
+  line-height:1;
+  text-align:center;
+}
+.chapter-eyebrow{
+  font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-variant:small-caps;color:var(--ink-soft);margin-bottom:6px;text-align:center;
+}
+h1.title{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:32px;
+  letter-spacing:.01em;
+  color:var(--ink);
+  line-height:1.25;
+  text-align:center;
+}
+h1.title .t-en{
+  display:block;
+  font-family:var(--sans);
+  font-weight:400;
+  font-style:italic;
+  font-variant:small-caps;
+  font-size:14px;
+  letter-spacing:.06em;
+  color:var(--ink-soft);
+  margin-top:7px;
+}
+.rule{height:1px;background:var(--ink);opacity:.4;margin:14px auto;width:58mm;position:relative}
+.rule.wide{width:100%}
+.rule::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;background:var(--paper);border:1px solid var(--ink);transform:translate(-50%,-50%) rotate(45deg)}
+.rule-plain{height:1px;background:var(--ink);opacity:.85;margin:0 auto}
+
+.zh{font-size:13.5px;line-height:2.05;color:var(--ink);letter-spacing:.01em;max-width:100%}
+.en{font-size:10.5px;line-height:1.75;color:var(--ink-soft);font-style:italic;margin-top:6px;letter-spacing:.01em}
+p.zh + p.en{margin-top:5px}
+.cap{margin-top:16px;max-width:120mm}
+.cap.center{max-width:130mm;margin-left:auto;margin-right:auto;text-align:center}
+
+.pull{
+  font-family:var(--serif);
+  font-size:27px;
+  line-height:1.5;
+  color:var(--ink);
+  text-align:center;
+}
+.pull .pull-en{
+  display:block;
+  font-family:var(--sans);
+  font-style:italic;
+  font-variant:small-caps;
+  font-weight:400;
+  font-size:13.5px;
+  color:var(--ink-soft);
+  margin-top:12px;
+  letter-spacing:.06em;
+}
+
+.pageno{
+  position:absolute;
+  right:20mm;
+  bottom:12mm;
+  font-size:9.5px;
+  letter-spacing:.08em;
+  color:var(--blue);
+  font-variant-numeric:tabular-nums;
+}
+.pageno .ttl{color:var(--ink-soft);margin-left:6px;font-style:italic;font-variant:small-caps;letter-spacing:.06em}
+.footline{
+  position:absolute;
+  left:20mm;
+  bottom:12mm;
+  font-size:8px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-variant:small-caps;
+  color:var(--ink-soft);
+  opacity:.75;
+}
+
+.frame{width:100%;break-inside:avoid;position:relative;padding:13px 15px}
+.frame svg{width:100%;height:auto;overflow:visible;position:relative;z-index:1}
+.frame::before{content:"";position:absolute;inset:7px;border:1px solid var(--ink);opacity:.25;pointer-events:none}
+.frame::after{content:"";position:absolute;inset:0;border:1px solid var(--ink);opacity:.11;pointer-events:none}
+.plate-cap{margin-top:9px;font-size:9.5px;font-style:italic;text-align:center;color:var(--ink);opacity:.82;letter-spacing:.02em;line-height:1.5}
+.plate-cap .pl{font-variant:small-caps;letter-spacing:.1em;font-style:normal;margin-right:5px;color:var(--blue)}
+.plate-cap .sc{font-variant:small-caps;letter-spacing:.1em;font-style:normal}
+
+/* ---------- engraving line vocabulary (no filters, no wobble) ---------- */
+.li{fill:none;stroke:var(--ink);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.li-thin{fill:none;stroke:var(--ink);stroke-width:.6;stroke-linecap:round;stroke-linejoin:round}
+.li-steel{fill:none;stroke:var(--ink);stroke-width:.85;opacity:.5;stroke-linecap:round;stroke-linejoin:round}
+.li-teal{fill:none;stroke:var(--blue);stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round}
+.li-teal-thin{fill:none;stroke:var(--blue);stroke-width:.6;stroke-linecap:round;stroke-linejoin:round}
+.li-rust{fill:none;stroke:var(--sepia);stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round}
+.li-rust-thin{fill:none;stroke:var(--sepia);stroke-width:.6;stroke-linecap:round;stroke-linejoin:round}
+.hi{fill:var(--paper);stroke:none}
+.swell{fill:var(--ink);stroke:none}
+.swell-sepia{fill:var(--sepia);stroke:none}
+.swell-blue{fill:var(--blue);stroke:none}
+.lbl-svg{font-family:var(--serif);font-size:11px;fill:var(--ink)}
+.lbl-svg-en{font-family:var(--sans);font-size:7.7px;fill:var(--ink-soft);font-style:italic;font-variant:small-caps;letter-spacing:.06em}
+.leader{stroke:var(--ink-soft);stroke-width:.7;opacity:.55}
+.constr{fill:none;stroke:var(--ink-soft);stroke-width:.6;stroke-dasharray:1 4;opacity:.28}
+
+/* ---------- print ---------- */
+@page{size:A4 portrait;margin:0}
+@media print{
+  body{background:#fff;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .page{
+    margin:0;box-shadow:none;
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .noprint{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================================================== -->
+<!-- COVER 封面 — PL. I -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-cover">
+  <div class="brandrow">
+    <svg width="20" height="20" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#1c1a17"/><text x="15" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" font-weight="700" fill="#2c5560">HT</text></svg>
+    <div>
+      <div class="wordmark">HENDERSON <b>TRANSPACIFIC</b></div>
+      <div class="wordmark-cn">亨德森环太</div>
+    </div>
+  </div>
+
+  <div style="margin-top:44mm;text-align:center">
+    <div class="chapter-eyebrow">车辆档案 · 大修纪事 &nbsp;VEHICLE FILE · A REBUILD NARRATIVE</div>
+    <h1 class="title" style="font-size:38px;text-align:center">
+      重生<br><span style="font-size:25px">一部越野车的大修纪事</span>
+      <span class="t-en" style="text-align:center;font-size:15px">REBORN<br><span style="font-size:12.5px">The Overhaul of a Land Cruiser</span></span>
+    </h1>
+  </div>
+
+  <div class="frame" style="margin-top:8mm">
+    <svg viewBox="0 0 1000 420" role="img" aria-label="Land Cruiser LC200, restored, in copperplate engraving style">
+      <defs>
+        <clipPath id="clip-cov-body"><path d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"/></clipPath>
+      </defs>
+      <line x1="120" y1="368" x2="880" y2="368" class="li-teal-thin" opacity=".6"/>
+      <g class="stipple" data-x="200" data-y="358" data-w="600" data-h="26" data-count="90" data-rmin=".4" data-rmax="1" data-fx="500" data-fy="368" data-invert="1" data-color="var(--ink)" data-op=".35"></g>
+
+      <g clip-path="url(#clip-cov-body)">
+        <g class="taille" data-mode="cyl" data-x="128" data-y="60" data-w="741" data-h="245" data-angle="8" data-spacing="9" data-bow="18" data-color="var(--ink)" data-sw=".55" data-op=".55"></g>
+        <path class="hi" d="M 300 148 C 420 128 620 118 800 128 L 800 108 C 620 98 420 108 300 128 Z"/>
+        <path class="hi" d="M 150 260 C 300 300 620 300 830 258 L 830 292 C 620 320 300 320 150 292 Z"/>
+      </g>
+      <path class="swell" data-w="3.4" d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"></path>
+      <path d="M 380 53 L 760 53" class="li" stroke-width="2.4" opacity=".75"/>
+      <path d="M 306 146 C 322 120, 338 96, 352 80 C 360 70, 368 64, 380 62" class="li-thin" opacity=".55"/>
+
+      <!-- front wheel -->
+      <g>
+        <clipPath id="clip-cov-tire1"><circle cx="263" cy="270" r="65"/></clipPath>
+        <g clip-path="url(#clip-cov-tire1)"><g class="radial" data-cx="263" data-cy="270" data-rin="38" data-rout="66" data-form="ring" data-spacing="3.2" data-a0="20" data-a1="340" data-color="var(--ink)" data-sw=".6" data-op=".8"></g><path class="hi" d="M225,240 A60,60 0 0 1 263,205 L263,238 A28,28 0 0 0 233,260 Z"/></g>
+        <circle cx="263" cy="270" r="65" class="li" stroke-width="1.4" fill="none"/>
+        <circle cx="263" cy="270" r="38" fill="var(--paper)" class="li" stroke-width="1.6"/>
+        <g class="radial" data-cx="263" data-cy="270" data-rin="6" data-rout="34" data-n="5" data-a0="270" data-a1="342" data-color="var(--ink)" data-sw="1.3" data-op=".85"></g>
+        <circle cx="263" cy="270" r="6" fill="var(--ink)"/>
+      </g>
+      <!-- rear wheel -->
+      <g>
+        <clipPath id="clip-cov-tire2"><circle cx="691" cy="270" r="65"/></clipPath>
+        <g clip-path="url(#clip-cov-tire2)"><g class="radial" data-cx="691" data-cy="270" data-rin="38" data-rout="66" data-form="ring" data-spacing="3.2" data-a0="20" data-a1="340" data-color="var(--ink)" data-sw=".6" data-op=".8"></g><path class="hi" d="M653,240 A60,60 0 0 1 691,205 L691,238 A28,28 0 0 0 661,260 Z"/></g>
+        <circle cx="691" cy="270" r="65" class="li" stroke-width="1.4" fill="none"/>
+        <circle cx="691" cy="270" r="38" fill="var(--paper)" class="li" stroke-width="1.6"/>
+        <g class="radial" data-cx="691" data-cy="270" data-rin="6" data-rout="34" data-n="5" data-a0="270" data-a1="342" data-color="var(--ink)" data-sw="1.3" data-op=".85"></g>
+        <circle cx="691" cy="270" r="6" fill="var(--ink)"/>
+      </g>
+      <line x1="180" y1="300" x2="840" y2="300" class="li-steel" stroke-width="1.4"/>
+      <rect x="146" y="196" width="72" height="62" rx="6" class="li-thin" opacity=".7"/>
+      <rect x="300" y="256" width="66" height="34" rx="5" class="li-thin" opacity=".6"/>
+      <rect x="374" y="262" width="46" height="28" rx="5" class="li-thin" opacity=".5"/>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. I</span>卷首 · 修复完成的越野车 <span class="sc">Frontispiece — The Land Cruiser, Restored</span></div>
+  </div>
+
+  <div style="text-align:center;margin-top:6mm">
+    <div class="rule" style="width:44mm"></div>
+    <div class="chapter-eyebrow" style="margin-bottom:0">车辆档案 · TBC &nbsp;VEHICLE FILE · TBC &nbsp;·&nbsp; 2026</div>
+  </div>
+
+  <div class="footline">HENDERSON TRANSPACIFIC · 亨德森环太</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 序 PROLOGUE — PL. II -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-prologue">
+  <div class="chapter-eyebrow">序 &nbsp;PROLOGUE</div>
+  <h1 class="title">来处不明<span class="t-en">A History Unknown</span></h1>
+  <div class="rule"></div>
+
+  <div class="cap">
+    <p class="zh">一辆车抵达时，没有人能说清它去过哪里。里程表上的数字，是唯一愿意开口的证人——却也最不可信的一个。</p>
+    <p class="en">When a car arrives, no one can say for certain where it has been. The odometer is the only witness willing to speak — and the least reliable one.</p>
+  </div>
+
+  <div class="frame" style="margin-top:16mm;max-width:100mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 300 300" role="img" aria-label="Odometer gauge, digits uncertain">
+      <defs><clipPath id="clip-pro-face"><circle cx="150" cy="140" r="118"/></clipPath></defs>
+      <g clip-path="url(#clip-pro-face)">
+        <g class="radial" data-cx="150" data-cy="140" data-rin="100" data-rout="119" data-n="60" data-a0="0" data-a1="360" data-color="var(--ink)" data-sw=".5" data-op=".65"></g>
+        <path class="hi" d="M78,90 A100,100 0 0 1 175,44 L165,66 A78,78 0 0 0 96,106 Z"/>
+        <g class="contre" data-x="150" data-y="180" data-w="120" data-h="120" data-angle="15" data-angle2="70" data-spacing="5.5" data-spacing2="7" data-color="var(--ink)" data-sw=".4" data-op=".28"></g>
+      </g>
+      <circle cx="150" cy="140" r="118" class="li" stroke-width="1.5" fill="none"/>
+      <circle cx="150" cy="140" r="100" class="li-thin" opacity=".55"/>
+      <g stroke="var(--ink)" opacity=".6">
+        <line x1="150" y1="26" x2="150" y2="40" stroke-width="1.4"/>
+        <line x1="150" y1="240" x2="150" y2="254" stroke-width="1.4"/>
+        <line x1="36" y1="140" x2="50" y2="140" stroke-width="1.4"/>
+        <line x1="250" y1="140" x2="264" y2="140" stroke-width="1.4"/>
+        <line x1="66" y1="56" x2="76" y2="66" stroke-width="1"/>
+        <line x1="234" y1="56" x2="224" y2="66" stroke-width="1"/>
+        <line x1="66" y1="224" x2="76" y2="214" stroke-width="1"/>
+        <line x1="234" y1="224" x2="224" y2="214" stroke-width="1"/>
+      </g>
+      <path class="swell" data-w="2.6" d="M150,140 L112,80"></path>
+      <circle cx="150" cy="140" r="6" fill="var(--ink)"/>
+      <rect x="98" y="180" width="104" height="34" rx="3" class="li" fill="var(--paper)" stroke-width="1.2"/>
+      <line x1="107" y1="184" x2="107" y2="210" class="li-thin" opacity=".5"/>
+      <line x1="124" y1="184" x2="124" y2="210" class="li-thin" opacity=".5"/>
+      <line x1="141" y1="184" x2="141" y2="210" class="li-thin" opacity=".5"/>
+      <line x1="158" y1="184" x2="158" y2="210" class="li-thin" opacity=".5"/>
+      <line x1="175" y1="184" x2="175" y2="210" class="li-thin" opacity=".5"/>
+      <g class="lbl-svg" font-size="17" font-weight="600" fill="var(--ink)" text-anchor="middle" font-family="Georgia, serif">
+        <text x="115" y="203">1</text>
+        <text x="132" y="203">8</text>
+        <text x="149" y="203">4</text>
+        <text x="166" y="203" fill="var(--sepia)">?</text>
+        <text x="183" y="203" fill="var(--sepia)">?</text>
+      </g>
+      <text x="150" y="238" text-anchor="middle" class="lbl-svg-en">km</text>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. II</span>仪表：里程不明 <span class="sc">Odometer, Provenance Unknown</span></div>
+  </div>
+
+  <div class="cap center" style="margin-top:12mm">
+    <p class="zh" style="font-size:14.5px">没有纪录不等于没有故事，只是无人记下。</p>
+    <p class="en" style="text-align:center">No records does not mean no history — only that nobody wrote it down.</p>
+  </div>
+
+  <div class="pageno">02<span class="ttl">序 Prologue</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 01 抵达 ARRIVAL — PL. III -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-arrival">
+  <div class="chapter-no">01</div>
+  <h1 class="title" style="margin-top:2mm">抵达<span class="t-en">Arrival</span></h1>
+  <div class="rule"></div>
+
+  <div class="frame" style="margin-top:8mm">
+    <svg viewBox="0 0 1000 400" role="img" aria-label="LC200 before overhaul, tired and worn, dense cross-hatching">
+      <defs>
+        <clipPath id="clip-arr-body"><path d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"/></clipPath>
+        <clipPath id="clip-arr-arch1"><circle cx="263" cy="270" r="68"/></clipPath>
+        <clipPath id="clip-arr-arch2"><circle cx="691" cy="281" r="68"/></clipPath>
+      </defs>
+
+      <!-- shadow pool under the sagging body -->
+      <clipPath id="clip-arr-pool"><ellipse cx="510" cy="322" rx="310" ry="24"/></clipPath>
+      <g clip-path="url(#clip-arr-pool)"><g class="contre" data-x="200" data-y="298" data-w="620" data-h="48" data-angle="35" data-angle2="-30" data-spacing="4.5" data-spacing2="5.5" data-color="var(--sepia)" data-sw=".5" data-op=".4"></g></g>
+
+      <g clip-path="url(#clip-arr-body)">
+        <g class="contre" data-x="128" data-y="60" data-w="741" data-h="245" data-angle="12" data-angle2="-38" data-spacing="6" data-spacing2="8" data-color="var(--sepia)" data-sw=".55" data-op=".62"></g>
+        <g class="contre" data-x="600" data-y="80" data-w="270" data-h="200" data-angle="18" data-angle2="-40" data-spacing="4.2" data-spacing2="5" data-color="var(--sepia)" data-sw=".6" data-op=".55"></g>
+        <path class="hi" d="M340,80 C420,70 560,66 700,74 L698,90 C560,82 420,86 342,96 Z" opacity=".9"/>
+      </g>
+      <path class="swell-sepia" data-w="3" d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"></path>
+      <path d="M 380 53 L 760 53" class="li-rust" stroke-width="2" opacity=".7"/>
+      <path d="M 340 292 L 615 292" class="li-rust-thin" opacity=".45" stroke-dasharray="5 4"/>
+
+      <!-- grime specks under the arches -->
+      <g class="stipple" data-x="200" data-y="230" data-w="130" data-h="90" data-count="140" data-rmin=".4" data-rmax="1.4" data-fx="263" data-fy="300" data-invert="1" data-color="var(--sepia)" data-op=".55"></g>
+      <g class="stipple" data-x="630" data-y="245" data-w="130" data-h="95" data-count="150" data-rmin=".4" data-rmax="1.5" data-fx="691" data-fy="315" data-invert="1" data-color="var(--sepia)" data-op=".55"></g>
+
+      <!-- front wheel, normal -->
+      <g>
+        <g clip-path="url(#clip-arr-arch1)"><g class="radial" data-cx="263" data-cy="270" data-rin="38" data-rout="68" data-form="ring" data-spacing="3.4" data-a0="25" data-a1="330" data-color="var(--sepia)" data-sw=".55" data-op=".7"></g></g>
+        <circle cx="263" cy="270" r="65" class="li-rust" stroke-width="1.3" fill="none"/>
+        <circle cx="263" cy="270" r="38" fill="var(--paper)" class="li-rust" stroke-width="1.6"/>
+        <g class="radial" data-cx="263" data-cy="270" data-rin="6" data-rout="34" data-n="5" data-a0="270" data-a1="342" data-color="var(--sepia)" data-sw="1.2" data-op=".8"></g>
+        <circle cx="263" cy="270" r="6" fill="var(--sepia)"/>
+      </g>
+      <!-- rear wheel, sagging: shifted down 11px -->
+      <g transform="translate(0,11)">
+        <g clip-path="url(#clip-arr-arch2)"><g class="radial" data-cx="691" data-cy="270" data-rin="38" data-rout="68" data-form="ring" data-spacing="3.4" data-a0="25" data-a1="330" data-color="var(--sepia)" data-sw=".55" data-op=".7"></g></g>
+        <circle cx="691" cy="270" r="65" class="li-rust" stroke-width="1.3" fill="none"/>
+        <circle cx="691" cy="270" r="38" fill="var(--paper)" class="li-rust" stroke-width="1.6"/>
+        <g class="radial" data-cx="691" data-cy="270" data-rin="6" data-rout="34" data-n="5" data-a0="270" data-a1="342" data-color="var(--sepia)" data-sw="1.2" data-op=".8"></g>
+        <circle cx="691" cy="270" r="6" fill="var(--sepia)"/>
+      </g>
+      <line x1="180" y1="300" x2="840" y2="300" class="li-rust" stroke-width="1.4" opacity=".55" stroke-dasharray="30 4 60 4"/>
+      <rect x="146" y="196" width="72" height="62" rx="6" class="li-rust-thin" opacity=".7"/>
+      <rect x="300" y="256" width="66" height="34" rx="5" class="li-rust-thin" opacity=".6"/>
+      <rect x="374" y="262" width="46" height="28" rx="5" class="li-rust-thin" opacity=".5"/>
+      <!-- leak drops beneath engine -->
+      <path class="swell-sepia" data-w="1.8" d="M188,318 C186,326 182,332 178,332 C174,332 172,326 178,320"></path>
+      <path class="swell-sepia" data-w="1.6" d="M340,324 C338,331 335,336 331,336 C327,336 325,331 331,326"></path>
+      <ellipse cx="182" cy="340" rx="10" ry="3" class="li-rust-thin" opacity=".5"/>
+      <ellipse cx="333" cy="344" rx="8" ry="2.6" class="li-rust-thin" opacity=".5"/>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. III</span>抵达时的车况 <span class="sc">The Vehicle As It Arrived</span></div>
+  </div>
+
+  <div class="cap center" style="margin-top:6mm;max-width:150mm">
+    <p class="zh">悬挂沉了一寸，油封渗了经年，漆面记着风霜而非年份。里程表停在一个谁都不信的数字上。</p>
+    <p class="en" style="text-align:center">The suspension has settled by an inch. Seals have wept for years. The paint remembers weather, not model years. The odometer rests on a number nobody quite believes.</p>
+  </div>
+
+  <div class="pageno">03<span class="ttl">01 抵达 Arrival</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 02 拆解 TEARDOWN — PL. IV -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-teardown">
+  <div class="chapter-no">02</div>
+  <h1 class="title" style="margin-top:2mm">拆解<span class="t-en">Teardown</span></h1>
+  <div class="rule"></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14mm;margin-top:10mm;align-items:center">
+    <div class="frame">
+      <svg viewBox="0 0 800 560" role="img" aria-label="Vehicle raised on a two-post lift, workshop plate">
+        <defs>
+          <clipPath id="clip-td-pool"><ellipse cx="300" cy="270" rx="150" ry="90"/></clipPath>
+          <clipPath id="clip-td-cnr1"><rect x="0" y="0" width="230" height="230"/></clipPath>
+          <clipPath id="clip-td-cnr2"><rect x="560" y="0" width="240" height="230"/></clipPath>
+        </defs>
+        <!-- dense cross-hatch in the upper corners -->
+        <g clip-path="url(#clip-td-cnr1)"><g class="contre" data-x="0" data-y="0" data-w="230" data-h="230" data-angle="42" data-angle2="-42" data-spacing="4.2" data-spacing2="5" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+        <g clip-path="url(#clip-td-cnr2)"><g class="contre" data-x="560" data-y="0" data-w="240" data-h="230" data-angle="42" data-angle2="-42" data-spacing="4.2" data-spacing2="5" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+
+        <!-- lamp light pool: clean paper with a stippled fringe -->
+        <g clip-path="url(#clip-td-pool)">
+          <g class="stipple" data-x="150" data-y="180" data-w="300" data-h="180" data-count="260" data-rmin=".35" data-rmax="1.1" data-fx="400" data-fy="150" data-invert="0" data-color="var(--ink)" data-op=".38"></g>
+        </g>
+        <ellipse cx="300" cy="270" rx="150" ry="90" class="li-thin" opacity=".2" fill="none"/>
+
+        <!-- hanging lamp -->
+        <line x1="400" y1="18" x2="400" y2="118" class="li-thin" opacity=".55"/>
+        <path d="M382,118 L418,118 L409,144 L391,144 Z" class="li-thin"/>
+        <circle cx="400" cy="150" r="3" fill="var(--ink)" opacity=".8"/>
+        <g class="li-thin" opacity=".3">
+          <line x1="391" y1="156" x2="384" y2="166"/>
+          <line x1="400" y1="158" x2="400" y2="170"/>
+          <line x1="409" y1="156" x2="416" y2="166"/>
+        </g>
+
+        <!-- lift posts -->
+        <path class="swell" data-w="2.6" d="M118,60 L118,480"></path>
+        <path class="swell" data-w="2.6" d="M608,60 L608,480"></path>
+        <rect x="108" y="472" width="44" height="14" rx="2" class="li-steel" fill="none"/>
+        <rect x="574" y="472" width="44" height="14" rx="2" class="li-steel" fill="none"/>
+        <rect x="118" y="310" width="24" height="30" rx="4" class="li-thin" fill="var(--paper)"/>
+        <rect x="584" y="310" width="24" height="30" rx="4" class="li-thin" fill="var(--paper)"/>
+        <path d="M142,320 L233,318" class="li-thin"/>
+        <path d="M584,320 L493,318" class="li-thin"/>
+        <rect x="221" y="313" width="24" height="9" rx="3" class="li-thin" fill="var(--paper)"/>
+        <rect x="481" y="313" width="24" height="9" rx="3" class="li-thin" fill="var(--paper)"/>
+
+        <!-- car, in heavy silhouette-weight contour, elevated -->
+        <g transform="translate(150,150) scale(0.5)">
+          <defs><clipPath id="clip-td-body"><path d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"/></clipPath></defs>
+          <g clip-path="url(#clip-td-body)">
+            <g class="taille" data-mode="flat" data-x="128" data-y="60" data-w="741" data-h="245" data-angle="90" data-spacing="6" data-color="var(--ink)" data-sw=".9" data-op=".75"></g>
+          </g>
+          <path class="swell" data-w="6" d="M 134 305 C 130 298, 128 290, 128 280 L 128 198 C 128 184, 133 174, 144 168 L 196 158 C 230 152, 266 148, 302 146 C 314 124, 330 96, 346 78 C 354 68, 364 62, 378 60 L 762 60 C 776 61, 786 66, 792 78 C 798 92, 802 108, 804 128 C 808 182, 812 232, 815 258 C 817 274, 824 284, 836 288 L 860 292 C 866 294, 869 298, 869 305 L 761 305 A 70 70 0 0 0 621 305 L 333 305 A 70 70 0 0 0 193 305 Z"></path>
+          <circle cx="263" cy="270" r="65" fill="var(--ink)"/><circle cx="263" cy="270" r="38" fill="var(--paper)"/>
+          <circle cx="691" cy="270" r="65" fill="var(--ink)"/><circle cx="691" cy="270" r="38" fill="var(--paper)"/>
+          <line x1="180" y1="300" x2="840" y2="300" class="li-steel" stroke-width="3"/>
+        </g>
+        <clipPath id="clip-td-groundshadow"><ellipse cx="300" cy="480" rx="230" ry="11"/></clipPath>
+        <g clip-path="url(#clip-td-groundshadow)"><g class="contre" data-x="70" data-y="469" data-w="460" data-h="22" data-angle="30" data-angle2="-30" data-spacing="3.4" data-spacing2="4" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+        <line x1="60" y1="480" x2="740" y2="480" class="li-steel"/>
+
+        <!-- tool trolley -->
+        <g transform="translate(636,412)">
+          <rect x="0" y="0" width="66" height="50" rx="4" class="li-thin" fill="var(--paper)"/>
+          <line x1="0" y1="17" x2="66" y2="17" class="li-thin" opacity=".6"/>
+          <line x1="0" y1="33" x2="66" y2="33" class="li-thin" opacity=".6"/>
+          <circle cx="12" cy="58" r="7" class="li-thin"/>
+          <circle cx="54" cy="58" r="7" class="li-thin"/>
+        </g>
+      </svg>
+      <div class="plate-cap"><span class="pl">PL. IV</span>举升机上的拆解 <span class="sc">Teardown on the Lift</span></div>
+    </div>
+
+    <div>
+      <p class="zh" style="font-size:13px;line-height:1.95">拆解是一种纪律，不是拆毁。</p>
+      <p class="zh" style="font-size:13px;line-height:1.95;margin-top:10px">每一颗螺栓入袋编号，每一个零件落地前先入镜——这样，重新装回时才不必猜测。</p>
+      <p class="en" style="margin-top:14px">Teardown is a discipline, not a demolition.</p>
+      <p class="en" style="margin-top:8px">Every fastener is bagged and numbered; every part is photographed before it leaves its place — so reassembly never has to guess.</p>
+    </div>
+  </div>
+
+  <div class="pageno">04<span class="ttl">02 拆解 Teardown</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 03 发现 DISCOVERY — PL. V / PL. VI -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-discovery">
+  <div class="chapter-no">03</div>
+  <h1 class="title" style="margin-top:2mm">发现<span class="t-en">Discovery</span></h1>
+  <div class="rule"></div>
+
+  <div class="cap" style="max-width:150mm">
+    <p class="zh">磨损不撒谎。活塞裙部的划痕，轴瓦被磨薄的那一层光泽，都是三十万公里安静写下的算术题。</p>
+    <p class="en">Wear does not lie. The scoring on a piston skirt, the sheen worn thin on a bearing shell — both are arithmetic quietly written by three hundred thousand kilometres.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;justify-content:center;height:172mm">
+  <div class="frame" style="margin-top:4mm">
+    <svg viewBox="0 0 1000 420" role="img" aria-label="Worn piston compared with new piston, engraved">
+      <line x1="500" y1="20" x2="500" y2="330" class="li-thin" opacity=".25" stroke-dasharray="3 5"/>
+
+      <!-- ============ WORN PISTON (left) ============ -->
+      <g transform="translate(160,20)">
+        <defs>
+          <clipPath id="clip-pw-crown"><path d="M8,18 Q8,0 26,0 L74,0 Q92,0 92,18 L92,50 L8,50 Z"/></clipPath>
+          <clipPath id="clip-pw-skirt"><path d="M8,50 C4,90 4,130 10,168 L90,168 C96,130 96,90 92,50 Z"/></clipPath>
+          <clipPath id="clip-pw-end"><circle cx="51" cy="252" r="30"/></clipPath>
+        </defs>
+        <g clip-path="url(#clip-pw-crown)"><g class="stipple" data-x="8" data-y="0" data-w="84" data-h="50" data-count="150" data-rmin=".4" data-rmax="1.3" data-fx="50" data-fy="5" data-invert="1" data-color="var(--sepia)" data-op=".8"></g></g>
+        <path class="swell-sepia" data-w="1.6" d="M8,18 Q8,0 26,0 L74,0 Q92,0 92,18 L92,50 L8,50 Z"></path>
+        <line x1="14" y1="16" x2="86" y2="16" class="li-rust-thin"/>
+        <line x1="14" y1="27" x2="86" y2="27" class="li-rust-thin" stroke-dasharray="5 4"/>
+        <line x1="14" y1="38" x2="86" y2="38" class="li-rust-thin"/>
+        <g clip-path="url(#clip-pw-skirt)">
+          <g class="taille" data-mode="cyl" data-x="4" data-y="50" data-w="92" data-h="118" data-angle="90" data-spacing="7" data-bow="5" data-color="var(--sepia)" data-sw=".55" data-op=".65"></g>
+          <g class="stipple" data-x="4" data-y="60" data-w="92" data-h="105" data-count="90" data-rmin=".4" data-rmax="1.2" data-fx="50" data-fy="110" data-invert="1" data-color="var(--sepia)" data-op=".6"></g>
+        </g>
+        <path class="swell-sepia" data-w="1.8" d="M8,50 C4,90 4,130 10,168 L90,168 C96,130 96,90 92,50 Z"></path>
+        <g class="li-rust-thin" opacity=".85">
+          <line x1="22" y1="66" x2="20" y2="150"/>
+          <line x1="34" y1="72" x2="31" y2="140"/>
+          <line x1="70" y1="70" x2="73" y2="146"/>
+          <line x1="80" y1="66" x2="84" y2="130"/>
+        </g>
+        <circle cx="50" cy="118" r="15" class="li-rust-thin" fill="var(--paper)"/>
+        <rect x="-2" y="112" width="14" height="12" rx="3" class="li-rust-thin" fill="none"/>
+        <rect x="88" y="112" width="14" height="12" rx="3" class="li-rust-thin" fill="none"/>
+        <path class="swell-sepia" data-w="2.2" d="M42,131 L36,225"></path>
+        <path class="swell-sepia" data-w="2.2" d="M58,131 L66,225"></path>
+        <g clip-path="url(#clip-pw-end)"><g class="contre" data-x="10" data-y="210" data-w="90" data-h="90" data-angle="35" data-angle2="-35" data-spacing="4" data-spacing2="5" data-color="var(--sepia)" data-sw=".55" data-op=".65"></g></g>
+        <circle cx="51" cy="252" r="30" class="li-rust-thin" fill="none"/>
+        <line x1="21" y1="252" x2="81" y2="252" class="li-rust-thin"/>
+        <circle cx="34" cy="252" r="2.6" fill="var(--sepia)"/>
+        <circle cx="68" cy="252" r="2.6" fill="var(--sepia)"/>
+      </g>
+
+      <!-- ============ NEW PISTON (right) ============ -->
+      <g transform="translate(660,20)">
+        <defs>
+          <clipPath id="clip-pn-skirt"><path d="M8,50 C4,90 4,130 10,168 L90,168 C96,130 96,90 92,50 Z"/></clipPath>
+          <clipPath id="clip-pn-end"><circle cx="50" cy="252" r="30"/></clipPath>
+        </defs>
+        <path class="hi" d="M14,4 Q30,-2 74,-2 L74,10 Q30,8 16,14 Z"/>
+        <path class="swell" data-w="1.4" d="M8,18 Q8,0 26,0 L74,0 Q92,0 92,18 L92,50 L8,50 Z"></path>
+        <line x1="14" y1="16" x2="86" y2="16" class="li-thin"/>
+        <line x1="14" y1="27" x2="86" y2="27" class="li-thin"/>
+        <line x1="14" y1="38" x2="86" y2="38" class="li-thin"/>
+        <g clip-path="url(#clip-pn-skirt)">
+          <g class="taille" data-mode="cyl" data-x="4" data-y="50" data-w="92" data-h="118" data-angle="90" data-spacing="12" data-bow="5" data-color="var(--ink)" data-sw=".45" data-op=".4"></g>
+          <path class="hi" d="M14,55 C10,90 10,125 16,160 L34,160 C28,125 28,90 32,55 Z"/>
+        </g>
+        <path class="swell" data-w="1.6" d="M8,50 C4,90 4,130 10,168 L90,168 C96,130 96,90 92,50 Z"></path>
+        <circle cx="50" cy="118" r="15" class="li-thin" fill="var(--paper)"/>
+        <rect x="-2" y="112" width="14" height="12" rx="3" class="li-thin" fill="none"/>
+        <rect x="88" y="112" width="14" height="12" rx="3" class="li-thin" fill="none"/>
+        <path class="swell" data-w="2" d="M42,131 L44,225"></path>
+        <path class="swell" data-w="2" d="M58,131 L56,225"></path>
+        <g clip-path="url(#clip-pn-end)"><g class="taille" data-mode="flat" data-x="10" data-y="210" data-w="90" data-h="90" data-angle="20" data-spacing="6" data-color="var(--ink)" data-sw=".45" data-op=".45"></g></g>
+        <circle cx="50" cy="252" r="30" class="li-thin" fill="none"/>
+        <line x1="20" y1="252" x2="80" y2="252" class="li-thin"/>
+        <circle cx="33" cy="252" r="2.6" fill="var(--ink)"/>
+        <circle cx="67" cy="252" r="2.6" fill="var(--ink)"/>
+      </g>
+
+      <text x="250" y="360" text-anchor="middle" class="lbl-svg" fill="var(--sepia)">磨损 <tspan class="lbl-svg-en" fill="var(--sepia)">Worn</tspan></text>
+      <text x="750" y="360" text-anchor="middle" class="lbl-svg" fill="var(--ink)">全新 <tspan class="lbl-svg-en" fill="var(--ink)">New</tspan></text>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. V</span>活塞：磨损与全新对比 <span class="sc">Piston, Worn Against New</span></div>
+  </div>
+
+  <div class="frame" style="margin-top:8mm">
+    <svg viewBox="0 0 1000 220" role="img" aria-label="Crankshaft with main bearings, one journal exploded, radial hatching">
+      <line x1="60" y1="110" x2="640" y2="110" class="constr"/>
+      <defs>
+        <clipPath id="clip-ck-j1"><rect x="60" y="86" width="44" height="48" rx="10"/></clipPath>
+        <clipPath id="clip-ck-j2"><rect x="150" y="82" width="44" height="56" rx="10"/></clipPath>
+        <clipPath id="clip-ck-j3"><rect x="240" y="82" width="44" height="56" rx="10"/></clipPath>
+        <clipPath id="clip-ck-j4"><rect x="330" y="82" width="44" height="56" rx="10"/></clipPath>
+        <clipPath id="clip-ck-j5"><rect x="420" y="86" width="44" height="48" rx="10"/></clipPath>
+        <clipPath id="clip-ck-shell"><circle cx="90" cy="110" r="34"/></clipPath>
+      </defs>
+      <g>
+        <g clip-path="url(#clip-ck-j1)"><g class="taille" data-mode="cyl" data-x="60" data-y="86" data-w="44" data-h="48" data-angle="0" data-spacing="4" data-bow="4" data-color="var(--ink)" data-sw=".5" data-op=".7"></g><path class="hi" d="M64,90 L70,90 L70,130 L64,130 Z" opacity=".85"/></g>
+        <path class="swell" data-w="2" d="M60,86 L60,134 L104,134 L104,86 Z" opacity="0"></path>
+        <rect x="60" y="86" width="44" height="48" rx="10" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M104,86 L150,70 L150,150 L104,134 Z" class="li-thin" fill="var(--paper)"/>
+        <g clip-path="url(#clip-ck-j2)"><g class="taille" data-mode="cyl" data-x="150" data-y="82" data-w="44" data-h="56" data-angle="0" data-spacing="4" data-bow="4" data-color="var(--ink)" data-sw=".5" data-op=".7"></g><path class="hi" d="M154,86 L160,86 L160,134 L154,134 Z" opacity=".85"/></g>
+        <rect x="150" y="82" width="44" height="56" rx="10" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M194,82 L240,64 L240,156 L194,138 Z" class="li-thin" fill="var(--paper)"/>
+        <g clip-path="url(#clip-ck-j3)"><g class="taille" data-mode="cyl" data-x="240" data-y="82" data-w="44" data-h="56" data-angle="0" data-spacing="4" data-bow="4" data-color="var(--ink)" data-sw=".5" data-op=".7"></g><path class="hi" d="M244,86 L250,86 L250,134 L244,134 Z" opacity=".85"/></g>
+        <rect x="240" y="82" width="44" height="56" rx="10" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M284,82 L330,64 L330,156 L284,138 Z" class="li-thin" fill="var(--paper)"/>
+        <g clip-path="url(#clip-ck-j4)"><g class="taille" data-mode="cyl" data-x="330" data-y="82" data-w="44" data-h="56" data-angle="0" data-spacing="4" data-bow="4" data-color="var(--ink)" data-sw=".5" data-op=".7"></g><path class="hi" d="M334,86 L340,86 L340,134 L334,134 Z" opacity=".85"/></g>
+        <rect x="330" y="82" width="44" height="56" rx="10" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M374,86 L420,70 L420,150 L374,134 Z" class="li-thin" fill="var(--paper)"/>
+        <g clip-path="url(#clip-ck-j5)"><g class="taille" data-mode="cyl" data-x="420" data-y="86" data-w="44" data-h="48" data-angle="0" data-spacing="4" data-bow="4" data-color="var(--ink)" data-sw=".5" data-op=".7"></g><path class="hi" d="M424,90 L430,90 L430,130 L424,130 Z" opacity=".85"/></g>
+        <rect x="420" y="86" width="44" height="48" rx="10" class="li" fill="none" stroke-width="1.1"/>
+      </g>
+      <text x="242" y="196" text-anchor="middle" class="lbl-svg">曲轴 <tspan class="lbl-svg-en">Crankshaft, main journals</tspan></text>
+
+      <!-- exploded journal with bearing shells -->
+      <g transform="translate(660,0)">
+        <g clip-path="url(#clip-ck-shell)">
+          <g class="radial" data-cx="90" data-cy="110" data-rin="8" data-rout="35" data-n="30" data-a0="0" data-a1="360" data-color="var(--ink)" data-sw=".45" data-op=".5"></g>
+        </g>
+        <circle cx="90" cy="110" r="34" class="li" fill="none" stroke-width="1.1"/>
+        <defs><clipPath id="clip-ck-bear1"><path d="M56,88 A34,34 0 0 1 124,88" transform="translate(0,-46)"/></clipPath><clipPath id="clip-ck-bear2"><path d="M56,132 A34,34 0 0 1 124,132" transform="translate(0,46) rotate(180,90,132)"/></clipPath></defs>
+        <g clip-path="url(#clip-ck-bear1)"><g class="stipple" data-x="50" data-y="0" data-w="80" data-h="60" data-count="90" data-rmin=".4" data-rmax="1" data-fx="90" data-fy="20" data-invert="1" data-color="var(--ink)" data-op=".7"></g></g>
+        <path d="M56,88 A34,34 0 0 1 124,88" class="li" transform="translate(0,-46)" fill="none" stroke-width="1.1"/>
+        <g clip-path="url(#clip-ck-bear2)"><g class="stipple" data-x="50" data-y="160" data-w="80" data-h="60" data-count="90" data-rmin=".4" data-rmax="1" data-fx="90" data-fy="200" data-invert="1" data-color="var(--ink)" data-op=".7"></g></g>
+        <path d="M56,132 A34,34 0 0 1 124,132" class="li" transform="translate(0,46) rotate(180,90,132)" fill="none" stroke-width="1.1"/>
+        <line x1="90" y1="76" x2="90" y2="60" class="leader" stroke-dasharray="2 3"/>
+        <line x1="90" y1="144" x2="90" y2="160" class="leader" stroke-dasharray="2 3"/>
+        <text x="90" y="30" text-anchor="middle" class="lbl-svg">轴瓦 <tspan class="lbl-svg-en">Bearing shell</tspan></text>
+        <text x="90" y="196" text-anchor="middle" class="lbl-svg">轴瓦 <tspan class="lbl-svg-en">Bearing shell</tspan></text>
+      </g>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. VI</span>曲轴与轴瓦 <span class="sc">Crankshaft &amp; Bearings</span></div>
+  </div>
+  </div>
+
+  <div class="pageno">05<span class="ttl">03 发现 Discovery</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 04 重生 REBUILD — PL. VII / PL. VIII -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-rebuild">
+  <div class="chapter-no">04</div>
+  <h1 class="title" style="margin-top:2mm">重生<span class="t-en">Rebuild</span></h1>
+  <div class="rule"></div>
+
+  <div class="cap" style="max-width:150mm">
+    <p class="zh">缸体重新镗磨，气门座重新研配。这里，力气说了不算——量出来的公差，才说了算。</p>
+    <p class="en">The block is rebored, the valve seats reseated. Here, strength counts for nothing — only the tolerance measured on a gauge.</p>
+  </div>
+
+  <div class="frame" style="margin-top:2mm;max-width:150mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 640 480" role="img" aria-label="V6 engine block: spider intake, ribbed valve covers, header exhaust, engraved">
+      <defs>
+        <clipPath id="clip-eb-pan"><path d="M200,368 L440,368 L412,415 L228,415 Z"/></clipPath>
+        <clipPath id="clip-eb-case"><rect x="150" y="278" width="340" height="92" rx="12"/></clipPath>
+        <clipPath id="clip-eb-left"><path d="M150,280 L200,112 L300,100 L328,280 Z"/></clipPath>
+        <clipPath id="clip-eb-right"><path d="M490,280 L440,112 L340,100 L312,280 Z"/></clipPath>
+      </defs>
+      <rect x="86" y="34" width="410" height="382" class="constr"/>
+      <line x1="320" y1="34" x2="320" y2="416" class="constr"/>
+
+      <!-- oil pan -->
+      <g clip-path="url(#clip-eb-pan)"><g class="taille" data-mode="flat" data-x="200" data-y="368" data-w="240" data-h="47" data-angle="35" data-spacing="5" data-color="var(--ink)" data-sw=".5" data-op=".5"></g></g>
+      <path class="swell" data-w="1.6" d="M200,368 L440,368 L412,415 L228,415 Z"></path>
+
+      <!-- crankcase -->
+      <g clip-path="url(#clip-eb-case)">
+        <g class="taille" data-mode="flat" data-x="150" data-y="278" data-w="340" data-h="92" data-angle="8" data-spacing="6" data-color="var(--ink)" data-sw=".5" data-op=".45"></g>
+        <path class="hi" d="M155,285 L485,285 L485,296 L155,296 Z" opacity=".8"/>
+      </g>
+      <path class="swell" data-w="2" d="M150,278 L490,278 L490,370 L150,370 Z"></path>
+      <line x1="320" y1="278" x2="320" y2="370" class="li-thin" opacity=".25"/>
+
+      <!-- left cylinder head : LIT face — curved taille wrapping the bank, light -->
+      <g clip-path="url(#clip-eb-left)">
+        <g class="taille" data-mode="cyl" data-x="150" data-y="100" data-w="178" data-h="180" data-angle="78" data-spacing="9" data-bow="26" data-color="var(--ink)" data-sw=".5" data-op=".55"></g>
+        <path class="hi" d="M158,150 L215,120 L225,140 L168,172 Z" opacity=".95"/>
+      </g>
+      <path class="swell" data-w="2.6" d="M150,280 L200,112 L300,100 L328,280 Z"></path>
+      <g class="li-thin" opacity=".65">
+        <line x1="171" y1="145" x2="308" y2="133"/>
+        <line x1="176" y1="172" x2="304" y2="160"/>
+        <line x1="181" y1="199" x2="300" y2="187"/>
+        <line x1="186" y1="226" x2="296" y2="214"/>
+        <line x1="191" y1="253" x2="292" y2="241"/>
+      </g>
+
+      <!-- right cylinder head : SHADOW side — dense contre-taille in the V valley -->
+      <g clip-path="url(#clip-eb-right)">
+        <g class="taille" data-mode="cyl" data-x="312" data-y="100" data-w="178" data-h="180" data-angle="102" data-spacing="7" data-bow="22" data-color="var(--ink)" data-sw=".55" data-op=".6"></g>
+        <g class="contre" data-x="312" data-y="100" data-w="70" data-h="180" data-angle="55" data-angle2="15" data-spacing="3.6" data-spacing2="4.4" data-color="var(--ink)" data-sw=".55" data-op=".65"></g>
+      </g>
+      <path class="swell" data-w="2.6" d="M490,280 L440,112 L340,100 L312,280 Z"></path>
+      <g class="li-thin" opacity=".65">
+        <line x1="469" y1="145" x2="332" y2="133"/>
+        <line x1="464" y1="172" x2="336" y2="160"/>
+        <line x1="459" y1="199" x2="340" y2="187"/>
+        <line x1="454" y1="226" x2="344" y2="214"/>
+        <line x1="449" y1="253" x2="348" y2="241"/>
+      </g>
+      <!-- deep valley shadow between the banks -->
+      <clipPath id="clip-eb-valley"><rect x="298" y="95" width="44" height="190"/></clipPath>
+      <g clip-path="url(#clip-eb-valley)"><g class="contre" data-x="298" data-y="95" data-w="44" data-h="190" data-angle="80" data-angle2="20" data-spacing="3" data-spacing2="3.6" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+
+      <!-- spider intake manifold, bridging the V -->
+      <rect x="278" y="66" width="84" height="38" rx="9" class="li" fill="var(--paper)" stroke-width="1.1"/>
+      <line x1="320" y1="66" x2="320" y2="44" class="li-thin"/>
+      <ellipse cx="320" cy="38" rx="15" ry="8" class="li-thin" fill="var(--paper)"/>
+      <path d="M292,104 C270,113 250,122 232,138" class="li-thin"/>
+      <path d="M304,104 C288,120 270,134 254,152" class="li-thin"/>
+      <path d="M316,104 C308,126 296,146 284,166" class="li-thin"/>
+      <path d="M348,104 C370,113 390,122 408,138" class="li-thin"/>
+      <path d="M336,104 C352,120 370,134 386,152" class="li-thin"/>
+      <path d="M324,104 C332,126 344,146 356,166" class="li-thin"/>
+      <!-- white highlight along the top edges of the cam covers -->
+      <path class="hi" d="M278,68 L362,68 L362,74 L278,74 Z" opacity=".9"/>
+
+      <!-- accessory belt loop -->
+      <circle cx="129" cy="345" r="33" class="li-thin" fill="none"/>
+      <circle cx="129" cy="345" r="19" class="li-thin" fill="var(--paper)"/>
+      <circle cx="129" cy="345" r="5" fill="var(--ink)"/>
+      <circle cx="129" cy="312" r="11" class="li-thin" fill="var(--paper)"/>
+      <circle cx="129" cy="312" r="3" fill="var(--ink)"/>
+
+      <!-- dipstick -->
+      <path class="swell" data-w="1.4" d="M462,282 C478,260 484,240 482,220"></path>
+      <circle cx="482" cy="215" r="7" class="li-thin" fill="var(--paper)"/>
+
+      <!-- header-style exhaust -->
+      <path d="M158,168 C122,178 100,198 88,224" class="li-thin"/>
+      <path d="M164,206 C130,212 106,226 92,248" class="li-thin"/>
+      <path d="M172,244 C142,248 116,258 98,272" class="li-thin"/>
+      <rect x="76" y="266" width="24" height="14" rx="3" class="li-thin" fill="none"/>
+      <path d="M482,168 C518,178 540,198 552,224" class="li-thin"/>
+      <path d="M476,206 C510,212 534,226 548,248" class="li-thin"/>
+      <path d="M468,244 C498,248 524,258 542,272" class="li-thin"/>
+      <rect x="540" y="266" width="24" height="14" rx="3" class="li-thin" fill="none"/>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. VII</span>发动机缸体：蜘蛛式进气歧管、肋纹气门室盖 <span class="sc">V6 Block — Spider Intake, Ribbed Valve Covers</span></div>
+  </div>
+
+  <div class="frame" style="margin-top:6mm;max-width:92mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 520 300" role="img" aria-label="Cylinder head cross section, densest cross-hatch on cut surfaces">
+      <defs>
+        <clipPath id="clip-ch-block"><rect x="60" y="18" width="400" height="220" rx="14"/></clipPath>
+      </defs>
+      <line x1="30" y1="128" x2="490" y2="128" class="constr"/>
+      <g clip-path="url(#clip-ch-block)">
+        <g class="taille" data-mode="flat" data-x="60" data-y="18" data-w="400" data-h="220" data-angle="16" data-spacing="7" data-color="var(--ink)" data-sw=".45" data-op=".4"></g>
+        <path class="hi" d="M70,26 L450,26 L450,36 L70,36 Z" opacity=".9"/>
+      </g>
+      <rect x="60" y="18" width="400" height="220" rx="14" class="li" fill="none" stroke-width="1.1"/>
+      <circle cx="90" cy="30" r="4" class="li-thin"/><circle cx="180" cy="30" r="4" class="li-thin"/>
+      <circle cx="340" cy="30" r="4" class="li-thin"/><circle cx="430" cy="30" r="4" class="li-thin"/>
+
+      <!-- combustion chamber cutout: cut surface, densest cross-hatch -->
+      <defs><clipPath id="clip-ch-chamber"><path d="M170,222 Q260,264 350,222 L350,238 Q260,280 170,238 Z"/></clipPath></defs>
+      <g clip-path="url(#clip-ch-chamber)">
+        <g class="contre" data-x="160" data-y="215" data-w="200" data-h="72" data-angle="45" data-angle2="-45" data-spacing="3" data-spacing2="3.6" data-color="var(--ink)" data-sw=".5" data-op=".7"></g>
+      </g>
+      <path d="M170,222 Q260,264 350,222 L350,238 Q260,280 170,238 Z" class="li" fill="none" stroke-width="1.1"/>
+
+      <!-- intake / exhaust ports -->
+      <path d="M60,140 C110,150 130,170 148,205" class="li-thin"/>
+      <path d="M60,155 C104,164 122,180 138,208" class="li-thin"/>
+      <path d="M460,140 C410,150 390,170 372,205" class="li-thin"/>
+      <path d="M460,155 C416,164 398,180 382,208" class="li-thin"/>
+
+      <!-- intake valve assembly (uncut: light taille only) -->
+      <g>
+        <rect x="150" y="66" width="14" height="20" rx="3" class="li-thin" fill="none"/>
+        <path class="swell" data-w="1.6" d="M157,82 L157,214"></path>
+        <path d="M133,214 C133,222 143,228 157,228 C171,228 181,222 181,214" class="li" fill="none" stroke-width="1.1"/>
+        <ellipse cx="145" cy="82" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="145" cy="97" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="145" cy="112" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="145" cy="127" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="145" cy="142" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="145" cy="157" rx="17" ry="6" class="li-thin" fill="none"/>
+        <rect x="132" y="169" width="26" height="12" rx="4" class="li-thin" fill="var(--paper)"/>
+        <path d="M137,44 C150,40 165,44 168,58 C170,70 158,82 145,78 C133,74 126,64 128,54 C130,48 133,45 137,44 Z" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M100,32 A40,40 0 0 1 130,20" class="li-thin" opacity=".55"/>
+        <path d="M124,20 L130,20 L126,27 Z" fill="var(--ink)" opacity=".7"/>
+        <rect x="132" y="60" width="30" height="13" rx="4" class="li-thin" fill="var(--paper)"/>
+      </g>
+      <!-- exhaust valve assembly (mirror) -->
+      <g>
+        <rect x="356" y="66" width="14" height="20" rx="3" class="li-thin" fill="none"/>
+        <path class="swell" data-w="1.6" d="M363,82 L363,214"></path>
+        <path d="M339,214 C339,222 349,228 363,228 C377,228 387,222 387,214" class="li" fill="none" stroke-width="1.1"/>
+        <ellipse cx="375" cy="82" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="375" cy="97" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="375" cy="112" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="375" cy="127" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="375" cy="142" rx="17" ry="6" class="li-thin" fill="none"/>
+        <ellipse cx="375" cy="157" rx="17" ry="6" class="li-thin" fill="none"/>
+        <rect x="362" y="169" width="26" height="12" rx="4" class="li-thin" fill="var(--paper)"/>
+        <path d="M383,44 C370,40 355,44 352,58 C350,70 362,82 375,78 C387,74 394,64 392,54 C390,48 387,45 383,44 Z" class="li" fill="none" stroke-width="1.1"/>
+        <path d="M420,32 A40,40 0 0 0 390,20" class="li-thin" opacity=".55"/>
+        <path d="M396,20 L390,20 L394,27 Z" fill="var(--ink)" opacity=".7"/>
+        <rect x="358" y="60" width="30" height="13" rx="4" class="li-thin" fill="var(--paper)"/>
+      </g>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. VIII</span>汽缸盖剖面：气门、弹簧、凸轮 <span class="sc">Cylinder Head, Section — Valves, Springs, Cam Lobe</span></div>
+  </div>
+
+  <div class="pageno">06<span class="ttl">04 重生 Rebuild</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 05 底盘 CHASSIS — PL. IX -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-chassis">
+  <div class="chapter-no">05</div>
+  <h1 class="title" style="margin-top:2mm">底盘<span class="t-en">Chassis</span></h1>
+  <div class="cap" style="max-width:150mm;margin-top:4mm">
+    <p class="zh">决定一辆车"开起来像什么"的，从来不是发动机，而是这些藏在轮拱里的小零件。</p>
+    <p class="en">What decides how a car actually feels was never the engine — it was these small parts hidden inside the wheel arch.</p>
+  </div>
+
+  <div class="frame" style="margin-top:2mm;max-width:150mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 720 800" role="img" aria-label="Suspension exploded diagram, engraved">
+      <line x1="360" y1="16" x2="360" y2="770" class="constr"/>
+
+      <!-- coil spring -->
+      <defs><clipPath id="clip-ch-coil"><path d="M360,30 C400,50 320,70 360,90 C400,110 320,130 360,150 C400,170 320,190 360,210 C400,230 320,250 360,268"/></clipPath></defs>
+      <path class="swell" data-w="3.2" d="M360,30 C400,50 320,70 360,90 C400,110 320,130 360,150 C400,170 320,190 360,210 C400,230 320,250 360,268"></path>
+      <line x1="320" y1="80" x2="150" y2="70" class="leader"/>
+      <text x="145" y="62" text-anchor="end" class="lbl-svg">螺旋弹簧</text>
+      <text x="145" y="76" text-anchor="end" class="lbl-svg-en">Coil spring</text>
+
+      <!-- damper -->
+      <g transform="translate(0,296)">
+        <defs><clipPath id="clip-ch-damper"><rect x="337" y="36" width="46" height="128" rx="10"/></clipPath></defs>
+        <path class="swell" data-w="1.6" d="M360,0 L360,36"></path>
+        <circle cx="360" cy="9" r="8" class="li-thin" fill="none"/>
+        <g clip-path="url(#clip-ch-damper)">
+          <g class="taille" data-mode="cyl" data-x="337" data-y="36" data-w="46" data-h="128" data-angle="90" data-spacing="6" data-bow="7" data-color="var(--ink)" data-sw=".5" data-op=".55"></g>
+          <path class="hi" d="M340,40 L349,40 L349,160 L340,160 Z" opacity=".85"/>
+        </g>
+        <rect x="337" y="36" width="46" height="128" rx="10" class="li" fill="none" stroke-width="1.1"/>
+        <path class="swell" data-w="1.6" d="M360,164 L360,226"></path>
+        <circle cx="360" cy="232" r="8" class="li-thin" fill="none"/>
+      </g>
+      <line x1="383" y1="392" x2="540" y2="382" class="leader"/>
+      <text x="545" y="376" text-anchor="start" class="lbl-svg">减震器</text>
+      <text x="545" y="390" text-anchor="start" class="lbl-svg-en">Damper / shock absorber</text>
+
+      <!-- ball joint -->
+      <g transform="translate(0,540)">
+        <defs><clipPath id="clip-ch-ball"><path d="M320,16 L400,16 L409,50 Q360,68 311,50 Z"/></clipPath><clipPath id="clip-ch-ballhead"><circle cx="360" cy="56" r="16"/></clipPath></defs>
+        <g clip-path="url(#clip-ch-ball)"><g class="taille" data-mode="flat" data-x="311" data-y="16" data-w="98" data-h="34" data-angle="15" data-spacing="5" data-color="var(--ink)" data-sw=".5" data-op=".5"></g></g>
+        <path class="swell" data-w="1.6" d="M320,16 L400,16 L409,50 Q360,68 311,50 Z"></path>
+        <g clip-path="url(#clip-ch-ballhead)"><g class="contre" data-x="344" data-y="40" data-w="32" data-h="32" data-angle="30" data-angle2="-30" data-spacing="3" data-spacing2="3.6" data-color="var(--ink)" data-sw=".5" data-op=".6"></g></g>
+        <circle cx="360" cy="56" r="16" class="li" fill="none" stroke-width="1.1"/>
+        <line x1="360" y1="72" x2="360" y2="116" class="li-thin" stroke-dasharray="4 3"/>
+      </g>
+      <line x1="381" y1="578" x2="540" y2="566" class="leader"/>
+      <text x="545" y="560" text-anchor="start" class="lbl-svg">球头</text>
+      <text x="545" y="574" text-anchor="start" class="lbl-svg-en">Ball joint</text>
+
+      <!-- bushing -->
+      <g transform="translate(0,540)">
+        <defs><clipPath id="clip-ch-bush"><circle cx="240" cy="180" r="28"/></clipPath></defs>
+        <g clip-path="url(#clip-ch-bush)"><g class="radial" data-cx="240" data-cy="180" data-rin="12" data-rout="29" data-n="24" data-a0="0" data-a1="360" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+        <circle cx="240" cy="180" r="28" class="li" fill="none" stroke-width="1.1"/>
+        <circle cx="240" cy="180" r="12" class="li-thin" fill="var(--paper)"/>
+        <line x1="207" y1="180" x2="273" y2="180" class="li-thin" opacity=".55"/>
+        <g class="li-thin" opacity=".6">
+          <line x1="219" y1="160" x2="226" y2="167"/><line x1="231" y1="153" x2="238" y2="160"/>
+          <line x1="255" y1="153" x2="248" y2="160"/><line x1="264" y1="160" x2="257" y2="167"/>
+        </g>
+      </g>
+      <line x1="211" y1="740" x2="150" y2="756" class="leader"/>
+      <text x="145" y="762" text-anchor="end" class="lbl-svg">衬套</text>
+      <text x="145" y="776" text-anchor="end" class="lbl-svg-en">Bushing</text>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. IX</span>悬挂分解图 <span class="sc">Suspension, Exploded</span></div>
+  </div>
+
+  <div class="pageno">07<span class="ttl">05 底盘 Chassis</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 06 传动 DRIVELINE — PL. X -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-driveline">
+  <div class="chapter-no">06</div>
+  <h1 class="title" style="margin-top:2mm">传动<span class="t-en">Driveline</span></h1>
+  <div class="rule"></div>
+
+  <div class="frame" style="margin-top:12mm;max-width:128mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 600 480" role="img" aria-label="Differential crown wheel and pinion, meshed, engraved">
+      <g transform="translate(340,240)">
+        <defs><clipPath id="clip-dl-crown"><circle r="150"/></clipPath><clipPath id="clip-dl-hub"><circle r="62"/></clipPath></defs>
+        <g clip-path="url(#clip-dl-crown)">
+          <g class="radial" data-cx="0" data-cy="0" data-rin="70" data-rout="150" data-n="46" data-a0="20" data-a1="340" data-color="var(--ink)" data-sw=".5" data-op=".6"></g>
+          <path class="hi" transform="rotate(-35)" d="M-40,-140 A150,150 0 0 1 60,-135 L45,-105 A118,118 0 0 0 -30,-108 Z" opacity=".85"/>
+        </g>
+        <circle r="150" class="li" fill="none" stroke-width="1.1"/>
+        <g class="li-thin">
+          <line x1="0" y1="-150" x2="0" y2="-136"/><line x1="26.1" y1="-148.7" x2="23.7" y2="-135.1"/><line x1="51.5" y1="-141.7" x2="46.9" y2="-128.9"/><line x1="75" y1="-129.9" x2="68.2" y2="-118.3"/><line x1="96.2" y1="-113.4" x2="87.5" y2="-103.1"/><line x1="113.4" y1="-96.2" x2="103.1" y2="-87.5"/><line x1="129.9" y1="-75" x2="118.3" y2="-68.2"/><line x1="141.7" y1="-51.5" x2="128.9" y2="-46.9"/><line x1="148.7" y1="-26.1" x2="135.1" y2="-23.7"/><line x1="150" y1="0" x2="136" y2="0"/><line x1="148.7" y1="26.1" x2="135.1" y2="23.7"/><line x1="141.7" y1="51.5" x2="128.9" y2="46.9"/><line x1="129.9" y1="75" x2="118.3" y2="68.2"/><line x1="113.4" y1="96.2" x2="103.1" y2="87.5"/><line x1="96.2" y1="113.4" x2="87.5" y2="103.1"/><line x1="75" y1="129.9" x2="68.2" y2="118.3"/><line x1="51.5" y1="141.7" x2="46.9" y2="128.9"/><line x1="26.1" y1="148.7" x2="23.7" y2="135.1"/>
+          <line x1="0" y1="150" x2="0" y2="136"/><line x1="-26.1" y1="148.7" x2="-23.7" y2="135.1"/><line x1="-51.5" y1="141.7" x2="-46.9" y2="128.9"/><line x1="-75" y1="129.9" x2="-68.2" y2="118.3"/><line x1="-96.2" y1="113.4" x2="-87.5" y2="103.1"/><line x1="-113.4" y1="96.2" x2="-103.1" y2="87.5"/><line x1="-129.9" y1="75" x2="-118.3" y2="68.2"/><line x1="-141.7" y1="51.5" x2="-128.9" y2="46.9"/><line x1="-148.7" y1="26.1" x2="-135.1" y2="23.7"/><line x1="-150" y1="0" x2="-136" y2="0"/><line x1="-148.7" y1="-26.1" x2="-135.1" y2="-23.7"/><line x1="-141.7" y1="-51.5" x2="-128.9" y2="-46.9"/><line x1="-129.9" y1="-75" x2="-118.3" y2="-68.2"/><line x1="-113.4" y1="-96.2" x2="-103.1" y2="-87.5"/><line x1="-96.2" y1="-113.4" x2="-87.5" y2="-103.1"/><line x1="-75" y1="-129.9" x2="-68.2" y2="-118.3"/><line x1="-51.5" y1="-141.7" x2="-46.9" y2="-128.9"/><line x1="-26.1" y1="-148.7" x2="-23.7" y2="-135.1"/>
+        </g>
+        <g clip-path="url(#clip-dl-hub)"><g class="contre" data-x="-62" data-y="-62" data-w="124" data-h="124" data-angle="40" data-angle2="-20" data-spacing="4" data-spacing2="5" data-color="var(--ink)" data-sw=".5" data-op=".6"></g></g>
+        <circle r="62" class="li" fill="none" stroke-width="1.1"/>
+        <circle r="10" fill="var(--ink)"/>
+
+        <!-- pinion -->
+        <g transform="translate(-204,0)">
+          <defs><clipPath id="clip-dl-pin"><circle r="58"/></clipPath></defs>
+          <g clip-path="url(#clip-dl-pin)"><g class="radial" data-cx="0" data-cy="0" data-rin="8" data-rout="58" data-n="26" data-a0="20" data-a1="340" data-color="var(--ink)" data-sw=".5" data-op=".6"></g></g>
+          <circle r="58" class="li" fill="none" stroke-width="1.1"/>
+          <g class="li-thin">
+            <line x1="0" y1="-58" x2="0" y2="-48"/><line x1="29" y1="-50.2" x2="24" y2="-41.6"/><line x1="50.2" y1="-29" x2="41.6" y2="-24"/><line x1="58" y1="0" x2="48" y2="0"/><line x1="50.2" y1="29" x2="41.6" y2="24"/><line x1="29" y1="50.2" x2="24" y2="41.6"/><line x1="0" y1="58" x2="0" y2="48"/><line x1="-29" y1="50.2" x2="-24" y2="41.6"/><line x1="-50.2" y1="29" x2="-41.6" y2="24"/><line x1="-58" y1="0" x2="-48" y2="0"/><line x1="-50.2" y1="-29" x2="-41.6" y2="-24"/><line x1="-29" y1="-50.2" x2="-24" y2="-41.6"/>
+          </g>
+          <circle r="8" fill="var(--ink)"/>
+          <line x1="-58" y1="0" x2="-150" y2="0" class="li-thin" opacity=".55"/>
+        </g>
+
+        <!-- oil drop -->
+        <path class="swell-blue" data-w="9" d="M148,108 C152,116 152,127 148,134 C144,127 144,116 148,108"></path>
+        <circle cx="168" cy="126" r="2.6" class="li-teal-thin" fill="none"/>
+        <circle cx="178" cy="135" r="1.8" class="li-teal-thin" fill="none"/>
+      </g>
+      <text x="300" y="450" text-anchor="middle" class="lbl-svg">冠齿轮与小齿轮 <tspan class="lbl-svg-en">Crown wheel &amp; pinion</tspan></text>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. X</span>冠齿轮与小齿轮 <span class="sc">Crown Wheel &amp; Pinion</span></div>
+  </div>
+
+  <div class="cap center" style="margin-top:12mm;max-width:135mm">
+    <p class="zh">涉水之后，第一件事不是庆祝，是换油。差速器不怕水，怕的是水混进油里没人理会。这是最便宜的保险。</p>
+    <p class="en" style="text-align:center">After a water crossing, the first task is not celebration — it is an oil change. A differential does not fear water; it fears water mixed into oil and ignored. It is the cheapest insurance there is.</p>
+  </div>
+
+  <div class="pageno">08<span class="ttl">06 传动 Driveline</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 07 组装 REASSEMBLY — PL. XI -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-reassembly">
+  <div class="chapter-no">07</div>
+  <h1 class="title" style="margin-top:2mm">组装<span class="t-en">Reassembly</span></h1>
+  <div class="rule"></div>
+
+  <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:210mm">
+  <div class="frame" style="max-width:104mm;margin-left:auto;margin-right:auto">
+    <svg viewBox="0 0 420 170" role="img" aria-label="Torque wrench, engraved">
+      <defs><clipPath id="clip-tw-head"><path d="M262,68 C300,60 320,72 320,90 C320,108 300,120 262,112 Z"/></clipPath></defs>
+      <path class="swell" data-w="4.4" d="M20,90 L270,90"></path>
+      <rect x="90" y="72" width="86" height="24" rx="4" class="li-thin" fill="var(--paper)"/>
+      <line x1="100" y1="80" x2="100" y2="88" class="li-thin" opacity=".55"/>
+      <line x1="118" y1="78" x2="118" y2="90" class="li-thin" opacity=".55"/>
+      <line x1="136" y1="80" x2="136" y2="88" class="li-thin" opacity=".55"/>
+      <line x1="154" y1="78" x2="154" y2="90" class="li-thin" opacity=".55"/>
+      <path class="swell-blue" data-w="2.4" d="M133,90 L150,80"></path>
+      <circle cx="150" cy="80" r="2.6" fill="var(--blue)"/>
+      <g clip-path="url(#clip-tw-head)"><g class="taille" data-mode="cyl" data-x="262" data-y="60" data-w="58" data-h="52" data-angle="80" data-spacing="6" data-bow="8" data-color="var(--ink)" data-sw=".5" data-op=".55"></g></g>
+      <path class="swell" data-w="2" d="M262,68 C300,60 320,72 320,90 C320,108 300,120 262,112 Z"></path>
+      <circle cx="300" cy="90" r="16" class="li" fill="none" stroke-width="1.1"/>
+      <rect x="292" y="82" width="16" height="16" class="li-thin" fill="none"/>
+      <clipPath id="clip-tw-socket"><rect x="292" y="82" width="16" height="16"/></clipPath>
+      <g clip-path="url(#clip-tw-socket)"><g class="contre" data-x="292" data-y="82" data-w="16" data-h="16" data-angle="45" data-angle2="-45" data-spacing="2.6" data-spacing2="3.2" data-color="var(--ink)" data-sw=".4" data-op=".6"></g></g>
+      <circle cx="18" cy="90" r="9" class="li-thin" fill="var(--paper)"/>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. XI</span>扭力扳手 <span class="sc">Torque Wrench</span></div>
+  </div>
+
+  <div class="pull" style="margin-top:24mm">
+    「每一颗螺栓都有它的数字。」
+    <span class="pull-en">"Every bolt has its number."</span>
+  </div>
+
+  <div class="cap center" style="margin-top:18mm;max-width:120mm">
+    <p class="zh">扭力扳手咔的一声，是这本书里最不浪漫、也最重要的一句标点。</p>
+    <p class="en" style="text-align:center">The click of a torque wrench is the least romantic punctuation mark in this book — and the most important one.</p>
+  </div>
+  </div>
+
+  <div class="pageno">09<span class="ttl">07 组装 Reassembly</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 08 第一次启动 FIRST START — PL. XII -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-firststart">
+  <div class="chapter-no">08</div>
+  <h1 class="title" style="margin-top:2mm">第一次启动<span class="t-en">First Start</span></h1>
+
+  <div style="margin-top:48mm;text-align:center">
+    <svg viewBox="0 0 220 220" width="150" height="150" style="margin:0 auto;display:block" role="img" aria-label="Ignition key and starting motif, sparse engraving">
+      <circle cx="110" cy="110" r="88" class="li-thin" opacity=".35"/>
+      <g class="stipple" data-x="30" data-y="30" data-w="160" data-h="160" data-count="70" data-rmin=".4" data-rmax="1" data-fx="110" data-fy="110" data-invert="1" data-color="var(--ink)" data-op=".3"></g>
+      <circle cx="110" cy="110" r="6" fill="var(--ink)"/>
+      <path class="swell-blue" data-w="2.4" d="M110,110 L110,58"></path>
+      <path d="M110,110 L148,148" class="li-thin" opacity=".5"/>
+      <path d="M110,110 L72,148" class="li-thin" opacity=".5"/>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. XII</span>点火 <span class="sc">Ignition</span></div>
+  </div>
+
+  <div class="cap center" style="margin-top:12mm;max-width:110mm">
+    <p class="zh">曾经是零件、图纸和编号袋的东西，忽然发出了声音。</p>
+    <p class="en" style="text-align:center">What was, until a moment ago, only parts, drawings and numbered bags — suddenly makes a sound.</p>
+  </div>
+
+  <div class="pageno">10<span class="ttl">08 第一次启动 First Start</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 09 磨合 RUN-IN — PL. XIII -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-runin">
+  <div class="chapter-no">09</div>
+  <h1 class="title" style="margin-top:2mm">磨合<span class="t-en">Run-in</span></h1>
+  <div class="rule"></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14mm;margin-top:14mm;align-items:center">
+    <div>
+      <p class="zh" style="font-size:13px;line-height:1.95">头一千公里，转速要压低，性子要压住。</p>
+      <p class="zh" style="font-size:13px;line-height:1.95;margin-top:10px">这不是保守，是让新的公差学会彼此。第一次换油，是这段时间里唯一不能省的一步。</p>
+      <p class="en" style="margin-top:14px">For the first thousand kilometres, keep the revs down and the impatience down further.</p>
+      <p class="en" style="margin-top:8px">This is not caution for its own sake — it is letting new tolerances learn each other. The first oil change is the one step in this period that cannot be skipped.</p>
+    </div>
+    <div class="frame">
+      <svg viewBox="0 0 320 260" role="img" aria-label="Odometer detail, run-in period">
+        <defs><clipPath id="clip-ri-face"><circle cx="160" cy="120" r="100"/></clipPath></defs>
+        <g clip-path="url(#clip-ri-face)">
+          <g class="radial" data-cx="160" data-cy="120" data-rin="84" data-rout="101" data-n="50" data-a0="0" data-a1="360" data-color="var(--ink)" data-sw=".5" data-op=".6"></g>
+          <path class="hi" d="M90,70 A84,84 0 0 1 182,28 L172,50 A62,62 0 0 0 108,84 Z"/>
+        </g>
+        <circle cx="160" cy="120" r="100" class="li" fill="none" stroke-width="1.1"/>
+        <circle cx="160" cy="120" r="84" class="li-thin" opacity=".5"/>
+        <g stroke="var(--ink)" opacity=".6">
+          <line x1="160" y1="24" x2="160" y2="38" stroke-width="1.4"/>
+          <line x1="160" y1="202" x2="160" y2="216" stroke-width="1.4"/>
+          <line x1="64" y1="120" x2="78" y2="120" stroke-width="1.4"/>
+          <line x1="242" y1="120" x2="256" y2="120" stroke-width="1.4"/>
+        </g>
+        <path class="swell-blue" data-w="2.2" d="M160,120 L196,76"></path>
+        <circle cx="160" cy="120" r="5" fill="var(--ink)"/>
+        <rect x="108" y="150" width="104" height="30" rx="3" class="li" fill="var(--paper)" stroke-width="1.1"/>
+        <g font-size="15" font-weight="600" fill="var(--ink)" text-anchor="middle" font-family="Georgia, serif">
+          <text x="124" y="171">0</text><text x="140" y="171">0</text><text x="156" y="171">0</text>
+          <text x="172" y="171" fill="var(--blue)">1</text><text x="188" y="171">0</text><text x="204" y="171">0</text>
+        </g>
+        <text x="160" y="204" text-anchor="middle" class="lbl-svg-en">km</text>
+      </svg>
+      <div class="plate-cap"><span class="pl">PL. XIII</span>磨合里程 <span class="sc">Run-in, First 1000&nbsp;km</span></div>
+    </div>
+  </div>
+
+  <div class="pageno">11<span class="ttl">09 磨合 Run-in</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 前后 BEFORE & AFTER — PL. XIV -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-beforeafter">
+  <div class="chapter-eyebrow" style="text-align:center">前后 &nbsp;BEFORE &amp; AFTER</div>
+
+  <div style="display:flex;flex-direction:column;justify-content:center;height:222mm">
+  <div>
+    <div class="frame">
+      <svg viewBox="0 0 1000 300" role="img" aria-label="Before: tired, sagging LC200, dense sepia cross-hatch">
+        <defs>
+          <clipPath id="clip-ba-body1"><path d="M 134 245 C 130 238, 128 230, 128 220 L 128 138 C 128 124, 133 114, 144 108 L 196 98 C 230 92, 266 88, 302 86 C 314 64, 330 36, 346 18 C 354 8, 364 2, 378 0 L 762 0 C 776 1, 786 6, 792 18 C 798 32, 802 48, 804 68 C 808 122, 812 172, 815 198 C 817 214, 824 224, 836 228 L 860 232 C 866 234, 869 238, 869 245 L 761 245 A 70 70 0 0 0 621 245 L 333 245 A 70 70 0 0 0 193 245 Z"/></clipPath>
+          <clipPath id="clip-ba-pool"><ellipse cx="510" cy="242" rx="330" ry="18"/></clipPath>
+        </defs>
+        <g clip-path="url(#clip-ba-pool)"><g class="contre" data-x="150" data-y="200" data-w="600" data-h="55" data-angle="35" data-angle2="-30" data-spacing="4.4" data-spacing2="5.4" data-color="var(--sepia)" data-sw=".5" data-op=".38"></g></g>
+        <g clip-path="url(#clip-ba-body1)">
+          <g class="contre" data-x="128" data-y="0" data-w="741" data-h="245" data-angle="12" data-angle2="-40" data-spacing="6" data-spacing2="8" data-color="var(--sepia)" data-sw=".55" data-op=".6"></g>
+          <g class="contre" data-x="600" data-y="10" data-w="270" data-h="200" data-angle="18" data-angle2="-42" data-spacing="4" data-spacing2="4.8" data-color="var(--sepia)" data-sw=".6" data-op=".55"></g>
+          <path class="hi" d="M340,20 C420,10 560,6 700,14 L698,28 C560,20 420,24 342,34 Z" opacity=".9"/>
+        </g>
+        <path class="swell-sepia" data-w="2.8" d="M 134 245 C 130 238, 128 230, 128 220 L 128 138 C 128 124, 133 114, 144 108 L 196 98 C 230 92, 266 88, 302 86 C 314 64, 330 36, 346 18 C 354 8, 364 2, 378 0 L 762 0 C 776 1, 786 6, 792 18 C 798 32, 802 48, 804 68 C 808 122, 812 172, 815 198 C 817 214, 824 224, 836 228 L 860 232 C 866 234, 869 238, 869 245 L 761 245 A 70 70 0 0 0 621 245 L 333 245 A 70 70 0 0 0 193 245 Z"></path>
+        <path d="M 380 -7 L 760 -7" class="li-rust" stroke-width="1.8" opacity=".65"/>
+        <g class="stipple" data-x="200" data-y="170" data-w="130" data-h="80" data-count="120" data-rmin=".4" data-rmax="1.3" data-fx="263" data-fy="245" data-invert="1" data-color="var(--sepia)" data-op=".5"></g>
+        <g class="stipple" data-x="630" data-y="185" data-w="130" data-h="85" data-count="130" data-rmin=".4" data-rmax="1.4" data-fx="691" data-fy="260" data-invert="1" data-color="var(--sepia)" data-op=".5"></g>
+        <g>
+          <defs><clipPath id="clip-ba-t1"><circle cx="263" cy="210" r="60"/></clipPath></defs>
+          <g clip-path="url(#clip-ba-t1)"><g class="radial" data-cx="263" data-cy="210" data-rin="35" data-rout="62" data-form="ring" data-spacing="3.2" data-a0="25" data-a1="330" data-color="var(--sepia)" data-sw=".5" data-op=".7"></g></g>
+          <circle cx="263" cy="210" r="60" class="li-rust" fill="none" stroke-width="1.1"/>
+          <circle cx="263" cy="210" r="35" fill="var(--paper)" class="li-rust" stroke-width="1.4"/>
+        </g>
+        <g transform="translate(0,10)">
+          <defs><clipPath id="clip-ba-t2"><circle cx="691" cy="210" r="60"/></clipPath></defs>
+          <g clip-path="url(#clip-ba-t2)"><g class="radial" data-cx="691" data-cy="210" data-rin="35" data-rout="62" data-form="ring" data-spacing="3.2" data-a0="25" data-a1="330" data-color="var(--sepia)" data-sw=".5" data-op=".7"></g></g>
+          <circle cx="691" cy="210" r="60" class="li-rust" fill="none" stroke-width="1.1"/>
+          <circle cx="691" cy="210" r="35" fill="var(--paper)" class="li-rust" stroke-width="1.4"/>
+        </g>
+        <line x1="180" y1="240" x2="840" y2="240" class="li-rust" stroke-width="1.3" opacity=".5" stroke-dasharray="30 4 60 4"/>
+      </svg>
+    </div>
+    <div style="text-align:center;margin-top:2mm">
+      <span class="chapter-eyebrow" style="color:var(--sepia);opacity:1">前 &nbsp;BEFORE</span>
+    </div>
+  </div>
+
+  <div class="rule wide" style="margin:10mm 0"></div>
+
+  <div>
+    <div class="frame">
+      <svg viewBox="0 0 1000 300" role="img" aria-label="After: crisp, restored LC200, light directional taille, clean highlight">
+        <defs>
+          <clipPath id="clip-ba-body2"><path d="M 134 245 C 130 238, 128 230, 128 220 L 128 138 C 128 124, 133 114, 144 108 L 196 98 C 230 92, 266 88, 302 86 C 314 64, 330 36, 346 18 C 354 8, 364 2, 378 0 L 762 0 C 776 1, 786 6, 792 18 C 798 32, 802 48, 804 68 C 808 122, 812 172, 815 198 C 817 214, 824 224, 836 228 L 860 232 C 866 234, 869 238, 869 245 L 761 245 A 70 70 0 0 0 621 245 L 333 245 A 70 70 0 0 0 193 245 Z"/></clipPath>
+        </defs>
+        <line x1="120" y1="260" x2="880" y2="260" class="li-teal-thin" opacity=".6"/>
+        <g class="stipple" data-x="230" data-y="250" data-w="540" data-h="16" data-count="60" data-rmin=".35" data-rmax=".9" data-fx="500" data-fy="258" data-invert="1" data-color="var(--ink)" data-op=".3"></g>
+        <g clip-path="url(#clip-ba-body2)">
+          <g class="taille" data-mode="cyl" data-x="128" data-y="0" data-w="741" data-h="245" data-angle="8" data-spacing="10" data-bow="16" data-color="var(--ink)" data-sw=".5" data-op=".42"></g>
+          <path class="hi" d="M300,88 C420,68 620,58 800,68 L800,48 C620,38 420,48 300,68 Z"/>
+          <path class="hi" d="M150,200 C300,240 620,240 830,198 L830,232 C620,260 300,260 150,232 Z"/>
+        </g>
+        <path class="swell" data-w="2.8" d="M 134 245 C 130 238, 128 230, 128 220 L 128 138 C 128 124, 133 114, 144 108 L 196 98 C 230 92, 266 88, 302 86 C 314 64, 330 36, 346 18 C 354 8, 364 2, 378 0 L 762 0 C 776 1, 786 6, 792 18 C 798 32, 802 48, 804 68 C 808 122, 812 172, 815 198 C 817 214, 824 224, 836 228 L 860 232 C 866 234, 869 238, 869 245 L 761 245 A 70 70 0 0 0 621 245 L 333 245 A 70 70 0 0 0 193 245 Z"></path>
+        <path d="M 380 -7 L 760 -7" class="li" stroke-width="2" opacity=".75"/>
+        <g>
+          <defs><clipPath id="clip-ba-t3"><circle cx="263" cy="210" r="60"/></clipPath></defs>
+          <g clip-path="url(#clip-ba-t3)"><g class="radial" data-cx="263" data-cy="210" data-rin="35" data-rout="61" data-form="ring" data-spacing="2.9" data-a0="20" data-a1="335" data-color="var(--ink)" data-sw=".5" data-op=".75"></g></g>
+          <circle cx="263" cy="210" r="60" class="li" fill="none" stroke-width="1.1"/>
+          <circle cx="263" cy="210" r="35" fill="var(--paper)" class="li" stroke-width="1.4"/>
+        </g>
+        <g>
+          <defs><clipPath id="clip-ba-t4"><circle cx="691" cy="210" r="60"/></clipPath></defs>
+          <g clip-path="url(#clip-ba-t4)"><g class="radial" data-cx="691" data-cy="210" data-rin="35" data-rout="61" data-form="ring" data-spacing="2.9" data-a0="20" data-a1="335" data-color="var(--ink)" data-sw=".5" data-op=".75"></g></g>
+          <circle cx="691" cy="210" r="60" class="li" fill="none" stroke-width="1.1"/>
+          <circle cx="691" cy="210" r="35" fill="var(--paper)" class="li" stroke-width="1.4"/>
+        </g>
+        <line x1="180" y1="240" x2="840" y2="240" class="li-steel" stroke-width="1.3"/>
+      </svg>
+    </div>
+    <div style="text-align:center;margin-top:2mm">
+      <span class="chapter-eyebrow" style="color:var(--blue);opacity:1">后 &nbsp;AFTER</span>
+    </div>
+  </div>
+  </div>
+
+  <div class="pageno">12<span class="ttl">前后 Before &amp; After</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 尾声 THE ROAD AHEAD — PL. XV -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-epilogue">
+  <div class="chapter-eyebrow">尾声 &nbsp;EPILOGUE</div>
+  <h1 class="title">前路<span class="t-en">The Road Ahead</span></h1>
+  <div class="rule"></div>
+
+  <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:206mm">
+  <div class="frame" style="max-width:150mm">
+    <svg viewBox="0 0 800 320" role="img" aria-label="Open road vanishing to a horizon, sparse converging lines, graded stipple">
+      <line x1="0" y1="180" x2="800" y2="180" class="li-thin" opacity=".35"/>
+      <path class="swell" data-w="2.2" d="M120,320 L392,180"></path>
+      <path class="swell" data-w="2.2" d="M680,320 L408,180"></path>
+      <g class="li-thin" opacity=".45">
+        <line x1="220" y1="320" x2="398" y2="222"/>
+        <line x1="580" y1="320" x2="402" y2="222"/>
+      </g>
+      <g class="stipple" data-x="60" data-y="180" data-w="680" data-h="140" data-count="220" data-rmin=".3" data-rmax="1.1" data-fx="400" data-fy="180" data-invert="0" data-color="var(--ink)" data-op=".4"></g>
+      <g class="li-thin" opacity=".5">
+        <line x1="395" y1="300" x2="398" y2="280"/>
+        <line x1="399" y1="260" x2="401" y2="244"/>
+        <line x1="401" y1="228" x2="402.5" y2="216"/>
+        <line x1="403" y1="204" x2="403.8" y2="196"/>
+      </g>
+    </svg>
+    <div class="plate-cap"><span class="pl">PL. XV</span>前路 <span class="sc">The Open Road</span></div>
+  </div>
+
+  <div class="cap center" style="margin-top:16mm;max-width:145mm">
+    <p class="zh">大修不是终点，是一个新的起点。真正保护它的，不是这一次修复的用心，而是往后十年里，枯燥而准时的保养。</p>
+    <p class="en" style="text-align:center">An overhaul is not an ending — it is a beginning. What protects it afterward is not the care taken this once, but ten years of unglamorous, punctual maintenance.</p>
+    <p class="zh" style="margin-top:14px;font-size:12px;color:var(--ink-soft)">详见《车辆档案 — 大修后开档报告》。</p>
+    <p class="en" style="text-align:center;font-size:9.5px">See the companion document, <i>Vehicle File — Post-Overhaul Opening Report</i>.</p>
+  </div>
+  </div>
+
+  <div class="pageno">13<span class="ttl">尾声 The Road Ahead</span></div>
+  <div class="footline">HT · 重生</div>
+</section>
+
+<!-- =========================================================================================== -->
+<!-- 版权页 COLOPHON -->
+<!-- =========================================================================================== -->
+<section class="page" id="p-colophon">
+  <div class="brandrow">
+    <svg width="20" height="20" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#1c1a17"/><text x="15" y="20" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" font-weight="700" fill="#2c5560">HT</text></svg>
+    <div>
+      <div class="wordmark">HENDERSON <b>TRANSPACIFIC</b></div>
+      <div class="wordmark-cn">亨德森环太</div>
+    </div>
+  </div>
+
+  <div class="rule" style="margin-top:14mm"></div>
+
+  <div class="cap" style="max-width:150mm">
+    <p class="zh">本书由 Henderson Transpacific 编制。</p>
+    <p class="en">This book is compiled by Henderson Transpacific.</p>
+    <p class="zh" style="margin-top:14px">书中所有插图均为原创铜版画风格线刻，非实物照片。</p>
+    <p class="en">All illustrations in this book are original copperplate-style line engravings, not photographs.</p>
+  </div>
+
+  <div style="margin-top:20mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14mm">
+    <div>
+      <div class="chapter-eyebrow" style="margin-bottom:0;text-align:left">车主 <span style="text-transform:none;font-style:italic">Owner</span></div>
+      <div style="border-bottom:1px solid var(--ink);opacity:.4;height:26mm"></div>
+    </div>
+    <div>
+      <div class="chapter-eyebrow" style="margin-bottom:0;text-align:left">技师 <span style="text-transform:none;font-style:italic">Technician</span></div>
+      <div style="border-bottom:1px solid var(--ink);opacity:.4;height:26mm"></div>
+    </div>
+    <div>
+      <div class="chapter-eyebrow" style="margin-bottom:0;text-align:left">日期 <span style="text-transform:none;font-style:italic">Date</span></div>
+      <div style="border-bottom:1px solid var(--ink);opacity:.4;height:26mm"></div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:20mm;right:20mm;bottom:18mm">
+    <div class="rule-plain"></div>
+    <p class="en" style="font-style:normal;font-size:8.5px;color:var(--ink-soft);margin-top:8px">
+      本书为叙事纪录，不能替代技术维修档案；具体检修数据以《大修后开档报告》为准。
+      <br>This is a narrative record and does not replace the technical service file; refer to the Post-Overhaul Opening Report for technical data.
+    </p>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<button id="a4print" class="noprint" onclick="window.print()" title="打印或另存 PDF Print or save as PDF"
+ style="position:fixed;right:18px;bottom:18px;z-index:999;display:flex;align-items:center;gap:7px;
+ padding:10px 16px;border:0;border-radius:24px;background:#1c1a17;color:#fff;font:600 12.5px/1 'Helvetica Neue',Arial,sans-serif;white-space:nowrap;
+ letter-spacing:.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28)">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+打印 A4 Print</button>
+
+<script>
+/* =====================================================================
+   copperplate engraving generator — burin-precise, no filters, no wobble.
+   Reads declarative data-* placeholders and emits taille (directional
+   hatch), contre-taille (cross-hatch), radial hatch (cylindrical /
+   spherical volumes), stippling, and swelling burin contours.
+   Runs once on load; pure DOM manipulation, no external assets.
+   ===================================================================== */
+(function(){
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function mk(tag,attrs){
+    var e=document.createElementNS(SVGNS,tag);
+    for(var k in attrs){ if(attrs[k]!==undefined) e.setAttribute(k,attrs[k]); }
+    return e;
+  }
+
+  /* straight parallel lines at angleDeg, generous coverage of (x,y,w,h);
+     the caller's ancestor <clipPath> trims them to the true silhouette. */
+  function flatLines(x,y,w,h,angleDeg,spacing){
+    var rad=angleDeg*Math.PI/180;
+    var dx=Math.cos(rad), dy=Math.sin(rad);
+    var nx=-dy, ny=dx;
+    var diag=Math.hypot(w,h)*0.75;
+    var cx=x+w/2, cy=y+h/2;
+    var out=[];
+    for(var o=-diag; o<=diag; o+=spacing){
+      var px=cx+nx*o, py=cy+ny*o;
+      out.push([px-dx*diag, py-dy*diag, px+dx*diag, py+dy*diag]);
+    }
+    return out;
+  }
+
+  /* lines that wrap perpendicular to a cylinder's long axis, bowed
+     slightly forward — the classic engraved-barrel curvature. */
+  function cylLines(x,y,w,h,axisAngleDeg,spacing,bow){
+    var rad=axisAngleDeg*Math.PI/180;
+    var ax=Math.cos(rad), ay=Math.sin(rad);
+    var px=-ay, py=ax;
+    var along=Math.hypot(w,h);
+    var cx=x+w/2, cy=y+h/2;
+    var out=[];
+    for(var o=-along/2; o<=along/2; o+=spacing){
+      var sx=cx+ax*o, sy=cy+ay*o;
+      var x1=sx-px*along, y1=sy-py*along;
+      var x2=sx+px*along, y2=sy+py*along;
+      var mcx=sx+ax*bow, mcy=sy+ay*bow;
+      out.push('M'+x1.toFixed(1)+','+y1.toFixed(1)+' Q'+mcx.toFixed(1)+','+mcy.toFixed(1)+' '+x2.toFixed(1)+','+y2.toFixed(1));
+    }
+    return out;
+  }
+
+  /* radial spokes from rIn to rOut around (cx,cy) between a0..a1 degrees —
+     used for flat disc/gear/dial faces viewed head-on (coin-engraving
+     convention); leaving an angular gap unfilled is how the highlight
+     band survives. */
+  function radialLines(cx,cy,rIn,rOut,n,a0,a1){
+    var out=[];
+    for(var i=0;i<n;i++){
+      var t=n>1 ? a0+(a1-a0)*i/(n-1) : a0;
+      var rad=t*Math.PI/180;
+      out.push([cx+Math.cos(rad)*rIn, cy+Math.sin(rad)*rIn, cx+Math.cos(rad)*rOut, cy+Math.sin(rad)*rOut]);
+    }
+    return out;
+  }
+
+  /* concentric arcs between rIn and rOut around (cx,cy), spanning a0..a1 —
+     used for a torus/ring form (a tire) so the tone follows the tread's
+     own curvature rather than radiating like spokes from a hub. */
+  function ringArcs(cx,cy,rIn,rOut,spacing,a0,a1){
+    var out=[]; var n=Math.max(2, Math.round((rOut-rIn)/spacing));
+    var largeArc = (a1-a0)>180 ? 1 : 0;
+    for(var i=0;i<=n;i++){
+      var r = rIn + (rOut-rIn)*i/n;
+      if(r<=0) continue;
+      var x1=cx+Math.cos(a0*Math.PI/180)*r, y1=cy+Math.sin(a0*Math.PI/180)*r;
+      var x2=cx+Math.cos(a1*Math.PI/180)*r, y2=cy+Math.sin(a1*Math.PI/180)*r;
+      out.push('M'+x1.toFixed(2)+','+y1.toFixed(2)+' A'+r.toFixed(2)+','+r.toFixed(2)+' 0 '+largeArc+' 1 '+x2.toFixed(2)+','+y2.toFixed(2));
+    }
+    return out;
+  }
+
+  /* density-graded dot field; invert=1 -> dense near the focus point
+     (shadow root), invert=0 -> dense away from it (fringe of a light pool). */
+  function stippleDots(x,y,w,h,count,rmin,rmax,fx,fy,invert){
+    var pts=[]; var tries=0; var diag=Math.hypot(w,h);
+    while(pts.length<count && tries<count*8){
+      tries++;
+      var px=x+Math.random()*w, py=y+Math.random()*h;
+      var d=Math.hypot(px-fx,py-fy)/diag;
+      var p = invert ? (1-d) : d;
+      p = Math.max(0,Math.min(1,p));
+      if(Math.random() < p*p){
+        pts.push([px,py, rmin+Math.random()*(rmax-rmin)]);
+      }
+    }
+    return pts;
+  }
+
+  function buildTaille(g){
+    var x=+g.dataset.x, y=+g.dataset.y, w=+g.dataset.w, h=+g.dataset.h;
+    var angle=+g.dataset.angle||18, spacing=+g.dataset.spacing||6;
+    var color=g.dataset.color||'var(--ink)', sw=g.dataset.sw||.55, op=g.dataset.op||.7;
+    var mode=g.dataset.mode||'flat';
+    if(mode==='cyl'){
+      var bow=+g.dataset.bow||0;
+      cylLines(x,y,w,h,angle,spacing,bow).forEach(function(d){
+        g.appendChild(mk('path',{d:d, fill:'none', stroke:color, 'stroke-width':sw, opacity:op, 'stroke-linecap':'round'}));
+      });
+    } else {
+      flatLines(x,y,w,h,angle,spacing).forEach(function(L){
+        g.appendChild(mk('line',{x1:L[0].toFixed(1),y1:L[1].toFixed(1),x2:L[2].toFixed(1),y2:L[3].toFixed(1), stroke:color, 'stroke-width':sw, opacity:op, 'stroke-linecap':'round'}));
+      });
+    }
+  }
+
+  function buildContre(g){
+    var x=+g.dataset.x, y=+g.dataset.y, w=+g.dataset.w, h=+g.dataset.h;
+    var a1=+g.dataset.angle||20, a2=+g.dataset.angle2!==undefined?+g.dataset.angle2:a1+45;
+    var s1=+g.dataset.spacing||5, s2=+g.dataset.spacing2||s1*1.15;
+    var color=g.dataset.color||'var(--ink)', sw=g.dataset.sw||.5, op=g.dataset.op||.55;
+    var a3=g.dataset.angle3, s3=g.dataset.spacing3;
+    [[a1,s1],[a2,s2]].forEach(function(pair){
+      flatLines(x,y,w,h,pair[0],pair[1]).forEach(function(L){
+        g.appendChild(mk('line',{x1:L[0].toFixed(1),y1:L[1].toFixed(1),x2:L[2].toFixed(1),y2:L[3].toFixed(1), stroke:color, 'stroke-width':sw, opacity:op, 'stroke-linecap':'round'}));
+      });
+    });
+    if(a3!==undefined){
+      flatLines(x,y,w,h,+a3,+s3||s1).forEach(function(L){
+        g.appendChild(mk('line',{x1:L[0].toFixed(1),y1:L[1].toFixed(1),x2:L[2].toFixed(1),y2:L[3].toFixed(1), stroke:color, 'stroke-width':sw, opacity:op*.9, 'stroke-linecap':'round'}));
+      });
+    }
+  }
+
+  function buildRadial(g){
+    var cx=+g.dataset.cx, cy=+g.dataset.cy, rin=+g.dataset.rin||0, rout=+g.dataset.rout;
+    var a0=+g.dataset.a0||0, a1=g.dataset.a1!==undefined?+g.dataset.a1:359;
+    var color=g.dataset.color||'var(--ink)', sw=g.dataset.sw||.5, op=g.dataset.op||.7;
+    if(g.dataset.form==='ring'){
+      var spacing=+g.dataset.spacing||3.5;
+      ringArcs(cx,cy,rin,rout,spacing,a0,a1).forEach(function(d){
+        g.appendChild(mk('path',{d:d, fill:'none', stroke:color, 'stroke-width':sw, opacity:op, 'stroke-linecap':'round'}));
+      });
+      return;
+    }
+    var n=+g.dataset.n||24;
+    radialLines(cx,cy,rin,rout,n,a0,a1).forEach(function(L){
+      g.appendChild(mk('line',{x1:L[0].toFixed(1),y1:L[1].toFixed(1),x2:L[2].toFixed(1),y2:L[3].toFixed(1), stroke:color, 'stroke-width':sw, opacity:op, 'stroke-linecap':'round'}));
+    });
+  }
+
+  function buildStipple(g){
+    var x=+g.dataset.x, y=+g.dataset.y, w=+g.dataset.w, h=+g.dataset.h;
+    var count=+g.dataset.count||120, rmin=+g.dataset.rmin||.35, rmax=+g.dataset.rmax||1.2;
+    var fx=g.dataset.fx!==undefined?+g.dataset.fx:x+w/2;
+    var fy=g.dataset.fy!==undefined?+g.dataset.fy:y+h/2;
+    var invert=g.dataset.invert==='1';
+    var color=g.dataset.color||'var(--ink)', op=g.dataset.op||.7;
+    stippleDots(x,y,w,h,count,rmin,rmax,fx,fy,invert).forEach(function(P){
+      g.appendChild(mk('circle',{cx:P[0].toFixed(1),cy:P[1].toFixed(1),r:P[2].toFixed(2), fill:color, opacity:op}));
+    });
+  }
+
+  /* the signature burin mark: convert an open centerline path into a
+     filled lens — thick at the middle, tapering to a point at both ends. */
+  function swellify(path){
+    var w = +path.dataset.w || 3;
+    var len = path.getTotalLength();
+    if(!len) return;
+    var N = Math.max(20, Math.min(90, Math.round(len/5)));
+    var pts=[];
+    for(var i=0;i<=N;i++) pts.push(path.getPointAtLength(len*i/N));
+    var top=[], bot=[];
+    for(i=0;i<=N;i++){
+      var t=i/N;
+      var wgt=Math.sin(Math.PI*t);
+      var wid=(w*wgt*0.5) + 0.12; /* tiny floor so tips stay crisp, not zero-width slivers */
+      var p0=pts[Math.max(0,i-1)], p1=pts[Math.min(N,i+1)];
+      var ddx=p1.x-p0.x, ddy=p1.y-p0.y; var L=Math.hypot(ddx,ddy)||1;
+      var nx=-ddy/L, ny=ddx/L;
+      top.push([pts[i].x+nx*wid, pts[i].y+ny*wid]);
+      bot.push([pts[i].x-nx*wid, pts[i].y-ny*wid]);
+    }
+    var d='M'+top.map(function(p){return p[0].toFixed(2)+','+p[1].toFixed(2);}).join('L');
+    d+='L'+bot.slice().reverse().map(function(p){return p[0].toFixed(2)+','+p[1].toFixed(2);}).join('L')+'Z';
+    path.setAttribute('d', d);
+    path.removeAttribute('stroke-width');
+    path.style.stroke='none';
+  }
+
+  function init(){
+    document.querySelectorAll('g.taille').forEach(buildTaille);
+    document.querySelectorAll('g.contre').forEach(buildContre);
+    document.querySelectorAll('g.radial').forEach(buildRadial);
+    document.querySelectorAll('g.stipple').forEach(buildStipple);
+    document.querySelectorAll('path.swell,path.swell-sepia,path.swell-blue').forEach(swellify);
+    window.__engraveReady = true;
+    document.documentElement.setAttribute('data-engrave-ready', '1');
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

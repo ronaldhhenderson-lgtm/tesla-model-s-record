@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>车辆档案 — 开档报告 Vehicle File — Opening Report — Henderson Transpacific</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7; --muted:#33475e; --faint:#64748b;
+  --line:#d5dbe1; --hair:#e6eaee; --panel:#f6f7f8; --panel2:#fbfcfd;
+  --red:#c0392b; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--ink); background:#eef2f4; font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  width:210mm; min-height:297mm; margin:16px auto; background:#fff;
+  padding:14mm 13mm 13mm; position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10);
+}
+/* ---------- type ---------- */
+h1{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1.25}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+h3{font-size:12.5px;font-weight:600;letter-spacing:.01em}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.5px;color:var(--muted);line-height:1.45}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:-.01em}
+b,strong{font-weight:600}
+/* ---------- header ---------- */
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.wordmark{font-size:10.5px;font-weight:600;letter-spacing:.24em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--accent)}
+.masthead h1{margin-top:9px}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:17px;
+  font-weight:600;letter-spacing:.09em;display:inline-block;color:var(--faint)}
+.hd-right{text-align:right;flex:0 0 auto}
+.stamp{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+.stamp-new{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+/* ---------- fillable identity grid ---------- */
+.fill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--hair);margin-top:16px}
+.fill-cell{padding:12px 14px 14px;border-bottom:1px solid var(--hair)}
+.fill-cell:nth-child(4n+1),.fill-cell:nth-child(4n+2),.fill-cell:nth-child(4n+3){border-right:1px solid var(--hair)}
+.fill-cell:nth-child(n+5){border-bottom:none}
+.fill-line{margin-top:16px;height:1px;border-bottom:1.5px dashed var(--line);min-height:22px}
+.fill-tbc{margin-top:6px}
+/* ---------- kpi-style chip row ---------- */
+.pill{display:inline-block;font-size:8.2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fbeceb}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-blue{color:var(--blue);border-color:#b3c1f2;background:#f2f5fd}
+.p-teal{color:var(--accent);border-color:#9fd3d7;background:#eaf7f8}
+/* ---------- sections ---------- */
+section{margin-top:22px;break-inside:avoid}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:11px}
+.shead .rule{font-size:9px;color:var(--faint);letter-spacing:.04em;text-align:right}
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;white-space:nowrap}
+td{padding:7px 7px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.42}
+th+th,td+td{padding-left:9px}
+table.wrap th,table.wrap td{white-space:normal}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+td.r,th.r{padding-right:0}
+tbody tr:hover{background:var(--panel2)}
+.tot td{border-bottom:none;border-top:1.5px solid var(--ink);font-weight:600;padding-top:8px;font-size:11px}
+.dim{color:var(--muted)}
+/* ---------- year block ---------- */
+.yearcard{border:1px solid var(--hair);padding:12px 14px 11px;margin-top:12px;break-inside:avoid}
+.yearcard-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;
+  border-bottom:1px solid var(--hair);padding-bottom:7px}
+.yearcard-head .yn{font-size:14px;font-weight:600;color:var(--ink)}
+.yearcard-head .yk{font-size:10px;color:var(--faint)}
+.yearcard-head .ys{font-size:11px;font-weight:600;color:var(--accent)}
+/* ---------- charts ---------- */
+.card{border:1px solid var(--hair);padding:13px 14px 10px;background:#fff;break-inside:avoid}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:13px;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend .bar{border-radius:1px;width:17px;height:10px}
+/* ---------- notes ---------- */
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.4px;line-height:1.5}
+.note.warn{border-left-color:var(--red);background:#fbeceb}
+.note.accent{border-left-color:var(--accent);background:#eaf7f8}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* ---------- checklist ---------- */
+ol.checklist{list-style:none}
+ol.checklist li{position:relative;padding:9px 0 9px 30px;border-bottom:1px solid var(--hair);font-size:10.5px;line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+ol.checklist li:before{content:'';position:absolute;left:0;top:10px;width:12px;height:12px;
+  border:1.5px solid var(--ink);border-radius:2px}
+ol.checklist li:last-child{border-bottom:none}
+ol.checklist .cn{flex:0 0 16px;font-size:9px;font-weight:600;color:var(--faint);font-variant-numeric:tabular-nums}
+/* ---------- signature ---------- */
+.sigrow{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:14px}
+.sigline{margin-top:20px;border-bottom:1px solid var(--ink);height:1px}
+.foot{margin-top:10px;padding-top:7px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint);letter-spacing:.03em}
+/* ---------- bilingual secondary text ---------- */
+.en{display:inline;font-size:.82em;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:normal}
+.note .en,.sub .en,li .en,.foot .en,.tiny .en{display:block;margin-top:2px}
+td .en{margin-left:4px}
+/* ---------- brand ---------- */
+.brandmark{display:flex;align-items:center;gap:9px}
+.brandmark svg{flex:0 0 auto;display:block;width:19px;height:19px}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+.ht-tag{text-align:center;font-size:8.6px;color:var(--faint);letter-spacing:.05em;margin-top:2px}
+@page{size:A4 portrait;margin:11mm 10mm 10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  .noprint{display:none!important}
+  section,.card,table,.note,.fill-grid,.yearcard{break-inside:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .page-break{break-before:page}
+  section{margin-top:14px}
+  .masthead{padding-bottom:9px}
+  .card{padding:10px 11px 8px}
+  ol.checklist li{padding:6px 0 6px 30px}
+  ol.checklist li:before{top:7px}
+  .shead{margin-bottom:8px}
+  tbody tr:hover{background:none}
+  .yearcard{margin-top:9px;padding:10px 12px 9px}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- ======================= MASTHEAD ======================= -->
+  <div class="masthead">
+    <div>
+      <div class="brandmark">
+        <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>
+        <div>
+          <div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div>
+          <div class="cnname">亨德森环太</div>
+        </div>
+      </div>
+      <h1 style="margin-top:9px">车辆档案 — 开档报告 Vehicle File — Opening Report</h1>
+      <div class="sub" style="margin-top:4px">
+        新客户入厂首次建档 · Mercedes-Benz S-Class W221（2006–2013）· 此前并无本厂维修纪录
+        <span class="en">First file opened for a new customer · Mercedes-Benz S-Class W221 (2006–2013) · no prior service history at this workshop</span>
+      </div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">— — —</div>
+      <div class="tiny" style="margin-top:7px">
+        开档日期 待补 <span class="en">File opened — TBC</span>
+      </div>
+      <div style="margin-top:6px"><span class="stamp-new">开档 · NEW FILE</span></div>
+    </div>
+  </div>
+
+  <!-- ======================= IDENTITY (fillable) ======================= -->
+  <div class="fill-grid">
+    <div class="fill-cell">
+      <div class="lbl">车牌 <span class="en">Plate</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">车架号 <span class="en">VIN</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">型号 <span class="en">Model (e.g. S350 / S500)</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">年份 <span class="en">Year</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">首次登记 <span class="en">First registered</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">现时里程 <span class="en">Current odometer</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">车主 <span class="en">Owner</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl">开档日期 <span class="en">File opened</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待补 TBC</span></div>
+    </div>
+  </div>
+
+  <!-- ======================= 01 FILE STATUS ======================= -->
+  <section>
+    <div class="shead">
+      <h2>01 — 档案状态 <span class="en">File Status</span></h2>
+      <div class="rule">开档当日 <span class="en">As of file opening</span></div>
+    </div>
+    <div class="note accent">
+      <div>本车过往维修纪录尚未建立 — 由本次入厂起，所有工序、零件、里程与费用将逐次记录，形成完整可追溯档案。<span class="en">No prior service history is on file. From this visit onward, every job, part, odometer reading and cost is recorded, building a complete traceable archive.</span></div>
+    </div>
+    <table style="margin-top:14px">
+      <thead><tr>
+        <th>项目 <span class="en">Item</span></th>
+        <th>状态 <span class="en">Status</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>过往维修纪录<span class="en">Prior service records</span></td><td><span class="pill p-grey">待补 TBC</span></td></tr>
+        <tr><td>过往零件更换<span class="en">Prior parts replaced</span></td><td><span class="pill p-grey">待补 TBC</span></td></tr>
+        <tr><td>AIRMATIC 维修纪录<span class="en">Prior AIRMATIC work</span></td><td><span class="pill p-grey">待补 TBC</span></td></tr>
+        <tr><td>上次保养日期<span class="en">Last service date</span></td><td><span class="pill p-grey">待补 TBC</span></td></tr>
+        <tr><td>上次里程<span class="en">Last odometer reading</span></td><td><span class="pill p-grey">待补 TBC</span></td></tr>
+      </tbody>
+    </table>
+    <div class="tiny" style="margin-top:10px">
+      未有纪录不等于未做保养，只代表本厂未能核实。<span class="en">Absence of records does not mean work was not done — it means this workshop cannot verify it.</span>
+    </div>
+  </section>
+
+  <!-- ======================= 02 10-YEAR PLAN ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2>02 — 十年保养计划 <span class="en">10-Year Maintenance Plan</span></h2>
+      <div class="rule">按年均 15,000 km 推算 <span class="en">Projected at 15,000 km / year</span></div>
+    </div>
+    <div class="note warn">
+      <h4>适用车型 <span class="en">Applicable variant</span></h4>
+      <div>本计划假设 <b>M272 / M273 汽油引擎配 AIRMATIC 气压避震</b>。若为 <b>S320 / S350 CDI 柴油</b>、<b>ABC 主动液压悬挂（S600 / AMG）</b>或 <b>4MATIC 四驱</b>车型，周期及项目需另行调整，柴油款无火咀但需另计高压油泵及 DPF，ABC 车无 AIRMATIC 但有液压油及蓄能器保养，4MATIC 车需加入前传动轴及分动箱项目。<span class="en">This plan assumes a <b>petrol M272 / M273 engine with AIRMATIC air suspension</b>. <b>S320/350 CDI diesel</b>, <b>ABC hydraulic suspension (S600/AMG)</b>, and <b>4MATIC</b> variants need a different plan — diesels have no spark plugs but need high-pressure pump and DPF service, ABC cars have no AIRMATIC but need hydraulic fluid and accumulator service, and 4MATIC needs a front prop-shaft and transfer-case line.</span></div>
+    </div>
+    <div class="note" style="margin-top:12px">
+      <h4>推算假设 <span class="en">Projection assumption</span></h4>
+      <div>本计划假设车辆年均行驶 <b>15,000 km</b>（香港私家车一般使用强度），尚未有本车实际里程数据。首次入厂量得现时里程后，本计划将按实际年均里程重新校准；里程愈高或愈低，各项到期年份将相应提前或推后。<span class="en">This plan assumes an average of <b>15,000 km / year</b> (typical Hong Kong private-use intensity), as no actual mileage history exists yet for this vehicle. Once the current odometer is recorded at this first visit, the plan will be re-based on the real annual average — higher or lower mileage will shift every due year earlier or later accordingly.</span></div>
+    </div>
+    <div id="plan-years"></div>
+    <div class="tiny" style="margin-top:12px">
+      价格为中山／珠海第三方维修厂参考估算范围，未经逐项核实，均标示「参考」，落单前请向维修厂确认。<span class="en">Prices are indicative ranges for Zhongshan/Zhuhai independent shops, not individually verified — all figures are marked "indicative"; confirm with the shop before ordering.</span>
+    </div>
+  </section>
+
+  <!-- ======================= 03 COST OUTLOOK ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2>03 — 十年费用预算 <span class="en">10-Year Cost Outlook</span></h2>
+      <div class="rule">每年小计（低—高） <span class="en">Per-year subtotal (low–high)</span></div>
+    </div>
+    <div class="card"><div id="chart-cost"></div>
+      <div class="legend"><span><i class="bar" style="background:#0e9aa7;border-radius:1px"></i>参考费用范围（低—高） <span class="en">Indicative cost range (low–high)</span></span></div>
+    </div>
+    <table style="margin-top:14px" id="tbl-cost"></table>
+    <div class="note" style="margin-top:12px">
+      <div>不含意外损坏、AIRMATIC 气泵总成／全套避震大修、M272 平衡轴大修（如适用，¥15,000+，只影响 2006 年 9 月前生产引擎，需核对引擎号）、及重大电气或线束维修。香港年检费（HK$585／年，车龄满 6 年后）以港币计算，未计入以下人民币小计。<span class="en">Excludes accident damage, a full AIRMATIC compressor/strut-set overhaul, M272 balance shaft gear repair (if applicable, ¥15,000+, affects only pre-Sept-2006 production engines — verify engine number), and major electrical or wiring-harness repair. The Hong Kong annual exam fee (HK$585/yr, due after the vehicle turns 6) is in HKD and is not included in the RMB subtotals below.</span></div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 PRIORITY ACTIONS ======================= -->
+  <section>
+    <div class="shead">
+      <h2>04 — 开档优先检查 <span class="en">Priority Checks at File Opening</span></h2>
+      <div class="rule">本次首次入厂应完成事项，建立基线 <span class="en">To complete on this first visit — establishing a baseline</span></div>
+    </div>
+    <ol class="checklist">
+      <li><span class="cn">01</span><span>记录现时里程<span class="en">Record current odometer reading</span></span></li>
+      <li><span class="cn">02</span><span>核对引擎号，确认 M272 平衡轴批次（2006 年 9 月前／后生产）<span class="en">Verify engine number to confirm M272 balance-shaft-gear batch (pre/post Sept 2006 production)</span></span></li>
+      <li><span class="cn">03</span><span>AIRMATIC 四角车身高度量测及漏气测试<span class="en">AIRMATIC ride-height measurement at all four corners &amp; air-leak test</span></span></li>
+      <li><span class="cn">04</span><span>引擎 V 位及机油冷却器渗漏检查<span class="en">Engine V-valley &amp; oil cooler seal leak inspection</span></span></li>
+      <li><span class="cn">05</span><span>波箱油状态及有无渗漏检查<span class="en">ATF condition &amp; leak check</span></span></li>
+      <li><span class="cn">06</span><span>主电池及副电池电压测试<span class="en">Main &amp; auxiliary battery voltage test</span></span></li>
+      <li><span class="cn">07</span><span>量度制动皮及碟厚度<span class="en">Measure brake pad and rotor thickness</span></span></li>
+      <li><span class="cn">08</span><span>检查悬挂胶套及下摆臂<span class="en">Inspect suspension bushings and control arms</span></span></li>
+      <li><span class="cn">09</span><span>读取全车故障码（STAR/XENTRY）<span class="en">Full-vehicle fault code scan (STAR/XENTRY)</span></span></li>
+    </ol>
+  </section>
+
+  <!-- ======================= 05 COMPONENT MAP & PREVENTION ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2>05 — 部件位置与预防策略 <span class="en">Component Map &amp; Prevention Strategy</span></h2>
+      <div class="rule">全车保养重点图解 · 手绘风格 · W221 <span class="en">Whole-car maintenance overview · hand-drawn style · W221</span></div>
+    </div>
+    <div class="card">
+      <div class="lbl" style="margin-bottom:10px">整车部件图 — S-Class W221 <span class="en">Vehicle Component Map — S-Class W221</span></div>
+      <svg viewBox="0 0 1000 520" role="img" aria-label="W221 vehicle component map" style="width:100%;height:auto;overflow:visible">
+      <g transform="translate(0,110)">
+      <!-- ground line -->
+      <line x1="30" y1="320" x2="975" y2="320" stroke="#33475e" stroke-width="1" opacity=".4"/>
+
+      <!-- ===== APPROVED W221 saloon geometry, verbatim from /tmp/w/p.html (viewBox 0 0 1000 360), colours adapted only ===== -->
+      <path d="M 56 300
+               C 48 290, 44 276, 46 258
+               C 48 240, 54 228, 64 222
+               C 74 216, 92 212, 118 208
+               C 160 202, 210 197, 262 193
+               C 300 190, 330 188, 352 186
+               C 372 172, 398 148, 428 130
+               C 452 116, 478 108, 508 106
+               L 640 106
+               C 672 107, 698 113, 720 124
+               C 748 138, 778 156, 812 172
+               C 846 188, 886 196, 918 199
+               C 940 201, 954 206, 960 214
+               C 966 224, 968 240, 966 256
+               C 964 276, 960 292, 954 300
+               L 803 300
+               A 70 70 0 0 0 663 300
+               L 272 300
+               A 70 70 0 0 0 132 300
+               Z" fill="#f2f2f3" stroke="#0e1b2c" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 118 212 C 330 192, 640 178, 916 200" fill="none" stroke="#0e1b2c" stroke-width="1.2" opacity=".3"/>
+      <path d="M 360 184 C 384 162, 410 138, 434 124 C 458 111, 484 107, 510 106" fill="none" stroke="#0e1b2c" stroke-width="1.4" opacity=".42"/>
+      <path d="M 720 126 C 748 142, 780 160, 810 174" fill="none" stroke="#0e1b2c" stroke-width="1.4" opacity=".42"/>
+      <line x1="636" y1="107" x2="640" y2="180" stroke="#0e1b2c" stroke-width="1.2" opacity=".28"/>
+      <line x1="290" y1="288" x2="650" y2="288" stroke="#0e1b2c" stroke-width="1" opacity=".2"/>
+      <g>
+      <circle cx="202" cy="265" r="60" fill="#0e1b2c"/><circle cx="202" cy="265" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+      <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="202" y1="265" x2="202" y2="235"/><line x1="202" y1="265" x2="230" y2="256"/><line x1="202" y1="265" x2="220" y2="290"/><line x1="202" y1="265" x2="184" y2="290"/><line x1="202" y1="265" x2="174" y2="256"/></g>
+      <circle cx="733" cy="265" r="60" fill="#0e1b2c"/><circle cx="733" cy="265" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+      <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="733" y1="265" x2="733" y2="235"/><line x1="733" y1="265" x2="761" y2="256"/><line x1="733" y1="265" x2="751" y2="290"/><line x1="733" y1="265" x2="715" y2="290"/><line x1="733" y1="265" x2="705" y2="256"/></g>
+      </g>
+      <rect x="78" y="228" width="62" height="46" rx="6" fill="none" stroke="#33475e" stroke-width="2" opacity=".7"/>
+      <rect x="248" y="250" width="66" height="32" rx="5" fill="none" stroke="#33475e" stroke-width="2" opacity=".5"/>
+      <!-- ===== end approved geometry ===== -->
+
+      <!-- ===================== TOP CALLOUTS (non-crossing, verified) ===================== -->
+      <!-- 水泵及皮带 Water pump & belt : front, grey -->
+      <line x1="30" y1="-88" x2="78" y2="244" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="78" cy="244" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="30" y="-94" text-anchor="start" font-size="12.5" font-weight="700" fill="#0e1b2c">水泵及皮带</text>
+      <text x="30" y="-83" text-anchor="start" font-size="8.5" fill="#33475e">Water pump &amp; belt</text>
+      <!-- 冷气检查 A/C check : front, teal -->
+      <line x1="180" y1="-88" x2="92" y2="226" stroke="#0e9aa7" stroke-width="1.3" opacity=".8"/>
+      <circle cx="92" cy="226" r="5.5" fill="#0e9aa7" stroke="#fff" stroke-width="1.4"/>
+      <text x="180" y="-94" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">冷气检查</text>
+      <text x="180" y="-83" text-anchor="middle" font-size="8.5" fill="#33475e">A/C check</text>
+      <!-- 机油冷却器封胶 Oil cooler seals : engine V, red -->
+      <line x1="330" y1="-88" x2="128" y2="236" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="128" cy="236" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="330" y="-94" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">机油冷却器封胶</text>
+      <text x="330" y="-83" text-anchor="middle" font-size="8.5" fill="#33475e">Oil cooler seals (V8)</text>
+      <!-- 火咀 Spark plugs : engine, grey -->
+      <line x1="480" y1="-88" x2="150" y2="232" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="150" cy="232" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="480" y="-94" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">火咀</text>
+      <text x="480" y="-83" text-anchor="middle" font-size="8.5" fill="#33475e">Spark plugs</text>
+      <!-- 主电池 Main battery : engine bay, amber -->
+      <line x1="630" y1="-88" x2="168" y2="224" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="168" cy="224" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="630" y="-94" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">主电池</text>
+      <text x="630" y="-83" text-anchor="middle" font-size="8.5" fill="#33475e">Main battery</text>
+      <!-- PSE 真空泵 PSE vacuum pump : rear, red -->
+      <line x1="830" y1="-88" x2="900" y2="236" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="900" cy="236" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="830" y="-94" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">PSE 真空泵</text>
+      <text x="830" y="-83" text-anchor="middle" font-size="8.5" fill="#33475e">PSE vacuum pump</text>
+      <!-- 副电池 Auxiliary battery : boot area, amber -->
+      <line x1="980" y1="-88" x2="930" y2="214" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="930" cy="214" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="980" y="-94" text-anchor="end" font-size="12.5" font-weight="700" fill="#0e1b2c">副电池</text>
+      <text x="980" y="-83" text-anchor="end" font-size="8.5" fill="#33475e">Auxiliary battery (boot)</text>
+
+      <!-- ===================== BOTTOM CALLOUTS (two tiers, non-crossing, verified) ===================== -->
+      <!-- 散热系统／冷却液 Cooling system / coolant : front, amber (near tier) -->
+      <line x1="15" y1="344" x2="62" y2="258" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="62" cy="258" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="15" y="356" text-anchor="start" font-size="12.5" font-weight="700" fill="#0e1b2c">散热系统／冷却液</text>
+      <text x="15" y="367" text-anchor="start" font-size="8.5" fill="#33475e">Cooling system / coolant</text>
+      <!-- 机油及滤芯 Engine oil & filter : engine, teal (far tier) -->
+      <line x1="112" y1="378" x2="110" y2="250" stroke="#0e9aa7" stroke-width="1.3" opacity=".8"/>
+      <circle cx="110" cy="250" r="5.5" fill="#0e9aa7" stroke="#fff" stroke-width="1.4"/>
+      <text x="112" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">机油及滤芯</text>
+      <text x="112" y="401" text-anchor="middle" font-size="8.5" fill="#33475e">Engine oil &amp; filter</text>
+      <!-- AIRMATIC 气泵 Compressor & relay : front, amber (near tier) -->
+      <line x1="209" y1="344" x2="150" y2="272" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="150" cy="272" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="209" y="356" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">AIRMATIC 气泵</text>
+      <text x="209" y="367" text-anchor="middle" font-size="8.5" fill="#33475e">Compressor &amp; relay</text>
+      <!-- 制动皮／碟（前轴） Brake pads/rotors, front : wheels, amber (far tier) -->
+      <line x1="306" y1="378" x2="176" y2="288" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="176" cy="288" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="306" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">制动皮／碟</text>
+      <text x="306" y="401" text-anchor="middle" font-size="8.5" fill="#33475e">Brake pads/rotors — front</text>
+      <!-- AIRMATIC 前避震 Front air struts : front wheel, red (near tier) -->
+      <line x1="403" y1="344" x2="202" y2="265" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="202" cy="265" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="403" y="356" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">AIRMATIC 前避震</text>
+      <text x="403" y="367" text-anchor="middle" font-size="8.5" fill="#33475e">Air struts, front</text>
+      <!-- 悬挂胶套及下摆臂 Bushings & control arms : front lower, amber (far tier) -->
+      <line x1="500" y1="378" x2="240" y2="292" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="240" cy="292" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="500" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">悬挂胶套及下摆臂</text>
+      <text x="500" y="401" text-anchor="middle" font-size="8.5" fill="#33475e">Bushings &amp; control arms</text>
+      <!-- 轮胎 Tyres : front tyre tread, amber (near tier) -->
+      <line x1="597" y1="344" x2="256" y2="250" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="256" cy="250" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="597" y="356" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">轮胎</text>
+      <text x="597" y="367" text-anchor="middle" font-size="8.5" fill="#33475e">Tyres (tread)</text>
+      <!-- 波箱油 ATF : mid, grey (far tier) -->
+      <line x1="694" y1="378" x2="280" y2="268" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="280" cy="268" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="694" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">波箱油 ATF</text>
+      <text x="694" y="401" text-anchor="middle" font-size="8.5" fill="#33475e">Transmission fluid</text>
+      <!-- 差速器油 Differential oil : rear axle, grey (near tier) -->
+      <line x1="791" y1="344" x2="700" y2="288" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="700" cy="288" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="791" y="356" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">差速器油</text>
+      <text x="791" y="367" text-anchor="middle" font-size="8.5" fill="#33475e">Differential oil</text>
+      <!-- AIRMATIC 后避震 Rear air struts : rear wheel, red (far tier) -->
+      <line x1="888" y1="378" x2="733" y2="265" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="733" cy="265" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="888" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">AIRMATIC 后避震</text>
+      <text x="888" y="401" text-anchor="middle" font-size="8.5" fill="#33475e">Air struts, rear</text>
+      <!-- 制动皮／碟（后轴） Brake pads/rotors, rear : wheels, amber (near tier) -->
+      <line x1="985" y1="344" x2="770" y2="286" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="770" cy="286" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="985" y="356" text-anchor="end" font-size="12.5" font-weight="700" fill="#0e1b2c">制动皮／碟</text>
+      <text x="985" y="367" text-anchor="end" font-size="8.5" fill="#33475e">Brake pads/rotors — rear</text>
+      </g>
+      </svg>
+      <div class="legend" style="margin-top:12px">
+        <span><i style="background:#0e9aa7"></i>即时监察／每年检查 <span class="en">Live-monitored / checked annually</span></span>
+        <span><i style="background:#b8730a"></i>2 年内到期 <span class="en">Due within 2 yrs</span></span>
+        <span><i style="background:#64748b"></i>长期计划 <span class="en">Long-term</span></span>
+        <span><i style="background:#c0392b"></i>有症状即换 <span class="en">Replace on first symptom</span></span>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="lbl" style="margin-bottom:10px">预防性更换逻辑 — 为何宁早莫迟 <span class="en">Why Replace Before Failure</span></div>
+      <svg viewBox="0 0 1000 430" role="img" aria-label="Failure chain vs prevention" style="width:100%;height:auto;overflow:visible">
+      <rect x="20" y="16" width="960" height="94" rx="10" fill="#fbeceb"/>
+      <text x="34" y="34" font-size="12.5" font-weight="700" fill="#c0392b">坏先修 · Run-to-failure</text>
+      <line x1="265.0" y1="62" x2="277.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M277.0,57 L285.0,62 L277.0,67 Z" fill="#c0392b"/>
+      <line x1="515.0" y1="62" x2="532.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M532.0,57 L540.0,62 L532.0,67 Z" fill="#c0392b"/>
+      <line x1="760.0" y1="62" x2="782.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M782.0,57 L790.0,62 L782.0,67 Z" fill="#c0392b"/>
+      <rect x="35" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="150" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">避震漏气不理会</text>
+      <text x="150" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Sagging / leaking strut ignored</text>
+      <rect x="285" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="400" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">气泵日夜运作</text>
+      <text x="400" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Compressor runs constantly</text>
+      <rect x="540" y="39" width="220" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="650" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">气泵烧毁＋四角下沉</text>
+      <text x="650" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Compressor burns out, car sags</text>
+      <rect x="790" y="39" width="200" height="46" rx="10" fill="#c0392b" stroke="#c0392b" stroke-width="1.8" opacity="1"/>
+      <text x="890" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">¥8,000–15,000＋不能行驶</text>
+      <text x="890" y="73" text-anchor="middle" font-size="8.8" fill="#ffffff">¥8,000–15,000 &amp; car undrivable</text>
+
+      <rect x="20" y="122" width="960" height="94" rx="10" fill="#e6f5f5"/>
+      <text x="34" y="140" font-size="12.5" font-weight="700" fill="#0e9aa7">预防性 · Preventive</text>
+      <line x1="325.0" y1="152" x2="342.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+      <path d="M342.0,147 L350.0,152 L342.0,157 Z" fill="#0e9aa7"/>
+      <line x1="650.0" y1="152" x2="732.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+      <path d="M732.0,147 L740.0,152 L732.0,157 Z" fill="#0e9aa7"/>
+      <rect x="35" y="129" width="290" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+      <text x="180" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">每年高度／漏气检查 ¥0–300</text>
+      <text x="180" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Annual height / leak check</text>
+      <rect x="350" y="129" width="300" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+      <text x="500" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">见漏气即换单支避震 ¥2,500–6,000</text>
+      <text x="500" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Swap single strut on first leak</text>
+      <rect x="740" y="129" width="220" height="46" rx="10" fill="#0e9aa7" stroke="#0e9aa7" stroke-width="1.8" opacity="1"/>
+      <text x="850" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">车照行</text>
+      <text x="850" y="163" text-anchor="middle" font-size="8.8" fill="#ffffff">Car stays on the road</text>
+
+      <text x="30" y="230" font-size="12" font-weight="700" fill="#0e1b2c">预防成本 vs 后果成本 · Prevention cost vs consequence cost</text>
+      <text x="250" y="255.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">预防 Prevention</text>
+      <rect x="260" y="240" width="55" height="22" rx="4" fill="#0e9aa7"/>
+      <text x="323" y="255.0" font-size="10.5" fill="#33475e">~¥3,000</text>
+      <text x="250" y="289.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">后果 Consequence</text>
+      <rect x="260" y="274" width="550" height="22" rx="4" fill="#c0392b"/>
+      <text x="818" y="289.0" font-size="10.5" fill="#33475e">~¥12,000+</text>
+      <text x="30" y="318" font-size="10.5" fill="#33475e">一个部件的预防成本，通常系佢引发后果嘅十分之一 · Prevention typically costs ~1/10 of the failure it prevents</text>
+
+      <text x="30" y="338" font-size="11.5" font-weight="700" fill="#0e1b2c">小部件保护大部件 · A small part protects an expensive one</text>
+      <circle cx="150" cy="375" r="36" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+      <text x="150" y="370" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0e1b2c">机油冷却器封胶</text>
+      <text x="150" y="384" text-anchor="middle" font-size="8" fill="#33475e">Oil cooler seals</text>
+      <text x="150" y="397" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥3,000–7,000</text>
+      <line x1="192" y1="375" x2="245" y2="375" stroke="#33475e" stroke-width="1.6"/>
+      <path d="M245,371 L252,375 L245,379 Z" fill="#33475e"/>
+      <text x="218" y="367" text-anchor="middle" font-size="8" fill="#33475e">若拖延 if delayed</text>
+      <circle cx="320" cy="375" r="50" fill="none" stroke="#c0392b" stroke-width="2.4"/>
+      <text x="320" y="369" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0e1b2c">电气线束及底盘损伤</text>
+      <text x="320" y="383" text-anchor="middle" font-size="8" fill="#33475e">Wiring harness &amp; chassis damage</text>
+      <text x="320" y="397" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥15,000+</text>
+
+      </svg>
+    </div>
+  </section>
+
+  <!-- ======================= FOOTER ======================= -->
+  <div class="note" style="margin-top:16px">
+    <div>本报告由 Henderson Transpacific 系统生成。周期参考原厂建议及高里程车业界经验，价格为中山／珠海第三方维修厂估算，均未逐项核实，实际以检查结果为准。<span class="en">This report is generated by the Henderson Transpacific system. Intervals reference OEM guidance and high-mileage-fleet industry experience; prices are Zhongshan/Zhuhai independent-shop estimates. None are individually verified — actual condition governs on inspection.</span></div>
+  </div>
+
+  <div class="sigrow">
+    <div>
+      <div class="lbl">技师 <span class="en">Technician</span></div>
+      <div class="sigline"></div>
+    </div>
+    <div>
+      <div class="lbl">车主 <span class="en">Owner</span></div>
+      <div class="sigline"></div>
+    </div>
+    <div>
+      <div class="lbl">日期 <span class="en">Date</span></div>
+      <div class="sigline"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>开档报告 · 尚无过往纪录 · 所有里程与到期年份按 15,000 km／年假设推算<span class="en">Opening report · no prior history on file · all mileage and due-years projected at 15,000 km/yr</span></div>
+    <div>第 1 版 · 待补建档日期<span class="en">Rev 1 · file-open date TBC</span></div>
+  </div>
+  <div class="ht-tag">Henderson Transpacific · Vehicle Records &amp; Analytics</div>
+</div>
+
+<script>
+/* =================================================================
+   10-YEAR MAINTENANCE PLAN — W221 S-Class, M272/M273 petrol + AIRMATIC
+   assumption: 15,000 km/yr (Hong Kong private use)
+   ================================================================= */
+const T = (zh,en)=>({zh,en});
+function bi(o){ return o.zh+' <span class="en">'+o.en+'</span>'; }
+function biPill(o){ return o.zh+' · '+o.en; }
+function fmt(n){ return '¥'+Math.round(n).toLocaleString('en-US'); }
+
+const CUM = y => y*15000;
+function yearForKm(km){ return Math.min(10, Math.max(1, Math.ceil(km/15000))); }
+
+// each PLAN item: bilingual name + interval text, optional reliability tag,
+// and an explicit list of occurrences {year, odo (string), costLow, costHigh}
+const PLAN = [
+  { zh:'机油及机油滤芯', en:'Engine oil &amp; filter (MB 229.5)',
+    interval:T('每 10,000 km 或 12 个月（湿热塞车勿用原厂 25,000 km 长里程间隔）','every 10,000 km or 12 months (do not use OEM 25,000 km long-life interval in HK stop-go/humidity)'),
+    occ:[10000,20000,30000,40000,50000,60000,70000,80000,90000,100000,110000,120000,130000,140000,150000]
+      .map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:600, costHigh:1200})) },
+  { zh:'车厢滤芯（含活性碳）', en:'Cabin / charcoal filter',
+    interval:T('每 12 个月','every 12 months'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:250, costHigh:600})) },
+  { zh:'空气滤芯', en:'Air filter',
+    interval:T('每 40,000 km','every 40,000 km'),
+    occ:[40000,80000,120000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:300, costHigh:700})) },
+  { zh:'四轮定位', en:'Wheel alignment',
+    interval:T('每 12 个月或换胎时','every 12 months or at tyre change'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:300, costHigh:700})) },
+  { zh:'冷气检查及冷媒', en:'A/C check &amp; refrigerant',
+    interval:T('每 12 个月','every 12 months'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:200, costHigh:600})) },
+  { zh:'AIRMATIC 四角高度及漏气检查', en:'AIRMATIC ride-height &amp; leak check',
+    interval:T('每 12 个月','every 12 months'),
+    tag:{cls:'p-teal', zh:'年度检查', en:'Annual check'},
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:0, costHigh:0, included:true})) },
+  { zh:'悬挂胶套及下摆臂检查', en:'Bushings &amp; control arms — inspection',
+    interval:T('每 12 个月，按状态决定是否更换','every 12 months, replace on condition'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:0, costHigh:0, included:true})) },
+  { zh:'制动液', en:'Brake fluid',
+    interval:T('每 24 个月（MB 标准）','every 24 months (MB standard)'),
+    occ:[2,4,6,8,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:300, costHigh:600})) },
+  { zh:'制动皮（前轴）', en:'Brake pads, front axle',
+    interval:T('约每 40,000 km','approx every 40,000 km'),
+    occ:[40000,80000,120000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:900, costHigh:2200})) },
+  { zh:'制动皮（后轴）', en:'Brake pads, rear axle',
+    interval:T('约每 60,000 km','approx every 60,000 km'),
+    occ:[60000,120000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:900, costHigh:2200})) },
+  { zh:'制动碟', en:'Brake rotors',
+    interval:T('约每 80,000 km','approx every 80,000 km'),
+    occ:[80000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:1500, costHigh:3500})) },
+  { zh:'轮胎更换（一套四条）', en:'Tyre replacement (set of 4)',
+    interval:T('约每 40,000 km','approx every 40,000 km'),
+    occ:[40000,80000,120000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:3600, costHigh:8000})) },
+  { zh:'冷却液', en:'Coolant (MB 325.0)',
+    interval:T('每 60 个月','every 60 months'),
+    occ:[5,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:600, costHigh:1200})) },
+  { zh:'7G-Tronic 722.9 波箱油及滤网', en:'7G-Tronic 722.9 ATF &amp; filter',
+    interval:T('每 60,000–80,000 km（原厂称免更换，高里程车业界共识必换；导电板为已知故障点）','every 60,000–80,000 km (OEM claims "fill for life"; industry consensus is to change on high-mileage cars — conductor plate is a known failure point)'),
+    tag:{cls:'p-grey', zh:'长期', en:'Long-term'},
+    occ:[70000,140000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:1500, costHigh:3000})) },
+  { zh:'后差速器油', en:'Rear differential oil',
+    interval:T('每 100,000 km','every 100,000 km'),
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:500, costHigh:1000})) },
+  { zh:'火牛皮带及张力器', en:'Serpentine belt &amp; tensioner',
+    interval:T('每 100,000 km','every 100,000 km'),
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:800, costHigh:1800})) },
+  { zh:'火咀', en:'Spark plugs (M272/M273)',
+    interval:T('每 100,000 km','every 100,000 km'),
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:1200, costHigh:2500})) },
+  { zh:'燃油滤芯', en:'Fuel filter',
+    interval:T('每 100,000 km','every 100,000 km'),
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:400, costHigh:900})) },
+  { zh:'水泵', en:'Water pump',
+    interval:T('约 120,000 km，按状态','approx 120,000 km, on condition'),
+    tag:{cls:'p-grey', zh:'长期', en:'Long-term'},
+    occ:[120000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:1500, costHigh:3000})) },
+  { zh:'引擎脚（液压）', en:'Engine mounts (hydraulic)',
+    interval:T('约 100,000 km，按状态（震动加剧为先兆）','approx 100,000 km, on condition (increasing vibration is the tell)'),
+    tag:{cls:'p-amb', zh:'按状态', en:'Condition-based'},
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:1200, costHigh:3000})) },
+  { zh:'悬挂胶套及下摆臂（更换）', en:'Bushings &amp; control arms — replacement',
+    interval:T('按状态，通常两边同做','on condition, usually both sides together'),
+    tag:{cls:'p-amb', zh:'按状态', en:'Condition-based'},
+    occ:[6].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:1600, costHigh:5000})) },
+  { zh:'AIRMATIC 前避震（左右）', en:'AIRMATIC air struts, front (pair)',
+    interval:T('约 100,000–150,000 km，或一有下沉／漏气即换（副厂 aftermarket）','approx 100,000–150,000 km, or immediately on sag / air leak (aftermarket parts)'),
+    tag:{cls:'p-red', zh:'症状即换', en:'Replace on symptom'},
+    occ:[7].map(y=>({year:y, odo:'≈100,000–150,000', costLow:5000, costHigh:12000})) },
+  { zh:'AIRMATIC 后避震（左右）', en:'AIRMATIC air struts, rear (pair)',
+    interval:T('约 100,000–150,000 km，或一有下沉／漏气即换（副厂 aftermarket）','approx 100,000–150,000 km, or immediately on sag / air leak (aftermarket parts)'),
+    tag:{cls:'p-red', zh:'症状即换', en:'Replace on symptom'},
+    occ:[9].map(y=>({year:y, odo:'≈100,000–150,000', costLow:4000, costHigh:10000})) },
+  { zh:'AIRMATIC 气泵及继电器', en:'AIRMATIC compressor &amp; relay',
+    interval:T('按状态；避震漏气不理会会令气泵过劳烧毁','on condition; ignoring a leaking strut overworks and burns out the compressor'),
+    tag:{cls:'p-amb', zh:'按状态', en:'Condition-based'},
+    occ:[8].map(y=>({year:y, odo:'—', costLow:1500, costHigh:4000})) },
+  { zh:'M273 机油冷却器封胶（V8）', en:'M273 oil cooler seals (V8)',
+    interval:T('约 100,000 km 起已知渗漏；需拆进气歧管，工时占大半','known to leak from approx 100,000 km; requires intake manifold removal, mostly labour'),
+    tag:{cls:'p-red', zh:'已知漏点', en:'Known leak point'},
+    occ:[100000].map(km=>({year:yearForKm(km), odo:km.toLocaleString('en-US'), costLow:3000, costHigh:7000})) },
+  { zh:'M272 平衡轴齿轮（V6，如适用）', en:'M272 balance shaft gear (V6, if applicable)',
+    interval:T('只影响约 2006 年 9 月前生产之引擎；需核对引擎号确认是否适用','affects only engines produced before approx Sept 2006; verify engine number to confirm applicability'),
+    tag:{cls:'p-red', zh:'如适用 需核实', en:'If applicable — verify'},
+    occ:[{year:1, odo:'—', costLow:0, costHigh:0, special:'conditional'}] },
+  { zh:'主电池', en:'Main battery',
+    interval:T('每 36–48 个月','every 36–48 months'),
+    tag:{cls:'p-amb', zh:'定期更换', en:'Scheduled replacement'},
+    occ:[4,8].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:900, costHigh:1800})) },
+  { zh:'副电池', en:'Auxiliary battery',
+    interval:T('每 36–48 个月；失效会引发多个古怪电气故障','every 36–48 months; failure triggers a range of odd electrical faults'),
+    tag:{cls:'p-amb', zh:'定期更换', en:'Scheduled replacement'},
+    occ:[4,8].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:400, costHigh:900})) },
+  { zh:'PSE 真空泵（中控锁／尾厢）', en:'PSE vacuum pump (central locking / boot)',
+    interval:T('按状态，已知故障点','on condition, a known failure point'),
+    tag:{cls:'p-red', zh:'已知故障点', en:'Known fault point'},
+    occ:[8].map(y=>({year:y, odo:'—', costLow:1500, costHigh:3500})) },
+  { zh:'香港年检', en:'HK annual exam',
+    interval:T('车龄满 6 年后每年（此车已符合年龄）','every year once the vehicle turns 6 — this vehicle already qualifies'),
+    tag:{cls:'p-blue', zh:'法定年检', en:'Statutory'},
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:0, costHigh:0, special:'hkd', hkd:585})) },
+];
+
+function yearRows(year){
+  const rows=[];
+  PLAN.forEach(item=>{
+    item.occ.filter(o=>o.year===year).forEach(o=>{
+      rows.push({item, o});
+    });
+  });
+  return rows;
+}
+
+function yearSubtotal(year){
+  let lo=0, hi=0;
+  yearRows(year).forEach(r=>{ lo+=r.o.costLow; hi+=r.o.costHigh; });
+  return {lo,hi};
+}
+
+function renderPlan(){
+  const wrap=document.getElementById('plan-years');
+  let html='';
+  for(let y=1;y<=10;y++){
+    const rows=yearRows(y);
+    const sub=yearSubtotal(y);
+    html += `<div class="yearcard">
+      <div class="yearcard-head">
+        <div><span class="yn">${bi(T('第 '+y+' 年','Year '+y))}</span>
+        <span class="yk"> · ${bi(T('累计里程','cumulative'))} ${CUM(y).toLocaleString('en-US')} km</span></div>
+        <div class="ys">${bi(T('小计','subtotal'))} ${fmt(sub.lo)}–${fmt(sub.hi)}</div>
+      </div>
+      <table class="wrap">
+        <thead><tr>
+          <th style="width:30%">${bi(T('项目','Item'))}</th>
+          <th style="width:26%">${bi(T('周期','Interval'))}</th>
+          <th style="width:20%">${bi(T('预计里程 (km)','Projected odo (km)'))}</th>
+          <th class="r" style="width:24%">${bi(T('参考价','Indicative cost'))}</th>
+        </tr></thead>
+        <tbody>
+        ${rows.map(r=>{
+          const tag = r.item.tag ? ` <span class="pill ${r.item.tag.cls}" style="margin-left:5px">${biPill(T(r.item.tag.zh,r.item.tag.en))}</span>` : '';
+          const name = bi(T(r.item.zh, r.item.en)) + (r.o.label? ` <span class="dim">(${bi(r.o.label)})</span>`:'') + tag;
+          const cost = r.o.special==='conditional' ? `<span class="pill p-red">${biPill(T('如适用 ¥15,000+','if applicable ¥15,000+'))}</span>`
+                     : r.o.special==='hkd' ? `<span class="pill p-blue">HK$${r.o.hkd}</span>`
+                     : r.o.included ? `<span class="pill p-teal">${biPill(T('检查免费／已含','included'))}</span>`
+                     : (r.o.costLow===0 && r.o.costHigh===0) ? `<span class="pill p-teal">${biPill(T('已含','included'))}</span>`
+                     : `${fmt(r.o.costLow)}–${fmt(r.o.costHigh)}`;
+          return `<tr><td>${name}</td><td>${bi(r.item.interval)}</td><td class="num">${r.o.odo}</td><td class="r num">${cost}</td></tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+  wrap.innerHTML = html;
+}
+
+function grandTotal(){
+  let lo=0, hi=0;
+  for(let y=1;y<=10;y++){ const s=yearSubtotal(y); lo+=s.lo; hi+=s.hi; }
+  return {lo,hi};
+}
+
+function renderCostTable(){
+  const rows=[];
+  for(let y=1;y<=10;y++){
+    const s=yearSubtotal(y);
+    rows.push(`<tr><td>${bi(T('第 '+y+' 年','Year '+y))}</td><td class="num">${CUM(y).toLocaleString('en-US')}</td><td class="r num">${fmt(s.lo)}–${fmt(s.hi)}</td></tr>`);
+  }
+  const gt = grandTotal();
+  document.getElementById('tbl-cost').innerHTML = `
+    <thead><tr>
+      <th>${bi(T('年度','Year'))}</th>
+      <th>${bi(T('累计里程 (km)','Cumulative km'))}</th>
+      <th class="r">${bi(T('小计 参考','Subtotal, indicative'))}</th>
+    </tr></thead>
+    <tbody>${rows.join('')}</tbody>
+    <tfoot><tr class="tot"><td>${bi(T('十年合计','10-year total'))}</td><td></td><td class="r num">${fmt(gt.lo)}–${fmt(gt.hi)}</td></tr></tfoot>`;
+}
+
+function chartCost(){
+  const data=[]; let maxHi=0;
+  for(let y=1;y<=10;y++){ const s=yearSubtotal(y); data.push({y,...s}); if(s.hi>maxHi) maxHi=s.hi; }
+  const top = Math.ceil(maxHi/2000)*2000; // round headroom
+  const chartTop=20, chartBottom=280, chartLeft=60, chartRight=980;
+  const vy = v => chartBottom - (v/top)*(chartBottom-chartTop);
+  const bandW = (chartRight-chartLeft)/10;
+  const barW = Math.min(44, bandW*0.5);
+  let svg = `<svg viewBox="0 0 1000 320" role="img" aria-label="10-year cost outlook">`;
+  // gridlines
+  const steps=4;
+  for(let i=0;i<=steps;i++){
+    const v = top*i/steps;
+    const y = vy(v);
+    svg += `<line x1="${chartLeft}" y1="${y.toFixed(1)}" x2="${chartRight}" y2="${y.toFixed(1)}" stroke="#e6eaee" stroke-width="1"/>`;
+    svg += `<text x="${chartLeft-8}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#64748b">¥${Math.round(v).toLocaleString('en-US')}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x = chartLeft + i*bandW + (bandW-barW)/2;
+    const yLo = vy(d.lo), yHi = vy(d.hi);
+    svg += `<rect x="${x.toFixed(1)}" y="${yHi.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(2,(yLo-yHi)).toFixed(1)}" rx="2" fill="#0e9aa7"/>`;
+    svg += `<text x="${(x+barW/2).toFixed(1)}" y="${(chartBottom+16).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="#33475e">${d.y}</text>`;
+  });
+  svg += `<text x="${chartLeft}" y="${(chartBottom+34)}" font-size="9" fill="#64748b">年度 Year</text>`;
+  svg += `</svg>`;
+  document.getElementById('chart-cost').innerHTML = svg;
+}
+
+function renderAll(){
+  renderPlan();
+  renderCostTable();
+  chartCost();
+}
+renderAll();
+</script>
+<button id="a4print" onclick="window.print()" title="打印或另存 PDF Print or save as PDF"
+ style="position:fixed;right:18px;bottom:18px;z-index:999;display:flex;align-items:center;gap:7px;
+ padding:10px 16px;border:0;border-radius:24px;background:#0e1b2c;color:#fff;font:600 12.5px/1 'Inter','Noto Sans TC',sans-serif;white-space:nowrap;
+ letter-spacing:.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28)">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+打印 A4 Print</button>
+<style>@media print{#a4print{display:none!important}}</style>
+</body>
+</html>

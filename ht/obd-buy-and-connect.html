@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tesla Model S 診斷線材 — 採購及接駁指引 · VY1428</title>
+<style>
+:root{
+  --ink:#15181e; --ink2:#3a4049; --mut:#767e8a; --rule:#dfe3e8;
+  --acc:#a8492a; --acc2:#0e5a52; --tint:#f6f7f9; --warn:#8a6100;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font:14px/1.62 "Helvetica Neue",Helvetica,Arial,"PingFang HK","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink); background:#eceef1; -webkit-font-smoothing:antialiased;
+}
+.page{
+  width:210mm; min-height:297mm; margin:0 auto 10mm; background:#fff; padding:15mm 16mm 13mm;
+  box-shadow:0 1px 3px rgba(0,0,0,.12),0 8px 28px rgba(0,0,0,.08);
+}
+/* ---------- masthead ---------- */
+.mast{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  border-bottom:2px solid var(--ink); padding-bottom:9px; margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:8px}
+.brand svg{width:19px;height:19px;flex:none}
+.bname{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;line-height:1.25}
+.bname span{display:block;font-size:8.5px;letter-spacing:.1em;color:var(--mut);font-weight:500}
+.mast h1{margin:0;font-size:17px;letter-spacing:-.01em;line-height:1.3;text-align:right}
+.mast h1 small{display:block;font-size:9.5px;font-weight:500;color:var(--mut);letter-spacing:.04em;margin-top:2px}
+.meta{display:flex;gap:0;border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-bottom:18px}
+.meta div{flex:1;padding:6px 10px;border-right:1px solid var(--rule)}
+.meta div:last-child{border-right:0}
+.meta{margin-bottom:13px}
+.meta b{display:block;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.meta i{font-style:normal;font-size:11.5px;font-weight:600}
+
+/* ---------- headings ---------- */
+h2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:22px 0 9px;
+  padding-bottom:5px;border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:8px}
+h2 em{font-style:normal;font-family:Georgia,serif;color:var(--acc);font-size:15px;letter-spacing:0}
+h2 small{margin-left:auto;font-size:9px;letter-spacing:.05em;color:var(--mut);text-transform:none;font-weight:500}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
+th{text-align:left;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+  font-weight:700;padding:0 8px 5px;border-bottom:1px solid var(--ink);white-space:normal;line-height:1.3}
+td{padding:7px 8px;border-bottom:1px solid var(--rule);vertical-align:top;overflow-wrap:break-word}
+tr.tot td{border-bottom:0;border-top:1.5px solid var(--ink);font-weight:700;padding-top:8px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.kw{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:10px;background:var(--tint);
+  padding:1.5px 5px;border-radius:2px;color:var(--ink2);display:inline-block;line-height:1.5}
+.tag{display:inline-block;font-size:8.5px;letter-spacing:.06em;font-weight:700;padding:1.5px 6px;
+  border-radius:2px;text-transform:uppercase}
+.t-buy{background:#e8f3ef;color:#0e5a52}
+.t-wait{background:#fdf3e0;color:var(--warn)}
+.t-opt{background:var(--tint);color:var(--mut)}
+
+/* ---------- flow diagram ---------- */
+.flow{margin:6px 0 4px;border:1px solid var(--rule);border-radius:4px;padding:12px 10px 8px;background:#fcfcfd}
+.flow svg{display:block;width:100%;height:auto}
+.cap{font-size:9.5px;color:var(--mut);margin-top:2px;text-align:center}
+
+/* ---------- steps ---------- */
+ol.steps{margin:4px 0 0;padding:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 10px 30px;margin-bottom:9px;
+  border-bottom:1px dotted var(--rule)}
+ol.steps li:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:19px;height:19px;
+  border-radius:50%;background:var(--ink);color:#fff;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+ol.steps > li > b{display:block;font-size:12.5px;margin-bottom:1px}
+ol.steps p{margin:0;font-size:11px;color:var(--ink2);line-height:1.55}
+
+/* ---------- callout ---------- */
+.call{border-left:3px solid var(--acc);background:#fdf8f6;padding:9px 12px;margin:10px 0;border-radius:0 3px 3px 0}
+.call b{font-size:11.5px}
+.call p{margin:2px 0 0;font-size:11px;color:var(--ink2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:9px}
+.br{border:1px solid var(--rule);border-radius:4px;padding:10px 12px}
+.br.yes{border-color:#bcd9d1;background:#f5faf8}
+.br.no{border-color:#e8d5b0;background:#fdfaf3}
+.br h4{margin:0 0 5px;font-size:11.5px;display:flex;align-items:center;gap:6px}
+.br h4 span{font-size:8.5px;letter-spacing:.08em;padding:1.5px 5px;border-radius:2px;font-weight:700}
+.br.yes h4 span{background:#0e5a52;color:#fff}
+.br.no h4 span{background:var(--warn);color:#fff}
+.br p{margin:0;font-size:10.5px;color:var(--ink2);line-height:1.55}
+
+/* ---------- checklist ---------- */
+ul.chk{margin:4px 0 0;padding:0;list-style:none;columns:2;column-gap:20px}
+ul.chk li{font-size:11px;padding:4px 0 4px 20px;position:relative;break-inside:avoid;line-height:1.5}
+ul.chk li::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;
+  border:1.3px solid var(--ink2);border-radius:2px}
+
+/* ---------- ask box ---------- */
+pre.ask{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:10px;line-height:1.7;
+  background:var(--ink);color:#e8eaed;padding:11px 13px;border-radius:4px;margin:6px 0 0;
+  white-space:pre-wrap;overflow-wrap:break-word}
+
+.foot{margin-top:20px;padding-top:8px;border-top:1px solid var(--rule);
+  font-size:9px;color:var(--mut);display:flex;justify-content:space-between;gap:12px}
+
+/* ---------- print ---------- */
+#pbtn{position:fixed;right:18px;bottom:18px;z-index:99;background:var(--ink);color:#fff;
+  border:0;border-radius:24px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;
+  box-shadow:0 3px 14px rgba(0,0,0,.28);white-space:nowrap;font-family:inherit}
+@media print{
+  body{background:#fff}
+  .page{width:auto;min-height:0;margin:0;padding:0;box-shadow:none;page-break-after:always}
+  .page:last-of-type{page-break-after:auto}
+  #pbtn{display:none!important}
+  h2,ol.steps li,.br,.flow{break-inside:avoid}
+  @page{size:A4;margin:12mm 15mm}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE 1 ══════════════ -->
+<div class="page">
+
+  <div class="mast">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="7" stroke="#15181e" stroke-width="2.4"/><path d="M12 11v18M28 11v18M12 20h16" stroke="#15181e" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <div class="bname">Henderson Transpacific<span>亨德森環太 · 車輛檔案系統</span></div>
+    </div>
+    <h1>診斷線材採購及接駁指引
+      <small>OBD Diagnostic Harness — Purchase &amp; Connection Guide</small></h1>
+  </div>
+
+  <div class="meta">
+    <div><b>車輛 Vehicle</b><i>2016 Tesla Model S 70</i></div>
+    <div><b>車牌 Plate</b><i>UJ 713</i></div>
+    <div><b>VIN</b><i>5YJSB7E15GF122555</i></div>
+    <div><b>版本 Rev.</b><i>v2 · 2026-08-17</i></div>
+  </div>
+
+  <!-- ============ 1. 採購清單 ============ -->
+  <h2><em>01</em> 採購清單 Shopping List <small>先買 A 組，量到 12V 之後先買 B 組</small></h2>
+
+  <table>
+    <colgroup><col style="width:5%"><col style="width:27%"><col style="width:29%"><col style="width:15%"><col style="width:12%"><col style="width:12%"></colgroup>
+    <thead><tr>
+      <th>#</th><th>項目 Item</th><th>規格 / 搜尋關鍵字</th><th>來源</th><th class="num">參考價</th><th>時序</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><b>Tesla 診斷轉 OBD2 線</b><br><span style="color:var(--mut);font-size:10px">12+20 針 一拖三</span></td>
+        <td><span class="kw">特斯拉 CAN诊断转换头 一拖三</span><br><span style="color:var(--mut);font-size:10px">三分支涵蓋 12 針（前期 S）/ 20 針（改款 S·X）/ 3·Y</span></td>
+        <td>拼多多 · 包郵到港</td>
+        <td class="num">¥48</td>
+        <td><span class="tag t-buy">即刻買</span></td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><b>數字萬用錶</b><br><span style="color:var(--mut);font-size:10px">量 pin 16 有冇 12V</span></td>
+        <td><span class="kw">数字万用表 自动量程</span><br><span style="color:var(--mut);font-size:10px">揸車 20 年，呢支錶點都用得着</span></td>
+        <td>淘寶 / 深水埗</td>
+        <td class="num">¥40–80</td>
+        <td><span class="tag t-buy">即刻買</span></td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><b>OBD2 開關延長線</b><br><span style="color:var(--mut);font-size:10px">扁線 · 50 cm · 16 針全通</span></td>
+        <td>只自己用 → <span class="kw">OBD2 延长线 带开关 扁线 50cm</span><br>要留位俾車廠 → <span class="kw">OBD 一分二 独立开关 扁线</span></td>
+        <td>淘寶 / 拼多多</td>
+        <td class="num">¥25–70</td>
+        <td><span class="tag t-wait">量完先買</span></td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td><b>vLinker FS <u>BT</u></b><br><span style="color:var(--mut);font-size:10px">藍牙版 · Apple MFi 認證 · iOS + Android</span></td>
+        <td><span class="kw">vLinker FS BT</span> ／ 替代品 <span class="kw">OBDLink MX+</span><br><span style="color:#a8492a;font-size:10px;font-weight:600">⚠⚠ Vgate 有「vLinker FS <u>USB</u>」同「vLinker FS <u>BT</u>」兩款！<br>USB 版係俾 FORScan 用，插電腦，<u>無線唔通</u>。一定要揀 BT 版。</span><br><span style="color:var(--mut);font-size:10px">⚠ 唔好買 ELM327 山寨，讀唔到 Tesla 專有 frame</span></td>
+        <td>官方店 / 淘寶</td>
+        <td class="num">¥250–380</td>
+        <td><span class="tag t-buy">即刻買</span></td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td><b>Scan My Tesla</b><br><span style="color:var(--mut);font-size:10px">手機 App，一次性收費</span></td>
+        <td>Android：<span class="kw">Scan My Tesla</span>　iOS：<span class="kw">Scan My T3SLA</span><br><span style="color:var(--mut);font-size:10px">純本地運作，無雲端、無 API</span></td>
+        <td>App Store / Play</td>
+        <td class="num">HK$60</td>
+        <td><span class="tag t-buy">即刻買</span></td>
+      </tr>
+      <tr class="tot">
+        <td></td><td colspan="3">總計 Total（連運費，以 ¥1 ≈ HK$1.1 計）</td>
+        <td class="num">≈ HK$500–700</td><td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============ 2. 接駁流程 ============ -->
+  <h2><em>02</em> 接駁流程 Connection Flow <small>總線長上限 100 cm</small></h2>
+
+  <div class="flow">
+  <svg viewBox="0 0 980 250" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica,Arial,sans-serif">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#3a4049"/>
+      </marker>
+      <linearGradient id="gcar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2b323c"/><stop offset="1" stop-color="#161a20"/>
+      </linearGradient>
+    </defs>
+
+    <!-- node 1: car -->
+    <rect x="4" y="52" width="150" height="86" rx="7" fill="url(#gcar)"/>
+    <text x="79" y="80" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">車輛診斷口</text>
+    <text x="79" y="98" text-anchor="middle" fill="#aeb6c0" font-size="10.5">中控台屏幕下方</text>
+    <text x="79" y="115" text-anchor="middle" fill="#e8b48f" font-size="11" font-weight="bold">12 針 或 20 針</text>
+    <text x="79" y="30" text-anchor="middle" fill="#767e8a" font-size="9.5" letter-spacing="1.4">VEHICLE</text>
+    <text x="79" y="160" text-anchor="middle" fill="#767e8a" font-size="10">撬開側飾板（按扣式）</text>
+
+    <path d="M160 95 H190" stroke="#3a4049" stroke-width="1.6" marker-end="url(#ar)"/>
+
+    <!-- node 2 -->
+    <rect x="196" y="52" width="166" height="86" rx="7" fill="#fff" stroke="#15181e" stroke-width="1.7"/>
+    <circle cx="216" cy="70" r="9" fill="#15181e"/>
+    <text x="216" y="74" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">1</text>
+    <text x="279" y="97" text-anchor="middle" fill="#15181e" font-size="13.5" font-weight="bold">Tesla 轉接線</text>
+    <text x="279" y="114" text-anchor="middle" fill="#767e8a" font-size="10.5">一拖三 · 12+20 針</text>
+    <text x="279" y="30" text-anchor="middle" fill="#767e8a" font-size="9.5" letter-spacing="1.4">ADAPTER</text>
+    <text x="279" y="160" text-anchor="middle" fill="#a8492a" font-size="10.5" font-weight="bold">實測長度 = ___ cm</text>
+
+    <path d="M368 95 H398" stroke="#3a4049" stroke-width="1.6" marker-end="url(#ar)"/>
+
+    <!-- node 3 : switch -->
+    <rect x="404" y="52" width="186" height="86" rx="7" fill="#fdf8f6" stroke="#a8492a" stroke-width="1.9"/>
+    <circle cx="424" cy="70" r="9" fill="#a8492a"/>
+    <text x="424" y="74" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">2</text>
+    <text x="497" y="97" text-anchor="middle" fill="#15181e" font-size="13.5" font-weight="bold">帶開關延長線</text>
+    <text x="497" y="114" text-anchor="middle" fill="#767e8a" font-size="10.5">扁線 · 切 pin 16 電源</text>
+    <text x="497" y="30" text-anchor="middle" fill="#a8492a" font-size="9.5" letter-spacing="1.4" font-weight="bold">SWITCH</text>
+    <!-- switch icon -->
+    <g transform="translate(552,62)">
+      <rect x="0" y="0" width="26" height="15" rx="7.5" fill="#c9ced6"/>
+      <circle cx="8" cy="7.5" r="5.6" fill="#fff"/>
+    </g>
+    <text x="497" y="160" text-anchor="middle" fill="#a8492a" font-size="10.5" font-weight="bold">50 cm（可調）</text>
+    <text x="497" y="176" text-anchor="middle" fill="#767e8a" font-size="10">開關裝喺中控儲物格內</text>
+
+    <path d="M596 95 H626" stroke="#3a4049" stroke-width="1.6" marker-end="url(#ar)"/>
+
+    <!-- node 4 -->
+    <rect x="632" y="52" width="150" height="86" rx="7" fill="#fff" stroke="#15181e" stroke-width="1.7"/>
+    <circle cx="652" cy="70" r="9" fill="#15181e"/>
+    <text x="652" y="74" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">3</text>
+    <text x="707" y="97" text-anchor="middle" fill="#15181e" font-size="13.5" font-weight="bold">vLinker FS</text>
+    <text x="707" y="114" text-anchor="middle" fill="#767e8a" font-size="10.5">BT 版藍牙 dongle</text>
+    <text x="707" y="30" text-anchor="middle" fill="#767e8a" font-size="9.5" letter-spacing="1.4">DONGLE</text>
+    <text x="707" y="160" text-anchor="middle" fill="#767e8a" font-size="10">收埋喺飾板後面</text>
+
+    <!-- BT waves -->
+    <g stroke="#0e5a52" fill="none" stroke-width="1.6" stroke-linecap="round">
+      <path d="M792 95 q9 -9 0 -18"/><path d="M801 100 q15 -14 0 -28"/><path d="M810 105 q21 -19 0 -38"/>
+    </g>
+    <text x="838" y="128" text-anchor="middle" fill="#0e5a52" font-size="9.5" letter-spacing=".8">BT</text>
+
+    <!-- node 5 : phone -->
+    <rect x="866" y="46" width="66" height="98" rx="9" fill="#fff" stroke="#0e5a52" stroke-width="1.9"/>
+    <rect x="874" y="58" width="50" height="66" rx="3" fill="#e8f3ef"/>
+    <circle cx="899" cy="135" r="4" fill="#0e5a52"/>
+    <text x="899" y="86" text-anchor="middle" fill="#0e5a52" font-size="10" font-weight="bold">Scan</text>
+    <text x="899" y="99" text-anchor="middle" fill="#0e5a52" font-size="10" font-weight="bold">My</text>
+    <text x="899" y="112" text-anchor="middle" fill="#0e5a52" font-size="10" font-weight="bold">Tesla</text>
+    <text x="899" y="30" text-anchor="middle" fill="#767e8a" font-size="9.5" letter-spacing="1.4">PHONE</text>
+    <text x="899" y="162" text-anchor="middle" fill="#767e8a" font-size="10">手機</text>
+
+    <!-- total length brace -->
+    <path d="M8 208 V216 H786 V208" stroke="#a8492a" stroke-width="1.4" fill="none"/>
+    <rect x="290" y="204" width="222" height="24" rx="4" fill="#fff"/>
+    <text x="401" y="221" text-anchor="middle" fill="#a8492a" font-size="12" font-weight="bold">①+② 總長 ≤ 100 cm</text>
+    <text x="880" y="221" text-anchor="middle" fill="#767e8a" font-size="10">500 kbps CAN 分支限制</text>
+  </svg>
+  </div>
+  <div class="cap">開關 OFF = dongle 完全斷電、零耗流、唔會令 CAN bus 保持清醒　·　開關 ON = 季度檢查時使用</div>
+
+  <div class="foot">
+    <span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span>
+    <span>VY1428 · UJ 713 · 2026-08-17</span>
+    <span>Page 1 / 3</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 2 ══════════════ -->
+<div class="page">
+
+  <div class="mast">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="7" stroke="#15181e" stroke-width="2.4"/><path d="M12 11v18M28 11v18M12 20h16" stroke="#15181e" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <div class="bname">Henderson Transpacific<span>亨德森環太 · 車輛檔案系統</span></div>
+    </div>
+    <h1>安裝程序及驗收
+      <small>Installation Procedure &amp; Acceptance</small></h1>
+  </div>
+
+  <div class="call">
+    <b>⚠ 唔好買嘅嘢</b>
+    <p>· <b>OBD 一分二 <u>無開關</u> 延長線（¥9.7）</b> — 冇開關即係冇用，而且多咗一個帶電空置母座喺車入面吊吊揈。<br>
+       · <b>3 m / 5 m 長線</b> — 平幾蚊，但令 CAN 分支過長，換嚟間歇性讀唔到數據。<br>
+       · <b>太陽能 12V 補電板</b> — 詳見前次分析：插座瞓咗會斷電、直駁電池繞過 BMS 分流器，而且發電量只夠補返 1–2%。</p>
+  </div>
+
+  <!-- ============ 3. 安裝步驟 ============ -->
+  <h2><em>03</em> 安裝步驟 Installation <small>次序唔可以跳</small></h2>
+
+  <ol class="steps">
+    <li><b>撬開中控台側飾板，確認針數</b>
+      <p>診斷口喺屏幕下方嘅中控台內，飾板係按扣式（push clip），唔使工具、唔使拆儀錶台。<b>數清楚係 12 針定 20 針，並且影相存檔。</b>你部車 2016 年 1–2 月出廠，理論上係前期 12 針，但業界對切換日期講法唔一致 —— 實物為準。</p></li>
+
+    <li><b>試插 ¥48 轉接線，度返實際長度</b>
+      <p>三個分支揀啱嗰個插入，聽到「咔」聲即到位（防呆設計，只有一個方向入到）。<b>用軟尺度返條線由插頭到 OBD2 母座嘅長度，寫入第 02 節嘅空格。</b></p></li>
+
+    <li><b>⚡ 關鍵測試：量 OBD2 母座 pin 16 對地電壓</b>
+      <p>萬用錶調去 DC 20V 檔。黑筆搭 pin 4 或 pin 5（接地），紅筆搭 <b>pin 16</b>。<b>分別喺「車醒住」同「車瞓咗 30 分鐘後」各量一次</b>，兩個讀數都記低。結果決定下一步 —— 見第 04 節。</p></li>
+
+    <li><b>買並裝上開關延長線</b>
+      <p>長度 = 100 cm 減去第 2 步度到嘅數。開關擺喺中控儲物格內或飾板邊緣，用 3M 雙面膠貼實，<b>貼張標籤寫「OBD 診斷 — 平時 OFF」</b>。</p></li>
+
+    <li><b>收線、扣返飾板</b>
+      <p>Dongle 本體塞入飾板後面空位，用紮帶固定，唔好任由佢震。扁線由飾板隙位穿出，扣返飾板時確認冇夾住條線。</p></li>
+
+    <li><b>首次通電測試</b>
+      <p>開關扳 ON → dongle 應該亮燈 → 手機開藍牙配對 → 坐入車踩住迫力（令 CAN bus 活躍）→ 開 Scan My Tesla → 對照第 05 節驗收表逐項打勾 → <b>完成後即刻扳返 OFF</b>。</p></li>
+  </ol>
+
+  <!-- ============ 4. 決策點 ============ -->
+  <h2><em>04</em> 決策點：pin 16 有冇 12V？ <small>呢個決定要唔要買開關線</small></h2>
+
+  <div class="two">
+    <div class="br yes">
+      <h4><span>情況 A</span>量到 ≈ 12–13 V</h4>
+      <p><b>照原計劃行。</b>Dongle 由車供電，所以必須要開關 —— 冇開關就會長期令 CAN bus 保持清醒，令 12V 補電周期由約 27 小時縮短到約 17 小時。<br><br>→ 買第 03 項開關延長線，完成第 4–6 步。</p>
+    </div>
+    <div class="br no">
+      <h4><span>情況 B</span>量到 0 V</h4>
+      <p><b>開關唔使買，慳返。</b>條線根本冇引 12V 出嚟，dongle 冇電、零耗流，長期插住完全無害。<br><br>→ 但 dongle 要另外供電先郁到。<b>影低你嘅實測數字話我知，我再幫你出供電方案</b>，唔好自己亂駁。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span>
+    <span>VY1428 · UJ 713 · 2026-08-17</span>
+    <span>Page 2 / 3</span>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 3 ══════════════ -->
+<div class="page">
+
+  <div class="mast">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none"><rect x="1.5" y="1.5" width="37" height="37" rx="7" stroke="#15181e" stroke-width="2.4"/><path d="M12 11v18M28 11v18M12 20h16" stroke="#15181e" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <div class="bname">Henderson Transpacific<span>亨德森環太 · 車輛檔案系統</span></div>
+    </div>
+    <h1>驗收、日常使用及採購問答
+      <small>Acceptance, Routine Use &amp; Vendor Questions</small></h1>
+  </div>
+
+  <!-- ============ 5. 驗收 ============ -->
+  <h2 style="margin-top:0"><em>05</em> 首次驗收檢查表 Acceptance Checklist <small>逐項打勾</small></h2>
+
+  <ul class="chk">
+    <li>開關 ON 時 dongle 指示燈亮</li>
+    <li>開關 OFF 時 dongle 指示燈全熄</li>
+    <li>手機藍牙成功配對</li>
+    <li>App 讀到電芯電壓（約 96 個 cell group）</li>
+    <li>App 讀到模組溫度</li>
+    <li>App 讀到 Pack 總電壓及電流</li>
+    <li>App 讀到 DC-DC 輸出電壓</li>
+    <li>App 讀到 12V 電池電壓</li>
+    <li>連續讀 5 分鐘無斷線</li>
+    <li>飾板扣得返實、冇夾線</li>
+    <li>開關貼咗標籤、位置易撳</li>
+    <li>離車前確認開關已 OFF</li>
+  </ul>
+
+  <div class="call" style="margin-top:14px">
+    <b>季度檢查 SOP — 每季一次，約 20 分鐘</b>
+    <p>開關 ON → 坐入車踩迫力（或充緊電時做，更能反映負載表現）→ 記錄六項數字：<b>電芯最高壓 / 最低壓 / 壓差 mV / 模組最大溫差 °C / DC-DC 輸出 V / 12V 靜態 V</b> → 填入《季度電池體檢記錄表》→ 開關 OFF。<br>
+    數據會接落 HT 車輛檔案嘅電池健康曲線，同 Fleet API 每小時嘅續航趨勢互相對照。</p>
+  </div>
+
+  <!-- ============ 6. 問賣家 ============ -->
+  <h2><em>06</em> 落單前問賣家 Pre-Purchase Questions <small>複製直接發</small></h2>
+
+  <pre class="ask">【問第 1 項 · Tesla 轉接線】
+1. 我車係 2016 年 1–2 月出廠嘅 Model S（改款前），診斷口係 12 針，
+   呢條線嘅其中一個分支係咪對應呢款？
+2. OBD2 母座嘅 16 號腳有冇 12V 供電輸出？定係要另外接電？
+3. CAN-H / CAN-L 係咪接到 OBD2 嘅 6 號同 14 號腳？
+   支唔支援 Scan My Tesla 手機 App（唔係診斷儀）？
+
+【問 vLinker 賣家】
+1. 你賣嘅係 vLinker FS BT（藍牙）定 FS USB？我要藍牙版。
+
+【問第 3 項 · 開關延長線】
+1. 係咪 16 針全部直通？
+2. 個開關切邊條線？係咪只切 16 號腳（12V 電源）？
+3. 實際線長幾多 cm？扁線厚度幾多 mm？</pre>
+
+  <div class="call" style="margin-top:14px;border-left-color:#767e8a;background:var(--tint)">
+    <b>本文未確認之處（照直講）</b>
+    <p>· <b>12 針 vs 20 針切換日期</b> — 不同來源分別指向 2015 年 9 月 及 2016 年 4 月改款。本指引採「實物數針為準」處理，並以一拖三線材對沖此不確定性。<br>
+       · <b>轉接線是否引出 12V</b> — 各廠做法不一，必須實測，故第 3 步列為關鍵測試。<br>
+       · <b>RHD 飾板差異</b> — Tesla 官方文件指 2014 年 8 月後診斷口統一在中控台，不分左右軚；惟第三方安裝指南以左軚描述。撬板前請目視確認。</p>
+  </div>
+
+  <div class="foot">
+    <span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span>
+    <span>VY1428 · UJ 713 · 2026-08-17</span>
+    <span>Page 3 / 3</span>
+  </div>
+</div>
+
+<button id="pbtn" onclick="window.print()">列印 A4 · Print</button>
+</body>
+</html>

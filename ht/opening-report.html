@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>車輛檔案 — 開檔報告 Vehicle File — Opening Report — Henderson Transpacific</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7; --muted:#33475e; --faint:#64748b;
+  --line:#d5dbe1; --hair:#e6eaee; --panel:#f6f7f8; --panel2:#fbfcfd;
+  --red:#c0392b; --amber:#b8730a; --ok:#2f6b46; --blue:#3457dc;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink); background:#eef2f4; font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  width:210mm; min-height:297mm; margin:16px auto; background:#fff;
+  padding:14mm 13mm 13mm; position:relative;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10);
+}
+/* ---------- type ---------- */
+h1{font-size:23px;font-weight:600;letter-spacing:.02em;line-height:1.25}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+h3{font-size:12.5px;font-weight:600;letter-spacing:.01em}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.5px;color:var(--muted);line-height:1.45}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:-.01em}
+b,strong{font-weight:600}
+/* ---------- header ---------- */
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.wordmark{font-size:10.5px;font-weight:600;letter-spacing:.24em;color:var(--ink);text-transform:uppercase}
+.wordmark span{color:var(--accent)}
+.masthead h1{margin-top:9px}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:5px 12px;font-size:17px;
+  font-weight:600;letter-spacing:.09em;display:inline-block;color:var(--faint)}
+.hd-right{text-align:right;flex:0 0 auto}
+.stamp{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+.stamp-new{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:2px;
+  padding:2px 7px;font-size:8.6px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+/* ---------- lang tabs ---------- */
+.langbar{display:flex;gap:0;margin-bottom:9px;justify-content:flex-end}
+.langbar button{
+  font:inherit;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 15px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+.langbar button+button{border-left:none}
+.langbar button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+/* ---------- fillable identity grid ---------- */
+.fill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--hair);margin-top:16px}
+.fill-cell{padding:12px 14px 14px;border-bottom:1px solid var(--hair)}
+.fill-cell:nth-child(4n+1),.fill-cell:nth-child(4n+2),.fill-cell:nth-child(4n+3){border-right:1px solid var(--hair)}
+.fill-cell:nth-child(n+5){border-bottom:none}
+.fill-line{margin-top:16px;height:1px;border-bottom:1.5px dashed var(--line);min-height:22px}
+.fill-tbc{margin-top:6px}
+/* ---------- kpi-style chip row ---------- */
+.pill{display:inline-block;font-size:8.2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-red{color:var(--red);border-color:var(--red);background:#fbeceb}
+.p-amb{color:var(--amber);border-color:#e0b96a;background:#fdf8ee}
+.p-ok{color:var(--ok);border-color:#a9c9b6;background:#f2f8f4}
+.p-grey{color:var(--muted);border-color:var(--line);background:var(--panel)}
+.p-blue{color:var(--blue);border-color:#b3c1f2;background:#f2f5fd}
+.p-teal{color:var(--accent);border-color:#9fd3d7;background:#eaf7f8}
+/* ---------- sections ---------- */
+section{margin-top:22px;break-inside:avoid}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:11px}
+.shead .rule{font-size:9px;color:var(--faint);letter-spacing:.04em;text-align:right}
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th{text-align:left;font-size:8.4px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding:0 7px 6px 0;border-bottom:1px solid var(--line);vertical-align:bottom;white-space:nowrap}
+td{padding:7px 7px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.42}
+th+th,td+td{padding-left:9px}
+table.wrap th,table.wrap td{white-space:normal}
+tr:last-child td{border-bottom:1px solid var(--line)}
+.r{text-align:right}
+td.r,th.r{padding-right:0}
+tbody tr:hover{background:var(--panel2)}
+.tot td{border-bottom:none;border-top:1.5px solid var(--ink);font-weight:600;padding-top:8px;font-size:11px}
+.dim{color:var(--muted)}
+/* ---------- year block ---------- */
+.yearcard{border:1px solid var(--hair);padding:12px 14px 11px;margin-top:12px;break-inside:avoid}
+.yearcard-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;
+  border-bottom:1px solid var(--hair);padding-bottom:7px}
+.yearcard-head .yn{font-size:14px;font-weight:600;color:var(--ink)}
+.yearcard-head .yk{font-size:10px;color:var(--faint)}
+.yearcard-head .ys{font-size:11px;font-weight:600;color:var(--accent)}
+/* ---------- charts ---------- */
+.card{border:1px solid var(--hair);padding:13px 14px 10px;background:#fff;break-inside:avoid}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:7px 22px;margin-top:13px;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend .bar{border-radius:1px;width:17px;height:10px}
+/* ---------- notes ---------- */
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.4px;line-height:1.5}
+.note.warn{border-left-color:var(--red);background:#fbeceb}
+.note.accent{border-left-color:var(--accent);background:#eaf7f8}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* ---------- checklist ---------- */
+ol.checklist{list-style:none}
+ol.checklist li{position:relative;padding:9px 0 9px 30px;border-bottom:1px solid var(--hair);font-size:10.5px;line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+ol.checklist li:before{content:'';position:absolute;left:0;top:10px;width:12px;height:12px;
+  border:1.5px solid var(--ink);border-radius:2px}
+ol.checklist li:last-child{border-bottom:none}
+ol.checklist .cn{flex:0 0 16px;font-size:9px;font-weight:600;color:var(--faint);font-variant-numeric:tabular-nums}
+/* ---------- signature ---------- */
+.sigrow{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:18px}
+.sigline{margin-top:26px;border-bottom:1px solid var(--ink);height:1px}
+.foot{margin-top:26px;padding-top:9px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint);letter-spacing:.03em}
+/* ---------- lang visibility ---------- */
+body[data-lang="zh"] .en-only{display:none}
+body[data-lang="en"] .zh-only{display:none}
+/* ---------- brand ---------- */
+.brandmark{display:flex;align-items:center;gap:9px}
+.brandmark svg{flex:0 0 auto;display:block;width:19px;height:19px}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+.ht-tag{text-align:center;font-size:8.6px;color:var(--faint);letter-spacing:.05em;margin-top:6px}
+@page{size:A4 portrait;margin:11mm 10mm 10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  .langbar,.noprint{display:none!important}
+  section,.card,table,.note,.fill-grid,.yearcard{break-inside:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .page-break{break-before:page}
+  section{margin-top:14px}
+  .masthead{padding-bottom:9px}
+  .card{padding:10px 11px 8px}
+  ol.checklist li{padding:6px 0 6px 30px}
+  ol.checklist li:before{top:7px}
+  .shead{margin-bottom:8px}
+  tbody tr:hover{background:none}
+  .yearcard{margin-top:9px;padding:10px 12px 9px}
+}
+</style>
+</head>
+<body data-lang="zh">
+<div class="sheet">
+
+  <div class="langbar noprint">
+    <button id="btn-zh" class="on" onclick="setLang('zh')">繁體中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <!-- ======================= MASTHEAD ======================= -->
+  <div class="masthead">
+    <div>
+      <div class="brandmark">
+        <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>
+        <div>
+          <div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div>
+          <div class="cnname">亨德森環太</div>
+        </div>
+      </div>
+      <h1 class="zh-only" style="margin-top:9px">車輛檔案 — 開檔報告 Vehicle File — Opening Report</h1>
+      <h1 class="en-only" style="margin-top:9px">Vehicle File — Opening Report</h1>
+      <div class="sub" style="margin-top:4px">
+        <span class="zh-only">新客戶入廠首次建檔 · 此前並無本廠維修紀錄</span>
+        <span class="en-only">First file opened for a new customer · no prior service history at this workshop</span>
+      </div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">— — —</div>
+      <div class="tiny" style="margin-top:7px">
+        <span class="zh-only">開檔日期 待補</span><span class="en-only">File opened — TBC</span>
+      </div>
+      <div style="margin-top:6px"><span class="stamp-new"><span class="zh-only">開檔 · NEW FILE</span><span class="en-only">NEW FILE</span></span></div>
+    </div>
+  </div>
+
+  <!-- ======================= IDENTITY (fillable) ======================= -->
+  <div class="fill-grid">
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">車牌 Plate</span><span class="en-only">Plate</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">VIN 車架號</span><span class="en-only">VIN</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">廠牌型號 Make &amp; model</span><span class="en-only">Make &amp; model</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">年份 Year</span><span class="en-only">Year</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">首次登記 First registered</span><span class="en-only">First registered</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">現時里程 Current odometer</span><span class="en-only">Current odometer</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">車主 Owner</span><span class="en-only">Owner</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+    <div class="fill-cell">
+      <div class="lbl"><span class="zh-only">開檔日期 File opened</span><span class="en-only">File opened</span></div>
+      <div class="fill-line"></div>
+      <div class="fill-tbc"><span class="pill p-grey">待補 TBC</span></div>
+    </div>
+  </div>
+
+  <!-- ======================= 01 FILE STATUS ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">01 — 檔案狀態</span><span class="en-only">01 — File Status</span></h2>
+      <div class="rule"><span class="zh-only">開檔當日</span><span class="en-only">As of file opening</span></div>
+    </div>
+    <div class="note accent">
+      <div class="zh-only">本車過往維修紀錄尚未建立 — 由本次入廠起，所有工序、零件、里程與費用將逐次記錄，形成完整可追溯檔案。</div>
+      <div class="en-only">No prior service history is on file. From this visit onward, every job, part, odometer reading and cost is recorded, building a complete traceable archive.</div>
+    </div>
+    <table style="margin-top:14px">
+      <thead><tr>
+        <th><span class="zh-only">項目</span><span class="en-only">Item</span></th>
+        <th><span class="zh-only">狀態</span><span class="en-only">Status</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="zh-only">過往維修紀錄</span><span class="en-only">Prior service records</span></td><td><span class="pill p-grey">待補 TBC</span></td></tr>
+        <tr><td><span class="zh-only">過往零件更換</span><span class="en-only">Prior parts replaced</span></td><td><span class="pill p-grey">待補 TBC</span></td></tr>
+        <tr><td><span class="zh-only">上次保養日期</span><span class="en-only">Last service date</span></td><td><span class="pill p-grey">待補 TBC</span></td></tr>
+        <tr><td><span class="zh-only">上次里程</span><span class="en-only">Last odometer reading</span></td><td><span class="pill p-grey">待補 TBC</span></td></tr>
+      </tbody>
+    </table>
+    <div class="tiny" style="margin-top:10px">
+      <span class="zh-only">未有紀錄不等於未做保養，只代表本廠未能核實。</span>
+      <span class="en-only">Absence of records does not mean work was not done — it means this workshop cannot verify it.</span>
+    </div>
+  </section>
+
+  <!-- ======================= 02 10-YEAR PLAN ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2><span class="zh-only">02 — 十年保養計劃</span><span class="en-only">02 — 10-Year Maintenance Plan</span></h2>
+      <div class="rule"><span class="zh-only">按年均 20,000 km 推算</span><span class="en-only">Projected at 20,000 km / year</span></div>
+    </div>
+    <div class="note">
+      <h4><span class="zh-only">推算假設</span><span class="en-only">Projection assumption</span></h4>
+      <div class="zh-only">本計劃假設車輛年均行駛 <b>20,000 km</b>，尚未有本車實際里程數據。首次入廠量得現時里程後，本計劃將按實際年均里程重新校準；里程愈高或愈低，各項到期年份將相應提前或推後。</div>
+      <div class="en-only">This plan assumes an average of <b>20,000 km / year</b>, as no actual mileage history exists yet for this vehicle. Once the current odometer is recorded at this first visit, the plan will be re-based on the real annual average — higher or lower mileage will shift every due year earlier or later accordingly.</div>
+    </div>
+    <div id="plan-years"></div>
+    <div class="tiny" style="margin-top:12px">
+      <span class="zh-only">價格為大灣區第三方維修廠 2026 年參考估算範圍，未經逐項核實，均標示「參考」，落單前請向維修廠確認。</span>
+      <span class="en-only">Prices are 2026 indicative ranges for Greater Bay Area independent shops, not individually verified — all figures are marked "indicative"; confirm with the shop before ordering.</span>
+    </div>
+  </section>
+
+  <!-- ======================= 03 COST OUTLOOK ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2><span class="zh-only">03 — 十年費用預算</span><span class="en-only">03 — 10-Year Cost Outlook</span></h2>
+      <div class="rule"><span class="zh-only">每年小計（低—高）</span><span class="en-only">Per-year subtotal (low–high)</span></div>
+    </div>
+    <div class="card"><div id="chart-cost"></div>
+      <div class="legend"><span><i class="bar" style="background:#0e9aa7;border-radius:1px"></i><span class="zh-only">參考費用範圍（低—高）</span><span class="en-only">Indicative cost range (low–high)</span></span></div>
+    </div>
+    <table style="margin-top:14px" id="tbl-cost"></table>
+    <div class="note" style="margin-top:12px">
+      <div class="zh-only">不含意外損壞、輪胎因路況提早更換、及電池／驅動單元等大額維修。</div>
+      <div class="en-only">Excludes accident damage, early tyre wear from road conditions, and major HV battery / drive-unit repair.</div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 PRIORITY ACTIONS ======================= -->
+  <section>
+    <div class="shead">
+      <h2><span class="zh-only">04 — 優先處理建議</span><span class="en-only">04 — Priority Actions at File Opening</span></h2>
+      <div class="rule"><span class="zh-only">本次首次入廠應完成事項，建立基線</span><span class="en-only">To complete on this first visit — establishing a baseline</span></div>
+    </div>
+    <ol class="checklist">
+      <li><span class="cn zh-only">01</span><span class="cn en-only">01</span><span><span class="zh-only">記錄現時里程</span><span class="en-only">Record current odometer reading</span></span></li>
+      <li><span class="cn zh-only">02</span><span class="cn en-only">02</span><span><span class="zh-only">拍攝車身及輪胎照片</span><span class="en-only">Photograph body panels and all four tyres</span></span></li>
+      <li><span class="cn zh-only">03</span><span class="cn en-only">03</span><span><span class="zh-only">量度制動皮及碟厚度</span><span class="en-only">Measure brake pad and rotor thickness</span></span></li>
+      <li><span class="cn zh-only">04</span><span class="cn en-only">04</span><span><span class="zh-only">檢查 12V 電池狀態</span><span class="en-only">Check 12V battery condition</span></span></li>
+      <li><span class="cn zh-only">05</span><span class="cn en-only">05</span><span><span class="zh-only">讀取高壓電池健康數據</span><span class="en-only">Read HV battery health data</span></span></li>
+      <li><span class="cn zh-only">06</span><span class="cn en-only">06</span><span><span class="zh-only">確認冷氣製冷正常</span><span class="en-only">Confirm A/C cooling performance</span></span></li>
+      <li><span class="cn zh-only">07</span><span class="cn en-only">07</span><span><span class="zh-only">檢查懸掛及底盤</span><span class="en-only">Inspect suspension and underbody</span></span></li>
+      <li><span class="cn zh-only">08</span><span class="cn en-only">08</span><span><span class="zh-only">建立零件登記冊</span><span class="en-only">Open a component register</span></span></li>
+    </ol>
+  </section>
+
+  <!-- ======================= 05 COMPONENT MAP & PREVENTION ======================= -->
+  <section class="page-break">
+    <div class="shead">
+      <h2><span class="zh-only">05 — 部件位置與預防策略</span><span class="en-only">05 — Component Map &amp; Prevention Strategy</span></h2>
+      <div class="rule"><span class="zh-only">全車保養重點圖解 · 手繪風格</span><span class="en-only">Whole-car maintenance overview · hand-drawn style</span></div>
+    </div>
+    <div class="card">
+      <div class="lbl" style="margin-bottom:10px"><span class="zh-only">整車部件圖</span><span class="en-only">Vehicle Component Map</span></div>
+      <svg viewBox="0 0 1000 444" role="img" aria-label="Vehicle component map" style="width:100%;height:auto;overflow:visible">
+      <line x1="40" y1="366" x2="960" y2="366" stroke="#33475e" stroke-width="1" opacity=".4"/>
+      <rect x="330" y="334" width="340" height="16" rx="8" fill="none" stroke="#0e9aa7" stroke-width="2.5"/>
+      <rect x="690" y="316" width="80" height="30" rx="6" fill="none" stroke="#33475e" stroke-width="2.2"/>
+      <path d="M 96 342 C 86 334 80 322 80 312 C 80 302 86 294 100 288 C 118 280 150 272 200 262 C 250 252 296 244 326 232 C 342 226 356 218 372 204 C 398 182 424 160 452 148 C 480 138 504 134 530 134 C 562 134 592 139 628 148 C 672 160 720 179 764 196 C 802 211 838 217 868 217 C 888 217 899 214 904 210 C 909 216 911 226 910 238 C 908 262 903 292 896 314 C 892 328 886 338 876 342 L 820 342 A 70 70 0 0 0 680 342 L 320 342 A 70 70 0 0 0 180 342 Z" fill="#f2f2f3" stroke="#0e1b2c" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M 128 280 C 300 254 620 218 868 223" fill="none" stroke="#0e1b2c" stroke-width="1.2" opacity=".35"/>
+      <path d="M 376 202 C 402 180 428 160 456 149 C 486 138 506 134 528 133" fill="none" stroke="#0e1b2c" stroke-width="1.4" opacity=".45"/>
+      <circle cx="250" cy="307" r="59" fill="#0e1b2c"/><circle cx="250" cy="307" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+      <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="250" y1="307" x2="250" y2="277"/><line x1="250" y1="307" x2="278" y2="298"/><line x1="250" y1="307" x2="268" y2="332"/><line x1="250" y1="307" x2="232" y2="332"/><line x1="250" y1="307" x2="222" y2="298"/></g>
+      <circle cx="750" cy="307" r="59" fill="#0e1b2c"/><circle cx="750" cy="307" r="36" fill="#fff" stroke="#0e1b2c" stroke-width="3"/>
+      <g stroke="#0e1b2c" stroke-width="5" stroke-linecap="round"><line x1="750" y1="307" x2="750" y2="277"/><line x1="750" y1="307" x2="778" y2="298"/><line x1="750" y1="307" x2="768" y2="332"/><line x1="750" y1="307" x2="732" y2="332"/><line x1="750" y1="307" x2="722" y2="298"/></g>
+      <line x1="50" y1="23" x2="210" y2="272" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="210" cy="272" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="50" y="16" text-anchor="start" font-size="12.5" font-weight="700" fill="#0e1b2c">12V 電池</text>
+      <text x="50" y="27" text-anchor="start" font-size="8.5" fill="#33475e">12V battery</text>
+      <line x1="230" y1="53" x2="292" y2="265" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="292" cy="265" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="230" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">輪胎</text>
+      <text x="230" y="57" text-anchor="middle" font-size="8.5" fill="#33475e">Tyres ×4</text>
+      <line x1="410" y1="23" x2="350" y2="221" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="350" cy="221" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="410" y="16" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">車廂濾芯</text>
+      <text x="410" y="27" text-anchor="middle" font-size="8.5" fill="#33475e">Cabin filter</text>
+      <line x1="590" y1="53" x2="400" y2="196" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="400" cy="196" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="590" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">冷氣檢查</text>
+      <text x="590" y="57" text-anchor="middle" font-size="8.5" fill="#33475e">A/C check</text>
+      <line x1="770" y1="23" x2="520" y2="231" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="520" cy="231" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="770" y="16" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">車門柄</text>
+      <text x="770" y="27" text-anchor="middle" font-size="8.5" fill="#33475e">Door handles</text>
+      <line x1="950" y1="53" x2="742" y2="253" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="742" cy="253" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="950" y="46" text-anchor="end" font-size="12.5" font-weight="700" fill="#0e1b2c">避震</text>
+      <text x="950" y="57" text-anchor="end" font-size="8.5" fill="#33475e">Shocks</text>
+      <line x1="50" y1="381" x2="110" y2="296" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="110" cy="296" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="50" y="392" text-anchor="start" font-size="12.5" font-weight="700" fill="#0e1b2c">散熱器清洗</text>
+      <text x="50" y="403" text-anchor="start" font-size="8.5" fill="#33475e">Radiator cleaning</text>
+      <line x1="179" y1="413" x2="160" y2="308" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="160" cy="308" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="179" y="424" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">冷氣壓縮機</text>
+      <text x="179" y="435" text-anchor="middle" font-size="8.5" fill="#33475e">A/C compressor</text>
+      <line x1="307" y1="381" x2="250" y2="307" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="250" cy="307" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="307" y="392" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">制動碟</text>
+      <text x="307" y="403" text-anchor="middle" font-size="8.5" fill="#33475e">Rotors</text>
+      <line x1="436" y1="413" x2="296" y2="330" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="296" cy="330" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="436" y="424" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">前擺臂</text>
+      <text x="436" y="435" text-anchor="middle" font-size="8.5" fill="#33475e">Control arms (front)</text>
+      <line x1="564" y1="381" x2="500" y2="339" stroke="#0e9aa7" stroke-width="1.3" opacity=".8"/>
+      <circle cx="500" cy="339" r="5.5" fill="#0e9aa7" stroke="#fff" stroke-width="1.4"/>
+      <text x="564" y="392" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">高壓電池</text>
+      <text x="564" y="403" text-anchor="middle" font-size="8.5" fill="#33475e">HV battery (live)</text>
+      <line x1="693" y1="413" x2="712" y2="334" stroke="#64748b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="712" cy="334" r="5.5" fill="#64748b" stroke="#fff" stroke-width="1.4"/>
+      <text x="693" y="424" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">ATF／冷卻液</text>
+      <text x="693" y="435" text-anchor="middle" font-size="8.5" fill="#33475e">ATF &amp; coolant</text>
+      <line x1="821" y1="381" x2="750" y2="307" stroke="#c0392b" stroke-width="1.3" opacity=".8"/>
+      <circle cx="750" cy="307" r="5.5" fill="#c0392b" stroke="#fff" stroke-width="1.4"/>
+      <text x="821" y="392" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">半軸</text>
+      <text x="821" y="403" text-anchor="middle" font-size="8.5" fill="#33475e">Halfshafts</text>
+      <line x1="950" y1="413" x2="774" y2="286" stroke="#b8730a" stroke-width="1.3" opacity=".8"/>
+      <circle cx="774" cy="286" r="5.5" fill="#b8730a" stroke="#fff" stroke-width="1.4"/>
+      <text x="950" y="424" text-anchor="end" font-size="12.5" font-weight="700" fill="#0e1b2c">卡鉗保養</text>
+      <text x="950" y="435" text-anchor="end" font-size="8.5" fill="#33475e">Caliper service</text>
+      </svg>
+      <div class="legend" style="margin-top:12px">
+        <span><i style="background:#0e9aa7"></i><span class="zh-only">即時監察</span><span class="en-only">Live-monitored</span></span>
+        <span><i style="background:#b8730a"></i><span class="zh-only">2 年內到期</span><span class="en-only">Due within 2 yrs</span></span>
+        <span><i style="background:#64748b"></i><span class="zh-only">長期計劃</span><span class="en-only">Long-term</span></span>
+        <span><i style="background:#c0392b"></i><span class="zh-only">有症狀即換</span><span class="en-only">Replace on first symptom</span></span>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="lbl" style="margin-bottom:10px"><span class="zh-only">預防性更換邏輯 — 為何寧早莫遲</span><span class="en-only">Why Replace Before Failure</span></div>
+      <svg viewBox="0 0 1000 430" role="img" aria-label="Failure chain vs prevention" style="width:100%;height:auto;overflow:visible">
+      <rect x="20" y="16" width="960" height="94" rx="10" fill="#fbeceb"/>
+      <text x="34" y="34" font-size="12.5" font-weight="700" fill="#c0392b">壞先修 · Run-to-failure</text>
+      <line x1="265.0" y1="62" x2="277.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M277.0,57 L285.0,62 L277.0,67 Z" fill="#c0392b"/>
+      <line x1="515.0" y1="62" x2="532.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M532.0,57 L540.0,62 L532.0,67 Z" fill="#c0392b"/>
+      <line x1="760.0" y1="62" x2="782.0" y2="62" stroke="#c0392b" stroke-width="2.2"/>
+      <path d="M782.0,57 L790.0,62 L782.0,67 Z" fill="#c0392b"/>
+      <rect x="35" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="150" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">壓縮機異響被忽略</text>
+      <text x="150" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Compressor noise ignored</text>
+      <rect x="285" y="39" width="230" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="400" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">冷氣＋電池冷卻失效</text>
+      <text x="400" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">A/C &amp; battery cooling lost</text>
+      <rect x="540" y="39" width="220" height="46" rx="10" fill="#ffffff" stroke="#c0392b" stroke-width="1.8" opacity="0.97"/>
+      <text x="650" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">電池過熱降級／受損</text>
+      <text x="650" y="73" text-anchor="middle" font-size="8.8" fill="#33475e">Pack overheats &amp; degrades</text>
+      <rect x="790" y="39" width="200" height="46" rx="10" fill="#c0392b" stroke="#c0392b" stroke-width="1.8" opacity="1"/>
+      <text x="890" y="59" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">¥30,000+ ＋停駛數週</text>
+      <text x="890" y="73" text-anchor="middle" font-size="8.8" fill="#ffffff">Repair ¥30,000+ &amp; weeks off-road</text>
+
+      <rect x="20" y="122" width="960" height="94" rx="10" fill="#e6f5f5"/>
+      <text x="34" y="140" font-size="12.5" font-weight="700" fill="#0e9aa7">預防性 · Preventive</text>
+      <line x1="325.0" y1="152" x2="342.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+      <path d="M342.0,147 L350.0,152 L342.0,157 Z" fill="#0e9aa7"/>
+      <line x1="650.0" y1="152" x2="732.0" y2="152" stroke="#0e9aa7" stroke-width="2.2"/>
+      <path d="M732.0,147 L740.0,152 L732.0,157 Z" fill="#0e9aa7"/>
+      <rect x="35" y="129" width="290" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+      <text x="180" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">每年檢查 ¥150–400</text>
+      <text x="180" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Annual check</text>
+      <rect x="350" y="129" width="300" height="46" rx="10" fill="#ffffff" stroke="#0e9aa7" stroke-width="1.8" opacity="0.97"/>
+      <text x="500" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0e1b2c">見先兆即預防更換 ¥2,500–6,000</text>
+      <text x="500" y="163" text-anchor="middle" font-size="8.8" fill="#33475e">Preventive swap on first sign</text>
+      <rect x="740" y="129" width="220" height="46" rx="10" fill="#0e9aa7" stroke="#0e9aa7" stroke-width="1.8" opacity="1"/>
+      <text x="850" y="149" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">車照行，零停駛</text>
+      <text x="850" y="163" text-anchor="middle" font-size="8.8" fill="#ffffff">Zero downtime</text>
+
+      <text x="30" y="230" font-size="12" font-weight="700" fill="#0e1b2c">預防成本 vs 後果成本 · Prevention cost vs consequence cost</text>
+      <text x="250" y="255.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">預防 Prevention</text>
+      <rect x="260" y="240" width="55" height="22" rx="4" fill="#0e9aa7"/>
+      <text x="323" y="255.0" font-size="10.5" fill="#33475e">~¥3,000</text>
+      <text x="250" y="289.0" text-anchor="end" font-size="10.5" fill="#0e1b2c">後果 Consequence</text>
+      <rect x="260" y="274" width="550" height="22" rx="4" fill="#c0392b"/>
+      <text x="818" y="289.0" font-size="10.5" fill="#33475e">~¥30,000+</text>
+      <text x="30" y="318" font-size="10.5" fill="#33475e">一個部件的預防成本，通常係佢引發後果嘅十分之一 · Prevention typically costs ~1/10 of the failure it prevents</text>
+
+      <text x="30" y="338" font-size="11.5" font-weight="700" fill="#0e1b2c">小部件保護大部件 · A small part protects an expensive one</text>
+      <circle cx="122" cy="370" r="32" fill="none" stroke="#0e9aa7" stroke-width="2.2"/>
+      <text x="122" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">乾燥劑包</text>
+      <text x="122" y="380" text-anchor="middle" font-size="8" fill="#33475e">Desiccant</text>
+      <text x="122" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥600–1,200</text>
+      <line x1="158" y1="370" x2="199" y2="370" stroke="#33475e" stroke-width="1.6"/>
+      <path d="M199,366 L206,370 L199,374 Z" fill="#33475e"/>
+      <text x="182" y="362" text-anchor="middle" font-size="8" fill="#33475e">保護 protects</text>
+      <circle cx="249" cy="370" r="39" fill="none" stroke="#0e9aa7" stroke-width="2.2"/>
+      <text x="249" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">壓縮機</text>
+      <text x="249" y="380" text-anchor="middle" font-size="8" fill="#33475e">Compressor</text>
+      <text x="249" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥2,500–6,000</text>
+      <line x1="292" y1="370" x2="333" y2="370" stroke="#33475e" stroke-width="1.6"/>
+      <path d="M333,366 L340,370 L333,374 Z" fill="#33475e"/>
+      <text x="316" y="362" text-anchor="middle" font-size="8" fill="#33475e">保護 protects</text>
+      <circle cx="391" cy="370" r="47" fill="none" stroke="#c0392b" stroke-width="2.2"/>
+      <text x="391" y="366" text-anchor="middle" font-size="11" font-weight="700" fill="#0e1b2c">高壓電池</text>
+      <text x="391" y="380" text-anchor="middle" font-size="8" fill="#33475e">HV battery</text>
+      <text x="391" y="393" text-anchor="middle" font-size="8.5" font-weight="600" fill="#33475e">¥30,000+</text>
+
+      </svg>
+    </div>
+  </section>
+
+  <!-- ======================= FOOTER ======================= -->
+  <div class="note" style="margin-top:26px">
+    <div class="zh-only">本報告由 Henderson Transpacific 系統生成。週期參考原廠建議及高里程車業界經驗，價格為大灣區第三方維修廠估算，均未逐項核實，實際以檢查結果為準。</div>
+    <div class="en-only">This report is generated by the Henderson Transpacific system. Intervals reference OEM guidance and high-mileage-fleet industry experience; prices are Greater Bay Area independent-shop estimates. None are individually verified — actual condition governs on inspection.</div>
+  </div>
+
+  <div class="sigrow">
+    <div>
+      <div class="lbl"><span class="zh-only">技師</span><span class="en-only">Technician</span></div>
+      <div class="sigline"></div>
+    </div>
+    <div>
+      <div class="lbl"><span class="zh-only">車主</span><span class="en-only">Owner</span></div>
+      <div class="sigline"></div>
+    </div>
+    <div>
+      <div class="lbl"><span class="zh-only">日期</span><span class="en-only">Date</span></div>
+      <div class="sigline"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><span class="zh-only">開檔報告 · 尚無過往紀錄 · 所有里程與到期年份按 20,000 km／年假設推算</span><span class="en-only">Opening report · no prior history on file · all mileage and due-years projected at 20,000 km/yr</span></div>
+    <div><span class="zh-only">第 1 版 · 待補建檔日期</span><span class="en-only">Rev 1 · file-open date TBC</span></div>
+  </div>
+  <div class="ht-tag">Henderson Transpacific · Vehicle Records &amp; Analytics</div>
+</div>
+
+<script>
+/* =================================================================
+   10-YEAR MAINTENANCE PLAN — data-driven, assumption: 20,000 km/yr
+   ================================================================= */
+const T = (zh,en)=>({zh,en});
+function tx(o){ return document.body.dataset.lang==='zh' ? o.zh : o.en; }
+function fmt(n){ return '¥'+Math.round(n).toLocaleString('en-US'); }
+
+const CUM = y => y*20000;
+
+// each PLAN item: bilingual name + interval text, and an explicit list of
+// occurrences {year, odo (string), costLow, costHigh}
+const PLAN = [
+  { zh:'輪胎換位', en:'Tyre rotation',
+    interval:T('每 10,000 km（每年 2 次）','every 10,000 km (twice a year)'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:`${((y-1)*20000+10000).toLocaleString('en-US')} / ${(y*20000).toLocaleString('en-US')}`, costLow:100, costHigh:300})) },
+  { zh:'車廂濾芯', en:'Cabin filter',
+    interval:T('每 12 個月','every 12 months'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:100, costHigh:300})) },
+  { zh:'雨刮', en:'Wipers',
+    interval:T('每 12 個月','every 12 months'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:60, costHigh:200})) },
+  { zh:'冷氣性能檢查', en:'A/C performance check',
+    interval:T('每 12 個月（入夏前）','every 12 months (before summer)'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:150, costHigh:400})) },
+  { zh:'卡鉗清潔潤滑', en:'Caliper clean & lube',
+    interval:T('每 12 個月 / 20,000 km','every 12 months / 20,000 km'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:200, costHigh:500})) },
+  { zh:'散熱器／冷凝器清洗', en:'Radiator & condenser cleaning',
+    interval:T('每 24 個月','every 24 months'),
+    occ:[2,4,6,8,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:200, costHigh:500})) },
+  { zh:'制動液測試／更換', en:'Brake fluid — test / replace',
+    interval:T('測試每 24 個月，更換每 48 個月','test every 24 months, replace every 48 months'),
+    occ:[
+      {year:2, label:T('測試','test'), odo:CUM(2).toLocaleString('en-US'), costLow:200, costHigh:400},
+      {year:4, label:T('更換','replace'), odo:CUM(4).toLocaleString('en-US'), costLow:200, costHigh:400},
+      {year:6, label:T('測試','test'), odo:CUM(6).toLocaleString('en-US'), costLow:200, costHigh:400},
+      {year:8, label:T('更換','replace'), odo:CUM(8).toLocaleString('en-US'), costLow:200, costHigh:400},
+      {year:10, label:T('測試','test'), odo:CUM(10).toLocaleString('en-US'), costLow:200, costHigh:400},
+    ] },
+  { zh:'輪胎更換', en:'Tyre replacement',
+    interval:T('約每 45,000 km','approx every 45,000 km'),
+    occ:[
+      {year:3, odo:'45,000', costLow:2800, costHigh:6000},
+      {year:5, odo:'90,000', costLow:2800, costHigh:6000},
+      {year:7, odo:'135,000', costLow:2800, costHigh:6000},
+      {year:9, odo:'180,000', costLow:2800, costHigh:6000},
+    ] },
+  { zh:'制動皮', en:'Brake pads',
+    interval:T('約每 60,000 km（再生制動延壽）','approx every 60,000 km (regen extends life)'),
+    occ:[
+      {year:3, odo:'60,000', costLow:800, costHigh:2000},
+      {year:6, odo:'120,000', costLow:800, costHigh:2000},
+      {year:9, odo:'180,000', costLow:800, costHigh:2000},
+    ] },
+  { zh:'冷氣乾燥劑包', en:'A/C desiccant bag',
+    interval:T('每 48 個月 / 120,000 km','every 48 months / 120,000 km'),
+    occ:[
+      {year:4, odo:CUM(4).toLocaleString('en-US'), costLow:600, costHigh:1200},
+      {year:8, odo:CUM(8).toLocaleString('en-US'), costLow:600, costHigh:1200},
+    ] },
+  { zh:'傳動齒輪油（ATF）', en:'Drive-unit gear oil (ATF)',
+    interval:T('每 100,000 km','every 100,000 km'),
+    occ:[
+      {year:5, odo:'100,000', costLow:300, costHigh:600},
+      {year:10, odo:'200,000', costLow:300, costHigh:600},
+    ] },
+  { zh:'制動碟', en:'Brake rotors',
+    interval:T('約每 120,000 km（前後軸）','approx every 120,000 km (front & rear)'),
+    occ:[
+      {year:6, odo:'120,000', costLow:2400, costHigh:6000},
+    ] },
+  { zh:'電池冷卻液全量更換', en:'Battery coolant full change',
+    interval:T('每 60 個月 / 150,000 km','every 60 months / 150,000 km'),
+    occ:[
+      {year:5, odo:'100,000', costLow:800, costHigh:1800},
+      {year:10, odo:'200,000', costLow:800, costHigh:1800},
+    ] },
+  { zh:'冷氣壓縮機（預防性）', en:'A/C compressor, preventive',
+    interval:T('建議 150,000 km 內，或一有異聲／製冷力下降即換 — 兼負電池冷卻','recommended within 150,000 km, or immediately on noise / reduced cooling — also cools the battery'),
+    occ:[
+      {year:8, odo:'≈150,000', costLow:2500, costHigh:6000},
+    ] },
+  { zh:'12V 副電池', en:'12V battery',
+    interval:T('每 36–48 個月','every 36–48 months'),
+    occ:[
+      {year:4, odo:CUM(4).toLocaleString('en-US'), costLow:800, costHigh:1500},
+      {year:8, odo:CUM(8).toLocaleString('en-US'), costLow:800, costHigh:1500},
+    ] },
+  { zh:'懸掛檢查', en:'Suspension inspection',
+    interval:T('每 12 個月；擺臂／避震按狀態更換','every 12 months; control arms / shocks replaced on condition'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:0, costHigh:0, included:true})) },
+  { zh:'高壓電池健康檢查', en:'HV battery health check',
+    interval:T('每 12 個月（如已接入遙測則持續監察）','every 12 months (continuous if telemetry connected)'),
+    occ:[1,2,3,4,5,6,7,8,9,10].map(y=>({year:y, odo:CUM(y).toLocaleString('en-US'), costLow:0, costHigh:300})) },
+];
+
+function yearRows(year){
+  const rows=[];
+  PLAN.forEach(item=>{
+    item.occ.filter(o=>o.year===year).forEach(o=>{
+      rows.push({item, o});
+    });
+  });
+  return rows;
+}
+
+function yearSubtotal(year){
+  let lo=0, hi=0;
+  yearRows(year).forEach(r=>{ lo+=r.o.costLow; hi+=r.o.costHigh; });
+  return {lo,hi};
+}
+
+function renderPlan(){
+  const wrap=document.getElementById('plan-years');
+  let html='';
+  for(let y=1;y<=10;y++){
+    const rows=yearRows(y);
+    const sub=yearSubtotal(y);
+    html += `<div class="yearcard">
+      <div class="yearcard-head">
+        <div><span class="yn">${tx(T('第 '+y+' 年','Year '+y))}</span>
+        <span class="yk"> · ${tx(T('累計里程','cumulative'))} ${CUM(y).toLocaleString('en-US')} km</span></div>
+        <div class="ys">${tx(T('小計','subtotal'))} ${fmt(sub.lo)}–${fmt(sub.hi)}</div>
+      </div>
+      <table class="wrap">
+        <thead><tr>
+          <th style="width:30%">${tx(T('項目','Item'))}</th>
+          <th style="width:26%">${tx(T('週期','Interval'))}</th>
+          <th style="width:20%">${tx(T('預計里程 (km)','Projected odo (km)'))}</th>
+          <th class="r" style="width:24%">${tx(T('參考價','Indicative cost'))}</th>
+        </tr></thead>
+        <tbody>
+        ${rows.map(r=>{
+          const name = tx(T(r.item.zh, r.item.en)) + (r.o.label? ` <span class="dim">(${tx(r.o.label)})</span>`:'');
+          const cost = r.o.included ? `<span class="pill p-teal">${tx(T('檢查免費／已含','included'))}</span>`
+                     : r.o.costLow===0 && r.o.costHigh===0 ? `<span class="pill p-teal">${tx(T('已含','included'))}</span>`
+                     : `${fmt(r.o.costLow)}–${fmt(r.o.costHigh)}`;
+          return `<tr><td>${name}</td><td>${tx(r.item.interval)}</td><td class="num">${r.o.odo}</td><td class="r num">${cost}</td></tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+  wrap.innerHTML = html;
+}
+
+function grandTotal(){
+  let lo=0, hi=0;
+  for(let y=1;y<=10;y++){ const s=yearSubtotal(y); lo+=s.lo; hi+=s.hi; }
+  return {lo,hi};
+}
+
+function renderCostTable(){
+  const rows=[];
+  for(let y=1;y<=10;y++){
+    const s=yearSubtotal(y);
+    rows.push(`<tr><td>${tx(T('第 '+y+' 年','Year '+y))}</td><td class="num">${CUM(y).toLocaleString('en-US')}</td><td class="r num">${fmt(s.lo)}–${fmt(s.hi)}</td></tr>`);
+  }
+  const gt = grandTotal();
+  document.getElementById('tbl-cost').innerHTML = `
+    <thead><tr>
+      <th>${tx(T('年度','Year'))}</th>
+      <th>${tx(T('累計里程 (km)','Cumulative km'))}</th>
+      <th class="r">${tx(T('小計 參考','Subtotal, indicative'))}</th>
+    </tr></thead>
+    <tbody>${rows.join('')}</tbody>
+    <tfoot><tr class="tot"><td>${tx(T('十年合計','10-year total'))}</td><td></td><td class="r num">${fmt(gt.lo)}–${fmt(gt.hi)}</td></tr></tfoot>`;
+}
+
+function chartCost(){
+  const data=[]; let maxHi=0;
+  for(let y=1;y<=10;y++){ const s=yearSubtotal(y); data.push({y,...s}); if(s.hi>maxHi) maxHi=s.hi; }
+  const top = Math.ceil(maxHi/2000)*2000; // round headroom
+  const chartTop=20, chartBottom=280, chartLeft=60, chartRight=980;
+  const vy = v => chartBottom - (v/top)*(chartBottom-chartTop);
+  const bandW = (chartRight-chartLeft)/10;
+  const barW = Math.min(44, bandW*0.5);
+  let svg = `<svg viewBox="0 0 1000 320" role="img" aria-label="10-year cost outlook">`;
+  // gridlines
+  const steps=4;
+  for(let i=0;i<=steps;i++){
+    const v = top*i/steps;
+    const y = vy(v);
+    svg += `<line x1="${chartLeft}" y1="${y.toFixed(1)}" x2="${chartRight}" y2="${y.toFixed(1)}" stroke="#e6eaee" stroke-width="1"/>`;
+    svg += `<text x="${chartLeft-8}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="9" fill="#64748b">¥${Math.round(v).toLocaleString('en-US')}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x = chartLeft + i*bandW + (bandW-barW)/2;
+    const yLo = vy(d.lo), yHi = vy(d.hi);
+    svg += `<rect x="${x.toFixed(1)}" y="${yHi.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(2,(yLo-yHi)).toFixed(1)}" rx="2" fill="#0e9aa7"/>`;
+    svg += `<text x="${(x+barW/2).toFixed(1)}" y="${(chartBottom+16).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="#33475e">${d.y}</text>`;
+  });
+  svg += `<text x="${chartLeft}" y="${(chartBottom+34)}" font-size="9" fill="#64748b">${tx(T('年度 Year','Year'))}</text>`;
+  svg += `</svg>`;
+  document.getElementById('chart-cost').innerHTML = svg;
+}
+
+function renderAll(){
+  renderPlan();
+  renderCostTable();
+  chartCost();
+}
+function setLang(l){
+  document.body.dataset.lang=l;
+  document.documentElement.lang = l==='zh'?'zh-Hant':'en';
+  document.getElementById('btn-zh').classList.toggle('on',l==='zh');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  renderAll();
+}
+renderAll();
+</script>
+<button id="a4print" onclick="window.print()" title="列印或另存 PDF Print or save as PDF"
+ style="position:fixed;right:18px;bottom:18px;z-index:999;display:flex;align-items:center;gap:7px;
+ padding:10px 16px;border:0;border-radius:24px;background:#0e1b2c;color:#fff;font:600 12.5px/1 'Inter','Noto Sans TC',sans-serif;white-space:nowrap;
+ letter-spacing:.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28)">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+列印 A4 Print</button>
+<style>@media print{#a4print{display:none!important}}</style>
+</body>
+</html>
