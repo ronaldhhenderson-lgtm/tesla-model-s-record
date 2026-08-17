@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二十年維修費用明細 — 材料 / 工時分列 · UJ 713 · Henderson Transpacific</title>
+<style>
+:root{
+  --ink:#0e1b2c; --accent:#0e9aa7; --muted:#33475e; --faint:#64748b;
+  --line:#d5dbe1; --hair:#e6eaee; --panel:#f6f7f8;
+  --red:#c0392b; --amber:#b8730a; --ok:#2f6b46;
+  --mat:#2a78d6; --lab:#eb6834;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter","Helvetica Neue",Helvetica,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);background:#eef2f4;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.sheet{width:210mm;min-height:297mm;margin:16px auto;background:#fff;padding:13mm 12mm 12mm;
+  box-shadow:0 1px 3px rgba(0,0,0,.14),0 12px 34px rgba(0,0,0,.10)}
+h1{font-size:21px;font-weight:600;letter-spacing:.02em;line-height:1.25}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+h3{font-size:12px;font-weight:600;margin-bottom:6px}
+.lbl{font-size:8.6px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.sub{font-size:11.5px;color:var(--muted)}
+.tiny{font-size:9.4px;color:var(--muted);line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  border-bottom:2px solid var(--ink);padding-bottom:11px}
+.wordmark{font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.wordmark span{color:var(--accent)}
+.brandmark{display:flex;align-items:center;gap:9px}
+.cnname{font-size:8.6px;color:var(--faint);letter-spacing:.08em;margin-top:2px}
+.plate{border:1.5px solid var(--ink);border-radius:3px;padding:4px 11px;font-size:16px;font-weight:600;letter-spacing:.09em}
+.hd-right{text-align:right}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--ink);padding-bottom:5px;margin-bottom:8px;margin-top:14px}
+.shead .rule{font-size:9px;color:var(--faint)}
+/* KPI row */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:11px}
+.kpi{border:1px solid var(--hair);padding:7px 10px 8px}
+.kpi .k{font-size:8.4px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.kpi .v{font-size:21px;font-weight:600;letter-spacing:-.02em;margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:11px;font-weight:500;color:var(--muted)}
+.kpi .s{font-size:9.4px;color:var(--faint);margin-top:1px}
+.kpi.m{border-top:2.5px solid var(--mat)} .kpi.l{border-top:2.5px solid var(--lab)}
+.kpi.t{border-top:2.5px solid var(--ink)} .kpi.y{border-top:2.5px solid var(--accent)}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:10.2px;table-layout:fixed;margin-top:4px}
+th{text-align:left;font-size:8.2px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);padding:0 5px 5px 0;border-bottom:1px solid var(--line);vertical-align:bottom;
+  white-space:normal;line-height:1.25}
+td{padding:4.1px 5px 4.1px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.35;
+  overflow-wrap:break-word}
+th+th,td+td{padding-left:6px}
+.r{text-align:right} td.r,th.r{padding-right:0}
+.num{font-variant-numeric:tabular-nums}
+tr.grp td{background:var(--panel);font-weight:600;font-size:10.3px;border-bottom:1px solid var(--line);
+  padding-top:5px;padding-bottom:4.5px}
+tr.sub td{border-top:1px solid var(--line);border-bottom:1.5px solid var(--ink);font-weight:600;
+  padding-top:6px;padding-bottom:7px;font-size:10.4px}
+tr.tot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:700;padding-top:9px;font-size:12px}
+.mat{color:var(--mat)} .lab{color:var(--lab)}
+th.mat,td.mat{background:rgba(42,120,214,.045)}
+th.lab,td.lab{background:rgba(235,104,52,.05)}
+.dim{color:var(--muted)}
+.note{background:var(--panel);border-left:2px solid var(--ink);padding:9px 11px;font-size:9.5px;line-height:1.55;margin-top:11px}
+.note.accent{border-left-color:var(--accent);background:#eaf7f8}
+.note.warn{border-left-color:var(--red);background:#fbeceb}
+.note h4{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.bar{display:flex;height:22px;border:1px solid var(--ink);margin-top:10px;font-size:9.5px;font-weight:600}
+.bar div{display:flex;align-items:center;justify-content:center;color:#fff}
+.foot{margin-top:9px;padding-top:7px;border-top:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:16px;font-size:8.6px;color:var(--faint)}
+#pbtn{position:fixed;right:18px;bottom:18px;z-index:99;background:var(--ink);color:#fff;border:0;
+  border-radius:24px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+  box-shadow:0 3px 14px rgba(0,0,0,.28);white-space:nowrap}
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  body{background:#fff;font-size:10pt}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none;break-after:page}
+  .sheet:last-of-type{break-after:auto}
+  #pbtn{display:none!important}
+  table,.note,.kpis{break-inside:avoid} tr{break-inside:avoid} thead{display:table-header-group}
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════ SHEET 1 ═════════ -->
+<div class="sheet">
+  <div class="masthead">
+    <div>
+      <div class="brandmark">
+        <svg width="26" height="26" viewBox="0 0 30 30"><rect width="30" height="30" rx="7" fill="#0e1b2c"/><text x="15" y="20" text-anchor="middle" font-family="Inter,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#0e9aa7">HT</text></svg>
+        <div><div class="wordmark">HENDERSON <span>TRANSPACIFIC</span></div><div class="cnname">亨德森環太 · 車輛檔案系統</div></div>
+      </div>
+      <h1 style="margin-top:8px">二十年維修費用明細<br>20-Year Maintenance Cost — Material / Labour Split</h1>
+      <div class="sub" style="margin-top:3px">2026 – 2046 · 中度使用情境（+320,000 km）· 工時按珠海／中山價</div>
+    </div>
+    <div class="hd-right">
+      <div class="plate">UJ 713</div>
+      <div class="tiny" style="margin-top:6px">2016 Tesla Model S 70<br>5YJSB7E15GF122555<br>2026-08-17</div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi m"><div class="k">材料 Material</div><div class="v">177,700</div><div class="s">佔 53.6%</div></div>
+    <div class="kpi l"><div class="k">工時 Labour</div><div class="v">153,600</div><div class="s">佔 46.4%</div></div>
+    <div class="kpi t"><div class="k">二十年合計</div><div class="v">331,300</div><div class="s">HK$ · 不含規費保險</div></div>
+    <div class="kpi y"><div class="k">攤分</div><div class="v">16,600<small> /年</small></div><div class="s">HK$1.04 / km</div></div>
+  </div>
+
+  <div class="bar">
+    <div style="width:53.6%;background:var(--mat)">材料 Material　HK$177,700</div>
+    <div style="width:46.4%;background:var(--lab)">工時 Labour　HK$153,600</div>
+  </div>
+
+  <div class="shead"><h2>明細表 Itemised Breakdown</h2><div class="rule">港幣 HK$ · 單次為平均值</div></div>
+
+  <table>
+    <colgroup>
+      <col style="width:23%"><col style="width:11%"><col style="width:5.5%">
+      <col style="width:10%"><col style="width:10%">
+      <col style="width:12%"><col style="width:12%"><col style="width:16.5%">
+    </colgroup>
+    <thead><tr>
+      <th>項目 Item</th><th>週期</th><th class="r">次數</th>
+      <th class="r mat">材料<br>／次</th><th class="r lab">工時<br>／次</th>
+      <th class="r mat">材料<br>小計</th><th class="r lab">工時<br>小計</th><th class="r">合計 Total</th>
+    </tr></thead>
+    <tbody>
+
+      <tr class="grp"><td colspan="8">A　大件 — 佔總額 51%</td></tr>
+      <tr>
+        <td><b>高壓電池模組更換</b><br><span class="dim" style="font-size:9px">自供 18650 @ ¥0.3/Wh · 每次 4 模組</span></td>
+        <td>≈10 年 / 批量</td><td class="r num">2</td>
+        <td class="r num mat">5,760</td><td class="r num lab">16,000</td>
+        <td class="r num mat">11,520</td><td class="r num lab">32,000</td><td class="r num"><b>43,520</b></td>
+      </tr>
+      <tr>
+        <td><b>驅動單元</b><br><span class="dim" style="font-size:9px">二手 core 翻新 / 再造件</span></td>
+        <td>200,000 km</td><td class="r num">2</td>
+        <td class="r num mat">22,000</td><td class="r num lab">9,000</td>
+        <td class="r num mat">44,000</td><td class="r num lab">18,000</td><td class="r num"><b>62,000</b></td>
+      </tr>
+      <tr>
+        <td>懸掛全套翻新<br><span class="dim" style="font-size:9px">襯套、避震、球頭</span></td>
+        <td>8 – 10 年</td><td class="r num">2</td>
+        <td class="r num mat">6,000</td><td class="r num lab">5,000</td>
+        <td class="r num mat">12,000</td><td class="r num lab">10,000</td><td class="r num">22,000</td>
+      </tr>
+      <tr>
+        <td>車身修復<br><span class="dim" style="font-size:9px">除鏽、噴漆、內裝（階段四）</span></td>
+        <td>1 次（≈2042）</td><td class="r num">1</td>
+        <td class="r num mat">12,000</td><td class="r num lab">28,000</td>
+        <td class="r num mat">12,000</td><td class="r num lab">28,000</td><td class="r num">40,000</td>
+      </tr>
+      <tr class="sub"><td colspan="5">A 小計</td>
+        <td class="r num mat">79,520</td><td class="r num lab">88,000</td><td class="r num">167,520</td></tr>
+
+      <tr class="grp"><td colspan="8">B　定期消耗 — 佔總額 33%</td></tr>
+      <tr><td>輪胎（四條一套）</td><td>40,000 km</td><td class="r num">8</td>
+        <td class="r num mat">4,800</td><td class="r num lab">600</td>
+        <td class="r num mat">38,400</td><td class="r num lab">4,800</td><td class="r num">43,200</td></tr>
+      <tr><td>迫力碟 + 迫力皮</td><td>≈100,000 km</td><td class="r num">3</td>
+        <td class="r num mat">3,500</td><td class="r num lab">1,500</td>
+        <td class="r num mat">10,500</td><td class="r num lab">4,500</td><td class="r num">15,000</td></tr>
+      <tr><td>卡鉗清潔潤滑<br><span class="dim" style="font-size:9px">工時為主，防卡死</span></td><td>每年</td><td class="r num">20</td>
+        <td class="r num mat">100</td><td class="r num lab">700</td>
+        <td class="r num mat">2,000</td><td class="r num lab">14,000</td><td class="r num">16,000</td></tr>
+      <tr><td>12V 輔助電池</td><td>2 – 4 年</td><td class="r num">7</td>
+        <td class="r num mat">1,300</td><td class="r num lab">200</td>
+        <td class="r num mat">9,100</td><td class="r num lab">1,400</td><td class="r num">10,500</td></tr>
+      <tr><td>迫力油</td><td>2 年</td><td class="r num">10</td>
+        <td class="r num mat">250</td><td class="r num lab">500</td>
+        <td class="r num mat">2,500</td><td class="r num lab">5,000</td><td class="r num">7,500</td></tr>
+      <tr><td>冷卻液</td><td>4 年 / 80,000 km</td><td class="r num">5</td>
+        <td class="r num mat">500</td><td class="r num lab">900</td>
+        <td class="r num mat">2,500</td><td class="r num lab">4,500</td><td class="r num">7,000</td></tr>
+      <tr><td>ATF 傳動油</td><td>4 年</td><td class="r num">5</td>
+        <td class="r num mat">400</td><td class="r num lab">600</td>
+        <td class="r num mat">2,000</td><td class="r num lab">3,000</td><td class="r num">5,000</td></tr>
+      <tr><td>冷氣濾網</td><td>2 年</td><td class="r num">10</td>
+        <td class="r num mat">250</td><td class="r num lab">150</td>
+        <td class="r num mat">2,500</td><td class="r num lab">1,500</td><td class="r num">4,000</td></tr>
+      <tr class="sub"><td colspan="5">B 小計</td>
+        <td class="r num mat">69,500</td><td class="r num lab">38,700</td><td class="r num">108,200</td></tr>
+
+      <tr class="grp"><td colspan="8">C　老化 · 損耗件 — 佔總額 16%</td></tr>
+      <tr><td>橡膠件 / 密封條 / 水管<br><span class="dim" style="font-size:9px">階段三集中老化</span></td><td>≈2036、2044</td><td class="r num">2</td>
+        <td class="r num mat">6,000</td><td class="r num lab">6,000</td>
+        <td class="r num mat">12,000</td><td class="r num lab">12,000</td><td class="r num">24,000</td></tr>
+      <tr><td>門把手 / 充電口閂鎖 / 車窗機構</td><td>不定</td><td class="r num">4</td>
+        <td class="r num mat">1,800</td><td class="r num lab">1,200</td>
+        <td class="r num mat">7,200</td><td class="r num lab">4,800</td><td class="r num">12,000</td></tr>
+      <tr><td><b>冷氣壓縮機翻新</b><br><span class="dim" style="font-size:9px">軸承套件，非換新件</span></td><td>6 – 8 年</td><td class="r num">3</td>
+        <td class="r num mat">1,500</td><td class="r num lab">2,200</td>
+        <td class="r num mat">4,500</td><td class="r num lab">6,600</td><td class="r num">11,100</td></tr>
+      <tr><td>MCU1 第三方方案</td><td>1 次</td><td class="r num">1</td>
+        <td class="r num mat">3,000</td><td class="r num lab">2,000</td>
+        <td class="r num mat">3,000</td><td class="r num lab">2,000</td><td class="r num">5,000</td></tr>
+      <tr><td>乾燥劑 + O-ring</td><td>4 年 / 開系統時</td><td class="r num">5</td>
+        <td class="r num mat">400</td><td class="r num lab">300</td>
+        <td class="r num mat">2,000</td><td class="r num lab">1,500</td><td class="r num">3,500</td></tr>
+      <tr class="sub"><td colspan="5">C 小計</td>
+        <td class="r num mat">28,700</td><td class="r num lab">26,900</td><td class="r num">55,600</td></tr>
+
+      <tr class="tot"><td colspan="5">二十年維修合計</td>
+        <td class="r num mat">177,720</td><td class="r num lab">153,600</td><td class="r num">331,320</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 2026-08-17</span><span>1 / 2</span></div>
+</div>
+
+<!-- ═════════ SHEET 2 ═════════ -->
+<div class="sheet">
+  <div class="shead" style="margin-top:0"><h2>工時地點對照 Labour Location</h2><div class="rule">同樣工作，兩個價</div></div>
+  <table>
+    <colgroup><col style="width:34%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:18%"></colgroup>
+    <thead><tr><th>方案</th><th class="r mat">材料</th><th class="r lab">工時</th><th class="r">合計</th><th class="r">每年</th></tr></thead>
+    <tbody>
+      <tr style="background:#eaf7f8"><td><b>珠海 / 中山工時（本表基準）</b></td>
+        <td class="r num mat">177,700</td><td class="r num lab">153,600</td><td class="r num"><b>331,300</b></td><td class="r num"><b>16,600</b></td></tr>
+      <tr><td>全部香港工時（約 2.1×）</td>
+        <td class="r num mat">177,700</td><td class="r num lab">322,600</td><td class="r num">500,300</td><td class="r num">25,000</td></tr>
+      <tr class="tot"><td>選擇珠海嘅二十年差額</td><td class="r num">—</td>
+        <td class="r num lab">− 169,000</td><td class="r num">− 169,000</td><td class="r num">− 8,450</td></tr>
+    </tbody>
+  </table>
+  <div class="note accent">
+    <h4>讀法</h4>
+    <b>工時佔總額 46%，而工時價差係你唯一可以用「選擇地點」直接控制嘅變數。</b>
+    二十年慳 HK$169,000 —— 大過驅動單元兩次更換嘅材料費。<br>
+    但唔係樣樣都應該過關做：<b>年檢、緊急故障、需要原廠診斷授權嘅項目留喺香港</b>；
+    大件、可預約、需時嘅工作（電池模組、驅動單元、懸掛、車身）過關做。
+  </div>
+
+  <div class="shead"><h2>其他持有成本 Other Ownership Costs</h2><div class="rule">非維修，另計</div></div>
+  <table>
+    <colgroup><col style="width:30%"><col style="width:14%"><col style="width:14%"><col style="width:18%"><col style="width:24%"></colgroup>
+    <thead><tr><th>項目</th><th class="r">單價／年</th><th class="r">年數</th><th class="r">二十年合計</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>保險</td><td class="r num">≈10,000</td><td class="r num">20</td><td class="r num">≈200,000</td><td class="dim">⚠ 估算，未核實</td></tr>
+      <tr><td>牌費</td><td class="r num">≈5,000</td><td class="r num">20</td><td class="r num">≈100,000</td><td class="dim">⚠ 估算，未核實</td></tr>
+      <tr><td>年度驗車</td><td class="r num">585</td><td class="r num">20</td><td class="r num">11,700</td><td class="dim">現行費率</td></tr>
+      <tr style="background:#eaf7f8"><td><b>能源（73,600 kWh）</b></td><td class="r num"><b>0</b></td><td class="r num">20</td>
+        <td class="r num"><b>0</b></td><td class="dim"><b>終身免費超充</b></td></tr>
+      <tr class="sub"><td colspan="3">其他持有成本小計</td><td class="r num">≈311,700</td><td class="dim">維修以外</td></tr>
+      <tr class="tot"><td colspan="3">二十年總持有成本（維修 + 其他）</td><td class="r num">≈643,000</td><td class="dim">≈HK$32,150 / 年</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <h4>免費超充嘅實際價值</h4>
+    73,600 kWh 係按 320,000 km × 230 Wh/km 計。<br>
+    · 若付費超充（香港約 HK$3.10/kWh）＝ <b>HK$228,000</b><br>
+    · 若家用電（約 HK$1.30/kWh）＝ <b>HK$96,000</b><br>
+    <b>呢筆錢綁死喺呢個 VIN，換任何車都拎唔走。</b>應視為呢部車獨有嘅資產，而唔係「慳咗」。
+  </div>
+
+  <div class="shead"><h2>三情境 Sensitivity</h2><div class="rule">只維修，不含規費保險</div></div>
+  <table>
+    <colgroup><col style="width:36%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"></colgroup>
+    <thead><tr><th>情境</th><th class="r mat">材料</th><th class="r lab">工時</th><th class="r">合計</th><th class="r">每 km</th></tr></thead>
+    <tbody>
+      <tr><td><b>樂觀</b> — 電池 1 次、驅動單元 1 次、無車身大修</td>
+        <td class="r num mat">128,000</td><td class="r num lab">99,000</td><td class="r num">227,000</td><td class="r num">0.71</td></tr>
+      <tr style="background:#eaf7f8"><td><b>基準</b> — 本表</td>
+        <td class="r num mat">177,700</td><td class="r num lab">153,600</td><td class="r num"><b>331,300</b></td><td class="r num"><b>1.04</b></td></tr>
+      <tr><td><b>悲觀</b> — 電池 3 次、驅動單元 3 次、車身兩度</td>
+        <td class="r num mat">248,000</td><td class="r num lab">232,000</td><td class="r num">480,000</td><td class="r num">1.50</td></tr>
+      <tr class="tot"><td>對照：2023-01 → 2026-07 實際（3.5 年）</td>
+        <td class="r num" colspan="2">HK$72,922</td><td class="r num">—</td><td class="r num">0.853</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note warn">
+    <h4>假設與未核實事項 — 照直講</h4>
+    <b>1. 里程：</b>中度情境，2029 起 15,000 km/年，二十年共 +320,000 km。使用強度一改，次數全部要重算。<br>
+    <b>2. 電池材料價：</b>按你自供 18650 @ <b>¥0.3/Wh</b>（≈US$42/kWh）。2026 年 4 月中國儲能電芯現貨已升至 ¥0.36–0.39/Wh —— <b>若按現貨計，電池材料由 HK$11,520 升至約 HK$14,600</b>，總數影響約 +1%。影響細，但價格週期要留意。<br>
+    <b>3. 工時價：</b>珠海／中山基準取自你 2026-05 中山實單（¥11,892 含全組拆裝、絕緣處理、模組維修、均衡、氣密測試）。香港倍數 2.1× 為市場觀察，非報價。<br>
+    <b>4. 保險同牌費係估算</b>，我未核實香港電動車現行牌費級距同你嘅實際保費。呢兩項合共 HK$300,000，<b>比整個維修工時總額仲大</b> —— 值得你自己填實數。<br>
+    <b>5. 未計通脹。</b>全部為 2026 年幣值。若年通脹 2.5%，二十年名義總額約為表內數字嘅 1.28 倍。<br>
+    <b>6. 未計意外</b>：碰撞、水浸、盜竊、政策變動。<br>
+    <b>7. 電池策略假設</b>用滾動模組更換而非整組更換。若一次過換整組，材料約 HK$23,000／次、工時約 HK$55,000／次。
+  </div>
+
+  <div class="foot"><span>Henderson Transpacific 亨德森環太 · 車輛檔案系統</span><span>UJ 713 · 5YJSB7E15GF122555 · 2026-08-17</span><span>2 / 2</span></div>
+</div>
+
+<button id="pbtn" onclick="window.print()">列印 A4 · Print</button>
+</body>
+</html>
